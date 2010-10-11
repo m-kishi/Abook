@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E64E9C32-8F1A-45B3-B87A-1521FA382817}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Abook</RootNamespace>
+    <AssemblyName>Abook</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <StartupObject>Abook.AbMain</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="asm\AssemblyInfo.cs" />
+    <Compile Include="src\AbCommonConst.cs" />
+    <Compile Include="src\AbExpense.cs" />
+    <Compile Include="src\AbExpenseManager.cs" />
+    <Compile Include="src\AbFormMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\AbFormMain.designer.cs">
+      <DependentUpon>AbFormMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\AbFormVersion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\AbFormVersion.designer.cs">
+      <DependentUpon>AbFormVersion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\AbGraphLine.cs" />
+    <Compile Include="src\AbGraphManager.cs" />
+    <Compile Include="src\AbGraphPoints.cs" />
+    <Compile Include="src\AbMain.cs" />
+    <Compile Include="src\AbSummary.cs" />
+  </ItemGroup>
+</Project>
