@@ -1,13 +1,13 @@
-﻿using System;
-using System.Drawing;
-using System.Collections.Generic;
-
-namespace Abook
+﻿namespace Abook
 {
+    using System;
+    using System.Drawing;
+    using System.Collections.Generic;
+
     /// <summary>
-    /// グラフデータ座標クラス
+    /// グラフデータクラス
     /// </summary>
-    public class AbGraphPoints
+    public class AbGraphData
     {
         /// <summary>ペン</summary>
         private Pen pen;
@@ -16,26 +16,26 @@ namespace Abook
         private Brush brush;
 
         /// <summary>データ座標</summary>
-        private List<Point> points;
+        public List<Point> Points { get; private set; }
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public AbGraphPoints(Brush brush)
+        public AbGraphData(Brush brush)
         {
             this.brush  = brush;
             this.pen    = new Pen(brush);
-            this.points = new List<Point>();
+            this.Points = new List<Point>();
         }
 
         /// <summary>
         /// 座標追加
         /// </summary>
-        public void add(int value)
+        public void AddPoint(int value)
         {
-            points.Add(
+            Points.Add(
                 new Point(
-                    (int)(AbCommonConst.HORIZONTAL * points.Count),
+                    (int)(AbCommonConst.HORIZONTAL * Points.Count),
                     (int)(AbCommonConst.COEFFICIENT * value + AbCommonConst.HEIGHT)
                 )
             );
@@ -44,10 +44,10 @@ namespace Abook
         /// <summary>
         /// グラフ描画
         /// </summary>
-        public void draw(Graphics g)
+        public void DrawData(Graphics g)
         {
             Point? prev = null;
-            foreach (Point p in points)
+            foreach (Point p in Points)
             {
                 g.FillRectangle(
                     brush,

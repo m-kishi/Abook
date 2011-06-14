@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual C# Express 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abook", "Abook\Abook.csproj", "{E64E9C32-8F1A-45B3-B87A-1521FA382817}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AbookTest", "AbookTest\AbookTest.csproj", "{C5C08CC0-E7C7-4761-8C5D-7043996B0A0C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{E64E9C32-8F1A-45B3-B87A-1521FA382817}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E64E9C32-8F1A-45B3-B87A-1521FA382817}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E64E9C32-8F1A-45B3-B87A-1521FA382817}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5C08CC0-E7C7-4761-8C5D-7043996B0A0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5C08CC0-E7C7-4761-8C5D-7043996B0A0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5C08CC0-E7C7-4761-8C5D-7043996B0A0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5C08CC0-E7C7-4761-8C5D-7043996B0A0C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

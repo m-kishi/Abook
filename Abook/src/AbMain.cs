@@ -1,8 +1,8 @@
-﻿using System;
-using System.Windows.Forms;
-
-namespace Abook
+﻿namespace Abook
 {
+    using System;
+    using System.Windows.Forms;
+
     static class AbMain
     {
         [STAThread]

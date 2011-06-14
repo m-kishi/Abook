@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Windows.Forms;
-
-namespace Abook
+﻿namespace Abook
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Drawing;
+    using System.Windows.Forms;
+
     /// <summary>
     /// メイン画面フォーム
     /// </summary>
@@ -15,17 +15,14 @@ namespace Abook
             InitializeComponent();
         }
 
-        /// <summary>日付(集計用)</summary>
-        private DateTime dtENow;
-
-        /// <summary>日付(グラフ用)</summary>
-        private DateTime dtGNow;
-
         /// <summary>データ管理(集計用)</summary>
-        private AbExpenseManager abEManager;
+        private AbExpenseManager abExpenseManager;
 
         /// <summary>データ管理(グラフ用)</summary>
-        private AbGraphManager abGManager;
+        private AbGraphManager abGraphManager;
+
+        /// <summary>自動補完</summary>
+        private AbComplement abComplement;
 
         /// <summary>
         /// フォームロード
@@ -34,10 +31,13 @@ namespace Abook
         {
             try
             {
-                dtENow = DateTime.Now;
-                dtGNow = DateTime.Now;
-                abEManager = new AbExpenseManager(AbCommonConst.DB_NAME, dtENow);
-                abGManager = new AbGraphManager(dtGNow, abEManager.AbExpenses);
+                Icon = SystemIcons.Application;
+
+                var abExpenses = AbDBManager.LoadFromFile(AbCommonConst.DB_NAME);
+                SetViewExpense(abExpenses);
+                GenerateManagers(abExpenses);
+
+                abComplement = new AbComplement(abExpenses);
             }
             catch (Exception ex)
             {
@@ -49,27 +49,38 @@ namespace Abook
                 );
                 Application.Exit();
             }
+        }
 
-            setTabAccount();
-            this.Icon = SystemIcons.Application;
+        /// <summary>
+        /// マネージャ生成
+        /// </summary>
+        private void GenerateManagers(List<AbExpense> abExpenses)
+        {
+            var abSummaries = AbSummary.GetSummaries(abExpenses);
+
+            abExpenseManager = new AbExpenseManager(DateTime.Now, abSummaries);
+            abGraphManager = new AbGraphManager(DateTime.Now, abSummaries);
         }
 
         /// <summary>
         /// タブ切り替えイベント
         /// </summary>
-        private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
+        private void TabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch (tabControl.SelectedIndex)
+            switch (TabControl.SelectedIndex)
             {
-                case 0: //家計簿画面
-                    setTabAccount();
+                case 0: //支出登録
+                    //SetViewExpense();
                     break;
-                case 1: //月集計画面
-                    setTabSummary(dtENow.Year, dtENow.Month);
+
+                case 1: //月別表示
+                    SetViewSummary();
                     break;
-                case 2: //グラフ画面
+
+                case 2: //グラフ
                     Invalidate();
                     break;
+
                 default:
                     MessageBox.Show(
                         "不明なタブが選択されました。",
@@ -81,12 +92,10 @@ namespace Abook
             }
         }
 
-        #region "メニュー"
-
         /// <summary>
         /// アプリケーション終了
         /// </summary>
-        private void menuItemExit_Click(object sender, EventArgs e)
+        private void MenuExit_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
@@ -94,67 +103,76 @@ namespace Abook
         /// <summary>
         /// バージョン情報表示
         /// </summary>
-        private void menuItemVersion_Click(object sender, EventArgs e)
+        private void MenuVersion_Click(object sender, EventArgs e)
         {
-            AbFormVersion frmVersion = new AbFormVersion();
-            frmVersion.ShowDialog();
-
+            (new AbFormVersion()).ShowDialog();
         }
 
-        #endregion
-
-
-        #region "家計簿画面"
-
         /// <summary>
-        /// 家計簿画面
+        /// 支出登録画面
         /// </summary>
-        private void setTabAccount()
+        private void SetViewExpense(List<AbExpense> abExpenses)
         {
-            if (abEManager.AbExpenses.Count > 0)
+            try
             {
-                int idx = 0;
-                dgView.Rows.Clear();
-                dgView.Rows.Add(abEManager.AbExpenses.Count);
-
-                DataGridViewRow row;
-                foreach (AbExpense exp in abEManager.AbExpenses)
+                if (abExpenses.Count > 0)
                 {
-                    row = dgView.Rows[idx++];
-                    row.Cells["colDate"].Value = exp.Date.ToShortDateString();
-                    row.Cells["colName"].Value = exp.Name;
-                    row.Cells["colType"].Value = exp.Type;
-                    row.Cells["colPrice"].Value = exp.Price.ToString();
-                }
-            }
+                    int idx = 0;
+                    DgvExpense.Rows.Clear();
+                    DgvExpense.Rows.Add(abExpenses.Count);
 
-            dgView.ClearSelection();
-            if (dgView.Rows.Count > 0)
+                    foreach (var exp in abExpenses)
+                    {
+                        var row = DgvExpense.Rows[idx++];
+                        row.Cells["colDate"].Value  = exp.Date.ToShortDateString();
+                        row.Cells["colName"].Value  = exp.Name;
+                        row.Cells["colType"].Value  = exp.Type;
+                        row.Cells["colPrice"].Value = exp.Price.ToString();
+                    }
+                }
+
+                DgvExpense.ClearSelection();
+                if (DgvExpense.Rows.Count > 0)
+                {
+                    DgvExpense.FirstDisplayedScrollingRowIndex = DgvExpense.Rows.Count - 1;
+                    DgvExpense.Rows[DgvExpense.Rows.Count - 1].Cells["colDate"].Selected = true;
+                }
+
+            }
+            catch (Exception ex)
             {
-                dgView.FirstDisplayedScrollingRowIndex = dgView.Rows.Count - 1;
-                dgView.Rows[dgView.Rows.Count - 1].Cells["colDate"].Selected = true;
+                MessageBox.Show(
+                    ex.Message,
+                    "エラー",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
             }
         }
 
         /// <summary>
-        /// DataGridView を貼り付け可能にする
+        /// DataGridView へペースト
         /// </summary>
-        private void dgView_KeyDown(object sender, KeyEventArgs e)
+        private void DgvExpense_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Modifiers == Keys.Control && e.KeyCode == Keys.V)
             {
-                dgView.CurrentCell.Value = Clipboard.GetText();
-                autoComplete(dgView.CurrentCell.RowIndex, dgView.CurrentCell.ColumnIndex);
+                DgvExpense.CurrentCell.Value = Clipboard.GetText();
+
+                if (DgvExpense.CurrentCell.ColumnIndex == 1)
+                {
+                    DataGridViewRow row = DgvExpense.Rows[DgvExpense.CurrentCell.RowIndex];
+                    row.Cells["colType"].Value = abComplement.GetType(Clipboard.GetText());
+                }
             }
         }
 
         /// <summary>
         /// DB ファイルへ書き出し
         /// </summary>
-        private void btnEntry_Click(object sender, EventArgs e)
+        private void BtnEntry_Click(object sender, EventArgs e)
         {
-            //レコード 0 件
-            if (dgView.Rows.Count == 0)
+            if (DgvExpense.Rows.Count == 0)
             {
                 MessageBox.Show(
                     "レコードが1件もありません。",
@@ -165,34 +183,23 @@ namespace Abook
                 return;
             }
 
-            //未入力の行は削除
-            List<int> idxs = new List<int>();
-            foreach (DataGridViewRow row in dgView.Rows)
-            {
-                if (string.IsNullOrEmpty(row.Cells["colName"].Value as string))
-                {
-                    idxs.Add(row.Index);
-                }
-            }
+            RemoveEmptyRows();
 
-            idxs.Reverse();
-            foreach (int i in idxs)
-            {
-                dgView.Rows.RemoveAt(i);
-            }
-
-            if (dgViewValidate())
+            if (DgvExpenseValidate())
             {
                 try
                 {
-                    abEManager = new AbExpenseManager(dgView);
-                    abEManager.writeDB(AbCommonConst.DB_NAME);
+                    var abExpenses = AbDBManager.StoreToFile(AbCommonConst.DB_NAME, DgvExpense);
+
                     MessageBox.Show(
                         "正常に登録しました。",
                         "登録完了",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Asterisk
                     );
+
+                    SetViewExpense(abExpenses);
+                    GenerateManagers(abExpenses);
                 }
                 catch (Exception ex)
                 {
@@ -204,84 +211,70 @@ namespace Abook
                     );
                     return;
                 }
-
-                abEManager = new AbExpenseManager(AbCommonConst.DB_NAME, dtENow);
-                abGManager = new AbGraphManager(dtGNow, abEManager.AbExpenses);
             }
+        }
+
+        /// <summary>
+        /// プロパティ(DataGridView)
+        /// </summary>
+        public DataGridView DataGridView
+        {
+            get { return this.DgvExpense; }
         }
 
         /// <summary>
         /// 新規行追加
         /// </summary>
-        private void btnAdd_Click(object sender, EventArgs e)
+        private void BtnAddRow_Click(object sender, EventArgs e)
         {
-            dgView.Rows.Add(AbCommonConst.ADD_ROW_SIZE);
-            for (int i = dgView.Rows.Count - AbCommonConst.ADD_ROW_SIZE; i < dgView.Rows.Count; i++)
+            DgvExpense.Rows.Add(AbCommonConst.ADD_ROW_SIZE);
+            for (int i = DgvExpense.Rows.Count - AbCommonConst.ADD_ROW_SIZE; i < DgvExpense.Rows.Count; i++)
             {
-                dgView.Rows[i].Cells["colDate"].Value = DateTime.Today.ToShortDateString();
+                DgvExpense.Rows[i].Cells["colDate"].Value = DateTime.Today.ToShortDateString();
+            }
+        }
+
+        /// <summary>
+        /// 未入力行削除
+        /// </summary>
+        private void RemoveEmptyRows()
+        {
+            var idxEmpties = new List<int>();
+            foreach (DataGridViewRow row in DgvExpense.Rows)
+            {
+                if (string.IsNullOrEmpty(row.Cells["colName"].Value as string))
+                {
+                    idxEmpties.Add(row.Index);
+                }
+            }
+
+            idxEmpties.Reverse();
+            foreach (int i in idxEmpties)
+            {
+                DgvExpense.Rows.RemoveAt(i);
             }
         }
 
         /// <summary>
         /// セルの編集終了後に種別の自動補完を行う
         /// </summary>
-        private void dgView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        private void DgvExpense_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            autoComplete(e.RowIndex, e.ColumnIndex);
-        }
-
-        /// <summary>
-        /// 種別の自動補完
-        /// </summary>
-        private void autoComplete(int row, int col)
-        {
-            if (col != 1) return;
-
-            string name = dgView.Rows[row].Cells[col].Value as string;
-            if (name != null)
+            if (DgvExpense.CurrentCell.ColumnIndex == 1)
             {
-                Dictionary<string, int> counter = new Dictionary<string, int>();
-                foreach (AbExpense exp in abEManager.AbExpenses)
-                {
-                    if (exp.Name == name)
-                    {
-                        if (counter.ContainsKey(exp.Type))
-                        {
-                            counter[exp.Type] += 1;
-                        }
-                        else
-                        {
-                            counter.Add(exp.Type, 1);
-                        }
-                    }
-                }
-
-                int cntMax = 0;
-                string typeName = string.Empty;
-                foreach (KeyValuePair<string, int> pair in counter)
-                {
-                    if (cntMax <= pair.Value)
-                    {
-                        cntMax = pair.Value;
-                        typeName = pair.Key;
-                    }
-                }
-
-                if (cntMax > 0)
-                {
-                    dgView.Rows[row].Cells["colType"].Value = typeName;
-                }
+                DataGridViewRow row = DgvExpense.Rows[DgvExpense.CurrentCell.RowIndex];
+                row.Cells["colType"].Value = abComplement.GetType(row.Cells["colName"].Value as string);
             }
         }
 
         /// <summary>
         /// 登録前チェック
-        /// 日付、種別、金額が入力されていなければエラー
+        /// 日付、名前、種別、金額が入力されていなければエラー
         /// </summary>
-        private bool dgViewValidate()
+        private bool DgvExpenseValidate()
         {
             bool result = true;
-            foreach (DataGridViewRow row in dgView.Rows)
+            foreach (DataGridViewRow row in DgvExpense.Rows)
             {
                 result &= !string.IsNullOrEmpty(row.Cells["colDate"].Value as string);
                 result &= !string.IsNullOrEmpty(row.Cells["colName"].Value as string);
@@ -302,159 +295,123 @@ namespace Abook
             return result;
         }
 
-        #endregion
-
-
-        #region "月集計画面"
-
         /// <summary>
         /// 前年表示
         /// </summary>
-        private void btnPrevY_Click(object sender, EventArgs e)
+        private void BtnExpPrevYear_Click(object sender, EventArgs e)
         {
-            dtENow = dtENow.AddYears(-1);
-            reloadSummary();
+            abExpenseManager.PrevYear();
+            SetViewSummary();
         }
 
         /// <summary>
         /// 前月表示
         /// </summary>
-        private void btnPrevM_Click(object sender, EventArgs e)
+        private void BtnExpPrevMonth_Click(object sender, EventArgs e)
         {
-            dtENow = dtENow.AddMonths(-1);
-            reloadSummary();
+            abExpenseManager.PrevMonth();
+            SetViewSummary();
         }
 
         /// <summary>
         /// 翌月表示
         /// </summary>
-        private void btnNextM_Click(object sender, EventArgs e)
+        private void BtnExpNextMonth_Click(object sender, EventArgs e)
         {
-            dtENow = dtENow.AddMonths(1);
-            reloadSummary();
+            abExpenseManager.NextMonth();
+            SetViewSummary();
         }
 
         /// <summary>
         /// 翌年表示
         /// </summary>
-        private void btnNextY_Click(object sender, EventArgs e)
+        private void BtnExpNextYear_Click(object sender, EventArgs e)
         {
-            dtENow = dtENow.AddYears(1);
-            reloadSummary();
-        }
-
-        /// <summary>
-        /// 集計データ再読み込み
-        /// </summary>
-        public void reloadSummary()
-        {
-            abEManager.reload(dtENow);
-            setTabSummary(dtENow.Year, dtENow.Month);
+            abExpenseManager.NextYear();
+            SetViewSummary();
         }
 
         /// <summary>
         /// 月集計画面表示
         /// </summary>
-        private void setTabSummary(int y, int m)
+        private void SetViewSummary()
         {
-            lblToday.Text     = string.Format("{0}年{1:d2}月", y, m);
-            val_01食費.Text   = string.Format("{0:c}", abEManager.GetPrice("食費"  ));
-            val_02外食費.Text = string.Format("{0:c}", abEManager.GetPrice("外食費"));
-            val_03備品.Text   = string.Format("{0:c}", abEManager.GetPrice("備品"  ));
-            val_04雑貨.Text   = string.Format("{0:c}", abEManager.GetPrice("雑貨"  ));
-            val_05タイズ.Text = string.Format("{0:c}", abEManager.GetPrice("タイズ"));
-            val_06小遣い.Text = string.Format("{0:c}", abEManager.GetPrice("小遣い"));
-            val_07医療費.Text = string.Format("{0:c}", abEManager.GetPrice("医療費"));
-            val_08交通費.Text = string.Format("{0:c}", abEManager.GetPrice("交通費"));
-            val_09遊行費.Text = string.Format("{0:c}", abEManager.GetPrice("遊行費"));
-            val_10家賃.Text   = string.Format("{0:c}", abEManager.GetPrice("家賃"  ));
-            val_11電気代.Text = string.Format("{0:c}", abEManager.GetPrice("電気代"));
-            val_12ガス代.Text = string.Format("{0:c}", abEManager.GetPrice("ガス代"));
-            val_13水道代.Text = string.Format("{0:c}", abEManager.GetPrice("水道代"));
-            val_14携帯代.Text = string.Format("{0:c}", abEManager.GetPrice("携帯代"));
-            val_15保険料.Text = string.Format("{0:c}", abEManager.GetPrice("保険料"));
-            val_16手数料.Text = string.Format("{0:c}", abEManager.GetPrice("手数料"));
-            val_17その他.Text = string.Format("{0:c}", abEManager.GetPrice("その他"));
-            val_18合計.Text   = string.Format("{0:c}", abEManager.GetPrice("合計"  ));
-            val_19貯金.Text   = string.Format("{0:c}", abEManager.GetPrice("貯金"  ));
+            LblSummary.Text     = abExpenseManager.ToString();
+            LblYen01食費.Text   = abExpenseManager.GetPrice("食費"  );
+            LblYen02外食費.Text = abExpenseManager.GetPrice("外食費");
+            LblYen03雑貨.Text   = abExpenseManager.GetPrice("雑貨"  );
+            LblYen04交際費.Text = abExpenseManager.GetPrice("交際費");
+            LblYen05交通費.Text = abExpenseManager.GetPrice("交通費");
+            LblYen06遊行費.Text = abExpenseManager.GetPrice("遊行費");
+            LblYen07家賃.Text   = abExpenseManager.GetPrice("家賃"  );
+            LblYen08光熱費.Text = abExpenseManager.GetPrice("光熱費");
+            LblYen09通信費.Text = abExpenseManager.GetPrice("通信費");
+            LblYen10医療費.Text = abExpenseManager.GetPrice("医療費");
+            LblYen11保険料.Text = abExpenseManager.GetPrice("保険料");
+            LblYen12その他.Text = abExpenseManager.GetPrice("その他");
+            LblYen13合計.Text   = abExpenseManager.GetPrice("合計"  );
+            LblYen14残金.Text   = abExpenseManager.GetPrice("残金"  );
         }
-
-        #endregion
-
-
-        #region "グラフ画面"
 
         /// <summary>
         /// 前年表示
         /// </summary>
-        private void btnGPrevY_Click(object sender, EventArgs e)
+        private void BtnGraphPrevYear_Click(object sender, EventArgs e)
         {
-            dtGNow = dtGNow.AddYears(-1);
-            reloadGraph();
+            abGraphManager.PrevYear();
+            SetViewGraph(PboxGraph.CreateGraphics());
         }
 
         /// <summary>
         /// 前月表示
         /// </summary>
-        private void btnGPrevM_Click(object sender, EventArgs e)
+        private void BtnGraphPrevMonth_Click(object sender, EventArgs e)
         {
-            dtGNow = dtGNow.AddMonths(-1);
-            reloadGraph();
+            abGraphManager.PrevMonth();
+            SetViewGraph(PboxGraph.CreateGraphics());
         }
 
         /// <summary>
         /// 翌月表示
         /// </summary>
-        private void btnGNextM_Click(object sender, EventArgs e)
+        private void BtnGraphNextMonth_Click(object sender, EventArgs e)
         {
-            dtGNow = dtGNow.AddMonths(1);
-            reloadGraph();
+            abGraphManager.NextMonth();
+            SetViewGraph(PboxGraph.CreateGraphics());
         }
 
         /// <summary>
         /// 翌年表示
         /// </summary>
-        private void btnGNextY_Click(object sender, EventArgs e)
+        private void BtnGraphNextYear_Click(object sender, EventArgs e)
         {
-            dtGNow = dtGNow.AddYears(1);
-            reloadGraph();
-        }
-
-        /// <summary>
-        /// グラフデータ再読み込み
-        /// </summary>
-        private void reloadGraph()
-        {
-            abGManager.reload(dtGNow);
-            setTabGraph(picbGraph.CreateGraphics());
+            abGraphManager.NextYear();
+            SetViewGraph(PboxGraph.CreateGraphics());
         }
 
         /// <summary>
         /// グラフ描画イベント
         /// </summary>
-        private void picbGraph_Paint(object sender, PaintEventArgs e)
+        private void PboxGraph_Paint(object sender, PaintEventArgs e)
         {
-            setTabGraph(e.Graphics);
+            SetViewGraph(e.Graphics);
         }
 
         /// <summary>
         /// グラフ描画
         /// </summary>
-        private void setTabGraph(Graphics g)
+        private void SetViewGraph(Graphics g)
         {
             g.Clear(Color.Black);
+            abGraphManager.DrawGraph(g);
 
-            abGManager.drawGraph(g);
-
-            lblYear.Text = string.Format("～{0}年{1:d2}月", dtGNow.Year, dtGNow.Month);
-            lblX6.Text = dtGNow.Month.ToString("00");
-            lblX5.Text = dtGNow.AddMonths( -2).Month.ToString("00");
-            lblX4.Text = dtGNow.AddMonths( -4).Month.ToString("00");
-            lblX3.Text = dtGNow.AddMonths( -6).Month.ToString("00");
-            lblX2.Text = dtGNow.AddMonths( -8).Month.ToString("00");
-            lblX1.Text = dtGNow.AddMonths(-10).Month.ToString("00");
+            LblGraph.Text = abGraphManager.ToString();
+            LblX6.Text    = abGraphManager.GetMonth(0);
+            LblX5.Text    = abGraphManager.GetMonth(-2);
+            LblX4.Text    = abGraphManager.GetMonth(-4);
+            LblX3.Text    = abGraphManager.GetMonth(-6);
+            LblX2.Text    = abGraphManager.GetMonth(-8);
+            LblX1.Text    = abGraphManager.GetMonth(-10);
         }
-
-        #endregion
     }
 }

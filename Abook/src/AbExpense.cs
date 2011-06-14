@@ -1,76 +1,52 @@
-﻿using System;
-
-namespace Abook
+﻿namespace Abook
 {
+    using System;
+
     /// <summary>
     /// 支出レコードクラス
     /// </summary>
     public class AbExpense
     {
         /// <summary>日付</summary>
-        private DateTime date;
+        public DateTime Date { get; private set; }
 
         /// <summary>名前</summary>
-        private string name;
+        public string Name { get; private set; }
 
         /// <summary>種別</summary>
-        private string type;
+        public string Type { get; private set; }
 
         /// <summary>金額</summary>
-        private int price;
+        public int Price { get; private set; }
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
         public AbExpense(string date, string name, string type, string price)
         {
-            try
-            {
-                this.date  = DateTime.Parse(date);
-                this.name  = name;
-                this.type  = type;
-                this.price = int.Parse(price);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            if (string.IsNullOrEmpty(date) ) { throw new ArgumentException("日付が不正な値です。"); }
+            if (string.IsNullOrEmpty(name) ) { throw new ArgumentException("名前が不正な値です。"); }
+            if (string.IsNullOrEmpty(type) ) { throw new ArgumentException("種別が不正な値です。"); }
+            if (string.IsNullOrEmpty(price)) { throw new ArgumentException("金額が不正な値です。"); }
+
+            Date = DateTime.Parse(date);
+            Name = name;
+            Type = type;
+            Price = int.Parse(price);
         }
 
         /// <summary>
-        /// 日付アクセッサ
+        /// CSV フォーマット
         /// </summary>
-        public DateTime Date
+        public string ToCSVFormat()
         {
-            get { return this.date; }
-            set { this.date = value; }
-        }
-
-        /// <summary>
-        /// 名前アクセッサ
-        /// </summary>
-        public string Name
-        {
-            get { return this.name; }
-            set { this.name = value; }
-        }
-
-        /// <summary>
-        /// 種別アクセッサ
-        /// </summary>
-        public string Type
-        {
-            get { return this.type; }
-            set { this.type = value; }
-        }
-
-        /// <summary>
-        /// 金額アクセッサ
-        /// </summary>
-        public int Price
-        {
-            get { return this.price; }
-            set { this.price = value; }
+            return string.Format(
+                "{0},{1},{2},{3}",
+                Date.ToShortDateString(),
+                Name,
+                Type,
+                Price.ToString()
+            );
         }
     }
 }

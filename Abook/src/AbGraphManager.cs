@@ -1,70 +1,82 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-
-namespace Abook
+﻿namespace Abook
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Drawing;
+    using System.Linq;
+
     /// <summary>
     /// グラフデータ管理クラス
     /// </summary>
     public class AbGraphManager
     {
-        /// <summary>レコードリスト</summary>
-        private List<AbExpense> abExpenses;
+        /// <summary>グラフ表示年月</summary>
+        private DateTime dtNow;
+
+        /// <summary>グラフデータ</summary>
+        public List<AbGraphData> AbGraphDatas { get; private set; }
 
         /// <summary>基準線データ</summary>
         private List<AbGraphLine> abGraphLines;
 
-        /// <summary>グラフデータ</summary>
-        private List<AbGraphPoints> abGraphPoints;
+        /// <summary>集計値リスト</summary>
+        private List<AbSummary> abSummaries;
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public AbGraphManager(DateTime today, List<AbExpense> expenses)
+        public AbGraphManager(DateTime dtToday, List<AbSummary> abSummaries)
         {
-            abExpenses = expenses;
-            abGraphLines = new List<AbGraphLine>();
+            if (abSummaries == null)
+            {
+                throw new ArgumentException("集計値リストが設定されませんでした。");
+            }
 
-            reload(today);
+            this.dtNow = dtToday;
+            this.abGraphLines = new List<AbGraphLine>();
+            this.abSummaries = abSummaries;
+
+            SetGraphData(() => { });
         }
 
         /// <summary>
-        /// グラフデータの再読み込み
+        /// グラフデータ作成
         /// </summary>
-        public void reload(DateTime newDay)
+        private void SetGraphData(Action DtChange)
         {
-            abGraphPoints = new List<AbGraphPoints>();
-            AbGraphPoints gpF = new AbGraphPoints(Brushes.Red   ); //食費
-            AbGraphPoints gpO = new AbGraphPoints(Brushes.Orange); //外食費
-            AbGraphPoints gpE = new AbGraphPoints(Brushes.Yellow); //電気代
-            AbGraphPoints gpG = new AbGraphPoints(Brushes.Gray  ); //ガス代
-            AbGraphPoints gpW = new AbGraphPoints(Brushes.Blue  ); //水道代
+            DtChange();
 
-            AbSummary sum;
+            AbGraphDatas = new List<AbGraphData>();
+            var gdF = new AbGraphData(Brushes.Red   ); //食費
+            var gdO = new AbGraphData(Brushes.Orange); //外食費
+            var gdE = new AbGraphData(Brushes.Yellow); //電気代
+            var gdG = new AbGraphData(Brushes.Gray  ); //ガス代
+            var gdW = new AbGraphData(Brushes.Blue  ); //水道代
+
             int valF, valO, valE, valG, valW;
-            DateTime dtEnd = newDay.AddMonths(1);
-            for (DateTime dt = newDay.AddMonths(-10); dt <= newDay.AddMonths(1); dt = dt.AddMonths(1))
+            for (var dt = dtNow.AddYears(-1); dt <= dtNow; dt = dt.AddMonths(1))
             {
-                sum = new AbSummary(dt.Year, dt.Month, abExpenses);
-                valF = sum.GetPrice("食費");
-                valO = sum.GetPrice("外食費");
-                valE = sum.GetPrice("電気代");
-                valG = sum.GetPrice("ガス代");
-                valW = sum.GetPrice("水道代");
+                var sums = abSummaries.Where(sum => sum.Predicate(dt));
+                var abSummary = (sums.Count() > 0) ? sums.First() : new AbSummary(dt, new List<AbExpense>());
 
-                gpF.add(valF);
-                gpO.add(valO);
-                gpE.add(valE);
-                gpG.add(valG);
-                gpW.add(valW);
+                valF = abSummary.GetPriceByType("食費"  );
+                valO = abSummary.GetPriceByType("外食費");
+                valE = abSummary.GetPriceByName("電気代");
+                valG = abSummary.GetPriceByName("ガス代");
+                valW = abSummary.GetPriceByName("水道代");
+
+                gdF.AddPoint(valF);
+                gdO.AddPoint(valO);
+                gdE.AddPoint(valE);
+                gdG.AddPoint(valG);
+                gdW.AddPoint(valW);
             }
 
-            abGraphPoints.Add(gpF);
-            abGraphPoints.Add(gpO);
-            abGraphPoints.Add(gpE);
-            abGraphPoints.Add(gpG);
-            abGraphPoints.Add(gpW);
+            AbGraphDatas.Add(gdF);
+            AbGraphDatas.Add(gdO);
+            AbGraphDatas.Add(gdE);
+            AbGraphDatas.Add(gdG);
+            AbGraphDatas.Add(gdW);
 
             foreach (int value in AbCommonConst.LINE_VALUES)
             {
@@ -75,17 +87,65 @@ namespace Abook
         /// <summary>
         /// グラフ描画
         /// </summary>
-        public void drawGraph(Graphics g)
+        public void DrawGraph(Graphics g)
         {
-            foreach (AbGraphLine gl in abGraphLines)
+            foreach (var gl in abGraphLines)
             {
-                gl.draw(g);
+                gl.DrawLine(g);
             }
 
-            foreach (AbGraphPoints gp in abGraphPoints)
+            foreach (var gp in AbGraphDatas)
             {
-                gp.draw(g);
+                gp.DrawData(g);
             }
+        }
+
+        /// <summary>
+        /// 表示月取得
+        /// </summary>
+        public string GetMonth(int prev)
+        {
+            return dtNow.AddMonths(prev).Month.ToString("00");
+        }
+
+        /// <summary>
+        /// グラフ表示月取得
+        /// </summary>
+        public override string ToString()
+        {
+            return string.Format("～{0}年{1:d2}月", dtNow.Year, dtNow.Month);
+        }
+
+        /// <summary>
+        /// 前年グラフ
+        /// </summary>
+        public void PrevYear()
+        {
+            SetGraphData(() => { dtNow = dtNow.AddYears(-1); });
+        }
+
+        /// <summary>
+        /// 前月グラフ
+        /// </summary>
+        public void PrevMonth()
+        {
+            SetGraphData(() => { dtNow = dtNow.AddMonths(-1); });
+        }
+
+        /// <summary>
+        /// 翌月グラフ
+        /// </summary>
+        public void NextMonth()
+        {
+            SetGraphData(() => { dtNow = dtNow.AddMonths(1); });
+        }
+
+        /// <summary>
+        /// 翌年グラフ
+        /// </summary>
+        public void NextYear()
+        {
+            SetGraphData(() => { dtNow = dtNow.AddYears(1); });
         }
     }
 }

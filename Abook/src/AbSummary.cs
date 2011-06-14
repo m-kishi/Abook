@@ -1,100 +1,130 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Abook
+﻿namespace Abook
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     /// <summary>
-    /// 月別集計値クラス
+    /// 集計値クラス
     /// </summary>
     public class AbSummary
     {
-        /// <summary>開始年月日</summary>
-        private DateTime dtStr;
+        /// <summary>集計年</summary>
+        private int year;
 
-        /// <summary>終了年月日</summary>
-        private DateTime dtEnd;
+        /// <summary>集計月</summary>
+        private int month;
 
         /// <summary>種別ごとの集計値</summary>
-        private Dictionary<string, int> dicSummary;
+        private Dictionary<string, int> dicSumByType;
+
+        /// <summary>名前ごとの集計値</summary>
+        private Dictionary<string, int> dicSumByName;
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public AbSummary(int y, int m, List<AbExpense> expenses)
+        public AbSummary(DateTime dtNow, IEnumerable<AbExpense> abExpenses)
         {
-            dicSummary = new Dictionary<string, int>();
-
-            dtStr = new DateTime(y, m, 1);
-            dtEnd = dtStr.AddMonths(1).AddDays(-1);
-
-            List<AbExpense> list = expenses.FindAll((exp) => {
-                return (dtStr <= exp.Date && exp.Date <= dtEnd);
-            });
-
-            foreach (AbExpense exp in list)
+            if (abExpenses == null)
             {
-                if (dicSummary.ContainsKey(exp.Type))
-                {
-                    dicSummary[exp.Type] += exp.Price;
-                }
-                else
-                {
-                    dicSummary.Add(exp.Type, exp.Price);
-                }
+                throw new ArgumentException("支出リストが指定されませんでした。");
+            }
+
+            year = dtNow.Year;
+            month = dtNow.Month;
+
+            dicSumByType = new Dictionary<string, int>();
+            dicSumByName = new Dictionary<string, int>();
+
+            SummaryByType(abExpenses);
+            SummaryByName(abExpenses);
+        }
+
+        /// <summary>
+        /// 種別ごとの集計
+        /// </summary>
+        private void SummaryByType(IEnumerable<AbExpense> abExpenses)
+        {
+            foreach (var gObj in abExpenses.GroupBy(exp => exp.Type))
+            {
+                dicSumByType.Add(gObj.Key, gObj.Sum(exp => exp.Price));
+            }
+            dicSumByType.Add("合計", abExpenses.Where(exp => exp.Type != "収入").Sum(exp => exp.Price));
+            dicSumByType.Add("残金", GetPriceByType("収入") - GetPriceByType("合計"));
+        }
+
+        /// <summary>
+        /// 名前ごとの集計
+        /// </summary>
+        private void SummaryByName(IEnumerable<AbExpense> abExpenses)
+        {
+            foreach (var gObj in abExpenses.GroupBy(exp => exp.Name))
+            {
+                dicSumByName.Add(gObj.Key, gObj.Sum(exp => exp.Price));
             }
         }
 
         /// <summary>
         /// 集計値取得
         /// </summary>
-        public int GetPrice(string type)
+        public int GetPriceByType(string type)
         {
-            if (dicSummary.ContainsKey(type))
-            {
-                return dicSummary[type];
-            }
-            else if (type == "合計")
-            {
-                int total = 0;
-                foreach (int v in dicSummary.Values)
-                {
-                    total += v;
-                }
-
-                if (dicSummary.ContainsKey("給料"))
-                {
-                    total -= dicSummary["給料"];
-                }
-
-                return total;
-            }
-            else if (type == "貯金")
-            {
-                int total = 0;
-                foreach (int v in dicSummary.Values)
-                {
-                    total += v;
-                }
-
-                if (dicSummary.ContainsKey("給料"))
-                {
-                    return dicSummary["給料"] * 2 - total;
-                }
-                else
-                {
-                    return -total;
-                }
-            }
-
-            return 0;
+            if (string.IsNullOrEmpty(type)) { return 0; }
+            return dicSumByType.ContainsKey(type) ? dicSumByType[type] : 0;
         }
 
         /// <summary>
-        /// 集計値アクセッサ
+        /// 集計値取得
         /// </summary>
-        public Dictionary<string, int> DicSummary
+        public int GetPriceByName(string name)
         {
-            get { return this.dicSummary; }
+            if (string.IsNullOrEmpty(name)) { return 0; }
+            return dicSumByName.ContainsKey(name) ? dicSumByName[name] : 0;
+        }
+
+        /// <summary>
+        /// 集計値抽出条件
+        /// </summary>
+        public bool Predicate(DateTime dt)
+        {
+            return (year == dt.Year && month == dt.Month);
+        }
+
+        /// <summary>
+        /// 集計値リスト生成
+        /// </summary>
+        public static List<AbSummary> GetSummaries(List<AbExpense> abExpenses)
+        {
+            if (abExpenses == null)
+            {
+                throw new ArgumentException("支出リストが指定されませんでした。");
+            }
+
+            DateTime dtStr;
+            DateTime dtEnd;
+            List<AbSummary> abSummaries = new List<AbSummary>();
+
+            var expGroups = abExpenses.GroupBy(exp =>
+                string.Format("{0}/{1:00}", exp.Date.Year, exp.Date.Month)
+            );
+
+            foreach (var span in expGroups.Select(gObj => gObj.Key))
+            {
+                dtStr = DateTime.Parse(string.Format("{0}/{1}", span, "01"));
+                dtEnd = dtStr.AddMonths(1).AddDays(-1);
+
+                abSummaries.Add(
+                    new AbSummary(
+                        dtStr,
+                        abExpenses.Where(exp =>
+                            dtStr <= exp.Date && exp.Date <= dtEnd
+                        )
+                    )
+                );
+            }
+
+            return abSummaries;
         }
     }
 }

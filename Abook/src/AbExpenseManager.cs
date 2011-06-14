@@ -1,124 +1,96 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Windows.Forms;
-using Microsoft.VisualBasic.FileIO;
-
-namespace Abook
+﻿namespace Abook
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     /// <summary>
     /// 支出データ管理クラス
     /// </summary>
     public class AbExpenseManager
     {
-        /// <summary>レコードセット</summary>
-        private List<AbExpense> abExpenses;
+        /// <summary>集計対象年月</summary>
+        private DateTime dtNow;
 
         /// <summary>集計値</summary>
         private AbSummary abSummary;
 
+        /// <summary>集計値リスト</summary>
+        private List<AbSummary> abSummaries;
+
         /// <summary>
-        /// コンストラクタ(DB ファイル読み込み)
+        /// コンストラクタ
         /// </summary>
-        public AbExpenseManager(string file, DateTime today)
+        public AbExpenseManager(DateTime dtToday, List<AbSummary> abSummaries)
         {
-            abExpenses = new List<AbExpense>();
-            if (System.IO.File.Exists(file) == false)
+            if (abSummaries == null)
             {
-                System.IO.File.Create(file).Close();
+                throw new ArgumentException("集計値リストが設定されませんでした。");
             }
 
-            using (TextFieldParser parser = new TextFieldParser(file))
-            {
-                parser.TextFieldType = FieldType.Delimited;
-                parser.SetDelimiters(",");
+            this.dtNow = dtToday;
+            this.abSummaries = abSummaries;
 
-                try
-                {
-                    string[] row;
-                    while (parser.EndOfData == false)
-                    {
-                        row = parser.ReadFields();
-                        abExpenses.Add(new AbExpense(row[0], row[1], row[2], row[3]));
-                    }
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
-            }
-
-            reload(today);
+            SetCurrentSummary(() => { });
         }
 
         /// <summary>
-        /// コンストラクタ(DataGridView 読み込み)
+        /// 集計値設定
         /// </summary>
-        public AbExpenseManager(DataGridView dgv)
+        private void SetCurrentSummary(Action DtChange)
         {
-            abExpenses = new List<AbExpense>();
-            foreach (DataGridViewRow row in dgv.Rows)
-            {
-                abExpenses.Add(
-                    new AbExpense(
-                        row.Cells["colDate" ].Value.ToString(),
-                        row.Cells["colName" ].Value.ToString(),
-                        row.Cells["colType" ].Value.ToString(),
-                        row.Cells["colPrice"].Value.ToString()
-                    )
-                );
-            }
+            DtChange();
+
+            var sums = abSummaries.Where(sum => sum.Predicate(dtNow));
+            abSummary = (sums.Count() > 0) ? sums.First() : new AbSummary(dtNow, new List<AbExpense>());
         }
 
         /// <summary>
         /// 集計値取得
         /// </summary>
-        public int GetPrice(string type)
+        public string GetPrice(string type)
         {
-            return abSummary.GetPrice(type);
+            return string.Format("{0:c}", abSummary.GetPriceByType(type));
         }
 
         /// <summary>
-        /// レコードセット書き出し
+        /// 前年集計
         /// </summary>
-        public void writeDB(string file)
+        public void PrevYear()
         {
-            using (StreamWriter sw = new StreamWriter(file))
-            {
-                try
-                {
-                    foreach (AbExpense exp in abExpenses)
-                    {
-                        sw.WriteLine(
-                            "{0},{1},{2},{3}",
-                            exp.Date.ToShortDateString(),
-                            exp.Name,
-                            exp.Type,
-                            exp.Price
-                        );
-                    }
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
-            }
+            SetCurrentSummary(() => { dtNow = dtNow.AddYears(-1); });
         }
 
         /// <summary>
-        /// 集計値の再読み込み
+        /// 前月集計
         /// </summary>
-        public void reload(DateTime newDay)
+        public void PrevMonth()
         {
-            abSummary = new AbSummary(newDay.Year, newDay.Month, abExpenses);
+            SetCurrentSummary(() => { dtNow = dtNow.AddMonths(-1); });
         }
 
         /// <summary>
-        /// レコードセットアクセッサ
+        /// 翌月集計
         /// </summary>
-        public List<AbExpense> AbExpenses
+        public void NextMonth()
         {
-            get { return this.abExpenses; }
+            SetCurrentSummary(() => { dtNow = dtNow.AddMonths(1); });
+        }
+
+        /// <summary>
+        /// 翌年集計
+        /// </summary>
+        public void NextYear()
+        {
+            SetCurrentSummary(() => { dtNow = dtNow.AddYears(1); });
+        }
+
+        /// <summary>
+        /// 集計対象年月取得
+        /// </summary>
+        public override string ToString()
+        {
+            return string.Format("{0}年{1:d2}月", dtNow.Year, dtNow.Month);
         }
     }
 }

@@ -2,3 +2,6 @@ Abook.suo
 Abook/*.user
 Abook/bin/
 Abook/obj/
+AbookTest/*.user
+AbookTest/bin/
+AbookTest/obj/
