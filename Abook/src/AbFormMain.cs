@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Drawing;
+    using System.Linq;
     using System.Windows.Forms;
 
     /// <summary>
@@ -20,6 +21,9 @@
 
         /// <summary>データ管理(グラフ用)</summary>
         private AbGraphManager abGraphManager;
+
+        /// <summary>データ管理(特別支出用)</summary>
+        private AbSpecialManager abSpecialManager;
 
         /// <summary>自動補完</summary>
         private AbComplement abComplement;
@@ -60,6 +64,8 @@
 
             abExpenseManager = new AbExpenseManager(DateTime.Now, abSummaries);
             abGraphManager = new AbGraphManager(DateTime.Now, abSummaries);
+
+            abSpecialManager = new AbSpecialManager(abExpenses);
         }
 
         /// <summary>
@@ -79,6 +85,10 @@
 
                 case 2: //グラフ
                     Invalidate();
+                    break;
+
+                case 3: //特別支出
+                    SetViewBalance();
                     break;
 
                 default:
@@ -412,6 +422,26 @@
             LblX3.Text    = abGraphManager.GetMonth(-6);
             LblX2.Text    = abGraphManager.GetMonth(-8);
             LblX1.Text    = abGraphManager.GetMonth(-10);
+        }
+
+        /// <summary>
+        /// 特別支出画面
+        /// </summary>
+        private void SetViewBalance()
+        {
+            DgvBalance.Rows.Clear();
+            DgvBalance.Rows.Add(abSpecialManager.GetEnumerator().Count());
+
+            int i = 0;
+            foreach (var spc in abSpecialManager.GetEnumerator())
+            {
+                DataGridViewRow row = DgvBalance.Rows[i++];
+                row.Cells["ColYear"].Value = spc.Year;
+                row.Cells["ColEarn"].Value = spc.Earn;
+                row.Cells["ColExpense"].Value = spc.Expense;
+                row.Cells["ColSpecial"].Value = spc.Special;
+                row.Cells["ColBalance"].Value = spc.Balance;
+            }
         }
     }
 }

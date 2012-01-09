@@ -50,7 +50,12 @@
             {
                 dicSumByType.Add(gObj.Key, gObj.Sum(exp => exp.Price));
             }
-            dicSumByType.Add("合計", abExpenses.Where(exp => exp.Type != "収入").Sum(exp => exp.Price));
+            dicSumByType.Add(
+                "合計",
+                abExpenses.Where(exp =>
+                    exp.Type != "収入" && exp.Type != "特出"
+                ).Sum(exp => exp.Price)
+            );
             dicSumByType.Add("残金", GetPriceByType("収入") - GetPriceByType("合計"));
         }
 

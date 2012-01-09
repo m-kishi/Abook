@@ -71,6 +71,8 @@
     <Compile Include="src\AbGraphLine.cs" />
     <Compile Include="src\AbGraphManager.cs" />
     <Compile Include="src\AbMain.cs" />
+    <Compile Include="src\AbSpecial.cs" />
+    <Compile Include="src\AbSpecialManager.cs" />
     <Compile Include="src\AbSummary.cs" />
   </ItemGroup>
 </Project>

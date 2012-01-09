@@ -60,6 +60,8 @@
     <Compile Include="unit\AbTestGraphData.cs" />
     <Compile Include="unit\AbTestGraphLine.cs" />
     <Compile Include="unit\AbTestGraphManager.cs" />
+    <Compile Include="unit\AbTestSpecial.cs" />
+    <Compile Include="unit\AbTestSpecialManager.cs" />
     <Compile Include="unit\AbTestSummary.cs" />
   </ItemGroup>
   <ItemGroup>

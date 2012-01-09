@@ -28,10 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             this.MenuStrip = new System.Windows.Forms.MenuStrip();
             this.MenuFile = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuExit = new System.Windows.Forms.ToolStripMenuItem();
@@ -107,6 +112,13 @@
             this.LblGraph = new System.Windows.Forms.Label();
             this.BtnGraphPrevMonth = new System.Windows.Forms.Button();
             this.BtnGraphPrevYear = new System.Windows.Forms.Button();
+            this.TabBalance = new System.Windows.Forms.TabPage();
+            this.DgvBalance = new System.Windows.Forms.DataGridView();
+            this.ColYear = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColEarn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColExpense = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColSpecial = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColBalance = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MenuStrip.SuspendLayout();
             this.TabControl.SuspendLayout();
             this.TabExpense.SuspendLayout();
@@ -114,6 +126,8 @@
             this.TabSummary.SuspendLayout();
             this.TabGraph.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PboxGraph)).BeginInit();
+            this.TabBalance.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvBalance)).BeginInit();
             this.SuspendLayout();
             // 
             // MenuStrip
@@ -161,6 +175,7 @@
             this.TabControl.Controls.Add(this.TabExpense);
             this.TabControl.Controls.Add(this.TabSummary);
             this.TabControl.Controls.Add(this.TabGraph);
+            this.TabControl.Controls.Add(this.TabBalance);
             this.TabControl.Location = new System.Drawing.Point(0, 27);
             this.TabControl.Name = "TabControl";
             this.TabControl.SelectedIndex = 0;
@@ -214,8 +229,8 @@
             // 
             // colDate
             // 
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            this.colDate.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            this.colDate.DefaultCellStyle = dataGridViewCellStyle1;
             this.colDate.HeaderText = "日付";
             this.colDate.Name = "colDate";
             this.colDate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -223,17 +238,17 @@
             // 
             // colName
             // 
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.NullValue = null;
-            this.colName.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.NullValue = null;
+            this.colName.DefaultCellStyle = dataGridViewCellStyle2;
             this.colName.HeaderText = "名前";
             this.colName.Name = "colName";
             this.colName.Width = 120;
             // 
             // colType
             // 
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.colType.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.colType.DefaultCellStyle = dataGridViewCellStyle3;
             this.colType.HeaderText = "種別";
             this.colType.Name = "colType";
             this.colType.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -242,10 +257,10 @@
             // 
             // colPrice
             // 
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle8.Format = "N0";
-            dataGridViewCellStyle8.NullValue = null;
-            this.colPrice.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle4.Format = "N0";
+            dataGridViewCellStyle4.NullValue = null;
+            this.colPrice.DefaultCellStyle = dataGridViewCellStyle4;
             this.colPrice.HeaderText = "金額";
             this.colPrice.Name = "colPrice";
             this.colPrice.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -950,6 +965,110 @@
             this.BtnGraphPrevYear.UseVisualStyleBackColor = true;
             this.BtnGraphPrevYear.Click += new System.EventHandler(this.BtnGraphPrevYear_Click);
             // 
+            // TabBalance
+            // 
+            this.TabBalance.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.TabBalance.Controls.Add(this.DgvBalance);
+            this.TabBalance.Location = new System.Drawing.Point(4, 21);
+            this.TabBalance.Name = "TabBalance";
+            this.TabBalance.Padding = new System.Windows.Forms.Padding(3);
+            this.TabBalance.Size = new System.Drawing.Size(408, 291);
+            this.TabBalance.TabIndex = 3;
+            this.TabBalance.Text = "特別支出";
+            this.TabBalance.UseVisualStyleBackColor = true;
+            // 
+            // DgvBalance
+            // 
+            this.DgvBalance.AllowUserToAddRows = false;
+            this.DgvBalance.AllowUserToDeleteRows = false;
+            this.DgvBalance.AllowUserToResizeColumns = false;
+            this.DgvBalance.AllowUserToResizeRows = false;
+            this.DgvBalance.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DgvBalance.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ColYear,
+            this.ColEarn,
+            this.ColExpense,
+            this.ColSpecial,
+            this.ColBalance});
+            this.DgvBalance.Location = new System.Drawing.Point(6, 6);
+            this.DgvBalance.MultiSelect = false;
+            this.DgvBalance.Name = "DgvBalance";
+            this.DgvBalance.ReadOnly = true;
+            this.DgvBalance.RowHeadersWidth = 24;
+            this.DgvBalance.RowTemplate.Height = 21;
+            this.DgvBalance.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.DgvBalance.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.DgvBalance.Size = new System.Drawing.Size(392, 275);
+            this.DgvBalance.TabIndex = 64;
+            // 
+            // ColYear
+            // 
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.ColYear.DefaultCellStyle = dataGridViewCellStyle5;
+            this.ColYear.Frozen = true;
+            this.ColYear.HeaderText = "年度";
+            this.ColYear.Name = "ColYear";
+            this.ColYear.ReadOnly = true;
+            this.ColYear.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ColYear.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ColYear.Width = 45;
+            // 
+            // ColEarn
+            // 
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle6.Format = "C0";
+            dataGridViewCellStyle6.NullValue = null;
+            this.ColEarn.DefaultCellStyle = dataGridViewCellStyle6;
+            this.ColEarn.Frozen = true;
+            this.ColEarn.HeaderText = "収入";
+            this.ColEarn.Name = "ColEarn";
+            this.ColEarn.ReadOnly = true;
+            this.ColEarn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ColEarn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ColEarn.Width = 75;
+            // 
+            // ColExpense
+            // 
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle7.Format = "C0";
+            dataGridViewCellStyle7.NullValue = null;
+            this.ColExpense.DefaultCellStyle = dataGridViewCellStyle7;
+            this.ColExpense.Frozen = true;
+            this.ColExpense.HeaderText = "支出";
+            this.ColExpense.Name = "ColExpense";
+            this.ColExpense.ReadOnly = true;
+            this.ColExpense.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ColExpense.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ColExpense.Width = 75;
+            // 
+            // ColSpecial
+            // 
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle8.Format = "C0";
+            dataGridViewCellStyle8.NullValue = null;
+            this.ColSpecial.DefaultCellStyle = dataGridViewCellStyle8;
+            this.ColSpecial.Frozen = true;
+            this.ColSpecial.HeaderText = "特出";
+            this.ColSpecial.Name = "ColSpecial";
+            this.ColSpecial.ReadOnly = true;
+            this.ColSpecial.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ColSpecial.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ColSpecial.Width = 75;
+            // 
+            // ColBalance
+            // 
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle9.Format = "C0";
+            dataGridViewCellStyle9.NullValue = null;
+            this.ColBalance.DefaultCellStyle = dataGridViewCellStyle9;
+            this.ColBalance.Frozen = true;
+            this.ColBalance.HeaderText = "残金";
+            this.ColBalance.Name = "ColBalance";
+            this.ColBalance.ReadOnly = true;
+            this.ColBalance.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ColBalance.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ColBalance.Width = 75;
+            // 
             // AbFormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -974,6 +1093,8 @@
             this.TabGraph.ResumeLayout(false);
             this.TabGraph.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PboxGraph)).EndInit();
+            this.TabBalance.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.DgvBalance)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1056,5 +1177,12 @@
         private System.Windows.Forms.Label LblLineYellow;
         private System.Windows.Forms.Label LblLineOrange;
         private System.Windows.Forms.Label LblLineRed;
+        private System.Windows.Forms.TabPage TabBalance;
+        private System.Windows.Forms.DataGridView DgvBalance;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColYear;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColEarn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColExpense;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColSpecial;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColBalance;
     }
 }
