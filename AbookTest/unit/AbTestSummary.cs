@@ -1,417 +1,493 @@
-﻿namespace Abook
+﻿namespace AbookTest
 {
+    using Abook;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using NUnit.Framework;
+    using EX   = Abook.AbException.EX;
+    using NAME = Abook.AbConstants.NAME;
+    using TYPE = Abook.AbConstants.TYPE;
 
+    /// <summary>
+    /// 集計値テスト
+    /// </summary>
     [TestFixture]
     public class AbTestSummary
     {
-        private DateTime argDtNow;
-        private List<AbExpense> argAbExpenses;
-
+        /// <summary>引数:日付</summary>
+        private DateTime argDate;
+        /// <summary>引数:支出レコードリスト</summary>
+        private List<AbExpense> argExpenses;
+        /// <summary>対象:集計値</summary>
         private AbSummary abSummary;
+
+        [SetUp]
+        public void SetUp()
+        {
+            argDate = new DateTime(2011, 3, 15);
+            argExpenses = GenerateExpenses();
+            abSummary = new AbSummary(argDate, argExpenses);
+        }
+
+        /// <summary>
+        /// 支出レコードリスト生成
+        /// </summary>
+        /// <returns>支出レコードリスト</returns>
+        private List<AbExpense> GenerateExpenses()
+        {
+            var expenses = new List<AbExpense>();
+            expenses.Add(new AbExpense("2011-03-01", "FOOD", TYPE.FOOD, "100"));
+            expenses.Add(new AbExpense("2011-03-02", "FOOD", TYPE.FOOD, "110"));
+            expenses.Add(new AbExpense("2011-03-03", "OTFD", TYPE.OTFD, "200"));
+            expenses.Add(new AbExpense("2011-03-04", "OTFD", TYPE.OTFD, "210"));
+            expenses.Add(new AbExpense("2011-03-05", "GOOD", TYPE.GOOD, "300"));
+            expenses.Add(new AbExpense("2011-03-06", "GOOD", TYPE.GOOD, "310"));
+            expenses.Add(new AbExpense("2011-03-07", "FRND", TYPE.FRND, "400"));
+            expenses.Add(new AbExpense("2011-03-08", "FRND", TYPE.FRND, "410"));
+            expenses.Add(new AbExpense("2011-03-09", "TRFC", TYPE.TRFC, "500"));
+            expenses.Add(new AbExpense("2011-03-10", "TRFC", TYPE.TRFC, "510"));
+            expenses.Add(new AbExpense("2011-03-11", "PLAY", TYPE.PLAY, "600"));
+            expenses.Add(new AbExpense("2011-03-12", "PLAY", TYPE.PLAY, "610"));
+            expenses.Add(new AbExpense("2011-03-13", "HOUS", TYPE.HOUS, "700"));
+            expenses.Add(new AbExpense("2011-03-14", "HOUS", TYPE.HOUS, "710"));
+            expenses.Add(new AbExpense("2011-03-15", NAME.EL, TYPE.ENGY, "800"));
+            expenses.Add(new AbExpense("2011-03-16", NAME.EL, TYPE.ENGY, "810"));
+            expenses.Add(new AbExpense("2011-03-17", NAME.GS, TYPE.ENGY, "820"));
+            expenses.Add(new AbExpense("2011-03-18", NAME.GS, TYPE.ENGY, "830"));
+            expenses.Add(new AbExpense("2011-03-19", NAME.WT, TYPE.ENGY, "840"));
+            expenses.Add(new AbExpense("2011-03-20", NAME.WT, TYPE.ENGY, "850"));
+            expenses.Add(new AbExpense("2011-03-21", "CNCT", TYPE.CNCT, "900"));
+            expenses.Add(new AbExpense("2011-03-22", "CNCT", TYPE.CNCT, "910"));
+            expenses.Add(new AbExpense("2011-03-23", "MEDI", TYPE.MEDI, "1000"));
+            expenses.Add(new AbExpense("2011-03-24", "MEDI", TYPE.MEDI, "1100"));
+            expenses.Add(new AbExpense("2011-03-25", "INSU", TYPE.INSU, "2000"));
+            expenses.Add(new AbExpense("2011-03-26", "INSU", TYPE.INSU, "2100"));
+            expenses.Add(new AbExpense("2011-03-27", "OTHR", TYPE.OTHR, "3000"));
+            expenses.Add(new AbExpense("2011-03-28", "OTHR", TYPE.OTHR, "3100"));
+            expenses.Add(new AbExpense("2011-03-29", "EARN", TYPE.EARN, "100000"));
+            expenses.Add(new AbExpense("2011-03-30", "EARN", TYPE.EARN, "110000"));
+            expenses.Add(new AbExpense("2011-03-31", "SPCL", TYPE.SPCL, "20000"));
+            expenses.Add(new AbExpense("2011-03-31", "SPCL", TYPE.SPCL, "21000"));
+            return expenses;
+        }
+
+        /// <summary>
+        /// コンストラクタ
+        /// 集計年のテスト
+        /// </summary>
+        [Test]
+        public void AbSummaryWithYear()
+        {
+            Assert.AreEqual(argDate.Year, abSummary.Year);
+        }
+
+        /// <summary>
+        /// コンストラクタ
+        /// 集計月のテスト
+        /// </summary>
+        [Test]
+        public void AbSummaryWithMonth()
+        {
+            Assert.AreEqual(argDate.Month, abSummary.Month);
+        }
+
+        /// <summary>
+        /// コンストラクタ
+        /// 引数:支出レコードリストが NULL
+        /// </summary>
+        [Test]
+        public void AbSummaryWithNullExpenses()
+        {
+            argExpenses = null;
+            var ex = Assert.Throws<AbException>(() =>
+                { new AbSummary(argDate, argExpenses); }
+            );
+            Assert.AreEqual(EX.EXPENSES_NULL, ex.Message);
+        }
+
+        /// <summary>
+        /// 集計値取得
+        /// 引数:種別が NULL
+        /// </summary>
+        [Test]
+        public void GetCostByTypeWithNullType()
+        {
+            Assert.AreEqual(0, abSummary.GetCostByType(null));
+        }
+
+        /// <summary>
+        /// 集計値取得
+        /// 引数:種別が空文字列
+        /// </summary>
+        [Test]
+        public void GetCostByTypeWithEmptyType()
+        {
+            Assert.AreEqual(0, abSummary.GetCostByType(string.Empty));
+        }
+
+        /// <summary>
+        /// 集計値取得
+        /// 支出レコードリストが空リスト
+        /// </summary>
+        [Test]
+        public void GetCostByTypeWithEmptyExpenses()
+        {
+            argExpenses = new List<AbExpense>();
+            abSummary = new AbSummary(argDate, argExpenses);
+
+            Assert.AreEqual(argDate.Year, abSummary.Year);
+            Assert.AreEqual(argDate.Month, abSummary.Month);
+            Assert.AreEqual(0, abSummary.GetCostByType(TYPE.FOOD));
+            Assert.AreEqual(0, abSummary.GetCostByType(TYPE.OTFD));
+            Assert.AreEqual(0, abSummary.GetCostByType(TYPE.GOOD));
+            Assert.AreEqual(0, abSummary.GetCostByType(TYPE.FRND));
+            Assert.AreEqual(0, abSummary.GetCostByType(TYPE.TRFC));
+            Assert.AreEqual(0, abSummary.GetCostByType(TYPE.PLAY));
+            Assert.AreEqual(0, abSummary.GetCostByType(TYPE.HOUS));
+            Assert.AreEqual(0, abSummary.GetCostByType(TYPE.ENGY));
+            Assert.AreEqual(0, abSummary.GetCostByType(TYPE.CNCT));
+            Assert.AreEqual(0, abSummary.GetCostByType(TYPE.MEDI));
+            Assert.AreEqual(0, abSummary.GetCostByType(TYPE.INSU));
+            Assert.AreEqual(0, abSummary.GetCostByType(TYPE.OTHR));
+            Assert.AreEqual(0, abSummary.GetCostByType(TYPE.TTAL));
+            Assert.AreEqual(0, abSummary.GetCostByType(TYPE.EARN));
+            Assert.AreEqual(0, abSummary.GetCostByType(TYPE.BLNC));
+            Assert.AreEqual(0, abSummary.GetCostByType(TYPE.SPCL));
+            Assert.AreEqual(0, abSummary.GetCostByType("not match"));
+        }
+
+        /// <summary>
+        /// 集計値取得
+        /// </summary>
+        [Test]
+        public void GetCostByTypeWithExpenses()
+        {
+            Assert.AreEqual(argDate.Year, abSummary.Year);
+            Assert.AreEqual(argDate.Month, abSummary.Month);
+            Assert.AreEqual(   210, abSummary.GetCostByType(TYPE.FOOD));
+            Assert.AreEqual(   410, abSummary.GetCostByType(TYPE.OTFD));
+            Assert.AreEqual(   610, abSummary.GetCostByType(TYPE.GOOD));
+            Assert.AreEqual(   810, abSummary.GetCostByType(TYPE.FRND));
+            Assert.AreEqual(  1010, abSummary.GetCostByType(TYPE.TRFC));
+            Assert.AreEqual(  1210, abSummary.GetCostByType(TYPE.PLAY));
+            Assert.AreEqual(  1410, abSummary.GetCostByType(TYPE.HOUS));
+            Assert.AreEqual(  4950, abSummary.GetCostByType(TYPE.ENGY));
+            Assert.AreEqual(  1810, abSummary.GetCostByType(TYPE.CNCT));
+            Assert.AreEqual(  2100, abSummary.GetCostByType(TYPE.MEDI));
+            Assert.AreEqual(  4100, abSummary.GetCostByType(TYPE.INSU));
+            Assert.AreEqual(  6100, abSummary.GetCostByType(TYPE.OTHR));
+            Assert.AreEqual( 24730, abSummary.GetCostByType(TYPE.TTAL));
+            Assert.AreEqual(210000, abSummary.GetCostByType(TYPE.EARN));
+            Assert.AreEqual(185270, abSummary.GetCostByType(TYPE.BLNC));
+            Assert.AreEqual( 41000, abSummary.GetCostByType(TYPE.SPCL));
+            Assert.AreEqual(     0, abSummary.GetCostByType("not match"));
+        }
+
+        /// <summary>
+        /// 集計値取得
+        /// 引数:名称が NULL
+        /// </summary>
+        [Test]
+        public void GetCostByNameWithNullName()
+        {
+            Assert.AreEqual(0, abSummary.GetCostByName(null));
+        }
+
+        /// <summary>
+        /// 集計値取得
+        /// 引数:名称が空文字列
+        /// </summary>
+        [Test]
+        public void GetCostByNameWithEmptyName()
+        {
+            Assert.AreEqual(0, abSummary.GetCostByName(string.Empty));
+        }
+
+        /// <summary>
+        /// 集計値取得
+        /// 支出レコードリストが空リスト
+        /// </summary>
+        [Test]
+        public void GetCostByNameWithEmptyExpenses()
+        {
+            argExpenses = new List<AbExpense>();
+            abSummary = new AbSummary(argDate, argExpenses);
+
+            Assert.AreEqual(argDate.Year, abSummary.Year);
+            Assert.AreEqual(argDate.Month, abSummary.Month);
+            Assert.AreEqual(0, abSummary.GetCostByName("FOOD"));
+            Assert.AreEqual(0, abSummary.GetCostByName("OTFD"));
+            Assert.AreEqual(0, abSummary.GetCostByName("GOOD"));
+            Assert.AreEqual(0, abSummary.GetCostByName("FRND"));
+            Assert.AreEqual(0, abSummary.GetCostByName("TRFC"));
+            Assert.AreEqual(0, abSummary.GetCostByName("PLAY"));
+            Assert.AreEqual(0, abSummary.GetCostByName("HOUS"));
+            Assert.AreEqual(0, abSummary.GetCostByName(NAME.EL));
+            Assert.AreEqual(0, abSummary.GetCostByName(NAME.GS));
+            Assert.AreEqual(0, abSummary.GetCostByName(NAME.WT));
+            Assert.AreEqual(0, abSummary.GetCostByName("CNCT"));
+            Assert.AreEqual(0, abSummary.GetCostByName("MEDI"));
+            Assert.AreEqual(0, abSummary.GetCostByName("INSU"));
+            Assert.AreEqual(0, abSummary.GetCostByName("OTHR"));
+            Assert.AreEqual(0, abSummary.GetCostByName("EARN"));
+            Assert.AreEqual(0, abSummary.GetCostByName("SPCL"));
+            Assert.AreEqual(0, abSummary.GetCostByName("not match"));
+        }
+
+        /// <summary>
+        /// 集計値取得
+        /// </summary>
+        [Test]
+        public void GetCostByNameWithExpenses()
+        {
+            Assert.AreEqual(argDate.Year, abSummary.Year);
+            Assert.AreEqual(argDate.Month, abSummary.Month);
+            Assert.AreEqual(   0, abSummary.GetCostByName("FOOD"));
+            Assert.AreEqual(   0, abSummary.GetCostByName("OTFD"));
+            Assert.AreEqual(   0, abSummary.GetCostByName("GOOD"));
+            Assert.AreEqual(   0, abSummary.GetCostByName("FRND"));
+            Assert.AreEqual(   0, abSummary.GetCostByName("TRFC"));
+            Assert.AreEqual(   0, abSummary.GetCostByName("PLAY"));
+            Assert.AreEqual(   0, abSummary.GetCostByName("HOUS"));
+            Assert.AreEqual(1610, abSummary.GetCostByName(NAME.EL));
+            Assert.AreEqual(1650, abSummary.GetCostByName(NAME.GS));
+            Assert.AreEqual(1690, abSummary.GetCostByName(NAME.WT));
+            Assert.AreEqual(   0, abSummary.GetCostByName("CNCT"));
+            Assert.AreEqual(   0, abSummary.GetCostByName("MEDI"));
+            Assert.AreEqual(   0, abSummary.GetCostByName("INSU"));
+            Assert.AreEqual(   0, abSummary.GetCostByName("OTHR"));
+            Assert.AreEqual(   0, abSummary.GetCostByName("EARN"));
+            Assert.AreEqual(   0, abSummary.GetCostByName("SPCL"));
+            Assert.AreEqual(   0, abSummary.GetCostByName("not match"));
+        }
+    }
+
+    /// <summary>
+    /// 集計値テスト
+    /// </summary>
+    [TestFixture]
+    public class AbTestStaticSummary
+    {
+        /// <summary>引数:支出レコードリスト</summary>
+        private List<AbExpense> argExpenses;
+        /// <summary>対象:集計値リスト</summary>
         private List<AbSummary> abSummaries;
 
         [SetUp]
         public void SetUp()
         {
-            argDtNow = new DateTime(2011, 3, 15);
-            argAbExpenses = AbDBManager.LoadFromFile("In_AbSummaryTest.db");
-
-            abSummary = new AbSummary(argDtNow, argAbExpenses);
-            abSummaries = AbSummary.GetSummaries(argAbExpenses);
+            argExpenses = GenerateExpenses();
+            abSummaries = AbSummary.GetSummaries(argExpenses);
         }
 
-        [Test]
-        public void AbSummaryWithNullExpenses()
+        /// <summary>
+        /// 支出レコードリスト生成
+        /// </summary>
+        /// <returns>支出レコードリスト</returns>
+        private List<AbExpense> GenerateExpenses()
         {
-            argAbExpenses = null;
-            Assert.Throws(
-                typeof(ArgumentException),
-                () => { new AbSummary(argDtNow, argAbExpenses); }
-            );
+            var expenses = new List<AbExpense>();
+            expenses.Add(new AbExpense("2011-03-01", "FOOD", TYPE.FOOD, "100"));
+            expenses.Add(new AbExpense("2011-03-02", "FOOD", TYPE.FOOD, "110"));
+            expenses.Add(new AbExpense("2011-03-03", "OTFD", TYPE.OTFD, "200"));
+            expenses.Add(new AbExpense("2011-03-04", "OTFD", TYPE.OTFD, "210"));
+            expenses.Add(new AbExpense("2011-03-05", "GOOD", TYPE.GOOD, "300"));
+            expenses.Add(new AbExpense("2011-03-06", "GOOD", TYPE.GOOD, "310"));
+            expenses.Add(new AbExpense("2011-03-07", "FRND", TYPE.FRND, "400"));
+            expenses.Add(new AbExpense("2011-03-08", "FRND", TYPE.FRND, "410"));
+            expenses.Add(new AbExpense("2011-03-09", "TRFC", TYPE.TRFC, "500"));
+            expenses.Add(new AbExpense("2011-03-10", "TRFC", TYPE.TRFC, "510"));
+            expenses.Add(new AbExpense("2011-03-11", "PLAY", TYPE.PLAY, "600"));
+            expenses.Add(new AbExpense("2011-03-12", "PLAY", TYPE.PLAY, "610"));
+            expenses.Add(new AbExpense("2011-03-13", "HOUS", TYPE.HOUS, "700"));
+            expenses.Add(new AbExpense("2011-03-14", "HOUS", TYPE.HOUS, "710"));
+            expenses.Add(new AbExpense("2011-03-15", NAME.EL, TYPE.ENGY, "800"));
+            expenses.Add(new AbExpense("2011-03-16", NAME.EL, TYPE.ENGY, "810"));
+            expenses.Add(new AbExpense("2011-03-17", NAME.GS, TYPE.ENGY, "820"));
+            expenses.Add(new AbExpense("2011-03-18", NAME.GS, TYPE.ENGY, "830"));
+            expenses.Add(new AbExpense("2011-03-19", NAME.WT, TYPE.ENGY, "840"));
+            expenses.Add(new AbExpense("2011-03-20", NAME.WT, TYPE.ENGY, "850"));
+            expenses.Add(new AbExpense("2011-03-21", "CNCT", TYPE.CNCT, "900"));
+            expenses.Add(new AbExpense("2011-03-22", "CNCT", TYPE.CNCT, "910"));
+            expenses.Add(new AbExpense("2011-03-23", "MEDI", TYPE.MEDI, "1000"));
+            expenses.Add(new AbExpense("2011-03-24", "MEDI", TYPE.MEDI, "1100"));
+            expenses.Add(new AbExpense("2011-03-25", "INSU", TYPE.INSU, "2000"));
+            expenses.Add(new AbExpense("2011-03-26", "INSU", TYPE.INSU, "2100"));
+            expenses.Add(new AbExpense("2011-03-27", "OTHR", TYPE.OTHR, "3000"));
+            expenses.Add(new AbExpense("2011-03-28", "OTHR", TYPE.OTHR, "3100"));
+            expenses.Add(new AbExpense("2011-03-29", "EARN", TYPE.EARN, "100000"));
+            expenses.Add(new AbExpense("2011-03-30", "EARN", TYPE.EARN, "110000"));
+            expenses.Add(new AbExpense("2011-03-31", "SPCL", TYPE.SPCL, "20000"));
+            expenses.Add(new AbExpense("2011-03-31", "SPCL", TYPE.SPCL, "21000"));
+            expenses.Add(new AbExpense("2011-04-01", "FOOD", TYPE.FOOD, "200"));
+            expenses.Add(new AbExpense("2011-04-02", "FOOD", TYPE.FOOD, "210"));
+            expenses.Add(new AbExpense("2011-04-03", "OTFD", TYPE.OTFD, "400"));
+            expenses.Add(new AbExpense("2011-04-04", "OTFD", TYPE.OTFD, "410"));
+            expenses.Add(new AbExpense("2011-04-05", "GOOD", TYPE.GOOD, "500"));
+            expenses.Add(new AbExpense("2011-04-06", "GOOD", TYPE.GOOD, "510"));
+            expenses.Add(new AbExpense("2011-04-07", "FRND", TYPE.FRND, "600"));
+            expenses.Add(new AbExpense("2011-04-08", "FRND", TYPE.FRND, "610"));
+            expenses.Add(new AbExpense("2011-04-09", "TRFC", TYPE.TRFC, "1000"));
+            expenses.Add(new AbExpense("2011-04-10", "TRFC", TYPE.TRFC, "1010"));
+            expenses.Add(new AbExpense("2011-04-11", "PLAY", TYPE.PLAY, "1200"));
+            expenses.Add(new AbExpense("2011-04-12", "PLAY", TYPE.PLAY, "1210"));
+            expenses.Add(new AbExpense("2011-04-13", "HOUS", TYPE.HOUS, "1400"));
+            expenses.Add(new AbExpense("2011-04-14", "HOUS", TYPE.HOUS, "1410"));
+            expenses.Add(new AbExpense("2011-04-15", NAME.EL, TYPE.ENGY, "1600"));
+            expenses.Add(new AbExpense("2011-04-16", NAME.EL, TYPE.ENGY, "1610"));
+            expenses.Add(new AbExpense("2011-04-17", NAME.GS, TYPE.ENGY, "1620"));
+            expenses.Add(new AbExpense("2011-04-18", NAME.GS, TYPE.ENGY, "1630"));
+            expenses.Add(new AbExpense("2011-04-19", NAME.WT, TYPE.ENGY, "1640"));
+            expenses.Add(new AbExpense("2011-04-20", NAME.WT, TYPE.ENGY, "1650"));
+            expenses.Add(new AbExpense("2011-04-21", "CNCT", TYPE.CNCT, "1800"));
+            expenses.Add(new AbExpense("2011-04-22", "CNCT", TYPE.CNCT, "1810"));
+            expenses.Add(new AbExpense("2011-04-23", "MEDI", TYPE.MEDI, "2000"));
+            expenses.Add(new AbExpense("2011-04-24", "MEDI", TYPE.MEDI, "2100"));
+            expenses.Add(new AbExpense("2011-04-25", "INSU", TYPE.INSU, "4000"));
+            expenses.Add(new AbExpense("2011-04-26", "INSU", TYPE.INSU, "4100"));
+            expenses.Add(new AbExpense("2011-04-27", "OTHR", TYPE.OTHR, "6000"));
+            expenses.Add(new AbExpense("2011-04-28", "OTHR", TYPE.OTHR, "6100"));
+            expenses.Add(new AbExpense("2011-04-29", "EARN", TYPE.EARN, "200000"));
+            expenses.Add(new AbExpense("2011-04-30", "EARN", TYPE.EARN, "210000"));
+            expenses.Add(new AbExpense("2011-04-30", "SPCL", TYPE.SPCL, "40000"));
+            expenses.Add(new AbExpense("2011-04-30", "SPCL", TYPE.SPCL, "41000"));
+            return expenses;
         }
 
-        [Test]
-        public void GetPriceByTypeWithNullType()
-        {
-            Assert.AreEqual(0, abSummary.GetPriceByType(null));
-        }
-
-        [Test]
-        public void GetPriceByTypeWithEmptyType()
-        {
-            Assert.AreEqual(0, abSummary.GetPriceByType(string.Empty));
-        }
-
-        [Test]
-        public void GetPriceByTypeWithEmptyExpenses()
-        {
-            argAbExpenses = new List<AbExpense>();
-            abSummary = new AbSummary(argDtNow, argAbExpenses);
-
-            Assert.AreEqual(0, abSummary.GetPriceByType("食費"  ));
-            Assert.AreEqual(0, abSummary.GetPriceByType("外食費"));
-            Assert.AreEqual(0, abSummary.GetPriceByType("雑貨"  ));
-            Assert.AreEqual(0, abSummary.GetPriceByType("交際費"));
-            Assert.AreEqual(0, abSummary.GetPriceByType("交通費"));
-            Assert.AreEqual(0, abSummary.GetPriceByType("遊行費"));
-            Assert.AreEqual(0, abSummary.GetPriceByType("家賃"  ));
-            Assert.AreEqual(0, abSummary.GetPriceByType("光熱費"));
-            Assert.AreEqual(0, abSummary.GetPriceByType("通信費"));
-            Assert.AreEqual(0, abSummary.GetPriceByType("医療費"));
-            Assert.AreEqual(0, abSummary.GetPriceByType("保険料"));
-            Assert.AreEqual(0, abSummary.GetPriceByType("その他"));
-            Assert.AreEqual(0, abSummary.GetPriceByType("合計"  ));
-            Assert.AreEqual(0, abSummary.GetPriceByType("収入"  ));
-            Assert.AreEqual(0, abSummary.GetPriceByType("残金"  ));
-            Assert.AreEqual(0, abSummary.GetPriceByType("not match"));
-        }
-
-        [Test]
-        public void GetPriceByTypeWithOutOfHead()
-        {
-            argDtNow = new DateTime(2011, 1, 31);
-            abSummary = new AbSummary(
-                argDtNow,
-                argAbExpenses.Where(exp =>
-                    new DateTime(2011, 1, 1) <= exp.Date && exp.Date <= new DateTime(2011, 1, 31)
-                )
-            );
-
-            Assert.AreEqual(0, abSummary.GetPriceByType("食費"  ));
-            Assert.AreEqual(0, abSummary.GetPriceByType("外食費"));
-            Assert.AreEqual(0, abSummary.GetPriceByType("雑貨"  ));
-            Assert.AreEqual(0, abSummary.GetPriceByType("交際費"));
-            Assert.AreEqual(0, abSummary.GetPriceByType("交通費"));
-            Assert.AreEqual(0, abSummary.GetPriceByType("遊行費"));
-            Assert.AreEqual(0, abSummary.GetPriceByType("家賃"  ));
-            Assert.AreEqual(0, abSummary.GetPriceByType("光熱費"));
-            Assert.AreEqual(0, abSummary.GetPriceByType("通信費"));
-            Assert.AreEqual(0, abSummary.GetPriceByType("医療費"));
-            Assert.AreEqual(0, abSummary.GetPriceByType("保険料"));
-            Assert.AreEqual(0, abSummary.GetPriceByType("その他"));
-            Assert.AreEqual(0, abSummary.GetPriceByType("合計"  ));
-            Assert.AreEqual(0, abSummary.GetPriceByType("収入"  ));
-            Assert.AreEqual(0, abSummary.GetPriceByType("残金"  ));
-            Assert.AreEqual(0, abSummary.GetPriceByType("not match"));
-        }
-
-        [Test]
-        public void GetPriceByTypeWithInHead()
-        {
-            argDtNow = new DateTime(2011, 2, 20);
-            abSummary = new AbSummary(
-                argDtNow,
-                argAbExpenses.Where(exp =>
-                    new DateTime(2011, 2, 1) <= exp.Date && exp.Date <= new DateTime(2011, 2, 28)
-                )
-            );
-
-            Assert.AreEqual(  7304, abSummary.GetPriceByType("食費"  ));
-            Assert.AreEqual(  6684, abSummary.GetPriceByType("外食費"));
-            Assert.AreEqual(   598, abSummary.GetPriceByType("雑貨"  ));
-            Assert.AreEqual(  3000, abSummary.GetPriceByType("交際費"));
-            Assert.AreEqual(  2500, abSummary.GetPriceByType("交通費"));
-            Assert.AreEqual(     0, abSummary.GetPriceByType("遊行費"));
-            Assert.AreEqual( 45500, abSummary.GetPriceByType("家賃"  ));
-            Assert.AreEqual(  9130, abSummary.GetPriceByType("光熱費"));
-            Assert.AreEqual(  1304, abSummary.GetPriceByType("通信費"));
-            Assert.AreEqual(  4580, abSummary.GetPriceByType("医療費"));
-            Assert.AreEqual(  2760, abSummary.GetPriceByType("保険料"));
-            Assert.AreEqual(   630, abSummary.GetPriceByType("その他"));
-            Assert.AreEqual( 83990, abSummary.GetPriceByType("合計"  ));
-            Assert.AreEqual(160059, abSummary.GetPriceByType("収入"  ));
-            Assert.AreEqual( 76069, abSummary.GetPriceByType("残金"  ));
-            Assert.AreEqual(     0, abSummary.GetPriceByType("not match"));
-        }
-
-        [Test]
-        public void GetPriceByTypeWithInMiddle()
-        {
-            argDtNow = new DateTime(2011, 3, 31);
-            abSummary = new AbSummary(
-                argDtNow,
-                argAbExpenses.Where(exp =>
-                    new DateTime(2011, 3, 1) <= exp.Date && exp.Date <= new DateTime(2011, 3, 31)
-                )
-            );
-
-            Assert.AreEqual(  6527, abSummary.GetPriceByType("食費"  ));
-            Assert.AreEqual(  7904, abSummary.GetPriceByType("外食費"));
-            Assert.AreEqual(  2930, abSummary.GetPriceByType("雑貨"  ));
-            Assert.AreEqual(  5900, abSummary.GetPriceByType("交際費"));
-            Assert.AreEqual(   930, abSummary.GetPriceByType("交通費"));
-            Assert.AreEqual(  2000, abSummary.GetPriceByType("遊行費"));
-            Assert.AreEqual( 45500, abSummary.GetPriceByType("家賃"  ));
-            Assert.AreEqual(  8447, abSummary.GetPriceByType("光熱費"));
-            Assert.AreEqual(  1304, abSummary.GetPriceByType("通信費"));
-            Assert.AreEqual(  2330, abSummary.GetPriceByType("医療費"));
-            Assert.AreEqual(  9760, abSummary.GetPriceByType("保険料"));
-            Assert.AreEqual(   525, abSummary.GetPriceByType("その他"));
-            Assert.AreEqual( 94057, abSummary.GetPriceByType("合計"  ));
-            Assert.AreEqual(160059, abSummary.GetPriceByType("収入"  ));
-            Assert.AreEqual( 66002, abSummary.GetPriceByType("残金"  ));
-            Assert.AreEqual(     0, abSummary.GetPriceByType("not match"));
-        }
-
-        [Test]
-        public void GetPriceByTypeWithInTail()
-        {
-            argDtNow = new DateTime(2011, 4, 1);
-            abSummary = new AbSummary(
-                argDtNow,
-                argAbExpenses.Where(exp =>
-                    new DateTime(2011, 4, 1) <= exp.Date && exp.Date <= new DateTime(2011, 4, 30)
-                )
-            );
-
-            Assert.AreEqual(  6390, abSummary.GetPriceByType("食費"  ));
-            Assert.AreEqual(  6730, abSummary.GetPriceByType("外食費"));
-            Assert.AreEqual(  2171, abSummary.GetPriceByType("雑貨"  ));
-            Assert.AreEqual(  4514, abSummary.GetPriceByType("交際費"));
-            Assert.AreEqual(  7940, abSummary.GetPriceByType("交通費"));
-            Assert.AreEqual(   649, abSummary.GetPriceByType("遊行費"));
-            Assert.AreEqual( 45500, abSummary.GetPriceByType("家賃"  ));
-            Assert.AreEqual(  8468, abSummary.GetPriceByType("光熱費"));
-            Assert.AreEqual(  1303, abSummary.GetPriceByType("通信費"));
-            Assert.AreEqual(     0, abSummary.GetPriceByType("医療費"));
-            Assert.AreEqual(  2760, abSummary.GetPriceByType("保険料"));
-            Assert.AreEqual( 15435, abSummary.GetPriceByType("その他"));
-            Assert.AreEqual(101860, abSummary.GetPriceByType("合計"  ));
-            Assert.AreEqual(159889, abSummary.GetPriceByType("収入"  ));
-            Assert.AreEqual( 58029, abSummary.GetPriceByType("残金"  ));
-            Assert.AreEqual(     0, abSummary.GetPriceByType("not match"));
-        }
-
-        [Test]
-        public void GetPriceByTypeWithOutOfTail()
-        {
-            argDtNow = new DateTime(2011, 5, 1);
-            abSummary = new AbSummary(
-                argDtNow,
-                argAbExpenses.Where(exp =>
-                    new DateTime(2011, 5, 1) <= exp.Date && exp.Date <= new DateTime(2011, 5, 31)
-                )
-            );
-
-            Assert.AreEqual(0, abSummary.GetPriceByType("食費"  ));
-            Assert.AreEqual(0, abSummary.GetPriceByType("外食費"));
-            Assert.AreEqual(0, abSummary.GetPriceByType("雑貨"  ));
-            Assert.AreEqual(0, abSummary.GetPriceByType("交際費"));
-            Assert.AreEqual(0, abSummary.GetPriceByType("交通費"));
-            Assert.AreEqual(0, abSummary.GetPriceByType("遊行費"));
-            Assert.AreEqual(0, abSummary.GetPriceByType("家賃"  ));
-            Assert.AreEqual(0, abSummary.GetPriceByType("光熱費"));
-            Assert.AreEqual(0, abSummary.GetPriceByType("通信費"));
-            Assert.AreEqual(0, abSummary.GetPriceByType("医療費"));
-            Assert.AreEqual(0, abSummary.GetPriceByType("保険料"));
-            Assert.AreEqual(0, abSummary.GetPriceByType("その他"));
-            Assert.AreEqual(0, abSummary.GetPriceByType("合計"  ));
-            Assert.AreEqual(0, abSummary.GetPriceByType("収入"  ));
-            Assert.AreEqual(0, abSummary.GetPriceByType("残金"  ));
-            Assert.AreEqual(0, abSummary.GetPriceByType("not match"));
-        }
-
-        [Test]
-        public void GetPriceByNameWithNullName()
-        {
-            Assert.AreEqual(0, abSummary.GetPriceByName(null));
-        }
-
-        [Test]
-        public void GetPriceByNameWithEmptyName()
-        {
-            Assert.AreEqual(0, abSummary.GetPriceByName(string.Empty));
-        }
-
-        [Test]
-        public void GetPriceByNameWithEmptyExpenses()
-        {
-            argAbExpenses = new List<AbExpense>();
-            abSummary = new AbSummary(argDtNow, argAbExpenses);
-
-            Assert.AreEqual(0, abSummary.GetPriceByName("うどん"));
-            Assert.AreEqual(0, abSummary.GetPriceByName("電気代"));
-            Assert.AreEqual(0, abSummary.GetPriceByName("ガス代"));
-            Assert.AreEqual(0, abSummary.GetPriceByName("水道代"));
-            Assert.AreEqual(0, abSummary.GetPriceByName("not match"));
-        }
-
-        [Test]
-        public void GetPriceByNameWithOutOfHead()
-        {
-            argDtNow = new DateTime(2011, 1, 31);
-            abSummary = new AbSummary(
-                argDtNow,
-                argAbExpenses.Where(exp =>
-                    new DateTime(2011, 1, 1) <= exp.Date && exp.Date <= new DateTime(2011, 1, 31)
-                )
-            );
-
-            Assert.AreEqual(0, abSummary.GetPriceByName("うどん"));
-            Assert.AreEqual(0, abSummary.GetPriceByName("電気代"));
-            Assert.AreEqual(0, abSummary.GetPriceByName("ガス代"));
-            Assert.AreEqual(0, abSummary.GetPriceByName("水道代"));
-            Assert.AreEqual(0, abSummary.GetPriceByName("not match"));
-        }
-
-        [Test]
-        public void GetPriceByNameWithInHead()
-        {
-            argDtNow = new DateTime(2011, 2, 20);
-            abSummary = new AbSummary(
-                argDtNow,
-                argAbExpenses.Where(exp =>
-                    new DateTime(2011, 2, 1) <= exp.Date && exp.Date <= new DateTime(2011, 2, 28)
-                )
-            );
-
-            Assert.AreEqual(1570, abSummary.GetPriceByName("うどん"));
-            Assert.AreEqual(1783, abSummary.GetPriceByName("電気代"));
-            Assert.AreEqual(5596, abSummary.GetPriceByName("ガス代"));
-            Assert.AreEqual(1751, abSummary.GetPriceByName("水道代"));
-            Assert.AreEqual(   0, abSummary.GetPriceByName("not match"));
-        }
-
-        [Test]
-        public void GetPriceByNameWithInMiddle()
-        {
-            argDtNow = new DateTime(2011, 3, 31);
-            abSummary = new AbSummary(
-                argDtNow,
-                argAbExpenses.Where(exp =>
-                    new DateTime(2011, 3, 1) <= exp.Date && exp.Date <= new DateTime(2011, 3, 31)
-                )
-            );
-
-            Assert.AreEqual(2760, abSummary.GetPriceByName("うどん"));
-            Assert.AreEqual(1357, abSummary.GetPriceByName("電気代"));
-            Assert.AreEqual(5339, abSummary.GetPriceByName("ガス代"));
-            Assert.AreEqual(1751, abSummary.GetPriceByName("水道代"));
-            Assert.AreEqual(   0, abSummary.GetPriceByName("not match"));
-        }
-
-        [Test]
-        public void GetPriceByNameWithInTail()
-        {
-            argDtNow = new DateTime(2011, 4, 1);
-            abSummary = new AbSummary(
-                argDtNow,
-                argAbExpenses.Where(exp =>
-                    new DateTime(2011, 4, 1) <= exp.Date && exp.Date <= new DateTime(2011, 4, 30)
-                )
-            );
-
-            Assert.AreEqual(2349, abSummary.GetPriceByName("うどん"));
-            Assert.AreEqual(1426, abSummary.GetPriceByName("電気代"));
-            Assert.AreEqual(5339, abSummary.GetPriceByName("ガス代"));
-            Assert.AreEqual(1703, abSummary.GetPriceByName("水道代"));
-            Assert.AreEqual(   0, abSummary.GetPriceByName("not match"));
-        }
-
-        [Test]
-        public void GetPriceByNameWithOutOfTail()
-        {
-            argDtNow = new DateTime(2011, 5, 1);
-            abSummary = new AbSummary(
-                argDtNow,
-                argAbExpenses.Where(exp =>
-                    new DateTime(2011, 5, 1) <= exp.Date && exp.Date <= new DateTime(2011, 5, 31)
-                )
-            );
-
-            Assert.AreEqual(0, abSummary.GetPriceByName("うどん"));
-            Assert.AreEqual(0, abSummary.GetPriceByName("電気代"));
-            Assert.AreEqual(0, abSummary.GetPriceByName("ガス代"));
-            Assert.AreEqual(0, abSummary.GetPriceByName("水道代"));
-            Assert.AreEqual(0, abSummary.GetPriceByName("not match"));
-        }
-
+        /// <summary>
+        /// 集計値リスト生成
+        /// 引数:支出レコードリストが NULL
+        /// </summary>
         [Test]
         public void GetSummariesWithNullExpenses()
         {
-            argAbExpenses = null;
-            Assert.Throws(
-                typeof(ArgumentException),
-                () => { AbSummary.GetSummaries(argAbExpenses); }
+            argExpenses = null;
+            var ex = Assert.Throws<AbException>(() =>
+                { AbSummary.GetSummaries(argExpenses); }
             );
+            Assert.AreEqual(EX.EXPENSES_NULL, ex.Message);
         }
 
+        /// <summary>
+        /// 集計値リスト生成
+        /// 引数:支出レコードリストが空リスト
+        /// </summary>
         [Test]
         public void GetSummariesWithEmptyExpenses()
         {
-            argAbExpenses = new List<AbExpense>();
-            CollectionAssert.IsEmpty(AbSummary.GetSummaries(argAbExpenses));
+            argExpenses = new List<AbExpense>();
+            abSummaries = AbSummary.GetSummaries(argExpenses);
+
+            Assert.IsEmpty(abSummaries);
         }
 
+        /// <summary>
+        /// 集計値リスト生成
+        /// 集計値リスト数のテスト
+        /// </summary>
         [Test]
-        public void GetSummariesWithInDate()
+        public void GetSummariesWithCount()
         {
-            var sums = abSummaries.Where(sum => sum.Predicate(argDtNow));
-            abSummary = (sums.Count() > 0) ? sums.First() : new AbSummary(argDtNow, new List<AbExpense>());
-
-            Assert.AreEqual(1, sums.Count());
-
-            Assert.AreEqual(  6527, abSummary.GetPriceByType("食費"  ));
-            Assert.AreEqual(  7904, abSummary.GetPriceByType("外食費"));
-            Assert.AreEqual(  2930, abSummary.GetPriceByType("雑貨"  ));
-            Assert.AreEqual(  5900, abSummary.GetPriceByType("交際費"));
-            Assert.AreEqual(   930, abSummary.GetPriceByType("交通費"));
-            Assert.AreEqual(  2000, abSummary.GetPriceByType("遊行費"));
-            Assert.AreEqual( 45500, abSummary.GetPriceByType("家賃"  ));
-            Assert.AreEqual(  8447, abSummary.GetPriceByType("光熱費"));
-            Assert.AreEqual(  1304, abSummary.GetPriceByType("通信費"));
-            Assert.AreEqual(  2330, abSummary.GetPriceByType("医療費"));
-            Assert.AreEqual(  9760, abSummary.GetPriceByType("保険料"));
-            Assert.AreEqual(   525, abSummary.GetPriceByType("その他"));
-            Assert.AreEqual( 94057, abSummary.GetPriceByType("合計"  ));
-            Assert.AreEqual(160059, abSummary.GetPriceByType("収入"  ));
-            Assert.AreEqual( 66002, abSummary.GetPriceByType("残金"  ));
-            Assert.AreEqual(     0, abSummary.GetPriceByType("not match"));
-
-            Assert.AreEqual(2760, abSummary.GetPriceByName("うどん"));
-            Assert.AreEqual(1357, abSummary.GetPriceByName("電気代"));
-            Assert.AreEqual(5339, abSummary.GetPriceByName("ガス代"));
-            Assert.AreEqual(1751, abSummary.GetPriceByName("水道代"));
-            Assert.AreEqual(   0, abSummary.GetPriceByName("not match"));
+            Assert.AreEqual(2, abSummaries.Count);
         }
 
+        /// <summary>
+        /// 集計値リスト生成
+        /// 集計値リスト要素のテスト
+        /// </summary>
         [Test]
-        public void GetSummariesWithOutOfDate()
+        public void GetSummariesWithExpenses()
         {
-            argDtNow = new DateTime(2011, 11, 11);
-            abSummaries = AbSummary.GetSummaries(argAbExpenses);
+            var date = new DateTime(2011, 3, 1);
+            foreach (var sum in abSummaries)
+            {
+                Assert.AreEqual(date.Year, sum.Year);
+                Assert.AreEqual(date.Month, sum.Month);
+                date = date.AddMonths(1);
+            }
+        }
 
-            var sums = abSummaries.Where(sum => sum.Predicate(argDtNow));
-            abSummary = (sums.Count() > 0) ? sums.First() : new AbSummary(argDtNow, new List<AbExpense>());
+        /// <summary>
+        /// 集計値リスト生成
+        /// 2011年2月の集計値のテスト
+        /// </summary>
+        [Test]
+        public void GetSummariesWith_2011_02_Summary()
+        {
+            var date = new DateTime(2011, 2, 1);
+            var abSummary = abSummaries.Where(
+                sum => sum.Year == date.Year && sum.Month == date.Month
+            ).FirstOrDefault();
+            Assert.IsNull(abSummary);
+        }
 
-            Assert.AreEqual(0, sums.Count());
+        /// <summary>
+        /// 集計値リスト生成
+        /// 2011年3月の集計値のテスト
+        /// </summary>
+        [Test]
+        public void GetSummariesWith_2011_03_Summary()
+        {
+            var date = new DateTime(2011, 3, 1);
+            var abSummary = abSummaries.Where(sum =>
+                sum.Year == date.Year && sum.Month == date.Month
+            ).FirstOrDefault();
 
-            Assert.AreEqual(0, abSummary.GetPriceByType("食費"  ));
-            Assert.AreEqual(0, abSummary.GetPriceByType("外食費"));
-            Assert.AreEqual(0, abSummary.GetPriceByType("雑貨"  ));
-            Assert.AreEqual(0, abSummary.GetPriceByType("交際費"));
-            Assert.AreEqual(0, abSummary.GetPriceByType("交通費"));
-            Assert.AreEqual(0, abSummary.GetPriceByType("遊行費"));
-            Assert.AreEqual(0, abSummary.GetPriceByType("家賃"  ));
-            Assert.AreEqual(0, abSummary.GetPriceByType("光熱費"));
-            Assert.AreEqual(0, abSummary.GetPriceByType("通信費"));
-            Assert.AreEqual(0, abSummary.GetPriceByType("医療費"));
-            Assert.AreEqual(0, abSummary.GetPriceByType("保険料"));
-            Assert.AreEqual(0, abSummary.GetPriceByType("その他"));
-            Assert.AreEqual(0, abSummary.GetPriceByType("合計"  ));
-            Assert.AreEqual(0, abSummary.GetPriceByType("収入"  ));
-            Assert.AreEqual(0, abSummary.GetPriceByType("残金"  ));
-            Assert.AreEqual(0, abSummary.GetPriceByType("not match"));
+            Assert.IsNotNull(abSummary);
+            Assert.AreEqual(date.Year, abSummary.Year);
+            Assert.AreEqual(date.Month, abSummary.Month);
+            Assert.AreEqual(   210, abSummary.GetCostByType(TYPE.FOOD));
+            Assert.AreEqual(   410, abSummary.GetCostByType(TYPE.OTFD));
+            Assert.AreEqual(   610, abSummary.GetCostByType(TYPE.GOOD));
+            Assert.AreEqual(   810, abSummary.GetCostByType(TYPE.FRND));
+            Assert.AreEqual(  1010, abSummary.GetCostByType(TYPE.TRFC));
+            Assert.AreEqual(  1210, abSummary.GetCostByType(TYPE.PLAY));
+            Assert.AreEqual(  1410, abSummary.GetCostByType(TYPE.HOUS));
+            Assert.AreEqual(  4950, abSummary.GetCostByType(TYPE.ENGY));
+            Assert.AreEqual(  1810, abSummary.GetCostByType(TYPE.CNCT));
+            Assert.AreEqual(  2100, abSummary.GetCostByType(TYPE.MEDI));
+            Assert.AreEqual(  4100, abSummary.GetCostByType(TYPE.INSU));
+            Assert.AreEqual(  6100, abSummary.GetCostByType(TYPE.OTHR));
+            Assert.AreEqual( 24730, abSummary.GetCostByType(TYPE.TTAL));
+            Assert.AreEqual(210000, abSummary.GetCostByType(TYPE.EARN));
+            Assert.AreEqual(185270, abSummary.GetCostByType(TYPE.BLNC));
+            Assert.AreEqual( 41000, abSummary.GetCostByType(TYPE.SPCL));
+            Assert.AreEqual(     0, abSummary.GetCostByType("not match"));
+        }
 
-            Assert.AreEqual(0, abSummary.GetPriceByName("うどん"));
-            Assert.AreEqual(0, abSummary.GetPriceByName("電気代"));
-            Assert.AreEqual(0, abSummary.GetPriceByName("ガス代"));
-            Assert.AreEqual(0, abSummary.GetPriceByName("水道代"));
-            Assert.AreEqual(0, abSummary.GetPriceByName("not match"));
+        /// <summary>
+        /// 集計値リスト生成
+        /// 2011年4月の集計値のテスト
+        /// </summary>
+        [Test]
+        public void GetSummariesWith_2011_04_Summary()
+        {
+            var date = new DateTime(2011, 4, 1);
+            var abSummary = abSummaries.Where(sum =>
+                sum.Year == date.Year && sum.Month == date.Month
+            ).FirstOrDefault();
+
+            Assert.IsNotNull(abSummary);
+            Assert.AreEqual(date.Year, abSummary.Year);
+            Assert.AreEqual(date.Month, abSummary.Month);
+            Assert.AreEqual(   410, abSummary.GetCostByType(TYPE.FOOD));
+            Assert.AreEqual(   810, abSummary.GetCostByType(TYPE.OTFD));
+            Assert.AreEqual(  1010, abSummary.GetCostByType(TYPE.GOOD));
+            Assert.AreEqual(  1210, abSummary.GetCostByType(TYPE.FRND));
+            Assert.AreEqual(  2010, abSummary.GetCostByType(TYPE.TRFC));
+            Assert.AreEqual(  2410, abSummary.GetCostByType(TYPE.PLAY));
+            Assert.AreEqual(  2810, abSummary.GetCostByType(TYPE.HOUS));
+            Assert.AreEqual(  9750, abSummary.GetCostByType(TYPE.ENGY));
+            Assert.AreEqual(  3610, abSummary.GetCostByType(TYPE.CNCT));
+            Assert.AreEqual(  4100, abSummary.GetCostByType(TYPE.MEDI));
+            Assert.AreEqual(  8100, abSummary.GetCostByType(TYPE.INSU));
+            Assert.AreEqual( 12100, abSummary.GetCostByType(TYPE.OTHR));
+            Assert.AreEqual( 48330, abSummary.GetCostByType(TYPE.TTAL));
+            Assert.AreEqual(410000, abSummary.GetCostByType(TYPE.EARN));
+            Assert.AreEqual(361670, abSummary.GetCostByType(TYPE.BLNC));
+            Assert.AreEqual( 81000, abSummary.GetCostByType(TYPE.SPCL));
+            Assert.AreEqual(     0, abSummary.GetCostByType("not match"));
         }
     }
 }

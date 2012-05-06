@@ -53,15 +53,13 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="unit\AbTestBalance.cs" />
+    <Compile Include="unit\AbTestBalanceManager.cs" />
+    <Compile Include="unit\AbTestComplete.cs" />
     <Compile Include="unit\AbTestDBManager.cs" />
-    <Compile Include="unit\AbTestComplement.cs" />
     <Compile Include="unit\AbTestExpense.cs" />
     <Compile Include="unit\AbTestExpenseManager.cs" />
-    <Compile Include="unit\AbTestGraphData.cs" />
-    <Compile Include="unit\AbTestGraphLine.cs" />
     <Compile Include="unit\AbTestGraphManager.cs" />
-    <Compile Include="unit\AbTestSpecial.cs" />
-    <Compile Include="unit\AbTestSpecialManager.cs" />
     <Compile Include="unit\AbTestSummary.cs" />
   </ItemGroup>
   <ItemGroup>

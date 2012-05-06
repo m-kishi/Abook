@@ -2,11 +2,12 @@
 {
     using System;
     using System.Drawing;
+    using GRAPH = Abook.AbConstants.GRAPH;
 
     /// <summary>
     /// グラフ基準線クラス
     /// </summary>
-    public class AbGraphLine
+    public class AbGraphicLine
     {
         /// <summary>描画ペン</summary>
         private Pen pen;
@@ -20,34 +21,24 @@
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public AbGraphLine(int value)
+        /// <param name="value">基準値</param>
+        public AbGraphicLine(int value)
         {
             pen = new Pen(Brushes.Gray);
             pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
 
-            int h = (int)(AbCommonConst.COEFFICIENT * value + AbCommonConst.HEIGHT);
+            int h = (int)(GRAPH.COEFFICIENT * value + GRAPH.HEIGHT);
             strPoint = new Point(0, h);
-            endPoint = new Point((int)AbCommonConst.WIDTH, h);
+            endPoint = new Point((int)GRAPH.WIDTH, h);
         }
 
         /// <summary>
         /// 基準線描画
         /// </summary>
+        /// <param name="g">Graphics オブジェクト</param>
         public void DrawLine(Graphics g)
         {
             g.DrawLine(pen, strPoint, endPoint);
-        }
-
-        /// <summary>
-        /// 座標点表示
-        /// </summary>
-        public override string ToString()
-        {
-            return string.Format(
-                "({0},{1})-({2},{3})",
-                strPoint.X, strPoint.Y,
-                endPoint.X, endPoint.Y
-            );
         }
     }
 }

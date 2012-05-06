@@ -5,6 +5,12 @@
     using System.Drawing;
     using System.Linq;
     using System.Windows.Forms;
+    using COL  = Abook.AbConstants.COL;
+    using CSV  = Abook.AbConstants.CSV;
+    using DGV  = Abook.AbConstants.DGV;
+    using FMT  = Abook.AbConstants.FMT;
+    using TYPE = Abook.AbConstants.TYPE;
+    using UTIL = Abook.AbUtilities;
 
     /// <summary>
     /// メイン画面フォーム
@@ -20,13 +26,13 @@
         private AbExpenseManager abExpenseManager;
 
         /// <summary>データ管理(グラフ用)</summary>
-        private AbGraphManager abGraphManager;
+        private AbGraphicManager abGraphicManager;
 
-        /// <summary>データ管理(特別支出用)</summary>
-        private AbSpecialManager abSpecialManager;
+        /// <summary>データ管理(収支用)</summary>
+        private AbBalanceManager abBalanceManager;
 
         /// <summary>自動補完</summary>
-        private AbComplement abComplement;
+        private AbComplete abComplete;
 
         /// <summary>
         /// フォームロード
@@ -37,11 +43,11 @@
             {
                 Icon = SystemIcons.Application;
 
-                var abExpenses = AbDBManager.LoadFromFile(AbCommonConst.DB_NAME);
+                var abExpenses = AbDBManager.Load(CSV.DB);
                 SetViewExpense(abExpenses);
                 GenerateManagers(abExpenses);
 
-                abComplement = new AbComplement(abExpenses);
+                abComplete = new AbComplete(abExpenses);
             }
             catch (Exception ex)
             {
@@ -63,9 +69,9 @@
             var abSummaries = AbSummary.GetSummaries(abExpenses);
 
             abExpenseManager = new AbExpenseManager(DateTime.Now, abSummaries);
-            abGraphManager = new AbGraphManager(DateTime.Now, abSummaries);
+            abGraphicManager = new AbGraphicManager(DateTime.Now, abSummaries);
 
-            abSpecialManager = new AbSpecialManager(abExpenses);
+            abBalanceManager = new AbBalanceManager(abExpenses);
         }
 
         /// <summary>
@@ -75,19 +81,19 @@
         {
             switch (TabControl.SelectedIndex)
             {
-                case 0: //支出登録
-                    //SetViewExpense();
+                case 0: // 支出登録
+                    // SetViewExpense();
                     break;
 
-                case 1: //月別表示
+                case 1: // 月別表示
                     SetViewSummary();
                     break;
 
-                case 2: //グラフ
+                case 2: // グラフ
                     Invalidate();
                     break;
 
-                case 3: //特別支出
+                case 3: // 特別支出
                     SetViewBalance();
                     break;
 
@@ -134,10 +140,10 @@
                     foreach (var exp in abExpenses)
                     {
                         var row = DgvExpense.Rows[idx++];
-                        row.Cells["colDate"].Value  = exp.Date.ToShortDateString();
-                        row.Cells["colName"].Value  = exp.Name;
-                        row.Cells["colType"].Value  = exp.Type;
-                        row.Cells["colPrice"].Value = exp.Price.ToString();
+                        row.Cells[COL.DATE].Value = exp.Date.ToString(FMT.DATE);
+                        row.Cells[COL.NAME].Value = exp.Name;
+                        row.Cells[COL.TYPE].Value = exp.Type;
+                        row.Cells[COL.COST].Value = exp.Cost.ToString();
                     }
                 }
 
@@ -145,7 +151,7 @@
                 if (DgvExpense.Rows.Count > 0)
                 {
                     DgvExpense.FirstDisplayedScrollingRowIndex = DgvExpense.Rows.Count - 1;
-                    DgvExpense.Rows[DgvExpense.Rows.Count - 1].Cells["colDate"].Selected = true;
+                    DgvExpense.Rows[DgvExpense.Rows.Count - 1].Cells[COL.DATE].Selected = true;
                 }
 
             }
@@ -172,7 +178,7 @@
                 if (DgvExpense.CurrentCell.ColumnIndex == 1)
                 {
                     DataGridViewRow row = DgvExpense.Rows[DgvExpense.CurrentCell.RowIndex];
-                    row.Cells["colType"].Value = abComplement.GetType(Clipboard.GetText());
+                    row.Cells[COL.TYPE].Value = abComplete.GetType(Clipboard.GetText());
                 }
             }
         }
@@ -193,43 +199,44 @@
                 return;
             }
 
-            RemoveEmptyRows();
+            //RemoveEmptyRows();
 
-            if (DgvExpenseValidate())
+            //if (DgvExpenseValidate())
+            //{
+            var errLine = 0;
+            try
             {
-                try
-                {
-                    var abExpenses = AbDBManager.StoreToFile(AbCommonConst.DB_NAME, DgvExpense);
+                var expenses = AbDBManager.Load(DgvExpense, out errLine);
 
-                    MessageBox.Show(
-                        "正常に登録しました。",
-                        "登録完了",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Asterisk
-                    );
+                AbDBManager.Store(CSV.DB, expenses);
 
-                    SetViewExpense(abExpenses);
-                    GenerateManagers(abExpenses);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(
-                        ex.Message,
-                        "エラー",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error
-                    );
-                    return;
-                }
+                SetViewExpense(expenses);
+
+                GenerateManagers(expenses);
+
+                MessageBox.Show(
+                    "正常に登録しました。",
+                    "登録完了",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Asterisk
+                );
             }
-        }
+            catch (AbException ex)
+            {
+                var errIdx = errLine - 1;
+                DgvExpense.ClearSelection();
+                DgvExpense.Rows[errIdx].Selected = true;
+                DgvExpense.FirstDisplayedScrollingRowIndex = errIdx;
 
-        /// <summary>
-        /// プロパティ(DataGridView)
-        /// </summary>
-        public DataGridView DataGridView
-        {
-            get { return this.DgvExpense; }
+                MessageBox.Show(
+                    ex.Message,
+                    "エラー",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+                return;
+            }
+            //}
         }
 
         /// <summary>
@@ -237,10 +244,10 @@
         /// </summary>
         private void BtnAddRow_Click(object sender, EventArgs e)
         {
-            DgvExpense.Rows.Add(AbCommonConst.ADD_ROW_SIZE);
-            for (int i = DgvExpense.Rows.Count - AbCommonConst.ADD_ROW_SIZE; i < DgvExpense.Rows.Count; i++)
+            DgvExpense.Rows.Add(DGV.NEW_ROW_SIZE);
+            for (int i = DgvExpense.Rows.Count - DGV.NEW_ROW_SIZE; i < DgvExpense.Rows.Count; i++)
             {
-                DgvExpense.Rows[i].Cells["colDate"].Value = DateTime.Today.ToShortDateString();
+                DgvExpense.Rows[i].Cells[COL.DATE].Value = DateTime.Today.ToString(FMT.DATE);
             }
         }
 
@@ -252,7 +259,7 @@
             var idxEmpties = new List<int>();
             foreach (DataGridViewRow row in DgvExpense.Rows)
             {
-                if (string.IsNullOrEmpty(row.Cells["colName"].Value as string))
+                if (string.IsNullOrEmpty(row.Cells[COL.NAME].Value as string))
                 {
                     idxEmpties.Add(row.Index);
                 }
@@ -273,7 +280,7 @@
             if (DgvExpense.CurrentCell.ColumnIndex == 1)
             {
                 DataGridViewRow row = DgvExpense.Rows[DgvExpense.CurrentCell.RowIndex];
-                row.Cells["colType"].Value = abComplement.GetType(row.Cells["colName"].Value as string);
+                row.Cells[COL.TYPE].Value = abComplete.GetType(row.Cells[COL.NAME].Value as string);
             }
         }
 
@@ -286,10 +293,10 @@
             bool result = true;
             foreach (DataGridViewRow row in DgvExpense.Rows)
             {
-                result &= !string.IsNullOrEmpty(row.Cells["colDate"].Value as string);
-                result &= !string.IsNullOrEmpty(row.Cells["colName"].Value as string);
-                result &= !string.IsNullOrEmpty(row.Cells["colType"].Value as string);
-                result &= !string.IsNullOrEmpty(row.Cells["colPrice"].Value as string);
+                result &= !string.IsNullOrEmpty(row.Cells[COL.DATE].Value as string);
+                result &= !string.IsNullOrEmpty(row.Cells[COL.NAME].Value as string);
+                result &= !string.IsNullOrEmpty(row.Cells[COL.TYPE].Value as string);
+                result &= !string.IsNullOrEmpty(row.Cells[COL.COST].Value as string);
             }
 
             if (result == false)
@@ -346,21 +353,21 @@
         /// </summary>
         private void SetViewSummary()
         {
-            LblSummary.Text     = abExpenseManager.ToString();
-            LblYen01食費.Text   = abExpenseManager.GetPrice("食費"  );
-            LblYen02外食費.Text = abExpenseManager.GetPrice("外食費");
-            LblYen03雑貨.Text   = abExpenseManager.GetPrice("雑貨"  );
-            LblYen04交際費.Text = abExpenseManager.GetPrice("交際費");
-            LblYen05交通費.Text = abExpenseManager.GetPrice("交通費");
-            LblYen06遊行費.Text = abExpenseManager.GetPrice("遊行費");
-            LblYen07家賃.Text   = abExpenseManager.GetPrice("家賃"  );
-            LblYen08光熱費.Text = abExpenseManager.GetPrice("光熱費");
-            LblYen09通信費.Text = abExpenseManager.GetPrice("通信費");
-            LblYen10医療費.Text = abExpenseManager.GetPrice("医療費");
-            LblYen11保険料.Text = abExpenseManager.GetPrice("保険料");
-            LblYen12その他.Text = abExpenseManager.GetPrice("その他");
-            LblYen13合計.Text   = abExpenseManager.GetPrice("合計"  );
-            LblYen14残金.Text   = abExpenseManager.GetPrice("残金"  );
+            LblSummary.Text = abExpenseManager.Title;
+            LblYen01食費.Text   = UTIL.ToYen(abExpenseManager.GetCost(TYPE.FOOD));
+            LblYen02外食費.Text = UTIL.ToYen(abExpenseManager.GetCost(TYPE.OTFD));
+            LblYen03雑貨.Text   = UTIL.ToYen(abExpenseManager.GetCost(TYPE.GOOD));
+            LblYen04交際費.Text = UTIL.ToYen(abExpenseManager.GetCost(TYPE.FRND));
+            LblYen05交通費.Text = UTIL.ToYen(abExpenseManager.GetCost(TYPE.TRFC));
+            LblYen06遊行費.Text = UTIL.ToYen(abExpenseManager.GetCost(TYPE.PLAY));
+            LblYen07家賃.Text   = UTIL.ToYen(abExpenseManager.GetCost(TYPE.HOUS));
+            LblYen08光熱費.Text = UTIL.ToYen(abExpenseManager.GetCost(TYPE.ENGY));
+            LblYen09通信費.Text = UTIL.ToYen(abExpenseManager.GetCost(TYPE.CNCT));
+            LblYen10医療費.Text = UTIL.ToYen(abExpenseManager.GetCost(TYPE.MEDI));
+            LblYen11保険料.Text = UTIL.ToYen(abExpenseManager.GetCost(TYPE.INSU));
+            LblYen12その他.Text = UTIL.ToYen(abExpenseManager.GetCost(TYPE.OTHR));
+            LblYen13合計.Text   = UTIL.ToYen(abExpenseManager.GetCost(TYPE.TTAL));
+            LblYen14残金.Text   = UTIL.ToYen(abExpenseManager.GetCost(TYPE.BLNC));
         }
 
         /// <summary>
@@ -368,7 +375,7 @@
         /// </summary>
         private void BtnGraphPrevYear_Click(object sender, EventArgs e)
         {
-            abGraphManager.PrevYear();
+            abGraphicManager.PrevYear();
             SetViewGraph(PboxGraph.CreateGraphics());
         }
 
@@ -377,7 +384,7 @@
         /// </summary>
         private void BtnGraphPrevMonth_Click(object sender, EventArgs e)
         {
-            abGraphManager.PrevMonth();
+            abGraphicManager.PrevMonth();
             SetViewGraph(PboxGraph.CreateGraphics());
         }
 
@@ -386,7 +393,7 @@
         /// </summary>
         private void BtnGraphNextMonth_Click(object sender, EventArgs e)
         {
-            abGraphManager.NextMonth();
+            abGraphicManager.NextMonth();
             SetViewGraph(PboxGraph.CreateGraphics());
         }
 
@@ -395,7 +402,7 @@
         /// </summary>
         private void BtnGraphNextYear_Click(object sender, EventArgs e)
         {
-            abGraphManager.NextYear();
+            abGraphicManager.NextYear();
             SetViewGraph(PboxGraph.CreateGraphics());
         }
 
@@ -413,15 +420,15 @@
         private void SetViewGraph(Graphics g)
         {
             g.Clear(Color.Black);
-            abGraphManager.DrawGraph(g);
+            abGraphicManager.DrawGraph(g);
 
-            LblGraph.Text = abGraphManager.ToString();
-            LblX6.Text    = abGraphManager.GetMonth(0);
-            LblX5.Text    = abGraphManager.GetMonth(-2);
-            LblX4.Text    = abGraphManager.GetMonth(-4);
-            LblX3.Text    = abGraphManager.GetMonth(-6);
-            LblX2.Text    = abGraphManager.GetMonth(-8);
-            LblX1.Text    = abGraphManager.GetMonth(-10);
+            LblGraph.Text = abGraphicManager.Title;
+            LblX6.Text    = abGraphicManager.GetMonth(0);
+            LblX5.Text    = abGraphicManager.GetMonth(-2);
+            LblX4.Text    = abGraphicManager.GetMonth(-4);
+            LblX3.Text    = abGraphicManager.GetMonth(-6);
+            LblX2.Text    = abGraphicManager.GetMonth(-8);
+            LblX1.Text    = abGraphicManager.GetMonth(-10);
         }
 
         /// <summary>
@@ -430,17 +437,17 @@
         private void SetViewBalance()
         {
             DgvBalance.Rows.Clear();
-            DgvBalance.Rows.Add(abSpecialManager.GetEnumerator().Count());
+            DgvBalance.Rows.Add(abBalanceManager.Balances().Count());
 
             int i = 0;
-            foreach (var spc in abSpecialManager.GetEnumerator())
+            foreach (var bln in abBalanceManager.Balances())
             {
                 DataGridViewRow row = DgvBalance.Rows[i++];
-                row.Cells["ColYear"].Value = spc.Year;
-                row.Cells["ColEarn"].Value = spc.Earn;
-                row.Cells["ColExpense"].Value = spc.Expense;
-                row.Cells["ColSpecial"].Value = spc.Special;
-                row.Cells["ColBalance"].Value = spc.Balance;
+                row.Cells[COL.YEAR].Value = bln.Year;
+                row.Cells[COL.EARN].Value = bln.Earn;
+                row.Cells[COL.EXPENSE].Value = bln.Expense;
+                row.Cells[COL.SPECIAL].Value = bln.Special;
+                row.Cells[COL.BALANCE].Value = bln.Balance;
             }
         }
     }
