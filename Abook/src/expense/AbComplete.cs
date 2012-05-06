@@ -3,11 +3,12 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using EX = Abook.AbException.EX;
 
     /// <summary>
     /// 自動補完クラス
     /// </summary>
-    public class AbComplement
+    public class AbComplete
     {
         /// <summary>補完候補</summary>
         private Dictionary<string, string> dicComp;
@@ -15,21 +16,21 @@
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public AbComplement(List<AbExpense> abExpenses)
+        /// <param name="expenses">支出レコードリスト</param>
+        public AbComplete(List<AbExpense> expenses)
         {
-            if (abExpenses == null)
+            dicComp = new Dictionary<string, string>();
+            if (expenses == null)
             {
-                throw new ArgumentException("支出リストが指定されませんでした。");
+                AbException.Throw(EX.EXPENSES_NULL);
             }
 
-            dicComp = new Dictionary<string, string>();
-
-            foreach (var name in abExpenses.GroupBy(exp => exp.Name).Select(gObj => gObj.Key))
+            foreach (var name in expenses.GroupBy(exp => exp.Name).Select(gObj => gObj.Key))
             {
-                int max = 0;
-                string type = string.Empty;
+                var max = 0;
+                var type = string.Empty;
 
-                foreach (var gObj in abExpenses.Where(exp => exp.Name == name).GroupBy(exp => exp.Type))
+                foreach (var gObj in expenses.Where(exp => exp.Name == name).GroupBy(exp => exp.Type))
                 {
                     var cnt = gObj.Count();
                     if (max == cnt)
@@ -42,7 +43,6 @@
                         type = gObj.Key;
                     }
                 }
-
                 dicComp.Add(name, type);
             }
         }
@@ -50,6 +50,8 @@
         /// <summary>
         /// 種別取得
         /// </summary>
+        /// <param name="name">名称</param>
+        /// <returns>種別</returns>
         public string GetType(string name)
         {
             if (string.IsNullOrEmpty(name)) { return string.Empty; }

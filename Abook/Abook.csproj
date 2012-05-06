@@ -50,29 +50,31 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="asm\AssemblyInfo.cs" />
-    <Compile Include="src\AbCommonConst.cs" />
-    <Compile Include="src\AbComplement.cs" />
-    <Compile Include="src\AbDBManager.cs" />
-    <Compile Include="src\AbExpense.cs" />
-    <Compile Include="src\AbExpenseManager.cs" />
-    <Compile Include="src\AbFormMain.cs">
+    <Compile Include="src\AbMain.cs" />
+    <Compile Include="src\balance\AbBalance.cs" />
+    <Compile Include="src\balance\AbBalanceManager.cs" />
+    <Compile Include="src\common\AbConstants.cs" />
+    <Compile Include="src\common\AbDBManager.cs" />
+    <Compile Include="src\common\AbException.cs" />
+    <Compile Include="src\common\AbUtilities.cs" />
+    <Compile Include="src\expense\AbComplete.cs" />
+    <Compile Include="src\expense\AbExpense.cs" />
+    <Compile Include="src\expense\AbExpenseManager.cs" />
+    <Compile Include="src\expense\AbSummary.cs" />
+    <Compile Include="src\form\AbFormMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="src\AbFormMain.designer.cs">
+    <Compile Include="src\form\AbFormMain.designer.cs">
       <DependentUpon>AbFormMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\AbFormVersion.cs">
+    <Compile Include="src\form\AbFormVersion.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="src\AbFormVersion.designer.cs">
+    <Compile Include="src\form\AbFormVersion.designer.cs">
       <DependentUpon>AbFormVersion.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\AbGraphData.cs" />
-    <Compile Include="src\AbGraphLine.cs" />
-    <Compile Include="src\AbGraphManager.cs" />
-    <Compile Include="src\AbMain.cs" />
-    <Compile Include="src\AbSpecial.cs" />
-    <Compile Include="src\AbSpecialManager.cs" />
-    <Compile Include="src\AbSummary.cs" />
+    <Compile Include="src\graphic\AbGraphicData.cs" />
+    <Compile Include="src\graphic\AbGraphicLine.cs" />
+    <Compile Include="src\graphic\AbGraphicManager.cs" />
   </ItemGroup>
 </Project>

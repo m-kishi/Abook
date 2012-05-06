@@ -1,13 +1,14 @@
 ﻿namespace Abook
 {
     using System;
-    using System.Drawing;
     using System.Collections.Generic;
+    using System.Drawing;
+    using GRAPH = Abook.AbConstants.GRAPH;
 
     /// <summary>
     /// グラフデータクラス
     /// </summary>
-    public class AbGraphData
+    public class AbGraphicData
     {
         /// <summary>ペン</summary>
         private Pen pen;
@@ -16,12 +17,13 @@
         private Brush brush;
 
         /// <summary>データ座標</summary>
-        public List<Point> Points { get; private set; }
+        private List<Point> Points;
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public AbGraphData(Brush brush)
+        /// <param name="brush">Brush オブジェクト</param>
+        public AbGraphicData(Brush brush)
         {
             this.brush  = brush;
             this.pen    = new Pen(brush);
@@ -31,40 +33,39 @@
         /// <summary>
         /// 座標追加
         /// </summary>
-        public void AddPoint(int value)
+        /// <param name="value">金額</param>
+        public void AddPoint(decimal value)
         {
-            Points.Add(
-                new Point(
-                    (int)(AbCommonConst.HORIZONTAL * Points.Count),
-                    (int)(AbCommonConst.COEFFICIENT * value + AbCommonConst.HEIGHT)
-                )
-            );
+            var x = (int)(GRAPH.HORIZONTAL * Points.Count);
+            var y = (int)(GRAPH.COEFFICIENT * value + GRAPH.HEIGHT);
+            Points.Add(new Point(x, y));
         }
 
         /// <summary>
         /// グラフ描画
         /// </summary>
+        /// <param name="g">Graphics オブジェクト</param>
         public void DrawData(Graphics g)
         {
             Point? prev = null;
-            foreach (Point p in Points)
+            foreach (var point in Points)
             {
                 g.FillRectangle(
                     brush,
                     new Rectangle(
-                        p.X - AbCommonConst.RECTANGLE_SIZE / 2,
-                        p.Y - AbCommonConst.RECTANGLE_SIZE / 2,
-                        AbCommonConst.RECTANGLE_SIZE,
-                        AbCommonConst.RECTANGLE_SIZE
+                        point.X - GRAPH.RECTANGLE_SIZE / 2,
+                        point.Y - GRAPH.RECTANGLE_SIZE / 2,
+                        GRAPH.RECTANGLE_SIZE,
+                        GRAPH.RECTANGLE_SIZE
                     )
                 );
 
                 if (prev.HasValue)
                 {
-                    g.DrawLine(pen, prev.Value, p);
+                    g.DrawLine(pen, prev.Value, point);
                 }
 
-                prev = p;
+                prev = point;
             }
         }
     }

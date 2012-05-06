@@ -1,554 +1,414 @@
-﻿namespace Abook
+﻿namespace AbookTest
 {
+    using Abook;
     using System;
     using System.Collections.Generic;
     using NUnit.Framework;
+    using EX  = Abook.AbException.EX;
+    using FMT = Abook.AbConstants.FMT;
 
+    /// <summary>
+    /// 支出データ管理テスト
+    /// </summary>
     [TestFixture]
     public class AbTestExpenseManager
     {
-        private DateTime argDtToday;
-        private List<AbSummary> argAbSummaries;
+        /// <summary>引数:日付</summary>
+        private DateTime argDate;
+        /// <summary>引数:集計値リスト</summary>
+        private List<AbSummary> argSummaries;
+        /// <summary>対象:支出データ管理</summary>
         private AbExpenseManager abExpenseManager;
 
         [SetUp]
         public void SetUp()
         {
-            argDtToday = new DateTime(2011, 3, 11);
-            argAbSummaries = AbSummary.GetSummaries(
-                AbDBManager.LoadFromFile("In_AbExpenseManagerTest.db")
-            );
-
-            abExpenseManager = new AbExpenseManager(argDtToday, argAbSummaries);
+            argDate = new DateTime(2011, 4, 1);
+            argSummaries = AbSummary.GetSummaries(GenerateExpenses());
+            abExpenseManager = new AbExpenseManager(argDate, argSummaries);
         }
 
+        /// <summary>
+        /// 支出レコードリスト生成
+        /// </summary>
+        /// <returns>支出レコードリスト</returns>
+        private List<AbExpense> GenerateExpenses()
+        {
+            var expenses = new List<AbExpense>();
+            expenses.Add(new AbExpense("2009-04-01", "name", "type", "100"));
+            expenses.Add(new AbExpense("2010-04-01", "name", "type", "200"));
+            expenses.Add(new AbExpense("2011-02-01", "name", "type", "300"));
+            expenses.Add(new AbExpense("2011-03-01", "name", "type", "400"));
+            expenses.Add(new AbExpense("2011-04-01", "name", "type", "500"));
+            expenses.Add(new AbExpense("2011-05-01", "name", "type", "600"));
+            expenses.Add(new AbExpense("2011-06-01", "name", "type", "700"));
+            expenses.Add(new AbExpense("2012-04-01", "name", "type", "800"));
+            expenses.Add(new AbExpense("2013-04-01", "name", "type", "900"));
+            return expenses;
+        }
+
+        /// <summary>
+        /// コンストラクタ
+        /// 引数:集計値リストが NULL
+        /// </summary>
         [Test]
         public void AbExpenseManagerWithNullSummaries()
         {
-            argAbSummaries = null;
-            Assert.Throws(
-                typeof(ArgumentException),
-                () => { new AbExpenseManager(argDtToday, argAbSummaries); }
+            argSummaries = null;
+            var ex = Assert.Throws<AbException>(() =>
+                { new AbExpenseManager(argDate, argSummaries); }
             );
+            Assert.AreEqual(EX.SUMMARIES_NULL, ex.Message);
         }
 
+        /// <summary>
+        /// タイトル
+        /// 初期値のテスト
+        /// </summary>
         [Test]
-        public void GetPriceWithNullType()
+        public void TitleWithCurrent()
         {
-            Assert.AreEqual(string.Format("{0:c}",0), abExpenseManager.GetPrice(null));
+            Assert.AreEqual(argDate.ToString(FMT.TITLE), abExpenseManager.Title);
         }
 
+        /// <summary>
+        /// タイトル
+        /// 集計値リストが空リストのテスト
+        /// </summary>
         [Test]
-        public void GetPriceWithEmptyType()
+        public void TitleWithEmptySummaries()
         {
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice(string.Empty));
+            Assert.AreEqual(argDate.ToString(FMT.TITLE), abExpenseManager.Title);
         }
 
+        /// <summary>
+        /// タイトル
+        /// 1年前のテスト
+        /// </summary>
         [Test]
-        public void GetPriceWithEmptySummaries()
+        public void TitleWith_1_PrevYear()
         {
-            argAbSummaries = new List<AbSummary>();
-            abExpenseManager = new AbExpenseManager(argDtToday, argAbSummaries);
-
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("食費"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("外食費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("雑貨"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("交際費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("交通費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("遊行費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("家賃"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("光熱費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("通信費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("医療費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("保険料"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("その他"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("合計"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("収入"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("残金"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("not match"));
-        }
-
-        [Test]
-        public void GetPriceWithDtToday()
-        {
-            Assert.AreEqual(string.Format("{0:c}",   6527), abExpenseManager.GetPrice("食費"  ));
-            Assert.AreEqual(string.Format("{0:c}",   7904), abExpenseManager.GetPrice("外食費"));
-            Assert.AreEqual(string.Format("{0:c}",   2930), abExpenseManager.GetPrice("雑貨"  ));
-            Assert.AreEqual(string.Format("{0:c}",   5900), abExpenseManager.GetPrice("交際費"));
-            Assert.AreEqual(string.Format("{0:c}",    930), abExpenseManager.GetPrice("交通費"));
-            Assert.AreEqual(string.Format("{0:c}",   2000), abExpenseManager.GetPrice("遊行費"));
-            Assert.AreEqual(string.Format("{0:c}",  45500), abExpenseManager.GetPrice("家賃"  ));
-            Assert.AreEqual(string.Format("{0:c}",   8447), abExpenseManager.GetPrice("光熱費"));
-            Assert.AreEqual(string.Format("{0:c}",   1303), abExpenseManager.GetPrice("通信費"));
-            Assert.AreEqual(string.Format("{0:c}",   2330), abExpenseManager.GetPrice("医療費"));
-            Assert.AreEqual(string.Format("{0:c}",   9760), abExpenseManager.GetPrice("保険料"));
-            Assert.AreEqual(string.Format("{0:c}",    525), abExpenseManager.GetPrice("その他"));
-            Assert.AreEqual(string.Format("{0:c}",  94056), abExpenseManager.GetPrice("合計"  ));
-            Assert.AreEqual(string.Format("{0:c}", 160059), abExpenseManager.GetPrice("収入"  ));
-            Assert.AreEqual(string.Format("{0:c}",  66003), abExpenseManager.GetPrice("残金"  ));
-            Assert.AreEqual(string.Format("{0:c}",      0), abExpenseManager.GetPrice("not match"));
-        }
-
-        [Test]
-        public void ToStringWithDtNow()
-        {
-            Assert.AreEqual("2011年03月", abExpenseManager.ToString());
-        }
-
-        [Test]
-        public void PrevYearWith1Time()
-        {
-            argDtToday = new DateTime(2011, 4, 30);
-            abExpenseManager = new AbExpenseManager(argDtToday, argAbSummaries);
-
             abExpenseManager.PrevYear();
-
-            Assert.AreEqual("2010年04月", abExpenseManager.ToString());
-            Assert.AreEqual(string.Format("{0:c}",   8074), abExpenseManager.GetPrice("食費"  ));
-            Assert.AreEqual(string.Format("{0:c}",   6820), abExpenseManager.GetPrice("外食費"));
-            Assert.AreEqual(string.Format("{0:c}",      0), abExpenseManager.GetPrice("雑貨  "));
-            Assert.AreEqual(string.Format("{0:c}",   7300), abExpenseManager.GetPrice("交際費"));
-            Assert.AreEqual(string.Format("{0:c}",   7940), abExpenseManager.GetPrice("交通費"));
-            Assert.AreEqual(string.Format("{0:c}",   2535), abExpenseManager.GetPrice("遊行費"));
-            Assert.AreEqual(string.Format("{0:c}",  45500), abExpenseManager.GetPrice("家賃"  ));
-            Assert.AreEqual(string.Format("{0:c}",   9987), abExpenseManager.GetPrice("光熱費"));
-            Assert.AreEqual(string.Format("{0:c}",   1304), abExpenseManager.GetPrice("通信費"));
-            Assert.AreEqual(string.Format("{0:c}",      0), abExpenseManager.GetPrice("医療費"));
-            Assert.AreEqual(string.Format("{0:c}",   2850), abExpenseManager.GetPrice("保険料"));
-            Assert.AreEqual(string.Format("{0:c}",  15435), abExpenseManager.GetPrice("その他"));
-            Assert.AreEqual(string.Format("{0:c}", 107745), abExpenseManager.GetPrice("合計"  ));
-            Assert.AreEqual(string.Format("{0:c}", 164843), abExpenseManager.GetPrice("収入"  ));
-            Assert.AreEqual(string.Format("{0:c}",  57098), abExpenseManager.GetPrice("残金"  ));
-            Assert.AreEqual(string.Format("{0:c}",      0), abExpenseManager.GetPrice("not match"));
+            Assert.AreEqual(argDate.AddYears(-1).ToString(FMT.TITLE), abExpenseManager.Title);
         }
 
+        /// <summary>
+        /// タイトル
+        /// 2年前のテスト
+        /// </summary>
         [Test]
-        public void PrevYearWith2Times()
+        public void TitleWith_2_PrevYear()
         {
-            argDtToday = new DateTime(2011, 4, 30);
-            abExpenseManager = new AbExpenseManager(argDtToday, argAbSummaries);
-
             abExpenseManager.PrevYear();
             abExpenseManager.PrevYear();
-
-            Assert.AreEqual("2009年04月", abExpenseManager.ToString());
-            Assert.AreEqual(string.Format("{0:c}",   8967), abExpenseManager.GetPrice("食費"  ));
-            Assert.AreEqual(string.Format("{0:c}",  11355), abExpenseManager.GetPrice("外食費"));
-            Assert.AreEqual(string.Format("{0:c}",   3194), abExpenseManager.GetPrice("雑貨"  ));
-            Assert.AreEqual(string.Format("{0:c}",   5660), abExpenseManager.GetPrice("交際費"));
-            Assert.AreEqual(string.Format("{0:c}",   4300), abExpenseManager.GetPrice("交通費"));
-            Assert.AreEqual(string.Format("{0:c}",    579), abExpenseManager.GetPrice("遊行費"));
-            Assert.AreEqual(string.Format("{0:c}",  45500), abExpenseManager.GetPrice("家賃"  ));
-            Assert.AreEqual(string.Format("{0:c}",   9074), abExpenseManager.GetPrice("光熱費"));
-            Assert.AreEqual(string.Format("{0:c}",   1304), abExpenseManager.GetPrice("通信費"));
-            Assert.AreEqual(string.Format("{0:c}",      0), abExpenseManager.GetPrice("医療費"));
-            Assert.AreEqual(string.Format("{0:c}",      0), abExpenseManager.GetPrice("保険料"));
-            Assert.AreEqual(string.Format("{0:c}",  15285), abExpenseManager.GetPrice("その他"));
-            Assert.AreEqual(string.Format("{0:c}", 105218), abExpenseManager.GetPrice("合計"  ));
-            Assert.AreEqual(string.Format("{0:c}", 110321), abExpenseManager.GetPrice("収入"  ));
-            Assert.AreEqual(string.Format("{0:c}",   5103), abExpenseManager.GetPrice("残金"  ));
-            Assert.AreEqual(string.Format("{0:c}",      0), abExpenseManager.GetPrice("not match"));
+            Assert.AreEqual(argDate.AddYears(-2).ToString(FMT.TITLE), abExpenseManager.Title);
         }
 
+        /// <summary>
+        /// タイトル
+        /// 3年前のテスト
+        /// </summary>
         [Test]
-        public void PrevYearWith3Times()
+        public void TitleWith_3_PrevYear()
         {
-            argDtToday = new DateTime(2011, 4, 30);
-            abExpenseManager = new AbExpenseManager(argDtToday, argAbSummaries);
-
             abExpenseManager.PrevYear();
             abExpenseManager.PrevYear();
             abExpenseManager.PrevYear();
-
-            Assert.AreEqual("2008年04月", abExpenseManager.ToString());
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("食費"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("外食費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("雑貨"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("交際費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("交通費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("遊行費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("家賃"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("光熱費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("通信費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("医療費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("保険料"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("その他"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("合計"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("収入"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("残金"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("not match"));
+            Assert.AreEqual(argDate.AddYears(-3).ToString(FMT.TITLE), abExpenseManager.Title);
         }
 
+        /// <summary>
+        /// タイトル
+        /// 1ヶ月前のテスト
+        /// </summary>
         [Test]
-        public void PrevYearWith4Times()
+        public void TitleWith_1_PrevMonth()
         {
-            argDtToday = new DateTime(2011, 4, 30);
-            abExpenseManager = new AbExpenseManager(argDtToday, argAbSummaries);
+            abExpenseManager.PrevMonth();
+            Assert.AreEqual(argDate.AddMonths(-1).ToString(FMT.TITLE), abExpenseManager.Title);
+        }
 
+        /// <summary>
+        /// タイトル
+        /// 2ヶ月前のテスト
+        /// </summary>
+        [Test]
+        public void TitleWith_2_PrevMonth()
+        {
+            abExpenseManager.PrevMonth();
+            abExpenseManager.PrevMonth();
+            Assert.AreEqual(argDate.AddMonths(-2).ToString(FMT.TITLE), abExpenseManager.Title);
+        }
+
+        /// <summary>
+        /// タイトル
+        /// 3ヶ月前のテスト
+        /// </summary>
+        [Test]
+        public void TitleWith_3_PrevMonth()
+        {
+            abExpenseManager.PrevMonth();
+            abExpenseManager.PrevMonth();
+            abExpenseManager.PrevMonth();
+            Assert.AreEqual(argDate.AddMonths(-3).ToString(FMT.TITLE), abExpenseManager.Title);
+        }
+
+        /// <summary>
+        /// タイトル
+        /// 1ヶ月後のテスト
+        /// </summary>
+        [Test]
+        public void TitleWith_1_NextMonth()
+        {
+            abExpenseManager.NextMonth();
+            Assert.AreEqual(argDate.AddMonths(1).ToString(FMT.TITLE), abExpenseManager.Title);
+        }
+
+        /// <summary>
+        /// タイトル
+        /// 2ヶ月後のテスト
+        /// </summary>
+        [Test]
+        public void TitleWith_2_NextMonth()
+        {
+            abExpenseManager.NextMonth();
+            abExpenseManager.NextMonth();
+            Assert.AreEqual(argDate.AddMonths(2).ToString(FMT.TITLE), abExpenseManager.Title);
+        }
+
+        /// <summary>
+        /// タイトル
+        /// 3ヶ月後のテスト
+        /// </summary>
+        [Test]
+        public void TitleWith_3_NextMonth()
+        {
+            abExpenseManager.NextMonth();
+            abExpenseManager.NextMonth();
+            abExpenseManager.NextMonth();
+            Assert.AreEqual(argDate.AddMonths(3).ToString(FMT.TITLE), abExpenseManager.Title);
+        }
+
+        /// <summary>
+        /// タイトル
+        /// 1年後のテスト
+        /// </summary>
+        [Test]
+        public void TitleWith_1_NextYear()
+        {
+            abExpenseManager.NextYear();
+            Assert.AreEqual(argDate.AddYears(1).ToString(FMT.TITLE), abExpenseManager.Title);
+        }
+
+        /// <summary>
+        /// タイトル
+        /// 2年後のテスト
+        /// </summary>
+        [Test]
+        public void TitleWith_2_NextYear()
+        {
+            abExpenseManager.NextYear();
+            abExpenseManager.NextYear();
+            Assert.AreEqual(argDate.AddYears(2).ToString(FMT.TITLE), abExpenseManager.Title);
+        }
+
+        /// <summary>
+        /// タイトル
+        /// 3年後のテスト
+        /// </summary>
+        [Test]
+        public void TitleWith_3_NextYear()
+        {
+            abExpenseManager.NextYear();
+            abExpenseManager.NextYear();
+            abExpenseManager.NextYear();
+            Assert.AreEqual(argDate.AddYears(3).ToString(FMT.TITLE), abExpenseManager.Title);
+        }
+
+        /// <summary>
+        /// 集計値取得
+        /// </summary>
+        [Test]
+        public void GetCostWithCurrent()
+        {
+            Assert.AreEqual(500, abExpenseManager.GetCost("type"));
+        }
+
+        /// <summary>
+        /// 集計値取得
+        /// 引数:種別が NULL
+        /// </summary>
+        [Test]
+        public void GetCostWithNullType()
+        {
+            Assert.AreEqual(0, abExpenseManager.GetCost(null));
+        }
+
+        /// <summary>
+        /// 集計値取得
+        /// 引数:種別が空文字列
+        /// </summary>
+        [Test]
+        public void GetCostWithEmptyType()
+        {
+            Assert.AreEqual(0, abExpenseManager.GetCost(string.Empty));
+        }
+
+        /// <summary>
+        /// 集計値取得
+        /// 集計値リストが空リスト
+        /// </summary>
+        [Test]
+        public void GetCostWithEmptySummaries()
+        {
+            argSummaries = new List<AbSummary>();
+            abExpenseManager = new AbExpenseManager(argDate, argSummaries);
+
+            Assert.AreEqual(0, abExpenseManager.GetCost("type"));
+        }
+
+        /// <summary>
+        /// 前年集計
+        /// 1年前のテスト
+        /// </summary>
+        [Test]
+        public void PrevYearWith_1_Time()
+        {
+            abExpenseManager.PrevYear();
+            Assert.AreEqual(200, abExpenseManager.GetCost("type"));
+        }
+
+        /// <summary>
+        /// 前年集計
+        /// 2年前のテスト
+        /// </summary>
+        [Test]
+        public void PrevYearWith_2_Times()
+        {
+            abExpenseManager.PrevYear();
+            abExpenseManager.PrevYear();
+            Assert.AreEqual(100, abExpenseManager.GetCost("type"));
+        }
+
+        /// <summary>
+        /// 前年集計
+        /// 3年前のテスト
+        /// </summary>
+        [Test]
+        public void PrevYearWith_3_Times()
+        {
             abExpenseManager.PrevYear();
             abExpenseManager.PrevYear();
             abExpenseManager.PrevYear();
-            abExpenseManager.PrevYear();
-
-            Assert.AreEqual("2007年04月", abExpenseManager.ToString());
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("食費"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("外食費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("雑貨"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("交際費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("交通費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("遊行費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("家賃"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("光熱費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("通信費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("医療費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("保険料"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("その他"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("合計"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("収入"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("残金"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("not match"));
+            Assert.AreEqual(0, abExpenseManager.GetCost("type"));
         }
 
+        /// <summary>
+        /// 前月集計
+        /// 1ヶ月前のテスト
+        /// </summary>
         [Test]
-        public void PrevMonthWith1Time()
+        public void PrevMonthWith_1_Time()
         {
-            argDtToday = new DateTime(2009, 6, 30);
-            abExpenseManager = new AbExpenseManager(argDtToday, argAbSummaries);
-
             abExpenseManager.PrevMonth();
-
-            Assert.AreEqual("2009年05月", abExpenseManager.ToString());
-            Assert.AreEqual(string.Format("{0:c}",  13216), abExpenseManager.GetPrice("食費"  ));
-            Assert.AreEqual(string.Format("{0:c}",   8890), abExpenseManager.GetPrice("外食費"));
-            Assert.AreEqual(string.Format("{0:c}",   6966), abExpenseManager.GetPrice("雑貨"  ));
-            Assert.AreEqual(string.Format("{0:c}",   5000), abExpenseManager.GetPrice("交際費"));
-            Assert.AreEqual(string.Format("{0:c}",   9040), abExpenseManager.GetPrice("交通費"));
-            Assert.AreEqual(string.Format("{0:c}",   4600), abExpenseManager.GetPrice("遊行費"));
-            Assert.AreEqual(string.Format("{0:c}",  45500), abExpenseManager.GetPrice("家賃"  ));
-            Assert.AreEqual(string.Format("{0:c}",   7669), abExpenseManager.GetPrice("光熱費"));
-            Assert.AreEqual(string.Format("{0:c}",   1304), abExpenseManager.GetPrice("通信費"));
-            Assert.AreEqual(string.Format("{0:c}",      0), abExpenseManager.GetPrice("医療費"));
-            Assert.AreEqual(string.Format("{0:c}",      0), abExpenseManager.GetPrice("保険料"));
-            Assert.AreEqual(string.Format("{0:c}",   4880), abExpenseManager.GetPrice("その他"));
-            Assert.AreEqual(string.Format("{0:c}", 107065), abExpenseManager.GetPrice("合計"  ));
-            Assert.AreEqual(string.Format("{0:c}", 168102), abExpenseManager.GetPrice("収入"  ));
-            Assert.AreEqual(string.Format("{0:c}",  61037), abExpenseManager.GetPrice("残金"  ));
-            Assert.AreEqual(string.Format("{0:c}",      0), abExpenseManager.GetPrice("not match"));
+            Assert.AreEqual(400, abExpenseManager.GetCost("type"));
         }
 
+        /// <summary>
+        /// 前月集計
+        /// 2ヶ月前のテスト
+        /// </summary>
         [Test]
-        public void PrevMonthWith2Times()
+        public void PrevMonthWith_2_Times()
         {
-            argDtToday = new DateTime(2009, 6, 30);
-            abExpenseManager = new AbExpenseManager(argDtToday, argAbSummaries);
-
             abExpenseManager.PrevMonth();
             abExpenseManager.PrevMonth();
-
-            Assert.AreEqual("2009年04月", abExpenseManager.ToString());
-            Assert.AreEqual(string.Format("{0:c}",   8967), abExpenseManager.GetPrice("食費"  ));
-            Assert.AreEqual(string.Format("{0:c}",  11355), abExpenseManager.GetPrice("外食費"));
-            Assert.AreEqual(string.Format("{0:c}",   3194), abExpenseManager.GetPrice("雑貨"  ));
-            Assert.AreEqual(string.Format("{0:c}",   5660), abExpenseManager.GetPrice("交際費"));
-            Assert.AreEqual(string.Format("{0:c}",   4300), abExpenseManager.GetPrice("交通費"));
-            Assert.AreEqual(string.Format("{0:c}",    579), abExpenseManager.GetPrice("遊行費"));
-            Assert.AreEqual(string.Format("{0:c}",  45500), abExpenseManager.GetPrice("家賃"  ));
-            Assert.AreEqual(string.Format("{0:c}",   9074), abExpenseManager.GetPrice("光熱費"));
-            Assert.AreEqual(string.Format("{0:c}",   1304), abExpenseManager.GetPrice("通信費"));
-            Assert.AreEqual(string.Format("{0:c}",      0), abExpenseManager.GetPrice("医療費"));
-            Assert.AreEqual(string.Format("{0:c}",      0), abExpenseManager.GetPrice("保険料"));
-            Assert.AreEqual(string.Format("{0:c}",  15285), abExpenseManager.GetPrice("その他"));
-            Assert.AreEqual(string.Format("{0:c}", 105218), abExpenseManager.GetPrice("合計"  ));
-            Assert.AreEqual(string.Format("{0:c}", 110321), abExpenseManager.GetPrice("収入"  ));
-            Assert.AreEqual(string.Format("{0:c}",   5103), abExpenseManager.GetPrice("残金"  ));
-            Assert.AreEqual(string.Format("{0:c}",      0), abExpenseManager.GetPrice("not match"));
+            Assert.AreEqual(300, abExpenseManager.GetCost("type"));
         }
 
+        /// <summary>
+        /// 前月集計
+        /// 3ヶ月前のテスト
+        /// </summary>
         [Test]
-        public void PrevMonthWith3Times()
+        public void PrevMonthWith_3_Times()
         {
-            argDtToday = new DateTime(2009, 6, 30);
-            abExpenseManager = new AbExpenseManager(argDtToday, argAbSummaries);
-
             abExpenseManager.PrevMonth();
             abExpenseManager.PrevMonth();
             abExpenseManager.PrevMonth();
-
-            Assert.AreEqual("2009年03月", abExpenseManager.ToString());
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("食費"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("外食費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("雑貨"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("交際費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("交通費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("遊行費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("家賃"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("光熱費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("通信費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("医療費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("保険料"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("その他"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("合計"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("収入"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("残金"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("not match"));
+            Assert.AreEqual(0, abExpenseManager.GetCost("type"));
         }
 
+        /// <summary>
+        /// 翌月集計
+        /// 1ヵ月後のテスト
+        /// </summary>
         [Test]
-        public void PrevMonthWith4Times()
+        public void NextMonthWith_1_Time()
         {
-            argDtToday = new DateTime(2009, 6, 30);
-            abExpenseManager = new AbExpenseManager(argDtToday, argAbSummaries);
-
-            abExpenseManager.PrevMonth();
-            abExpenseManager.PrevMonth();
-            abExpenseManager.PrevMonth();
-            abExpenseManager.PrevMonth();
-
-            Assert.AreEqual("2009年02月", abExpenseManager.ToString());
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("食費"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("外食費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("雑貨"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("交際費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("交通費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("遊行費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("家賃"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("光熱費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("通信費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("医療費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("保険料"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("その他"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("合計"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("収入"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("残金"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("not match"));
+            abExpenseManager.NextMonth();
+            Assert.AreEqual(600, abExpenseManager.GetCost("type"));
         }
 
+        /// <summary>
+        /// 翌月集計
+        /// 2ヵ月後のテスト
+        /// </summary>
         [Test]
-        public void NextMonthWith1Time()
+        public void NextMonthWith_2_Times()
         {
-            argDtToday = new DateTime(2011, 2, 28);
-            abExpenseManager = new AbExpenseManager(argDtToday, argAbSummaries);
-
             abExpenseManager.NextMonth();
-
-            Assert.AreEqual("2011年03月", abExpenseManager.ToString());
-            Assert.AreEqual(string.Format("{0:c}",   6527), abExpenseManager.GetPrice("食費"  ));
-            Assert.AreEqual(string.Format("{0:c}",   7904), abExpenseManager.GetPrice("外食費"));
-            Assert.AreEqual(string.Format("{0:c}",   2930), abExpenseManager.GetPrice("雑貨"  ));
-            Assert.AreEqual(string.Format("{0:c}",   5900), abExpenseManager.GetPrice("交際費"));
-            Assert.AreEqual(string.Format("{0:c}",    930), abExpenseManager.GetPrice("交通費"));
-            Assert.AreEqual(string.Format("{0:c}",   2000), abExpenseManager.GetPrice("遊行費"));
-            Assert.AreEqual(string.Format("{0:c}",  45500), abExpenseManager.GetPrice("家賃"  ));
-            Assert.AreEqual(string.Format("{0:c}",   8447), abExpenseManager.GetPrice("光熱費"));
-            Assert.AreEqual(string.Format("{0:c}",   1303), abExpenseManager.GetPrice("通信費"));
-            Assert.AreEqual(string.Format("{0:c}",   2330), abExpenseManager.GetPrice("医療費"));
-            Assert.AreEqual(string.Format("{0:c}",   9760), abExpenseManager.GetPrice("保険料"));
-            Assert.AreEqual(string.Format("{0:c}",    525), abExpenseManager.GetPrice("その他"));
-            Assert.AreEqual(string.Format("{0:c}",  94056), abExpenseManager.GetPrice("合計"  ));
-            Assert.AreEqual(string.Format("{0:c}", 160059), abExpenseManager.GetPrice("収入"  ));
-            Assert.AreEqual(string.Format("{0:c}",  66003), abExpenseManager.GetPrice("残金"  ));
-            Assert.AreEqual(string.Format("{0:c}",      0), abExpenseManager.GetPrice("not match"));
+            abExpenseManager.NextMonth();
+            Assert.AreEqual(700, abExpenseManager.GetCost("type"));
         }
 
+        /// <summary>
+        /// 翌月集計
+        /// 3ヵ月後のテスト
+        /// </summary>
         [Test]
-        public void NextMonthWith2Times()
+        public void NextMonthWith_3_Times()
         {
-            argDtToday = new DateTime(2011, 2, 28);
-            abExpenseManager = new AbExpenseManager(argDtToday, argAbSummaries);
-
             abExpenseManager.NextMonth();
             abExpenseManager.NextMonth();
-
-            Assert.AreEqual("2011年04月", abExpenseManager.ToString());
-            Assert.AreEqual(string.Format("{0:c}",   6390), abExpenseManager.GetPrice("食費"  ));
-            Assert.AreEqual(string.Format("{0:c}",   6730), abExpenseManager.GetPrice("外食費"));
-            Assert.AreEqual(string.Format("{0:c}",   2171), abExpenseManager.GetPrice("雑貨"  ));
-            Assert.AreEqual(string.Format("{0:c}",   4514), abExpenseManager.GetPrice("交際費"));
-            Assert.AreEqual(string.Format("{0:c}",   7940), abExpenseManager.GetPrice("交通費"));
-            Assert.AreEqual(string.Format("{0:c}",    649), abExpenseManager.GetPrice("遊行費"));
-            Assert.AreEqual(string.Format("{0:c}",  45500), abExpenseManager.GetPrice("家賃"  ));
-            Assert.AreEqual(string.Format("{0:c}",   8468), abExpenseManager.GetPrice("光熱費"));
-            Assert.AreEqual(string.Format("{0:c}",   1303), abExpenseManager.GetPrice("通信費"));
-            Assert.AreEqual(string.Format("{0:c}",      0), abExpenseManager.GetPrice("医療費"));
-            Assert.AreEqual(string.Format("{0:c}",   2760), abExpenseManager.GetPrice("保険料"));
-            Assert.AreEqual(string.Format("{0:c}",  15435), abExpenseManager.GetPrice("その他"));
-            Assert.AreEqual(string.Format("{0:c}", 101860), abExpenseManager.GetPrice("合計"  ));
-            Assert.AreEqual(string.Format("{0:c}", 159889), abExpenseManager.GetPrice("収入"  ));
-            Assert.AreEqual(string.Format("{0:c}",  58029), abExpenseManager.GetPrice("残金"  ));
-            Assert.AreEqual(string.Format("{0:c}",      0), abExpenseManager.GetPrice("not match"));
+            abExpenseManager.NextMonth();
+            Assert.AreEqual(0, abExpenseManager.GetCost("type"));
         }
 
+        /// <summary>
+        /// 翌年集計
+        /// 1年後のテスト
+        /// </summary>
         [Test]
-        public void NextMonthWith3Times()
+        public void NextYearWith_1_Time()
         {
-            argDtToday = new DateTime(2011, 2, 28);
-            abExpenseManager = new AbExpenseManager(argDtToday, argAbSummaries);
-
-            abExpenseManager.NextMonth();
-            abExpenseManager.NextMonth();
-            abExpenseManager.NextMonth();
-
-            Assert.AreEqual("2011年05月", abExpenseManager.ToString());
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("食費"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("外食費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("雑貨"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("交際費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("交通費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("遊行費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("家賃"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("光熱費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("通信費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("医療費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("保険料"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("その他"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("合計"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("収入"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("残金"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("not match"));
+            abExpenseManager.NextYear();
+            Assert.AreEqual(800, abExpenseManager.GetCost("type"));
         }
 
+        /// <summary>
+        /// 翌年集計
+        /// 2年後のテスト
+        /// </summary>
         [Test]
-        public void NextMonthWith4Times()
+        public void NextYearWith_2_Times()
         {
-            argDtToday = new DateTime(2011, 2, 28);
-            abExpenseManager = new AbExpenseManager(argDtToday, argAbSummaries);
-
-            abExpenseManager.NextMonth();
-            abExpenseManager.NextMonth();
-            abExpenseManager.NextMonth();
-            abExpenseManager.NextMonth();
-
-            Assert.AreEqual("2011年06月", abExpenseManager.ToString());
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("食費"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("外食費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("雑貨"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("交際費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("交通費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("遊行費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("家賃"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("光熱費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("通信費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("医療費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("保険料"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("その他"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("合計"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("収入"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("残金"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("not match"));
+            abExpenseManager.NextYear();
+            abExpenseManager.NextYear();
+            Assert.AreEqual(900, abExpenseManager.GetCost("type"));
         }
 
+        /// <summary>
+        /// 翌年集計
+        /// 3年後のテスト
+        /// </summary>
         [Test]
-        public void NextYearWith1Time()
+        public void NextYearWith_3_Times()
         {
-            argDtToday = new DateTime(2009, 4, 1);
-            abExpenseManager = new AbExpenseManager(argDtToday, argAbSummaries);
-
-            abExpenseManager.NextYear();
-
-            Assert.AreEqual("2010年04月", abExpenseManager.ToString());
-            Assert.AreEqual(string.Format("{0:c}",   8074), abExpenseManager.GetPrice("食費"  ));
-            Assert.AreEqual(string.Format("{0:c}",   6820), abExpenseManager.GetPrice("外食費"));
-            Assert.AreEqual(string.Format("{0:c}",      0), abExpenseManager.GetPrice("雑貨"  ));
-            Assert.AreEqual(string.Format("{0:c}",   7300), abExpenseManager.GetPrice("交際費"));
-            Assert.AreEqual(string.Format("{0:c}",   7940), abExpenseManager.GetPrice("交通費"));
-            Assert.AreEqual(string.Format("{0:c}",   2535), abExpenseManager.GetPrice("遊行費"));
-            Assert.AreEqual(string.Format("{0:c}",  45500), abExpenseManager.GetPrice("家賃"  ));
-            Assert.AreEqual(string.Format("{0:c}",   9987), abExpenseManager.GetPrice("光熱費"));
-            Assert.AreEqual(string.Format("{0:c}",   1304), abExpenseManager.GetPrice("通信費"));
-            Assert.AreEqual(string.Format("{0:c}",      0), abExpenseManager.GetPrice("医療費"));
-            Assert.AreEqual(string.Format("{0:c}",   2850), abExpenseManager.GetPrice("保険料"));
-            Assert.AreEqual(string.Format("{0:c}",  15435), abExpenseManager.GetPrice("その他"));
-            Assert.AreEqual(string.Format("{0:c}", 107745), abExpenseManager.GetPrice("合計"  ));
-            Assert.AreEqual(string.Format("{0:c}", 164843), abExpenseManager.GetPrice("収入"  ));
-            Assert.AreEqual(string.Format("{0:c}",  57098), abExpenseManager.GetPrice("残金"  ));
-            Assert.AreEqual(string.Format("{0:c}",      0), abExpenseManager.GetPrice("not match"));
-        }
-
-        [Test]
-        public void NextYearWith2Times()
-        {
-            argDtToday = new DateTime(2009, 4, 1);
-            abExpenseManager = new AbExpenseManager(argDtToday, argAbSummaries);
-
-            abExpenseManager.NextYear();
-            abExpenseManager.NextYear();
-
-            Assert.AreEqual("2011年04月", abExpenseManager.ToString());
-            Assert.AreEqual(string.Format("{0:c}",   6390), abExpenseManager.GetPrice("食費"  ));
-            Assert.AreEqual(string.Format("{0:c}",   6730), abExpenseManager.GetPrice("外食費"));
-            Assert.AreEqual(string.Format("{0:c}",   2171), abExpenseManager.GetPrice("雑貨"  ));
-            Assert.AreEqual(string.Format("{0:c}",   4514), abExpenseManager.GetPrice("交際費"));
-            Assert.AreEqual(string.Format("{0:c}",   7940), abExpenseManager.GetPrice("交通費"));
-            Assert.AreEqual(string.Format("{0:c}",    649), abExpenseManager.GetPrice("遊行費"));
-            Assert.AreEqual(string.Format("{0:c}",  45500), abExpenseManager.GetPrice("家賃"  ));
-            Assert.AreEqual(string.Format("{0:c}",   8468), abExpenseManager.GetPrice("光熱費"));
-            Assert.AreEqual(string.Format("{0:c}",   1303), abExpenseManager.GetPrice("通信費"));
-            Assert.AreEqual(string.Format("{0:c}",      0), abExpenseManager.GetPrice("医療費"));
-            Assert.AreEqual(string.Format("{0:c}",   2760), abExpenseManager.GetPrice("保険料"));
-            Assert.AreEqual(string.Format("{0:c}",  15435), abExpenseManager.GetPrice("その他"));
-            Assert.AreEqual(string.Format("{0:c}", 101860), abExpenseManager.GetPrice("合計"  ));
-            Assert.AreEqual(string.Format("{0:c}", 159889), abExpenseManager.GetPrice("収入"  ));
-            Assert.AreEqual(string.Format("{0:c}",  58029), abExpenseManager.GetPrice("残金"  ));
-            Assert.AreEqual(string.Format("{0:c}",      0), abExpenseManager.GetPrice("not match"));
-        }
-
-        [Test]
-        public void NextYearWith3Times()
-        {
-            argDtToday = new DateTime(2009, 4, 1);
-            abExpenseManager = new AbExpenseManager(argDtToday, argAbSummaries);
-
             abExpenseManager.NextYear();
             abExpenseManager.NextYear();
             abExpenseManager.NextYear();
-
-            Assert.AreEqual("2012年04月", abExpenseManager.ToString());
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("食費"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("外食費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("雑貨"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("交際費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("交通費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("遊行費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("家賃"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("光熱費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("通信費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("医療費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("保険料"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("その他"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("合計"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("収入"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("残金"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("not match"));
-        }
-
-        [Test]
-        public void NextYearWith4Times()
-        {
-            argDtToday = new DateTime(2009, 4, 1);
-            abExpenseManager = new AbExpenseManager(argDtToday, argAbSummaries);
-
-            abExpenseManager.NextYear();
-            abExpenseManager.NextYear();
-            abExpenseManager.NextYear();
-            abExpenseManager.NextYear();
-
-            Assert.AreEqual("2013年04月", abExpenseManager.ToString());
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("食費"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("外食費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("雑貨"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("交際費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("交通費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("遊行費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("家賃"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("光熱費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("通信費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("医療費"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("保険料"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("その他"));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("合計"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("収入"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("残金"  ));
-            Assert.AreEqual(string.Format("{0:c}", 0), abExpenseManager.GetPrice("not match"));
+            Assert.AreEqual(0, abExpenseManager.GetCost("type"));
         }
     }
 }
