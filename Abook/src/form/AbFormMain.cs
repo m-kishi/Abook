@@ -437,10 +437,14 @@
         private void SetViewBalance()
         {
             DgvBalance.Rows.Clear();
-            DgvBalance.Rows.Add(abBalanceManager.Balances().Count());
+            var balances = abBalanceManager.Balances();
+            if (balances.Count() > 0)
+            {
+                DgvBalance.Rows.Add(balances.Count());
+            }
 
             int i = 0;
-            foreach (var bln in abBalanceManager.Balances())
+            foreach (var bln in balances)
             {
                 DataGridViewRow row = DgvBalance.Rows[i++];
                 row.Cells[COL.YEAR].Value = bln.Year;
