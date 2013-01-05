@@ -6,6 +6,6 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("Abook")]
 [assembly: AssemblyProduct("Abook")]
-[assembly: AssemblyInformationalVersion("3.1.0")]
-[assembly: AssemblyCopyright("Copyright @ 2010-2012 m-kishi")]
+[assembly: AssemblyInformationalVersion("3.1.1")]
+[assembly: AssemblyCopyright("Copyright @ 2010-2013 m-kishi")]
 [assembly: AssemblyDescription("This is my account book application.")]
