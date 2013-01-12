@@ -393,7 +393,7 @@
             // 
             // LblBlnc
             // 
-            this.LblBlnc.Label = "残金";
+            this.LblBlnc.Label = "収支";
             this.LblBlnc.Location = new System.Drawing.Point(217, 251);
             this.LblBlnc.Name = "LblBlnc";
             this.LblBlnc.Size = new System.Drawing.Size(120, 12);
