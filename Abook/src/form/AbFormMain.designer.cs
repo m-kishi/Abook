@@ -53,35 +53,7 @@
             this.BtnEntry = new System.Windows.Forms.Button();
             this.TabSummary = new System.Windows.Forms.TabPage();
             this.LblLine2 = new System.Windows.Forms.Label();
-            this.LblYen14残金 = new System.Windows.Forms.Label();
-            this.Lbl14残金 = new System.Windows.Forms.Label();
-            this.LblYen13合計 = new System.Windows.Forms.Label();
-            this.Lbl13合計 = new System.Windows.Forms.Label();
-            this.LblYen12その他 = new System.Windows.Forms.Label();
-            this.Lbl12その他 = new System.Windows.Forms.Label();
-            this.LblYen11保険料 = new System.Windows.Forms.Label();
-            this.Lbl11保険料 = new System.Windows.Forms.Label();
-            this.LblYen09通信費 = new System.Windows.Forms.Label();
-            this.Lbl09通信費 = new System.Windows.Forms.Label();
-            this.LblYen08光熱費 = new System.Windows.Forms.Label();
-            this.Lbl08光熱費 = new System.Windows.Forms.Label();
-            this.LblYen07家賃 = new System.Windows.Forms.Label();
-            this.Lbl07家賃 = new System.Windows.Forms.Label();
-            this.LblYen06遊行費 = new System.Windows.Forms.Label();
-            this.Lbl06遊行費 = new System.Windows.Forms.Label();
-            this.LblYen05交通費 = new System.Windows.Forms.Label();
-            this.Lbl05交通費 = new System.Windows.Forms.Label();
-            this.LblYen10医療費 = new System.Windows.Forms.Label();
-            this.Lbl10医療費 = new System.Windows.Forms.Label();
             this.LblLine = new System.Windows.Forms.Label();
-            this.LblYen04交際費 = new System.Windows.Forms.Label();
-            this.Lbl04交際費 = new System.Windows.Forms.Label();
-            this.LblYen03雑貨 = new System.Windows.Forms.Label();
-            this.Lbl03雑貨 = new System.Windows.Forms.Label();
-            this.LblYen02外食費 = new System.Windows.Forms.Label();
-            this.Lbl02外食費 = new System.Windows.Forms.Label();
-            this.LblYen01食費 = new System.Windows.Forms.Label();
-            this.Lbl01食費 = new System.Windows.Forms.Label();
             this.BtnExpNextYear = new System.Windows.Forms.Button();
             this.BtnExpNextMonth = new System.Windows.Forms.Button();
             this.LblSummary = new System.Windows.Forms.Label();
@@ -119,6 +91,20 @@
             this.ColExpense = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColSpecial = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColBalance = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LblHous = new Abook.AbLabelControl();
+            this.LblPlay = new Abook.AbLabelControl();
+            this.LblTrfc = new Abook.AbLabelControl();
+            this.LblFrnd = new Abook.AbLabelControl();
+            this.LblGood = new Abook.AbLabelControl();
+            this.LblOtfd = new Abook.AbLabelControl();
+            this.LblFood = new Abook.AbLabelControl();
+            this.LblEngy = new Abook.AbLabelControl();
+            this.LblCnct = new Abook.AbLabelControl();
+            this.LblMedi = new Abook.AbLabelControl();
+            this.LblInsu = new Abook.AbLabelControl();
+            this.LblOthr = new Abook.AbLabelControl();
+            this.LblTtal = new Abook.AbLabelControl();
+            this.LblBlnc = new Abook.AbLabelControl();
             this.MenuStrip.SuspendLayout();
             this.TabControl.SuspendLayout();
             this.TabExpense.SuspendLayout();
@@ -280,36 +266,22 @@
             // TabSummary
             // 
             this.TabSummary.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.TabSummary.Controls.Add(this.LblBlnc);
+            this.TabSummary.Controls.Add(this.LblTtal);
+            this.TabSummary.Controls.Add(this.LblOthr);
+            this.TabSummary.Controls.Add(this.LblInsu);
+            this.TabSummary.Controls.Add(this.LblMedi);
+            this.TabSummary.Controls.Add(this.LblCnct);
+            this.TabSummary.Controls.Add(this.LblEngy);
+            this.TabSummary.Controls.Add(this.LblHous);
+            this.TabSummary.Controls.Add(this.LblPlay);
+            this.TabSummary.Controls.Add(this.LblTrfc);
+            this.TabSummary.Controls.Add(this.LblFrnd);
+            this.TabSummary.Controls.Add(this.LblGood);
+            this.TabSummary.Controls.Add(this.LblOtfd);
+            this.TabSummary.Controls.Add(this.LblFood);
             this.TabSummary.Controls.Add(this.LblLine2);
-            this.TabSummary.Controls.Add(this.LblYen14残金);
-            this.TabSummary.Controls.Add(this.Lbl14残金);
-            this.TabSummary.Controls.Add(this.LblYen13合計);
-            this.TabSummary.Controls.Add(this.Lbl13合計);
-            this.TabSummary.Controls.Add(this.LblYen12その他);
-            this.TabSummary.Controls.Add(this.Lbl12その他);
-            this.TabSummary.Controls.Add(this.LblYen11保険料);
-            this.TabSummary.Controls.Add(this.Lbl11保険料);
-            this.TabSummary.Controls.Add(this.LblYen09通信費);
-            this.TabSummary.Controls.Add(this.Lbl09通信費);
-            this.TabSummary.Controls.Add(this.LblYen08光熱費);
-            this.TabSummary.Controls.Add(this.Lbl08光熱費);
-            this.TabSummary.Controls.Add(this.LblYen07家賃);
-            this.TabSummary.Controls.Add(this.Lbl07家賃);
-            this.TabSummary.Controls.Add(this.LblYen06遊行費);
-            this.TabSummary.Controls.Add(this.Lbl06遊行費);
-            this.TabSummary.Controls.Add(this.LblYen05交通費);
-            this.TabSummary.Controls.Add(this.Lbl05交通費);
-            this.TabSummary.Controls.Add(this.LblYen10医療費);
-            this.TabSummary.Controls.Add(this.Lbl10医療費);
             this.TabSummary.Controls.Add(this.LblLine);
-            this.TabSummary.Controls.Add(this.LblYen04交際費);
-            this.TabSummary.Controls.Add(this.Lbl04交際費);
-            this.TabSummary.Controls.Add(this.LblYen03雑貨);
-            this.TabSummary.Controls.Add(this.Lbl03雑貨);
-            this.TabSummary.Controls.Add(this.LblYen02外食費);
-            this.TabSummary.Controls.Add(this.Lbl02外食費);
-            this.TabSummary.Controls.Add(this.LblYen01食費);
-            this.TabSummary.Controls.Add(this.Lbl01食費);
             this.TabSummary.Controls.Add(this.BtnExpNextYear);
             this.TabSummary.Controls.Add(this.BtnExpNextMonth);
             this.TabSummary.Controls.Add(this.LblSummary);
@@ -332,226 +304,6 @@
             this.LblLine2.TabIndex = 46;
             this.LblLine2.Text = "-----------------------";
             // 
-            // LblYen14残金
-            // 
-            this.LblYen14残金.AutoSize = true;
-            this.LblYen14残金.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.LblYen14残金.Location = new System.Drawing.Point(271, 251);
-            this.LblYen14残金.MinimumSize = new System.Drawing.Size(55, 12);
-            this.LblYen14残金.Name = "LblYen14残金";
-            this.LblYen14残金.Size = new System.Drawing.Size(55, 12);
-            this.LblYen14残金.TabIndex = 45;
-            this.LblYen14残金.Text = "\\999,999";
-            this.LblYen14残金.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // Lbl14残金
-            // 
-            this.Lbl14残金.AutoSize = true;
-            this.Lbl14残金.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.Lbl14残金.Location = new System.Drawing.Point(212, 251);
-            this.Lbl14残金.Name = "Lbl14残金";
-            this.Lbl14残金.Size = new System.Drawing.Size(29, 12);
-            this.Lbl14残金.TabIndex = 44;
-            this.Lbl14残金.Text = "残金";
-            // 
-            // LblYen13合計
-            // 
-            this.LblYen13合計.AutoSize = true;
-            this.LblYen13合計.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.LblYen13合計.Location = new System.Drawing.Point(276, 228);
-            this.LblYen13合計.MinimumSize = new System.Drawing.Size(50, 12);
-            this.LblYen13合計.Name = "LblYen13合計";
-            this.LblYen13合計.Size = new System.Drawing.Size(50, 12);
-            this.LblYen13合計.TabIndex = 43;
-            this.LblYen13合計.Text = "\\999,999";
-            this.LblYen13合計.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // Lbl13合計
-            // 
-            this.Lbl13合計.AutoSize = true;
-            this.Lbl13合計.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.Lbl13合計.Location = new System.Drawing.Point(212, 228);
-            this.Lbl13合計.Name = "Lbl13合計";
-            this.Lbl13合計.Size = new System.Drawing.Size(29, 12);
-            this.Lbl13合計.TabIndex = 42;
-            this.Lbl13合計.Text = "合計";
-            // 
-            // LblYen12その他
-            // 
-            this.LblYen12その他.AutoSize = true;
-            this.LblYen12その他.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.LblYen12その他.Location = new System.Drawing.Point(276, 185);
-            this.LblYen12その他.MinimumSize = new System.Drawing.Size(50, 12);
-            this.LblYen12その他.Name = "LblYen12その他";
-            this.LblYen12その他.Size = new System.Drawing.Size(50, 12);
-            this.LblYen12その他.TabIndex = 41;
-            this.LblYen12その他.Text = "\\999,999";
-            this.LblYen12その他.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // Lbl12その他
-            // 
-            this.Lbl12その他.AutoSize = true;
-            this.Lbl12その他.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.Lbl12その他.Location = new System.Drawing.Point(212, 185);
-            this.Lbl12その他.Name = "Lbl12その他";
-            this.Lbl12その他.Size = new System.Drawing.Size(36, 12);
-            this.Lbl12その他.TabIndex = 40;
-            this.Lbl12その他.Text = "その他";
-            // 
-            // LblYen11保険料
-            // 
-            this.LblYen11保険料.AutoSize = true;
-            this.LblYen11保険料.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.LblYen11保険料.Location = new System.Drawing.Point(276, 162);
-            this.LblYen11保険料.MinimumSize = new System.Drawing.Size(50, 12);
-            this.LblYen11保険料.Name = "LblYen11保険料";
-            this.LblYen11保険料.Size = new System.Drawing.Size(50, 12);
-            this.LblYen11保険料.TabIndex = 37;
-            this.LblYen11保険料.Text = "\\999,999";
-            this.LblYen11保険料.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // Lbl11保険料
-            // 
-            this.Lbl11保険料.AutoSize = true;
-            this.Lbl11保険料.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.Lbl11保険料.Location = new System.Drawing.Point(212, 162);
-            this.Lbl11保険料.Name = "Lbl11保険料";
-            this.Lbl11保険料.Size = new System.Drawing.Size(41, 12);
-            this.Lbl11保険料.TabIndex = 36;
-            this.Lbl11保険料.Text = "保険料";
-            // 
-            // LblYen09通信費
-            // 
-            this.LblYen09通信費.AutoSize = true;
-            this.LblYen09通信費.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.LblYen09通信費.Location = new System.Drawing.Point(276, 116);
-            this.LblYen09通信費.MinimumSize = new System.Drawing.Size(50, 12);
-            this.LblYen09通信費.Name = "LblYen09通信費";
-            this.LblYen09通信費.Size = new System.Drawing.Size(50, 12);
-            this.LblYen09通信費.TabIndex = 35;
-            this.LblYen09通信費.Text = "\\999,999";
-            this.LblYen09通信費.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // Lbl09通信費
-            // 
-            this.Lbl09通信費.AutoSize = true;
-            this.Lbl09通信費.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.Lbl09通信費.Location = new System.Drawing.Point(212, 116);
-            this.Lbl09通信費.Name = "Lbl09通信費";
-            this.Lbl09通信費.Size = new System.Drawing.Size(41, 12);
-            this.Lbl09通信費.TabIndex = 34;
-            this.Lbl09通信費.Text = "通信費";
-            // 
-            // LblYen08光熱費
-            // 
-            this.LblYen08光熱費.AutoSize = true;
-            this.LblYen08光熱費.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.LblYen08光熱費.Location = new System.Drawing.Point(276, 73);
-            this.LblYen08光熱費.MinimumSize = new System.Drawing.Size(50, 12);
-            this.LblYen08光熱費.Name = "LblYen08光熱費";
-            this.LblYen08光熱費.Size = new System.Drawing.Size(50, 12);
-            this.LblYen08光熱費.TabIndex = 27;
-            this.LblYen08光熱費.Text = "\\999,999";
-            this.LblYen08光熱費.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // Lbl08光熱費
-            // 
-            this.Lbl08光熱費.AutoSize = true;
-            this.Lbl08光熱費.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.Lbl08光熱費.Location = new System.Drawing.Point(212, 73);
-            this.Lbl08光熱費.Name = "Lbl08光熱費";
-            this.Lbl08光熱費.Size = new System.Drawing.Size(41, 12);
-            this.Lbl08光熱費.TabIndex = 26;
-            this.Lbl08光熱費.Text = "光熱費";
-            // 
-            // LblYen07家賃
-            // 
-            this.LblYen07家賃.AutoSize = true;
-            this.LblYen07家賃.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.LblYen07家賃.Location = new System.Drawing.Point(276, 50);
-            this.LblYen07家賃.MinimumSize = new System.Drawing.Size(50, 12);
-            this.LblYen07家賃.Name = "LblYen07家賃";
-            this.LblYen07家賃.Size = new System.Drawing.Size(50, 12);
-            this.LblYen07家賃.TabIndex = 25;
-            this.LblYen07家賃.Text = "\\999,999";
-            this.LblYen07家賃.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // Lbl07家賃
-            // 
-            this.Lbl07家賃.AutoSize = true;
-            this.Lbl07家賃.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.Lbl07家賃.Location = new System.Drawing.Point(212, 50);
-            this.Lbl07家賃.Name = "Lbl07家賃";
-            this.Lbl07家賃.Size = new System.Drawing.Size(29, 12);
-            this.Lbl07家賃.TabIndex = 24;
-            this.Lbl07家賃.Text = "家賃";
-            // 
-            // LblYen06遊行費
-            // 
-            this.LblYen06遊行費.AutoSize = true;
-            this.LblYen06遊行費.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.LblYen06遊行費.Location = new System.Drawing.Point(113, 185);
-            this.LblYen06遊行費.MinimumSize = new System.Drawing.Size(50, 12);
-            this.LblYen06遊行費.Name = "LblYen06遊行費";
-            this.LblYen06遊行費.Size = new System.Drawing.Size(50, 12);
-            this.LblYen06遊行費.TabIndex = 23;
-            this.LblYen06遊行費.Text = "\\999,999";
-            this.LblYen06遊行費.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // Lbl06遊行費
-            // 
-            this.Lbl06遊行費.AutoSize = true;
-            this.Lbl06遊行費.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.Lbl06遊行費.Location = new System.Drawing.Point(31, 185);
-            this.Lbl06遊行費.Name = "Lbl06遊行費";
-            this.Lbl06遊行費.Size = new System.Drawing.Size(41, 12);
-            this.Lbl06遊行費.TabIndex = 22;
-            this.Lbl06遊行費.Text = "遊行費";
-            // 
-            // LblYen05交通費
-            // 
-            this.LblYen05交通費.AutoSize = true;
-            this.LblYen05交通費.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.LblYen05交通費.Location = new System.Drawing.Point(113, 162);
-            this.LblYen05交通費.MinimumSize = new System.Drawing.Size(50, 12);
-            this.LblYen05交通費.Name = "LblYen05交通費";
-            this.LblYen05交通費.Size = new System.Drawing.Size(50, 12);
-            this.LblYen05交通費.TabIndex = 21;
-            this.LblYen05交通費.Text = "\\999,999";
-            this.LblYen05交通費.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // Lbl05交通費
-            // 
-            this.Lbl05交通費.AutoSize = true;
-            this.Lbl05交通費.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.Lbl05交通費.Location = new System.Drawing.Point(31, 162);
-            this.Lbl05交通費.Name = "Lbl05交通費";
-            this.Lbl05交通費.Size = new System.Drawing.Size(41, 12);
-            this.Lbl05交通費.TabIndex = 20;
-            this.Lbl05交通費.Text = "交通費";
-            // 
-            // LblYen10医療費
-            // 
-            this.LblYen10医療費.AutoSize = true;
-            this.LblYen10医療費.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.LblYen10医療費.Location = new System.Drawing.Point(276, 139);
-            this.LblYen10医療費.MinimumSize = new System.Drawing.Size(50, 12);
-            this.LblYen10医療費.Name = "LblYen10医療費";
-            this.LblYen10医療費.Size = new System.Drawing.Size(50, 12);
-            this.LblYen10医療費.TabIndex = 19;
-            this.LblYen10医療費.Text = "\\999,999";
-            this.LblYen10医療費.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // Lbl10医療費
-            // 
-            this.Lbl10医療費.AutoSize = true;
-            this.Lbl10医療費.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.Lbl10医療費.Location = new System.Drawing.Point(212, 139);
-            this.Lbl10医療費.Name = "Lbl10医療費";
-            this.Lbl10医療費.Size = new System.Drawing.Size(41, 12);
-            this.Lbl10医療費.TabIndex = 18;
-            this.Lbl10医療費.Text = "医療費";
-            // 
             // LblLine
             // 
             this.LblLine.AutoSize = true;
@@ -560,94 +312,6 @@
             this.LblLine.Size = new System.Drawing.Size(323, 12);
             this.LblLine.TabIndex = 15;
             this.LblLine.Text = "-----------------------------------------------------";
-            // 
-            // LblYen04交際費
-            // 
-            this.LblYen04交際費.AutoSize = true;
-            this.LblYen04交際費.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.LblYen04交際費.Location = new System.Drawing.Point(113, 139);
-            this.LblYen04交際費.MinimumSize = new System.Drawing.Size(50, 12);
-            this.LblYen04交際費.Name = "LblYen04交際費";
-            this.LblYen04交際費.Size = new System.Drawing.Size(50, 12);
-            this.LblYen04交際費.TabIndex = 12;
-            this.LblYen04交際費.Text = "\\999,999";
-            this.LblYen04交際費.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // Lbl04交際費
-            // 
-            this.Lbl04交際費.AutoSize = true;
-            this.Lbl04交際費.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.Lbl04交際費.Location = new System.Drawing.Point(31, 139);
-            this.Lbl04交際費.Name = "Lbl04交際費";
-            this.Lbl04交際費.Size = new System.Drawing.Size(41, 12);
-            this.Lbl04交際費.TabIndex = 11;
-            this.Lbl04交際費.Text = "交際費";
-            // 
-            // LblYen03雑貨
-            // 
-            this.LblYen03雑貨.AutoSize = true;
-            this.LblYen03雑貨.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.LblYen03雑貨.Location = new System.Drawing.Point(113, 116);
-            this.LblYen03雑貨.MinimumSize = new System.Drawing.Size(50, 12);
-            this.LblYen03雑貨.Name = "LblYen03雑貨";
-            this.LblYen03雑貨.Size = new System.Drawing.Size(50, 12);
-            this.LblYen03雑貨.TabIndex = 10;
-            this.LblYen03雑貨.Text = "\\999,999";
-            this.LblYen03雑貨.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // Lbl03雑貨
-            // 
-            this.Lbl03雑貨.AutoSize = true;
-            this.Lbl03雑貨.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.Lbl03雑貨.Location = new System.Drawing.Point(31, 116);
-            this.Lbl03雑貨.Name = "Lbl03雑貨";
-            this.Lbl03雑貨.Size = new System.Drawing.Size(29, 12);
-            this.Lbl03雑貨.TabIndex = 9;
-            this.Lbl03雑貨.Text = "雑貨";
-            // 
-            // LblYen02外食費
-            // 
-            this.LblYen02外食費.AutoSize = true;
-            this.LblYen02外食費.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.LblYen02外食費.Location = new System.Drawing.Point(113, 73);
-            this.LblYen02外食費.MinimumSize = new System.Drawing.Size(50, 12);
-            this.LblYen02外食費.Name = "LblYen02外食費";
-            this.LblYen02外食費.Size = new System.Drawing.Size(50, 12);
-            this.LblYen02外食費.TabIndex = 8;
-            this.LblYen02外食費.Text = "\\999,999";
-            this.LblYen02外食費.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // Lbl02外食費
-            // 
-            this.Lbl02外食費.AutoSize = true;
-            this.Lbl02外食費.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.Lbl02外食費.Location = new System.Drawing.Point(31, 73);
-            this.Lbl02外食費.Name = "Lbl02外食費";
-            this.Lbl02外食費.Size = new System.Drawing.Size(41, 12);
-            this.Lbl02外食費.TabIndex = 7;
-            this.Lbl02外食費.Text = "外食費";
-            // 
-            // LblYen01食費
-            // 
-            this.LblYen01食費.AutoSize = true;
-            this.LblYen01食費.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.LblYen01食費.Location = new System.Drawing.Point(113, 50);
-            this.LblYen01食費.MinimumSize = new System.Drawing.Size(50, 12);
-            this.LblYen01食費.Name = "LblYen01食費";
-            this.LblYen01食費.Size = new System.Drawing.Size(50, 12);
-            this.LblYen01食費.TabIndex = 6;
-            this.LblYen01食費.Text = "\\999,999";
-            this.LblYen01食費.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // Lbl01食費
-            // 
-            this.Lbl01食費.AutoSize = true;
-            this.Lbl01食費.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.Lbl01食費.Location = new System.Drawing.Point(31, 50);
-            this.Lbl01食費.Name = "Lbl01食費";
-            this.Lbl01食費.Size = new System.Drawing.Size(29, 12);
-            this.Lbl01食費.TabIndex = 5;
-            this.Lbl01食費.Text = "食費";
             // 
             // BtnExpNextYear
             // 
@@ -1061,6 +725,118 @@
             this.ColBalance.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.ColBalance.Width = 75;
             // 
+            // LblHous
+            // 
+            this.LblHous.Label = "家賃";
+            this.LblHous.Location = new System.Drawing.Point(217, 50);
+            this.LblHous.Name = "LblHous";
+            this.LblHous.Size = new System.Drawing.Size(120, 12);
+            this.LblHous.TabIndex = 53;
+            // 
+            // LblPlay
+            // 
+            this.LblPlay.Label = "遊行費";
+            this.LblPlay.Location = new System.Drawing.Point(36, 185);
+            this.LblPlay.Name = "LblPlay";
+            this.LblPlay.Size = new System.Drawing.Size(120, 12);
+            this.LblPlay.TabIndex = 52;
+            // 
+            // LblTrfc
+            // 
+            this.LblTrfc.Label = "交通費";
+            this.LblTrfc.Location = new System.Drawing.Point(36, 162);
+            this.LblTrfc.Name = "LblTrfc";
+            this.LblTrfc.Size = new System.Drawing.Size(120, 12);
+            this.LblTrfc.TabIndex = 51;
+            // 
+            // LblFrnd
+            // 
+            this.LblFrnd.Label = "交際費";
+            this.LblFrnd.Location = new System.Drawing.Point(36, 139);
+            this.LblFrnd.Name = "LblFrnd";
+            this.LblFrnd.Size = new System.Drawing.Size(120, 12);
+            this.LblFrnd.TabIndex = 50;
+            // 
+            // LblGood
+            // 
+            this.LblGood.Label = "雑貨";
+            this.LblGood.Location = new System.Drawing.Point(36, 116);
+            this.LblGood.Name = "LblGood";
+            this.LblGood.Size = new System.Drawing.Size(120, 12);
+            this.LblGood.TabIndex = 49;
+            // 
+            // LblOtfd
+            // 
+            this.LblOtfd.Label = "外食費";
+            this.LblOtfd.Location = new System.Drawing.Point(36, 73);
+            this.LblOtfd.Name = "LblOtfd";
+            this.LblOtfd.Size = new System.Drawing.Size(120, 12);
+            this.LblOtfd.TabIndex = 48;
+            // 
+            // LblFood
+            // 
+            this.LblFood.Label = "食費";
+            this.LblFood.Location = new System.Drawing.Point(36, 50);
+            this.LblFood.Name = "LblFood";
+            this.LblFood.Size = new System.Drawing.Size(120, 12);
+            this.LblFood.TabIndex = 47;
+            // 
+            // LblEngy
+            // 
+            this.LblEngy.Label = "光熱費";
+            this.LblEngy.Location = new System.Drawing.Point(217, 73);
+            this.LblEngy.Name = "LblEngy";
+            this.LblEngy.Size = new System.Drawing.Size(120, 12);
+            this.LblEngy.TabIndex = 54;
+            // 
+            // LblCnct
+            // 
+            this.LblCnct.Label = "通信費";
+            this.LblCnct.Location = new System.Drawing.Point(217, 116);
+            this.LblCnct.Name = "LblCnct";
+            this.LblCnct.Size = new System.Drawing.Size(120, 12);
+            this.LblCnct.TabIndex = 55;
+            // 
+            // LblMedi
+            // 
+            this.LblMedi.Label = "医療費";
+            this.LblMedi.Location = new System.Drawing.Point(217, 139);
+            this.LblMedi.Name = "LblMedi";
+            this.LblMedi.Size = new System.Drawing.Size(120, 12);
+            this.LblMedi.TabIndex = 56;
+            // 
+            // LblInsu
+            // 
+            this.LblInsu.Label = "保険料";
+            this.LblInsu.Location = new System.Drawing.Point(217, 162);
+            this.LblInsu.Name = "LblInsu";
+            this.LblInsu.Size = new System.Drawing.Size(120, 12);
+            this.LblInsu.TabIndex = 57;
+            // 
+            // LblOthr
+            // 
+            this.LblOthr.Label = "その他";
+            this.LblOthr.Location = new System.Drawing.Point(217, 185);
+            this.LblOthr.Name = "LblOthr";
+            this.LblOthr.Size = new System.Drawing.Size(120, 12);
+            this.LblOthr.TabIndex = 58;
+            // 
+            // LblTtal
+            // 
+            this.LblTtal.Label = "合計";
+            this.LblTtal.Location = new System.Drawing.Point(217, 228);
+            this.LblTtal.Name = "LblTtal";
+            this.LblTtal.Size = new System.Drawing.Size(120, 12);
+            this.LblTtal.TabIndex = 59;
+            // 
+            // LblBlnc
+            // 
+            this.LblBlnc.Label = "残金";
+            this.LblBlnc.Location = new System.Drawing.Point(217, 251);
+            this.LblBlnc.Name = "LblBlnc";
+            this.LblBlnc.Size = new System.Drawing.Size(120, 12);
+            this.LblBlnc.TabIndex = 60;
+            // 
             // AbFormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1107,35 +883,7 @@
         private System.Windows.Forms.Label LblSummary;
         private System.Windows.Forms.Button BtnExpPrevMonth;
         private System.Windows.Forms.Button BtnExpPrevYear;
-        private System.Windows.Forms.Label LblYen01食費;
-        private System.Windows.Forms.Label Lbl01食費;
-        private System.Windows.Forms.Label Lbl07家賃;
-        private System.Windows.Forms.Label LblYen06遊行費;
-        private System.Windows.Forms.Label Lbl06遊行費;
-        private System.Windows.Forms.Label LblYen05交通費;
-        private System.Windows.Forms.Label Lbl05交通費;
-        private System.Windows.Forms.Label LblYen10医療費;
-        private System.Windows.Forms.Label Lbl10医療費;
         private System.Windows.Forms.Label LblLine;
-        private System.Windows.Forms.Label LblYen04交際費;
-        private System.Windows.Forms.Label Lbl04交際費;
-        private System.Windows.Forms.Label LblYen03雑貨;
-        private System.Windows.Forms.Label Lbl03雑貨;
-        private System.Windows.Forms.Label LblYen02外食費;
-        private System.Windows.Forms.Label Lbl02外食費;
-        private System.Windows.Forms.Label LblYen14残金;
-        private System.Windows.Forms.Label Lbl14残金;
-        private System.Windows.Forms.Label LblYen13合計;
-        private System.Windows.Forms.Label Lbl13合計;
-        private System.Windows.Forms.Label LblYen12その他;
-        private System.Windows.Forms.Label Lbl12その他;
-        private System.Windows.Forms.Label LblYen11保険料;
-        private System.Windows.Forms.Label Lbl11保険料;
-        private System.Windows.Forms.Label LblYen09通信費;
-        private System.Windows.Forms.Label Lbl09通信費;
-        private System.Windows.Forms.Label LblYen08光熱費;
-        private System.Windows.Forms.Label Lbl08光熱費;
-        private System.Windows.Forms.Label LblYen07家賃;
         private System.Windows.Forms.Button BtnEntry;
         private System.Windows.Forms.DataGridView DgvExpense;
         private System.Windows.Forms.Button BtnAddRow;
@@ -1176,5 +924,19 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ColExpense;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColSpecial;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColBalance;
+        private AbLabelControl LblFood;
+        private AbLabelControl LblPlay;
+        private AbLabelControl LblTrfc;
+        private AbLabelControl LblFrnd;
+        private AbLabelControl LblGood;
+        private AbLabelControl LblOtfd;
+        private AbLabelControl LblHous;
+        private AbLabelControl LblOthr;
+        private AbLabelControl LblInsu;
+        private AbLabelControl LblMedi;
+        private AbLabelControl LblCnct;
+        private AbLabelControl LblEngy;
+        private AbLabelControl LblBlnc;
+        private AbLabelControl LblTtal;
     }
 }

@@ -33,20 +33,20 @@
             ExpenseManager();
 
             LblSummary.Text = abExpenseManager.Title;
-            LblYen01食費.Text   = UTIL.ToYen(abExpenseManager.GetCost(TYPE.FOOD));
-            LblYen02外食費.Text = UTIL.ToYen(abExpenseManager.GetCost(TYPE.OTFD));
-            LblYen03雑貨.Text   = UTIL.ToYen(abExpenseManager.GetCost(TYPE.GOOD));
-            LblYen04交際費.Text = UTIL.ToYen(abExpenseManager.GetCost(TYPE.FRND));
-            LblYen05交通費.Text = UTIL.ToYen(abExpenseManager.GetCost(TYPE.TRFC));
-            LblYen06遊行費.Text = UTIL.ToYen(abExpenseManager.GetCost(TYPE.PLAY));
-            LblYen07家賃.Text   = UTIL.ToYen(abExpenseManager.GetCost(TYPE.HOUS));
-            LblYen08光熱費.Text = UTIL.ToYen(abExpenseManager.GetCost(TYPE.ENGY));
-            LblYen09通信費.Text = UTIL.ToYen(abExpenseManager.GetCost(TYPE.CNCT));
-            LblYen10医療費.Text = UTIL.ToYen(abExpenseManager.GetCost(TYPE.MEDI));
-            LblYen11保険料.Text = UTIL.ToYen(abExpenseManager.GetCost(TYPE.INSU));
-            LblYen12その他.Text = UTIL.ToYen(abExpenseManager.GetCost(TYPE.OTHR));
-            LblYen13合計.Text   = UTIL.ToYen(abExpenseManager.GetCost(TYPE.TTAL));
-            LblYen14残金.Text   = UTIL.ToYen(abExpenseManager.GetCost(TYPE.BLNC));
+            LblFood.Cost = abExpenseManager.GetCost(TYPE.FOOD);
+            LblOtfd.Cost = abExpenseManager.GetCost(TYPE.OTFD);
+            LblGood.Cost = abExpenseManager.GetCost(TYPE.GOOD);
+            LblFrnd.Cost = abExpenseManager.GetCost(TYPE.FRND);
+            LblTrfc.Cost = abExpenseManager.GetCost(TYPE.TRFC);
+            LblPlay.Cost = abExpenseManager.GetCost(TYPE.PLAY);
+            LblHous.Cost = abExpenseManager.GetCost(TYPE.HOUS);
+            LblEngy.Cost = abExpenseManager.GetCost(TYPE.ENGY);
+            LblCnct.Cost = abExpenseManager.GetCost(TYPE.CNCT);
+            LblMedi.Cost = abExpenseManager.GetCost(TYPE.MEDI);
+            LblInsu.Cost = abExpenseManager.GetCost(TYPE.INSU);
+            LblOthr.Cost = abExpenseManager.GetCost(TYPE.OTHR);
+            LblTtal.Cost = abExpenseManager.GetCost(TYPE.TTAL);
+            LblBlnc.Cost = abExpenseManager.GetCost(TYPE.BLNC);
         }
 
         /// <summary>
