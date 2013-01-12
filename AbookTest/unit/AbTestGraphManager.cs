@@ -49,7 +49,7 @@
         [Test]
         public void TitleWithCurrent()
         {
-            var expected = "～" + argDate.ToString(FMT.TITLE);
+            var expected = argDate.ToString(FMT.TITLE);
             Assert.AreEqual(expected, abGraphicManager.Title);
         }
 
@@ -84,7 +84,7 @@
             abGraphicManager.PrevYear();
 
             var dtPrev = argDate.AddYears(-1);
-            var title = "～" + dtPrev.ToString(FMT.TITLE);
+            var title = dtPrev.ToString(FMT.TITLE);
 
             Assert.AreEqual(title, abGraphicManager.Title);
             Assert.AreEqual(expected, abGraphicManager.GetMonth(prev));
@@ -106,7 +106,7 @@
             abGraphicManager.PrevMonth();
 
             var dtPrev = argDate.AddMonths(-1);
-            var title = "～" + dtPrev.ToString(FMT.TITLE);
+            var title = dtPrev.ToString(FMT.TITLE);
 
             Assert.AreEqual(title, abGraphicManager.Title);
             Assert.AreEqual(expected, abGraphicManager.GetMonth(prev));
@@ -128,7 +128,7 @@
             abGraphicManager.NextMonth();
 
             var dtNext = argDate.AddMonths(1);
-            var title = "～" + dtNext.ToString(FMT.TITLE);
+            var title = dtNext.ToString(FMT.TITLE);
 
             Assert.AreEqual(title, abGraphicManager.Title);
             Assert.AreEqual(expected, abGraphicManager.GetMonth(prev));
@@ -150,7 +150,7 @@
             abGraphicManager.NextYear();
 
             var dtNext = argDate.AddYears(1);
-            var title = "～" + dtNext.ToString(FMT.TITLE);
+            var title = dtNext.ToString(FMT.TITLE);
 
             Assert.AreEqual(title, abGraphicManager.Title);
             Assert.AreEqual(expected, abGraphicManager.GetMonth(prev));
