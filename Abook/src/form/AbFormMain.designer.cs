@@ -52,13 +52,9 @@
             this.ColCost = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BtnEntry = new System.Windows.Forms.Button();
             this.TabSummary = new System.Windows.Forms.TabPage();
+            this.HeadSummary = new Abook.AbHeaderControl();
             this.LblLine2 = new System.Windows.Forms.Label();
             this.LblLine = new System.Windows.Forms.Label();
-            this.BtnExpNextYear = new System.Windows.Forms.Button();
-            this.BtnExpNextMonth = new System.Windows.Forms.Button();
-            this.LblSummary = new System.Windows.Forms.Label();
-            this.BtnExpPrevMonth = new System.Windows.Forms.Button();
-            this.BtnExpPrevYear = new System.Windows.Forms.Button();
             this.TabGraph = new System.Windows.Forms.TabPage();
             this.LblLineBlue = new System.Windows.Forms.Label();
             this.LblLineGray = new System.Windows.Forms.Label();
@@ -79,11 +75,6 @@
             this.LblX1 = new System.Windows.Forms.Label();
             this.LblYen10000 = new System.Windows.Forms.Label();
             this.LblYen5000 = new System.Windows.Forms.Label();
-            this.BtnGraphNextYear = new System.Windows.Forms.Button();
-            this.BtnGraphNextMonth = new System.Windows.Forms.Button();
-            this.LblGraph = new System.Windows.Forms.Label();
-            this.BtnGraphPrevMonth = new System.Windows.Forms.Button();
-            this.BtnGraphPrevYear = new System.Windows.Forms.Button();
             this.TabBalance = new System.Windows.Forms.TabPage();
             this.DgvBalance = new System.Windows.Forms.DataGridView();
             this.ColYear = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -105,6 +96,7 @@
             this.LblOthr = new Abook.AbLabelControl();
             this.LblTtal = new Abook.AbLabelControl();
             this.LblBlnc = new Abook.AbLabelControl();
+            this.HeadGraphic = new Abook.AbHeaderControl();
             this.MenuStrip.SuspendLayout();
             this.TabControl.SuspendLayout();
             this.TabExpense.SuspendLayout();
@@ -266,6 +258,7 @@
             // TabSummary
             // 
             this.TabSummary.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.TabSummary.Controls.Add(this.HeadSummary);
             this.TabSummary.Controls.Add(this.LblBlnc);
             this.TabSummary.Controls.Add(this.LblTtal);
             this.TabSummary.Controls.Add(this.LblOthr);
@@ -282,11 +275,6 @@
             this.TabSummary.Controls.Add(this.LblFood);
             this.TabSummary.Controls.Add(this.LblLine2);
             this.TabSummary.Controls.Add(this.LblLine);
-            this.TabSummary.Controls.Add(this.BtnExpNextYear);
-            this.TabSummary.Controls.Add(this.BtnExpNextMonth);
-            this.TabSummary.Controls.Add(this.LblSummary);
-            this.TabSummary.Controls.Add(this.BtnExpPrevMonth);
-            this.TabSummary.Controls.Add(this.BtnExpPrevYear);
             this.TabSummary.Location = new System.Drawing.Point(4, 21);
             this.TabSummary.Name = "TabSummary";
             this.TabSummary.Padding = new System.Windows.Forms.Padding(3);
@@ -294,6 +282,18 @@
             this.TabSummary.TabIndex = 0;
             this.TabSummary.Text = "集計";
             this.TabSummary.UseVisualStyleBackColor = true;
+            // 
+            // HeadSummary
+            // 
+            this.HeadSummary.Location = new System.Drawing.Point(84, 6);
+            this.HeadSummary.Name = "HeadSummary";
+            this.HeadSummary.Size = new System.Drawing.Size(227, 29);
+            this.HeadSummary.TabIndex = 61;
+            this.HeadSummary.Title = "9999年99月";
+            this.HeadSummary.NextYearClick += new System.EventHandler(this.HeadSummary_NextYearClick);
+            this.HeadSummary.NextMonthClick += new System.EventHandler(this.HeadSummary_NextMonthClick);
+            this.HeadSummary.PrevYearClick += new System.EventHandler(this.HeadSummary_PrevYearClick);
+            this.HeadSummary.PrevMonthClick += new System.EventHandler(this.HeadSummary_PrevMonthClick);
             // 
             // LblLine2
             // 
@@ -313,59 +313,10 @@
             this.LblLine.TabIndex = 15;
             this.LblLine.Text = "-----------------------------------------------------";
             // 
-            // BtnExpNextYear
-            // 
-            this.BtnExpNextYear.Location = new System.Drawing.Point(267, 6);
-            this.BtnExpNextYear.Name = "BtnExpNextYear";
-            this.BtnExpNextYear.Size = new System.Drawing.Size(25, 23);
-            this.BtnExpNextYear.TabIndex = 4;
-            this.BtnExpNextYear.Text = ">>";
-            this.BtnExpNextYear.UseVisualStyleBackColor = true;
-            this.BtnExpNextYear.Click += new System.EventHandler(this.BtnExpNextYear_Click);
-            // 
-            // BtnExpNextMonth
-            // 
-            this.BtnExpNextMonth.Location = new System.Drawing.Point(236, 6);
-            this.BtnExpNextMonth.Name = "BtnExpNextMonth";
-            this.BtnExpNextMonth.Size = new System.Drawing.Size(25, 23);
-            this.BtnExpNextMonth.TabIndex = 3;
-            this.BtnExpNextMonth.Text = ">";
-            this.BtnExpNextMonth.UseVisualStyleBackColor = true;
-            this.BtnExpNextMonth.Click += new System.EventHandler(this.BtnExpNextMonth_Click);
-            // 
-            // LblSummary
-            // 
-            this.LblSummary.AutoSize = true;
-            this.LblSummary.Font = new System.Drawing.Font("MS UI Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.LblSummary.Location = new System.Drawing.Point(124, 9);
-            this.LblSummary.Name = "LblSummary";
-            this.LblSummary.Size = new System.Drawing.Size(104, 16);
-            this.LblSummary.TabIndex = 2;
-            this.LblSummary.Text = "yyyy年mm月";
-            // 
-            // BtnExpPrevMonth
-            // 
-            this.BtnExpPrevMonth.Location = new System.Drawing.Point(87, 6);
-            this.BtnExpPrevMonth.Name = "BtnExpPrevMonth";
-            this.BtnExpPrevMonth.Size = new System.Drawing.Size(25, 23);
-            this.BtnExpPrevMonth.TabIndex = 1;
-            this.BtnExpPrevMonth.Text = "<";
-            this.BtnExpPrevMonth.UseVisualStyleBackColor = true;
-            this.BtnExpPrevMonth.Click += new System.EventHandler(this.BtnExpPrevMonth_Click);
-            // 
-            // BtnExpPrevYear
-            // 
-            this.BtnExpPrevYear.Location = new System.Drawing.Point(56, 6);
-            this.BtnExpPrevYear.Name = "BtnExpPrevYear";
-            this.BtnExpPrevYear.Size = new System.Drawing.Size(25, 23);
-            this.BtnExpPrevYear.TabIndex = 0;
-            this.BtnExpPrevYear.Text = "<<";
-            this.BtnExpPrevYear.UseVisualStyleBackColor = true;
-            this.BtnExpPrevYear.Click += new System.EventHandler(this.BtnExpPrevYear_Click);
-            // 
             // TabGraph
             // 
             this.TabGraph.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.TabGraph.Controls.Add(this.HeadGraphic);
             this.TabGraph.Controls.Add(this.LblLineBlue);
             this.TabGraph.Controls.Add(this.LblLineGray);
             this.TabGraph.Controls.Add(this.LblLineYellow);
@@ -385,11 +336,6 @@
             this.TabGraph.Controls.Add(this.LblX1);
             this.TabGraph.Controls.Add(this.LblYen10000);
             this.TabGraph.Controls.Add(this.LblYen5000);
-            this.TabGraph.Controls.Add(this.BtnGraphNextYear);
-            this.TabGraph.Controls.Add(this.BtnGraphNextMonth);
-            this.TabGraph.Controls.Add(this.LblGraph);
-            this.TabGraph.Controls.Add(this.BtnGraphPrevMonth);
-            this.TabGraph.Controls.Add(this.BtnGraphPrevYear);
             this.TabGraph.Location = new System.Drawing.Point(4, 21);
             this.TabGraph.Name = "TabGraph";
             this.TabGraph.Padding = new System.Windows.Forms.Padding(3);
@@ -579,56 +525,6 @@
             this.LblYen5000.TabIndex = 7;
             this.LblYen5000.Text = "\\5,000";
             this.LblYen5000.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // BtnGraphNextYear
-            // 
-            this.BtnGraphNextYear.Location = new System.Drawing.Point(267, 6);
-            this.BtnGraphNextYear.Name = "BtnGraphNextYear";
-            this.BtnGraphNextYear.Size = new System.Drawing.Size(25, 23);
-            this.BtnGraphNextYear.TabIndex = 5;
-            this.BtnGraphNextYear.Text = ">>";
-            this.BtnGraphNextYear.UseVisualStyleBackColor = true;
-            this.BtnGraphNextYear.Click += new System.EventHandler(this.BtnGraphNextYear_Click);
-            // 
-            // BtnGraphNextMonth
-            // 
-            this.BtnGraphNextMonth.Location = new System.Drawing.Point(236, 6);
-            this.BtnGraphNextMonth.Name = "BtnGraphNextMonth";
-            this.BtnGraphNextMonth.Size = new System.Drawing.Size(25, 23);
-            this.BtnGraphNextMonth.TabIndex = 4;
-            this.BtnGraphNextMonth.Text = ">";
-            this.BtnGraphNextMonth.UseVisualStyleBackColor = true;
-            this.BtnGraphNextMonth.Click += new System.EventHandler(this.BtnGraphNextMonth_Click);
-            // 
-            // LblGraph
-            // 
-            this.LblGraph.AutoSize = true;
-            this.LblGraph.Font = new System.Drawing.Font("MS UI Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.LblGraph.Location = new System.Drawing.Point(118, 9);
-            this.LblGraph.Name = "LblGraph";
-            this.LblGraph.Size = new System.Drawing.Size(121, 16);
-            this.LblGraph.TabIndex = 3;
-            this.LblGraph.Text = "～yyyy年mm月";
-            // 
-            // BtnGraphPrevMonth
-            // 
-            this.BtnGraphPrevMonth.Location = new System.Drawing.Point(87, 6);
-            this.BtnGraphPrevMonth.Name = "BtnGraphPrevMonth";
-            this.BtnGraphPrevMonth.Size = new System.Drawing.Size(25, 23);
-            this.BtnGraphPrevMonth.TabIndex = 2;
-            this.BtnGraphPrevMonth.Text = "<";
-            this.BtnGraphPrevMonth.UseVisualStyleBackColor = true;
-            this.BtnGraphPrevMonth.Click += new System.EventHandler(this.BtnGraphPrevMonth_Click);
-            // 
-            // BtnGraphPrevYear
-            // 
-            this.BtnGraphPrevYear.Location = new System.Drawing.Point(56, 6);
-            this.BtnGraphPrevYear.Name = "BtnGraphPrevYear";
-            this.BtnGraphPrevYear.Size = new System.Drawing.Size(25, 23);
-            this.BtnGraphPrevYear.TabIndex = 1;
-            this.BtnGraphPrevYear.Text = "<<";
-            this.BtnGraphPrevYear.UseVisualStyleBackColor = true;
-            this.BtnGraphPrevYear.Click += new System.EventHandler(this.BtnGraphPrevYear_Click);
             // 
             // TabBalance
             // 
@@ -837,6 +733,18 @@
             this.LblBlnc.Size = new System.Drawing.Size(120, 12);
             this.LblBlnc.TabIndex = 60;
             // 
+            // HeadGraphic
+            // 
+            this.HeadGraphic.Location = new System.Drawing.Point(84, 6);
+            this.HeadGraphic.Name = "HeadGraphic";
+            this.HeadGraphic.Size = new System.Drawing.Size(227, 29);
+            this.HeadGraphic.TabIndex = 27;
+            this.HeadGraphic.Title = "9999年99月";
+            this.HeadGraphic.NextYearClick += new System.EventHandler(this.HeadGraphic_NextYearClick);
+            this.HeadGraphic.NextMonthClick += new System.EventHandler(this.HeadGraphic_NextMonthClick);
+            this.HeadGraphic.PrevYearClick += new System.EventHandler(this.HeadGraphic_PrevYearClick);
+            this.HeadGraphic.PrevMonthClick += new System.EventHandler(this.HeadGraphic_PrevMonthClick);
+            // 
             // AbFormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -878,11 +786,6 @@
         private System.Windows.Forms.TabControl TabControl;
         private System.Windows.Forms.TabPage TabSummary;
         private System.Windows.Forms.TabPage TabExpense;
-        private System.Windows.Forms.Button BtnExpNextYear;
-        private System.Windows.Forms.Button BtnExpNextMonth;
-        private System.Windows.Forms.Label LblSummary;
-        private System.Windows.Forms.Button BtnExpPrevMonth;
-        private System.Windows.Forms.Button BtnExpPrevYear;
         private System.Windows.Forms.Label LblLine;
         private System.Windows.Forms.Button BtnEntry;
         private System.Windows.Forms.DataGridView DgvExpense;
@@ -891,11 +794,6 @@
         private System.Windows.Forms.Label LblX1;
         private System.Windows.Forms.Label LblYen10000;
         private System.Windows.Forms.Label LblYen5000;
-        private System.Windows.Forms.Button BtnGraphNextYear;
-        private System.Windows.Forms.Button BtnGraphNextMonth;
-        private System.Windows.Forms.Label LblGraph;
-        private System.Windows.Forms.Button BtnGraphPrevMonth;
-        private System.Windows.Forms.Button BtnGraphPrevYear;
         private System.Windows.Forms.PictureBox PboxGraph;
         private System.Windows.Forms.Label LblX6;
         private System.Windows.Forms.Label LblX5;
@@ -938,5 +836,7 @@
         private AbLabelControl LblEngy;
         private AbLabelControl LblBlnc;
         private AbLabelControl LblTtal;
+        private AbHeaderControl HeadSummary;
+        private AbHeaderControl HeadGraphic;
     }
 }

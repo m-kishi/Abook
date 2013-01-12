@@ -42,7 +42,7 @@
             g.Clear(Color.Black);
             abGraphicManager.DrawGraph(g);
 
-            LblGraph.Text = abGraphicManager.Title;
+            HeadGraphic.Title = abGraphicManager.Title;
             LblX6.Text = abGraphicManager.GetMonth(0);
             LblX5.Text = abGraphicManager.GetMonth(-2);
             LblX4.Text = abGraphicManager.GetMonth(-4);
@@ -54,7 +54,7 @@
         /// <summary>
         /// 前年表示
         /// </summary>
-        private void BtnGraphPrevYear_Click(object sender, EventArgs e)
+        private void HeadGraphic_PrevYearClick(object sender, EventArgs e)
         {
             var g = PboxGraph.CreateGraphics();
             SetViewGraph(g, abGraphicManager.PrevYear);
@@ -63,7 +63,7 @@
         /// <summary>
         /// 前月表示
         /// </summary>
-        private void BtnGraphPrevMonth_Click(object sender, EventArgs e)
+        private void HeadGraphic_PrevMonthClick(object sender, EventArgs e)
         {
             var g = PboxGraph.CreateGraphics();
             SetViewGraph(g, abGraphicManager.PrevMonth);
@@ -72,7 +72,7 @@
         /// <summary>
         /// 翌月表示
         /// </summary>
-        private void BtnGraphNextMonth_Click(object sender, EventArgs e)
+        private void HeadGraphic_NextMonthClick(object sender, EventArgs e)
         {
             var g = PboxGraph.CreateGraphics();
             SetViewGraph(g, abGraphicManager.NextMonth);
@@ -81,7 +81,7 @@
         /// <summary>
         /// 翌年表示
         /// </summary>
-        private void BtnGraphNextYear_Click(object sender, EventArgs e)
+        private void HeadGraphic_NextYearClick(object sender, EventArgs e)
         {
             var g = PboxGraph.CreateGraphics();
             SetViewGraph(g, abGraphicManager.NextYear);

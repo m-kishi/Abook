@@ -32,7 +32,7 @@
         {
             ExpenseManager();
 
-            LblSummary.Text = abExpenseManager.Title;
+            HeadSummary.Title = abExpenseManager.Title;
             LblFood.Cost = abExpenseManager.GetCost(TYPE.FOOD);
             LblOtfd.Cost = abExpenseManager.GetCost(TYPE.OTFD);
             LblGood.Cost = abExpenseManager.GetCost(TYPE.GOOD);
@@ -52,7 +52,7 @@
         /// <summary>
         /// 前年表示
         /// </summary>
-        private void BtnExpPrevYear_Click(object sender, EventArgs e)
+        private void HeadSummary_PrevYearClick(object sender, EventArgs e)
         {
             SetTabSummary(abExpenseManager.PrevYear);
         }
@@ -60,7 +60,7 @@
         /// <summary>
         /// 前月表示
         /// </summary>
-        private void BtnExpPrevMonth_Click(object sender, EventArgs e)
+        private void HeadSummary_PrevMonthClick(object sender, EventArgs e)
         {
             SetTabSummary(abExpenseManager.PrevMonth);
         }
@@ -68,7 +68,7 @@
         /// <summary>
         /// 翌月表示
         /// </summary>
-        private void BtnExpNextMonth_Click(object sender, EventArgs e)
+        private void HeadSummary_NextMonthClick(object sender, EventArgs e)
         {
             SetTabSummary(abExpenseManager.NextMonth);
         }
@@ -76,7 +76,7 @@
         /// <summary>
         /// 翌年表示
         /// </summary>
-        private void BtnExpNextYear_Click(object sender, EventArgs e)
+        private void HeadSummary_NextYearClick(object sender, EventArgs e)
         {
             SetTabSummary(abExpenseManager.NextYear);
         }
