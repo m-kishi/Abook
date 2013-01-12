@@ -56,6 +56,12 @@
     <Compile Include="src\common\AbDBManager.cs" />
     <Compile Include="src\common\AbException.cs" />
     <Compile Include="src\common\AbUtilities.cs" />
+    <Compile Include="src\control\AbLabelControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\control\AbLabelControl.Designer.cs">
+      <DependentUpon>AbLabelControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="src\expense\AbComplete.cs" />
     <Compile Include="src\expense\AbExpense.cs" />
     <Compile Include="src\expense\AbExpenseManager.cs" />
