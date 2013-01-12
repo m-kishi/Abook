@@ -134,8 +134,8 @@
             public const string EARN = "収入";
             /// <summary>合計</summary>
             public const string TTAL = "合計";
-            /// <summary>残金</summary>
-            public const string BLNC = "残金";
+            /// <summary>収支</summary>
+            public const string BLNC = "収支";
             /// <summary>特出</summary>
             public const string SPCL = "特出";
         }

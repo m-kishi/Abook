@@ -10,6 +10,9 @@
     /// </summary>
     public partial class AbFormVersion : Form
     {
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
         public AbFormVersion()
         {
             InitializeComponent();

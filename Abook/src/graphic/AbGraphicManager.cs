@@ -106,7 +106,7 @@
         /// </summary>
         public string Title
         {
-            get { return "～" + dtNow.ToString(FMT.TITLE); }
+            get { return dtNow.ToString(FMT.TITLE); }
         }
 
         /// <summary>
