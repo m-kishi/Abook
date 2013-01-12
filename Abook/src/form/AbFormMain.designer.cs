@@ -28,15 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             this.MenuStrip = new System.Windows.Forms.MenuStrip();
             this.MenuFile = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuExit = new System.Windows.Forms.ToolStripMenuItem();
@@ -181,7 +181,6 @@
             this.TabControl.SelectedIndex = 0;
             this.TabControl.Size = new System.Drawing.Size(416, 316);
             this.TabControl.TabIndex = 1;
-            this.TabControl.SelectedIndexChanged += new System.EventHandler(this.TabControl_SelectedIndexChanged);
             // 
             // TabExpense
             // 
@@ -229,26 +228,28 @@
             // 
             // ColDate
             // 
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            this.ColDate.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            this.ColDate.DefaultCellStyle = dataGridViewCellStyle1;
             this.ColDate.HeaderText = "日付";
             this.ColDate.Name = "ColDate";
             this.ColDate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ColDate.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.ColDate.Width = 90;
             // 
             // ColName
             // 
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle11.NullValue = null;
-            this.ColName.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            this.ColName.DefaultCellStyle = dataGridViewCellStyle2;
             this.ColName.HeaderText = "名称";
             this.ColName.Name = "ColName";
+            this.ColName.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ColName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.ColName.Width = 120;
             // 
             // ColType
             // 
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.ColType.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.ColType.DefaultCellStyle = dataGridViewCellStyle3;
             this.ColType.HeaderText = "種別";
             this.ColType.Name = "ColType";
             this.ColType.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -257,13 +258,13 @@
             // 
             // ColCost
             // 
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle13.Format = "N0";
-            dataGridViewCellStyle13.NullValue = null;
-            this.ColCost.DefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle4.Format = "N0";
+            this.ColCost.DefaultCellStyle = dataGridViewCellStyle4;
             this.ColCost.HeaderText = "金額";
             this.ColCost.Name = "ColCost";
             this.ColCost.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ColCost.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.ColCost.Width = 60;
             // 
             // BtnEntry
@@ -319,7 +320,7 @@
             this.TabSummary.Padding = new System.Windows.Forms.Padding(3);
             this.TabSummary.Size = new System.Drawing.Size(408, 291);
             this.TabSummary.TabIndex = 0;
-            this.TabSummary.Text = "月別";
+            this.TabSummary.Text = "集計";
             this.TabSummary.UseVisualStyleBackColor = true;
             // 
             // LblLine2
@@ -1003,9 +1004,8 @@
             // 
             // ColYear
             // 
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.ColYear.DefaultCellStyle = dataGridViewCellStyle14;
-            this.ColYear.Frozen = true;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.ColYear.DefaultCellStyle = dataGridViewCellStyle5;
             this.ColYear.HeaderText = "年度";
             this.ColYear.Name = "ColYear";
             this.ColYear.ReadOnly = true;
@@ -1015,11 +1015,9 @@
             // 
             // ColEarn
             // 
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle15.Format = "C0";
-            dataGridViewCellStyle15.NullValue = null;
-            this.ColEarn.DefaultCellStyle = dataGridViewCellStyle15;
-            this.ColEarn.Frozen = true;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle6.Format = "C0";
+            this.ColEarn.DefaultCellStyle = dataGridViewCellStyle6;
             this.ColEarn.HeaderText = "収入";
             this.ColEarn.Name = "ColEarn";
             this.ColEarn.ReadOnly = true;
@@ -1029,11 +1027,9 @@
             // 
             // ColExpense
             // 
-            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle16.Format = "C0";
-            dataGridViewCellStyle16.NullValue = null;
-            this.ColExpense.DefaultCellStyle = dataGridViewCellStyle16;
-            this.ColExpense.Frozen = true;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle7.Format = "C0";
+            this.ColExpense.DefaultCellStyle = dataGridViewCellStyle7;
             this.ColExpense.HeaderText = "支出";
             this.ColExpense.Name = "ColExpense";
             this.ColExpense.ReadOnly = true;
@@ -1043,11 +1039,9 @@
             // 
             // ColSpecial
             // 
-            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle17.Format = "C0";
-            dataGridViewCellStyle17.NullValue = null;
-            this.ColSpecial.DefaultCellStyle = dataGridViewCellStyle17;
-            this.ColSpecial.Frozen = true;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle8.Format = "C0";
+            this.ColSpecial.DefaultCellStyle = dataGridViewCellStyle8;
             this.ColSpecial.HeaderText = "特出";
             this.ColSpecial.Name = "ColSpecial";
             this.ColSpecial.ReadOnly = true;
@@ -1057,12 +1051,10 @@
             // 
             // ColBalance
             // 
-            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle18.Format = "C0";
-            dataGridViewCellStyle18.NullValue = null;
-            this.ColBalance.DefaultCellStyle = dataGridViewCellStyle18;
-            this.ColBalance.Frozen = true;
-            this.ColBalance.HeaderText = "残金";
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle9.Format = "C0";
+            this.ColBalance.DefaultCellStyle = dataGridViewCellStyle9;
+            this.ColBalance.HeaderText = "収支";
             this.ColBalance.Name = "ColBalance";
             this.ColBalance.ReadOnly = true;
             this.ColBalance.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -1147,10 +1139,6 @@
         private System.Windows.Forms.Button BtnEntry;
         private System.Windows.Forms.DataGridView DgvExpense;
         private System.Windows.Forms.Button BtnAddRow;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColDate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColType;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColCost;
         private System.Windows.Forms.TabPage TabGraph;
         private System.Windows.Forms.Label LblX1;
         private System.Windows.Forms.Label LblYen10000;
@@ -1179,6 +1167,10 @@
         private System.Windows.Forms.Label LblLineRed;
         private System.Windows.Forms.TabPage TabBalance;
         private System.Windows.Forms.DataGridView DgvBalance;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColCost;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColYear;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColEarn;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColExpense;

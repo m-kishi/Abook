@@ -12,7 +12,7 @@
     <AssemblyName>Abook</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <StartupObject>Abook.AbMain</StartupObject>
+    <StartupObject>Abook.AbFormMain</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -50,7 +50,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="asm\AssemblyInfo.cs" />
-    <Compile Include="src\AbMain.cs" />
     <Compile Include="src\balance\AbBalance.cs" />
     <Compile Include="src\balance\AbBalanceManager.cs" />
     <Compile Include="src\common\AbConstants.cs" />
@@ -72,6 +71,18 @@
     </Compile>
     <Compile Include="src\form\AbFormVersion.designer.cs">
       <DependentUpon>AbFormVersion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\form\AbTabBalance.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\form\AbTabExpense.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\form\AbTabGraphic.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\form\AbTabSummary.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="src\graphic\AbGraphicData.cs" />
     <Compile Include="src\graphic\AbGraphicLine.cs" />
