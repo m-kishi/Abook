@@ -1,16 +1,19 @@
 ﻿namespace Abook
 {
+    using System.ComponentModel;
+
+    /// <summary>
+    /// バージョン情報フォームデザイナ
+    /// </summary>
     partial class AbFormVersion
     {
-        /// <summary>
-        /// 必要なデザイナ変数です。
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        /// <summary>デザイナ変数</summary>
+        private IContainer components = null;
 
         /// <summary>
-        /// 使用中のリソースをすべてクリーンアップします。
+        /// リソース破棄
         /// </summary>
-        /// <param name="disposing">マネージ リソースが破棄される場合 true、破棄されない場合は false です。</param>
+        /// <param name="disposing">マネージリソース破棄</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -20,20 +23,17 @@
             base.Dispose(disposing);
         }
 
-        #region Windows フォーム デザイナで生成されたコード
-
         /// <summary>
-        /// デザイナ サポートに必要なメソッドです。このメソッドの内容を
-        /// コード エディタで変更しないでください。
+        /// コンポーネント初期化
         /// </summary>
         private void InitializeComponent()
         {
-            this.PboxIcon = new System.Windows.Forms.PictureBox();
-            this.LblProduct = new System.Windows.Forms.Label();
-            this.LblVersion = new System.Windows.Forms.Label();
-            this.LblCopyright = new System.Windows.Forms.Label();
+            this.PboxIcon       = new System.Windows.Forms.PictureBox();
+            this.LblProduct     = new System.Windows.Forms.Label();
+            this.LblVersion     = new System.Windows.Forms.Label();
+            this.LblCopyright   = new System.Windows.Forms.Label();
             this.LblDescription = new System.Windows.Forms.Label();
-            this.BtnOK = new System.Windows.Forms.Button();
+            this.BtnOK          = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.PboxIcon)).BeginInit();
             this.SuspendLayout();
             // 
@@ -96,12 +96,12 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(254, 131);
-            this.Controls.Add(this.BtnOK);
-            this.Controls.Add(this.LblDescription);
-            this.Controls.Add(this.LblCopyright);
-            this.Controls.Add(this.LblVersion);
-            this.Controls.Add(this.LblProduct);
             this.Controls.Add(this.PboxIcon);
+            this.Controls.Add(this.LblProduct);
+            this.Controls.Add(this.LblVersion);
+            this.Controls.Add(this.LblCopyright);
+            this.Controls.Add(this.LblDescription);
+            this.Controls.Add(this.BtnOK);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -114,10 +114,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.PboxIcon)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
-
-        #endregion
 
         private System.Windows.Forms.PictureBox PboxIcon;
         private System.Windows.Forms.Label LblProduct;
