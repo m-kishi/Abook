@@ -66,6 +66,7 @@
     <Compile Include="unit\AbTestGraphManager.cs" />
     <Compile Include="unit\AbTestSummary.cs" />
     <Compile Include="view\AbTestMenu.cs" />
+    <Compile Include="view\AbTestTabGraphic.cs" />
     <Compile Include="view\AbTestTabSummary.cs" />
   </ItemGroup>
   <ItemGroup>
