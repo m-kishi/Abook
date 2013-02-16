@@ -9,6 +9,9 @@
     /// </summary>
     public partial class AbLabelControl : UserControl
     {
+        /// <summary>内部保持用</summary>
+        private decimal _cost = decimal.Zero;
+
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -31,7 +34,8 @@
         /// </summary>
         public decimal Cost
         {
-            set { _Value.Text = UTIL.ToYen(value); }
+            get { return _cost; }
+            set { _cost = value; _Value.Text = UTIL.ToYen(value); }
         }
     }
 }
