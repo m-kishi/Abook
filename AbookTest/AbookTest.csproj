@@ -45,6 +45,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>lib\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="NUnitForms, Version=2.0.4389.29338, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\NUnitForms.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -61,6 +65,7 @@
     <Compile Include="unit\AbTestExpenseManager.cs" />
     <Compile Include="unit\AbTestGraphManager.cs" />
     <Compile Include="unit\AbTestSummary.cs" />
+    <Compile Include="view\AbTestMenu.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Abook\Abook.csproj">
@@ -70,5 +75,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="lib\nunit.framework.dll" />
+    <Content Include="lib\NUnitForms.dll" />
   </ItemGroup>
 </Project>

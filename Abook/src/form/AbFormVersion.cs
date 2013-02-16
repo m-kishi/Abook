@@ -2,6 +2,7 @@
 {
     using System;
     using System.Drawing;
+    using System.Linq;
     using System.Reflection;
     using System.Windows.Forms;
 
@@ -24,6 +25,7 @@
         private void AbFormVersion_Load(object sender, EventArgs e)
         {
             Assembly assembly = Assembly.GetEntryAssembly();
+            if (assembly == null) return;
 
             //タイトル
             this.Text = Application.ProductName + " のバージョン情報";
@@ -39,24 +41,18 @@
 
             //コピーライト
             LblCopyright.Text = "-";
-            object[] cpyArr = assembly.GetCustomAttributes(
-                typeof(AssemblyCopyrightAttribute),
-                false
-            );
+            var cpyArr = assembly.GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
             if (cpyArr != null && cpyArr.Length > 0)
             {
-                LblCopyright.Text = ((AssemblyCopyrightAttribute)cpyArr[0]).Copyright;
+                LblCopyright.Text = ((AssemblyCopyrightAttribute)cpyArr.First()).Copyright;
             }
 
             //詳細情報
             LblDescription.Text = "-";
-            object[] desArr = assembly.GetCustomAttributes(
-                typeof(AssemblyDescriptionAttribute),
-                false
-            );
+            var desArr = assembly.GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
             if (desArr != null && desArr.Length > 0)
             {
-                LblDescription.Text = ((AssemblyDescriptionAttribute)desArr[0]).Description;
+                LblDescription.Text = ((AssemblyDescriptionAttribute)desArr.First()).Description;
             }
         }
 
