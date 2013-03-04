@@ -67,6 +67,7 @@
     <Compile Include="unit\AbTestSummary.cs" />
     <Compile Include="view\AbTestMenu.cs" />
     <Compile Include="view\AbTestTabBalance.cs" />
+    <Compile Include="view\AbTestTabExpense.cs" />
     <Compile Include="view\AbTestTabGraphic.cs" />
     <Compile Include="view\AbTestTabSummary.cs" />
   </ItemGroup>
