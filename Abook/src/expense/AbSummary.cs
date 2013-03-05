@@ -55,9 +55,8 @@
                 dic.Add(gObj.Key, gObj.Sum(exp => exp.Cost));
             }
 
-            var total = expenses.Where(exp =>
-                exp.Type != TYPE.EARN && exp.Type != TYPE.SPCL
-            ).Sum(exp => exp.Cost);
+            var excepts = new string[] { TYPE.EARN, TYPE.BNUS, TYPE.SPCL };
+            var total = expenses.Where(exp => !excepts.Contains(exp.Type)).Sum(exp => exp.Cost);
             dic.Add(TYPE.TTAL, total);
 
             var earn = dic.ContainsKey(TYPE.EARN) ? dic[TYPE.EARN] : decimal.Zero;

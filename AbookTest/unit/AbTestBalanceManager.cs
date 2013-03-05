@@ -44,6 +44,7 @@
             expenses.Add(new AbExpense("2011-08-01", "name6", TYPE.SPCL,  "30000"));
             expenses.Add(new AbExpense("2011-08-03", "name7", TYPE.GOOD,  "70000"));
             expenses.Add(new AbExpense("2011-08-31", "name8", TYPE.EARN, "300000"));
+            expenses.Add(new AbExpense("2011-08-31", "nameX", TYPE.BNUS, "150000"));
             expenses.Add(new AbExpense("2011-11-10", "name9", TYPE.TRFC,  "60000"));
             expenses.Add(new AbExpense("2011-11-11", "name1", TYPE.FRND,  "50000"));
             expenses.Add(new AbExpense("2011-11-30", "name2", TYPE.EARN, "400000"));
@@ -51,6 +52,7 @@
             expenses.Add(new AbExpense("2012-01-01", "name4", TYPE.HOUS,  "30000"));
             expenses.Add(new AbExpense("2012-01-01", "name5", TYPE.SPCL,  "40000"));
             expenses.Add(new AbExpense("2012-02-28", "name6", TYPE.EARN, "500000"));
+            expenses.Add(new AbExpense("2012-02-28", "nameX", TYPE.BNUS,  "70000"));
             expenses.Add(new AbExpense("2012-04-01", "name7", TYPE.ENGY,  "20000"));
             expenses.Add(new AbExpense("2012-04-02", "name8", TYPE.EARN, "100000"));
             expenses.Add(new AbExpense("2012-04-03", "name9", TYPE.SPCL,  "50000"));
@@ -62,6 +64,7 @@
             expenses.Add(new AbExpense("2013-03-08", "name6", TYPE.OTHR,  "70000"));
             expenses.Add(new AbExpense("2013-03-09", "name7", TYPE.SPCL,  "60000"));
             expenses.Add(new AbExpense("2013-03-31", "name8", TYPE.EARN, "400000"));
+            expenses.Add(new AbExpense("2013-03-31", "nameX", TYPE.BNUS, "250000"));
             return expenses;
         }
 
@@ -84,10 +87,10 @@
         {
             var balance = abBalanceManager.Balances().ElementAt(0);
             Assert.AreEqual(2011, balance.Year);
-            Assert.AreEqual(1500000, balance.Earn);
+            Assert.AreEqual(1720000, balance.Earn);
             Assert.AreEqual( 420000, balance.Expense);
             Assert.AreEqual( 130000, balance.Special);
-            Assert.AreEqual( 950000, balance.Balance);
+            Assert.AreEqual(1170000, balance.Balance);
         }
 
         /// <summary>
@@ -99,10 +102,10 @@
         {
             var balance = abBalanceManager.Balances().ElementAt(1);
             Assert.AreEqual(2012, balance.Year);
-            Assert.AreEqual(1000000, balance.Earn);
+            Assert.AreEqual(1250000, balance.Earn);
             Assert.AreEqual( 270000, balance.Expense);
             Assert.AreEqual( 110000, balance.Special);
-            Assert.AreEqual( 620000, balance.Balance);
+            Assert.AreEqual( 870000, balance.Balance);
         }
 
         /// <summary>
@@ -114,10 +117,10 @@
         {
             var balance = abBalanceManager.Balances().ElementAt(2);
             Assert.AreEqual(9999, balance.Year);
-            Assert.AreEqual(2500000, balance.Earn);
+            Assert.AreEqual(2970000, balance.Earn);
             Assert.AreEqual( 690000, balance.Expense);
             Assert.AreEqual( 240000, balance.Special);
-            Assert.AreEqual(1570000, balance.Balance);
+            Assert.AreEqual(2040000, balance.Balance);
         }
 
         /// <summary>

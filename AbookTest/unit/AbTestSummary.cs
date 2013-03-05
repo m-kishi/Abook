@@ -67,6 +67,8 @@
             expenses.Add(new AbExpense("2011-03-28", "OTHR", TYPE.OTHR, "3100"));
             expenses.Add(new AbExpense("2011-03-29", "EARN", TYPE.EARN, "100000"));
             expenses.Add(new AbExpense("2011-03-30", "EARN", TYPE.EARN, "110000"));
+            expenses.Add(new AbExpense("2011-03-31", "BNUS", TYPE.BNUS, "200000"));
+            expenses.Add(new AbExpense("2011-03-31", "BNUS", TYPE.BNUS, "300000"));
             expenses.Add(new AbExpense("2011-03-31", "SPCL", TYPE.SPCL, "20000"));
             expenses.Add(new AbExpense("2011-03-31", "SPCL", TYPE.SPCL, "21000"));
             return expenses;
@@ -153,6 +155,7 @@
             Assert.AreEqual(0, abSummary.GetCostByType(TYPE.TTAL));
             Assert.AreEqual(0, abSummary.GetCostByType(TYPE.EARN));
             Assert.AreEqual(0, abSummary.GetCostByType(TYPE.BLNC));
+            Assert.AreEqual(0, abSummary.GetCostByType(TYPE.BNUS));
             Assert.AreEqual(0, abSummary.GetCostByType(TYPE.SPCL));
             Assert.AreEqual(0, abSummary.GetCostByType("not match"));
         }
@@ -180,6 +183,7 @@
             Assert.AreEqual( 24730, abSummary.GetCostByType(TYPE.TTAL));
             Assert.AreEqual(210000, abSummary.GetCostByType(TYPE.EARN));
             Assert.AreEqual(185270, abSummary.GetCostByType(TYPE.BLNC));
+            Assert.AreEqual(500000, abSummary.GetCostByType(TYPE.BNUS));
             Assert.AreEqual( 41000, abSummary.GetCostByType(TYPE.SPCL));
             Assert.AreEqual(     0, abSummary.GetCostByType("not match"));
         }
@@ -231,6 +235,7 @@
             Assert.AreEqual(0, abSummary.GetCostByName("INSU"));
             Assert.AreEqual(0, abSummary.GetCostByName("OTHR"));
             Assert.AreEqual(0, abSummary.GetCostByName("EARN"));
+            Assert.AreEqual(0, abSummary.GetCostByName("BNUS"));
             Assert.AreEqual(0, abSummary.GetCostByName("SPCL"));
             Assert.AreEqual(0, abSummary.GetCostByName("not match"));
         }
@@ -258,6 +263,7 @@
             Assert.AreEqual(   0, abSummary.GetCostByName("INSU"));
             Assert.AreEqual(   0, abSummary.GetCostByName("OTHR"));
             Assert.AreEqual(   0, abSummary.GetCostByName("EARN"));
+            Assert.AreEqual(   0, abSummary.GetCostByName("BNUS"));
             Assert.AreEqual(   0, abSummary.GetCostByName("SPCL"));
             Assert.AreEqual(   0, abSummary.GetCostByName("not match"));
         }
@@ -318,6 +324,8 @@
             expenses.Add(new AbExpense("2011-03-28", "OTHR", TYPE.OTHR, "3100"));
             expenses.Add(new AbExpense("2011-03-29", "EARN", TYPE.EARN, "100000"));
             expenses.Add(new AbExpense("2011-03-30", "EARN", TYPE.EARN, "110000"));
+            expenses.Add(new AbExpense("2011-03-31", "BNUS", TYPE.BNUS, "200000"));
+            expenses.Add(new AbExpense("2011-03-31", "BNUS", TYPE.BNUS, "300000"));
             expenses.Add(new AbExpense("2011-03-31", "SPCL", TYPE.SPCL, "20000"));
             expenses.Add(new AbExpense("2011-03-31", "SPCL", TYPE.SPCL, "21000"));
             expenses.Add(new AbExpense("2011-04-01", "FOOD", TYPE.FOOD, "200"));
@@ -452,6 +460,7 @@
             Assert.AreEqual( 24730, abSummary.GetCostByType(TYPE.TTAL));
             Assert.AreEqual(210000, abSummary.GetCostByType(TYPE.EARN));
             Assert.AreEqual(185270, abSummary.GetCostByType(TYPE.BLNC));
+            Assert.AreEqual(500000, abSummary.GetCostByType(TYPE.BNUS));
             Assert.AreEqual( 41000, abSummary.GetCostByType(TYPE.SPCL));
             Assert.AreEqual(     0, abSummary.GetCostByType("not match"));
         }
@@ -486,6 +495,7 @@
             Assert.AreEqual( 48330, abSummary.GetCostByType(TYPE.TTAL));
             Assert.AreEqual(410000, abSummary.GetCostByType(TYPE.EARN));
             Assert.AreEqual(361670, abSummary.GetCostByType(TYPE.BLNC));
+            Assert.AreEqual(     0, abSummary.GetCostByType(TYPE.BNUS));
             Assert.AreEqual( 81000, abSummary.GetCostByType(TYPE.SPCL));
             Assert.AreEqual(     0, abSummary.GetCostByType("not match"));
         }
