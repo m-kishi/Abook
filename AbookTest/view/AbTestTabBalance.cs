@@ -7,19 +7,20 @@
     using NUnit.Framework;
     using NUnit.Extensions.Forms;
     using COL  = Abook.AbConstants.COL;
-    using FMT  = Abook.AbConstants.FMT;
     using TYPE = Abook.AbConstants.TYPE;
 
     /// <summary>
     /// 収支タブテスト
     /// </summary>
     [TestFixture]
-    public class AbTestTabBalance : NUnitFormTest
+    public class AbTestTabBalance : AbTestFormBase
     {
-        /// <summary>引数:DB ファイル</summary>
-        private string argDB = "AbTestTabBalance.db";
-        /// <summary>対象:メイン画面フォーム</summary>
-        private AbFormMain abFormMain;
+        /// <summary>DB ファイル</summary>
+        private const string DB_EXIST = "AbTestTabBalanceExist.db";
+        /// <summary>DB ファイル</summary>
+        private const string DB_EMPTY = "AbTestTabBalanceEmpty.db";
+        /// <summary>タブインデックス</summary>
+        private const int TAB_IDX = 3;
 
         /// <summary>
         /// TestFixtureSetUp
@@ -27,79 +28,47 @@
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            using (StreamWriter sw = new StreamWriter(argDB, false, System.Text.Encoding.UTF8))
+            using (StreamWriter sw = new StreamWriter(DB_EXIST, false, System.Text.Encoding.UTF8))
             {
-                var date = new DateTime(2009, 4, 1);
-                sw.WriteLine(GenerateWriteLine(date, TYPE.EARN, 800000));
-                sw.WriteLine(GenerateWriteLine(date, TYPE.EARN, 900000));
-                sw.WriteLine(GenerateWriteLine(date, TYPE.FOOD, 200000));
-                sw.WriteLine(GenerateWriteLine(date, TYPE.FOOD, 350000));
-                sw.WriteLine(GenerateWriteLine(date, TYPE.SPCL,  80000));
-                sw.WriteLine(GenerateWriteLine(date, TYPE.SPCL,  50000));
+                sw.WriteLine(ToCSV("2009-04-01", "name", TYPE.EARN, "800000"));
+                sw.WriteLine(ToCSV("2009-04-01", "name", TYPE.EARN, "900000"));
+                sw.WriteLine(ToCSV("2009-04-01", "name", TYPE.FOOD, "200000"));
+                sw.WriteLine(ToCSV("2009-04-01", "name", TYPE.FOOD, "350000"));
+                sw.WriteLine(ToCSV("2009-04-01", "name", TYPE.SPCL,  "80000"));
+                sw.WriteLine(ToCSV("2009-04-01", "name", TYPE.SPCL,  "50000"));
+                sw.WriteLine(ToCSV("2009-04-30", "name", TYPE.BNUS,  "10000"));
 
-                date = new DateTime(2010, 3, 1);
-                sw.WriteLine(GenerateWriteLine(date, TYPE.EARN, 200000));
-                sw.WriteLine(GenerateWriteLine(date, TYPE.EARN, 400000));
-                sw.WriteLine(GenerateWriteLine(date, TYPE.FOOD, 300000));
-                sw.WriteLine(GenerateWriteLine(date, TYPE.FOOD, 250000));
-                sw.WriteLine(GenerateWriteLine(date, TYPE.SPCL,  20000));
-                sw.WriteLine(GenerateWriteLine(date, TYPE.SPCL,  30000));
+                sw.WriteLine(ToCSV("2010-03-01", "name", TYPE.EARN, "200000"));
+                sw.WriteLine(ToCSV("2010-03-01", "name", TYPE.EARN, "400000"));
+                sw.WriteLine(ToCSV("2010-03-01", "name", TYPE.FOOD, "300000"));
+                sw.WriteLine(ToCSV("2010-03-01", "name", TYPE.FOOD, "250000"));
+                sw.WriteLine(ToCSV("2010-03-01", "name", TYPE.SPCL,  "20000"));
+                sw.WriteLine(ToCSV("2010-03-01", "name", TYPE.SPCL,  "30000"));
+                sw.WriteLine(ToCSV("2010-03-31", "name", TYPE.BNUS,  "15000"));
 
-                date = new DateTime(2010, 4, 1);
-                sw.WriteLine(GenerateWriteLine(date, TYPE.EARN, 600000));
-                sw.WriteLine(GenerateWriteLine(date, TYPE.EARN, 800000));
-                sw.WriteLine(GenerateWriteLine(date, TYPE.FOOD, 200000));
-                sw.WriteLine(GenerateWriteLine(date, TYPE.FOOD, 250000));
-                sw.WriteLine(GenerateWriteLine(date, TYPE.SPCL,  20000));
-                sw.WriteLine(GenerateWriteLine(date, TYPE.SPCL,  40000));
+                sw.WriteLine(ToCSV("2010-04-01", "name", TYPE.EARN, "600000"));
+                sw.WriteLine(ToCSV("2010-04-01", "name", TYPE.EARN, "800000"));
+                sw.WriteLine(ToCSV("2010-04-01", "name", TYPE.FOOD, "200000"));
+                sw.WriteLine(ToCSV("2010-04-01", "name", TYPE.FOOD, "250000"));
+                sw.WriteLine(ToCSV("2010-04-01", "name", TYPE.SPCL,  "20000"));
+                sw.WriteLine(ToCSV("2010-04-01", "name", TYPE.SPCL,  "40000"));
+                sw.WriteLine(ToCSV("2010-04-30", "name", TYPE.BNUS,   "1000"));
 
-                date = new DateTime(2011, 3, 1);
-                sw.WriteLine(GenerateWriteLine(date, TYPE.EARN, 300000));
-                sw.WriteLine(GenerateWriteLine(date, TYPE.EARN, 700000));
-                sw.WriteLine(GenerateWriteLine(date, TYPE.FOOD, 100000));
-                sw.WriteLine(GenerateWriteLine(date, TYPE.FOOD, 450000));
-                sw.WriteLine(GenerateWriteLine(date, TYPE.SPCL,  60000));
-                sw.WriteLine(GenerateWriteLine(date, TYPE.SPCL,  18000));
+                sw.WriteLine(ToCSV("2011-03-01", "name", TYPE.EARN, "300000"));
+                sw.WriteLine(ToCSV("2011-03-01", "name", TYPE.EARN, "700000"));
+                sw.WriteLine(ToCSV("2011-03-01", "name", TYPE.FOOD, "100000"));
+                sw.WriteLine(ToCSV("2011-03-01", "name", TYPE.FOOD, "450000"));
+                sw.WriteLine(ToCSV("2011-03-01", "name", TYPE.SPCL,  "60000"));
+                sw.WriteLine(ToCSV("2011-03-01", "name", TYPE.SPCL,  "18000"));
+                sw.WriteLine(ToCSV("2011-03-31", "name", TYPE.BNUS,   "2000"));
 
-                date = new DateTime(2011, 4, 1);
-                sw.WriteLine(GenerateWriteLine(date, TYPE.EARN,      0));
-                sw.WriteLine(GenerateWriteLine(date, TYPE.EARN,      0));
-                sw.WriteLine(GenerateWriteLine(date, TYPE.FOOD, 300000));
-                sw.WriteLine(GenerateWriteLine(date, TYPE.FOOD, 900000));
-                sw.WriteLine(GenerateWriteLine(date, TYPE.SPCL,  80000));
-                sw.WriteLine(GenerateWriteLine(date, TYPE.SPCL,  20000));
+                sw.WriteLine(ToCSV("2011-04-01", "name", TYPE.EARN,      "0"));
+                sw.WriteLine(ToCSV("2011-04-01", "name", TYPE.EARN,      "0"));
+                sw.WriteLine(ToCSV("2011-04-01", "name", TYPE.FOOD, "300000"));
+                sw.WriteLine(ToCSV("2011-04-01", "name", TYPE.FOOD, "900000"));
+                sw.WriteLine(ToCSV("2011-04-01", "name", TYPE.SPCL,  "80000"));
+                sw.WriteLine(ToCSV("2011-04-01", "name", TYPE.SPCL,  "20000"));
             }
-        }
-
-        /// <summary>
-        /// Setup
-        /// </summary>
-        public override void Setup()
-        {
-            base.Setup();
-            abFormMain = new AbFormMain(argDB);
-            abFormMain.Show();
-
-            var tabSummary = new TabControlTester("TabControl", abFormMain);
-            tabSummary.SelectTab(3);
-        }
-
-        /// <summary>
-        /// TearDown
-        /// </summary>
-        public override void TearDown()
-        {
-            try
-            {
-                var finder = new FormFinder();
-                var form = finder.Find(typeof(AbFormMain).Name);
-                form.Close();
-            }
-            catch (NoSuchControlException)
-            {
-                //すでに閉じられている
-            }
-            base.TearDown();
         }
 
         /// <summary>
@@ -108,35 +77,8 @@
         [TestFixtureTearDown]
         public void TestFixtureTearDown()
         {
-            if (System.IO.File.Exists(argDB))
-            {
-                System.IO.File.Delete(argDB);
-            }
-        }
-
-        /// <summary>GenerateWriteLine メソッド用テンプレ</summary>
-        private const string TEMPLATE = "\"{0}\",\"name\",\"{1}\",\"{2}\"";
-
-        /// <summary>
-        /// 出力用レコード文字列生成
-        /// </summary>
-        /// <param name="date">日付</param>
-        /// <param name="type">種別</param>
-        /// <param name="cost">金額</param>
-        /// <returns>出力用レコード文字列</returns>
-        private string GenerateWriteLine(DateTime date, string type, decimal cost)
-        {
-            return string.Format(TEMPLATE, date.ToString(FMT.DATE), type, cost);
-        }
-
-        /// <summary>
-        /// DataGridView 取得
-        /// </summary>
-        /// <returns>DataGridView</returns>
-        private DataGridView GetDgvBalance()
-        {
-            var finder = new Finder<DataGridView>("DgvBalance", abFormMain);
-            return finder.Find();
+            if (System.IO.File.Exists(DB_EXIST)) System.IO.File.Delete(DB_EXIST);
+            if (System.IO.File.Exists(DB_EMPTY)) System.IO.File.Delete(DB_EMPTY);
         }
 
         /// <summary>
@@ -145,26 +87,21 @@
         [Test]
         public void DgvBalanceWithCount()
         {
-            var dgvBalance = GetDgvBalance();
-            Assert.AreEqual(4, dgvBalance.Rows.Count);
+            ShowFormMain(DB_EXIST, TAB_IDX);
+
+            Assert.AreEqual(4, CtDgvBalance().Rows.Count);
         }
 
         /// <summary>
-        /// データなしのテスト
+        /// レコード数のテスト
+        /// (データなし)
         /// </summary>
         [Test]
-        public void DgvBalanceWithEmptyData()
+        public void DgvBalanceWithCountWithEmptyData()
         {
-            abFormMain.Close();
-            abFormMain = new AbFormMain("AbTestTabBalanceWithEmptyData.db");
-            abFormMain.Show();
+            ShowFormMain(DB_EMPTY, TAB_IDX);
 
-            var tabSummary = new TabControlTester("TabControl", abFormMain);
-            tabSummary.SelectTab(3);
-
-            var dgvBalance = GetDgvBalance();
-            Assert.AreEqual(0, dgvBalance.Rows.Count);
-            System.IO.File.Delete("AbTestTabBalanceWithEmptyData.db");
+            Assert.AreEqual(0, CtDgvBalance().Rows.Count);
         }
 
         /// <summary>
@@ -173,7 +110,9 @@
         [Test]
         public void DgvBalanceWithYear()
         {
-            var dgvBalance = GetDgvBalance();
+            ShowFormMain(DB_EXIST, TAB_IDX);
+
+            var dgvBalance = CtDgvBalance();
             Assert.AreEqual(2009, dgvBalance.Rows[0].Cells[COL.YEAR].Value);
             Assert.AreEqual(2010, dgvBalance.Rows[1].Cells[COL.YEAR].Value);
             Assert.AreEqual(2011, dgvBalance.Rows[2].Cells[COL.YEAR].Value);
@@ -186,11 +125,13 @@
         [Test]
         public void DgvBalanceWithEarn()
         {
-            var dgvBalance = GetDgvBalance();
-            Assert.AreEqual(2300000, dgvBalance.Rows[0].Cells[COL.EARN].Value);
-            Assert.AreEqual(2400000, dgvBalance.Rows[1].Cells[COL.EARN].Value);
+            ShowFormMain(DB_EXIST, TAB_IDX);
+
+            var dgvBalance = CtDgvBalance();
+            Assert.AreEqual(2325000, dgvBalance.Rows[0].Cells[COL.EARN].Value);
+            Assert.AreEqual(2403000, dgvBalance.Rows[1].Cells[COL.EARN].Value);
             Assert.AreEqual(      0, dgvBalance.Rows[2].Cells[COL.EARN].Value);
-            Assert.AreEqual(4700000, dgvBalance.Rows[3].Cells[COL.EARN].Value);
+            Assert.AreEqual(4728000, dgvBalance.Rows[3].Cells[COL.EARN].Value);
         }
 
         /// <summary>
@@ -199,7 +140,9 @@
         [Test]
         public void DgvBalanceWithExpense()
         {
-            var dgvBalance = GetDgvBalance();
+            ShowFormMain(DB_EXIST, TAB_IDX);
+
+            var dgvBalance = CtDgvBalance();
             Assert.AreEqual(1100000, dgvBalance.Rows[0].Cells[COL.EXPENSE].Value);
             Assert.AreEqual(1000000, dgvBalance.Rows[1].Cells[COL.EXPENSE].Value);
             Assert.AreEqual(1200000, dgvBalance.Rows[2].Cells[COL.EXPENSE].Value);
@@ -212,7 +155,9 @@
         [Test]
         public void DgvBalanceWithSpecial()
         {
-            var dgvBalance = GetDgvBalance();
+            ShowFormMain(DB_EXIST, TAB_IDX);
+
+            var dgvBalance = CtDgvBalance();
             Assert.AreEqual(180000, dgvBalance.Rows[0].Cells[COL.SPECIAL].Value);
             Assert.AreEqual(138000, dgvBalance.Rows[1].Cells[COL.SPECIAL].Value);
             Assert.AreEqual(100000, dgvBalance.Rows[2].Cells[COL.SPECIAL].Value);
@@ -225,11 +170,13 @@
         [Test]
         public void DgvBalanceWithBalance()
         {
-            var dgvBalance = GetDgvBalance();
-            Assert.AreEqual( 1020000, dgvBalance.Rows[0].Cells[COL.BALANCE].Value);
-            Assert.AreEqual( 1262000, dgvBalance.Rows[1].Cells[COL.BALANCE].Value);
+            ShowFormMain(DB_EXIST, TAB_IDX);
+
+            var dgvBalance = CtDgvBalance();
+            Assert.AreEqual( 1045000, dgvBalance.Rows[0].Cells[COL.BALANCE].Value);
+            Assert.AreEqual( 1265000, dgvBalance.Rows[1].Cells[COL.BALANCE].Value);
             Assert.AreEqual(-1300000, dgvBalance.Rows[2].Cells[COL.BALANCE].Value);
-            Assert.AreEqual(  982000, dgvBalance.Rows[3].Cells[COL.BALANCE].Value);
+            Assert.AreEqual( 1010000, dgvBalance.Rows[3].Cells[COL.BALANCE].Value);
         }
     }
 }

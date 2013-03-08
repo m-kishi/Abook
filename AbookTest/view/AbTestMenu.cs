@@ -9,46 +9,18 @@
     /// メニューテスト
     /// </summary>
     [TestFixture]
-    public class AbTestMenu : NUnitFormTest
+    public class AbTestMenu : AbTestFormBase
     {
-        /// <summary>引数:DB ファイル</summary>
-        private string argDB = "AbTestMenu.db";
-        /// <summary>対象:メイン画面フォーム</summary>
-        private AbFormMain abFormMain;
+        /// <summary>DB ファイル</summary>
+        private const string DB = "AbTestMenu.db";
 
         /// <summary>
-        /// Setup
+        /// TestFixtureTearDown
         /// </summary>
-        public override void Setup()
+        [TestFixtureTearDown]
+        public void TestFixtureTearDown()
         {
-            base.Setup();
-            abFormMain = new AbFormMain(argDB);
-            abFormMain.Show();
-        }
-
-        /// <summary>
-        /// TearDown
-        /// </summary>
-        public override void TearDown()
-        {
-            try
-            {
-                var finder = new FormFinder();
-                var form = finder.Find(typeof(AbFormMain).Name);
-                form.Close();
-            }
-            catch (NoSuchControlException)
-            {
-                //すでに閉じられている
-            }
-            finally
-            {
-                if (System.IO.File.Exists(argDB))
-                {
-                    System.IO.File.Delete(argDB);
-                }
-            }
-            base.TearDown();
+            if (System.IO.File.Exists(DB)) System.IO.File.Delete(DB);
         }
 
         /// <summary>
@@ -57,10 +29,11 @@
         [Test]
         public void MenuExitClick()
         {
-            var menuExit = new ToolStripMenuItemTester("MenuExit", abFormMain);
-            menuExit.Click();
+            ShowFormMain(DB);
 
-            Assert.IsTrue(abFormMain.IsDisposed);
+            TsMenuExit().Click();
+
+            Assert.IsTrue(this.form.IsDisposed);
         }
 
         /// <summary>
@@ -72,17 +45,19 @@
             //バージョン情報フォームの表示テスト
             ModalFormHandler = (name, hWnd, form) =>
             {
+                //フォーム名テスト
                 Assert.AreEqual(name, "AbFormVersion");
 
-                //アセンブリ情報の取得は不可
-                var assembly = System.Reflection.Assembly.GetEntryAssembly();
-                Assert.IsNull(assembly);
+                //テスト環境でアセンブリ情報の取得は不可
+                Assert.IsNull(System.Reflection.Assembly.GetEntryAssembly());
 
-                var btnOK = new ButtonTester("BtnOK", form);
-                btnOK.Click();
+                // OK ボタンクリック
+                (new ButtonTester("BtnOK", form)).Click();
             };
-            var menuVersion = new ToolStripMenuItemTester("MenuVersion", abFormMain);
-            menuVersion.Click();
+
+            ShowFormMain(DB);
+
+            TsMenuVersion().Click();
         }
     }
 }

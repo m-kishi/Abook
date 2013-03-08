@@ -11,43 +11,12 @@
     /// グラフタブテスト
     /// </summary>
     [TestFixture]
-    public class AbTestTabGraphic : NUnitFormTest
+    public class AbTestTabGraphic : AbTestFormBase
     {
-        /// <summary>引数:DB ファイル</summary>
-        private string argDB = "AbTestTabGraphic.db";
-        /// <summary>対象:メイン画面フォーム</summary>
-        private AbFormMain abFormMain;
-
-        /// <summary>
-        /// Setup
-        /// </summary>
-        public override void Setup()
-        {
-            base.Setup();
-            abFormMain = new AbFormMain(argDB);
-            abFormMain.Show();
-
-            var tabSummary = new TabControlTester("TabControl", abFormMain);
-            tabSummary.SelectTab(2);
-        }
-
-        /// <summary>
-        /// TearDown
-        /// </summary>
-        public override void TearDown()
-        {
-            try
-            {
-                var finder = new FormFinder();
-                var form = finder.Find(typeof(AbFormMain).Name);
-                form.Close();
-            }
-            catch (NoSuchControlException)
-            {
-                //すでに閉じられている
-            }
-            base.TearDown();
-        }
+        /// <summary>DB ファイル</summary>
+        private const string DB = "AbTestTabGraphic.db";
+        /// <summary>タブインデックス</summary>
+        private const int TAB_IDX = 2;
 
         /// <summary>
         /// TestFixtureTearDown
@@ -55,86 +24,7 @@
         [TestFixtureTearDown]
         public void TestFixtureTearDown()
         {
-            if (System.IO.File.Exists(argDB))
-            {
-                System.IO.File.Delete(argDB);
-            }
-        }
-
-        /// <summary>
-        /// ヘッダーコントロール取得
-        /// </summary>
-        /// <param name="form">フォーム</param>
-        /// <returns>ヘッダーコントロール</returns>
-        private AbHeaderControl GetHeaderControl(Form form)
-        {
-            var finder = new Finder<AbHeaderControl>("HeadGraphic", form);
-            return finder.Find();
-        }
-
-        /// <summary>
-        /// 前年ボタン取得
-        /// </summary>
-        /// <returns>前年ボタン</returns>
-        private ButtonTester GetBtnPrevYear()
-        {
-            var btnPrevYear = new ButtonTester("HeadGraphic.BtnPrevYear", abFormMain);
-            return btnPrevYear;
-        }
-
-        /// <summary>
-        /// 前月ボタン取得
-        /// </summary>
-        /// <returns>前月ボタン</returns>
-        private ButtonTester GetBtnPrevMonth()
-        {
-            var btnPrevMonth = new ButtonTester("HeadGraphic.BtnPrevMonth", abFormMain);
-            return btnPrevMonth;
-        }
-
-        /// <summary>
-        /// 翌月ボタン取得
-        /// </summary>
-        /// <returns>翌月ボタン</returns>
-        private ButtonTester GetBtnNextMonth()
-        {
-            var btnNextMonth = new ButtonTester("HeadGraphic.BtnNextMonth", abFormMain);
-            return btnNextMonth;
-        }
-
-        /// <summary>
-        /// 翌年ボタン取得
-        /// </summary>
-        /// <returns>翌年ボタン</returns>
-        private ButtonTester GetBtnNextYear()
-        {
-            var btnNextYear = new ButtonTester("HeadGraphic.BtnNextYear", abFormMain);
-            return btnNextYear;
-        }
-
-        /// <summary>
-        /// タイトルの検証
-        /// </summary>
-        /// <param name="expect">期待値</param>
-        private void HeaderTitleTest(string expect)
-        {
-            var headGraphic = GetHeaderControl(abFormMain);
-            Assert.AreEqual(expect, headGraphic.Title);
-        }
-
-        /// <summary>
-        /// グラフラベルの検証
-        /// </summary>
-        /// <param name="date">日付</param>
-        private void GraphicLabelTest(DateTime date)
-        {
-            foreach (var label in new string[] { "LblX6", "LblX5", "LblX4", "LblX3", "LblX2", "LblX1" })
-            {
-                var lblX = new LabelTester(label, abFormMain);
-                Assert.AreEqual(date.ToString(FMT.MONTH), lblX.Text, label);
-
-                date = date.AddMonths(-2);
-            }
+            if (System.IO.File.Exists(DB)) System.IO.File.Delete(DB);
         }
 
         /// <summary>
@@ -142,16 +32,16 @@
         /// 初期表示:システム年月
         /// </summary>
         [Test]
-        public void TitleAndGraphWithInitial()
+        public void TitleWithInitial()
         {
-            //明示的に描画イベントを呼び出し
-            var pboxGraph = new ControlTester("PboxGraph", abFormMain);
-            var g = ((new Finder<PictureBox>("PboxGraph", abFormMain)).Find()).CreateGraphics();
-            pboxGraph.FireEvent("Paint", new PaintEventArgs(g, System.Drawing.Rectangle.Empty));
+            ShowFormMain(DB, TAB_IDX);
 
-            var date = DateTime.Now;
-            HeaderTitleTest(date.ToString(FMT.TITLE));
-            GraphicLabelTest(date);
+            //明示的に描画イベントを呼び出し
+            var g = CtPboxGraph().CreateGraphics();
+            TsPboxGraph().FireEvent("Paint", new PaintEventArgs(g, System.Drawing.Rectangle.Empty));
+
+            var title = DateTime.Now.ToString(FMT.TITLE);
+            Assert.AreEqual(title, CtHeadGraphic().Title);
         }
 
         /// <summary>
@@ -159,14 +49,14 @@
         /// 前年表示:1年前
         /// </summary>
         [Test]
-        public void TitleAndGraphWithPrevYear_1_Time()
+        public void TitleWithPrevYear_1_Time()
         {
-            var btnPrevYear = GetBtnPrevYear();
-            btnPrevYear.Click();
+            ShowFormMain(DB, TAB_IDX);
 
-            var date = DateTime.Now.AddYears(-1);
-            HeaderTitleTest(date.ToString(FMT.TITLE));
-            GraphicLabelTest(date);
+            TsGraphicBtnPrevYear().Click();
+
+            var title = DateTime.Now.AddYears(-1).ToString(FMT.TITLE);
+            Assert.AreEqual(title, CtHeadGraphic().Title);
         }
 
         /// <summary>
@@ -174,15 +64,15 @@
         /// 前年表示:2年前
         /// </summary>
         [Test]
-        public void TitleAndGraphWithPrevYear_2_Time()
+        public void TitleWithPrevYear_2_Time()
         {
-            var btnPrevYear = GetBtnPrevYear();
-            btnPrevYear.Click();
-            btnPrevYear.Click();
+            ShowFormMain(DB, TAB_IDX);
 
-            var date = DateTime.Now.AddYears(-2);
-            HeaderTitleTest(date.ToString(FMT.TITLE));
-            GraphicLabelTest(date);
+            TsGraphicBtnPrevYear().Click();
+            TsGraphicBtnPrevYear().Click();
+
+            var title = DateTime.Now.AddYears(-2).ToString(FMT.TITLE);
+            Assert.AreEqual(title, CtHeadGraphic().Title);
         }
 
         /// <summary>
@@ -190,16 +80,16 @@
         /// 前年表示:3年前
         /// </summary>
         [Test]
-        public void TitleAndGraphWithPrevYear_3_Time()
+        public void TitleWithPrevYear_3_Time()
         {
-            var btnPrevYear = GetBtnPrevYear();
-            btnPrevYear.Click();
-            btnPrevYear.Click();
-            btnPrevYear.Click();
+            ShowFormMain(DB, TAB_IDX);
 
-            var date = DateTime.Now.AddYears(-3);
-            HeaderTitleTest(date.ToString(FMT.TITLE));
-            GraphicLabelTest(date);
+            TsGraphicBtnPrevYear().Click();
+            TsGraphicBtnPrevYear().Click();
+            TsGraphicBtnPrevYear().Click();
+
+            var title = DateTime.Now.AddYears(-3).ToString(FMT.TITLE);
+            Assert.AreEqual(title, CtHeadGraphic().Title);
         }
 
         /// <summary>
@@ -207,14 +97,14 @@
         /// 前月表示:1ヶ月前
         /// </summary>
         [Test]
-        public void TitleAndGraphWithPrevMonth_1_Time()
+        public void TitleWithPrevMonth_1_Time()
         {
-            var btnPrevMonth = GetBtnPrevMonth();
-            btnPrevMonth.Click();
+            ShowFormMain(DB, TAB_IDX);
 
-            var date = DateTime.Now.AddMonths(-1);
-            HeaderTitleTest(date.ToString(FMT.TITLE));
-            GraphicLabelTest(date);
+            TsGraphicBtnPrevMonth().Click();
+
+            var title = DateTime.Now.AddMonths(-1).ToString(FMT.TITLE);
+            Assert.AreEqual(title, CtHeadGraphic().Title);
         }
 
         /// <summary>
@@ -222,15 +112,15 @@
         /// 前月表示:2ヶ月前
         /// </summary>
         [Test]
-        public void TitleAndGraphWithPrevMonth_2_Time()
+        public void TitleWithPrevMonth_2_Time()
         {
-            var btnPrevMonth = GetBtnPrevMonth();
-            btnPrevMonth.Click();
-            btnPrevMonth.Click();
+            ShowFormMain(DB, TAB_IDX);
 
-            var date = DateTime.Now.AddMonths(-2);
-            HeaderTitleTest(date.ToString(FMT.TITLE));
-            GraphicLabelTest(date);
+            TsGraphicBtnPrevMonth().Click();
+            TsGraphicBtnPrevMonth().Click();
+
+            var title = DateTime.Now.AddMonths(-2).ToString(FMT.TITLE);
+            Assert.AreEqual(title, CtHeadGraphic().Title);
         }
 
         /// <summary>
@@ -238,16 +128,16 @@
         /// 前月表示:3ヶ月前
         /// </summary>
         [Test]
-        public void TitleAndGraphWithPrevMonth_3_Time()
+        public void TitleWithPrevMonth_3_Time()
         {
-            var btnPrevMonth = GetBtnPrevMonth();
-            btnPrevMonth.Click();
-            btnPrevMonth.Click();
-            btnPrevMonth.Click();
+            ShowFormMain(DB, TAB_IDX);
 
-            var date = DateTime.Now.AddMonths(-3);
-            HeaderTitleTest(date.ToString(FMT.TITLE));
-            GraphicLabelTest(date);
+            TsGraphicBtnPrevMonth().Click();
+            TsGraphicBtnPrevMonth().Click();
+            TsGraphicBtnPrevMonth().Click();
+
+            var title = DateTime.Now.AddMonths(-3).ToString(FMT.TITLE);
+            Assert.AreEqual(title, CtHeadGraphic().Title);
         }
 
         /// <summary>
@@ -255,14 +145,14 @@
         /// 翌月表示:1ヶ月後
         /// </summary>
         [Test]
-        public void TitleAndGraphWithNextMonth_1_Time()
+        public void TitleWithNextMonth_1_Time()
         {
-            var btnNextMonth = GetBtnNextMonth();
-            btnNextMonth.Click();
+            ShowFormMain(DB, TAB_IDX);
 
-            var date = DateTime.Now.AddMonths(1);
-            HeaderTitleTest(date.ToString(FMT.TITLE));
-            GraphicLabelTest(date);
+            TsGraphicBtnNextMonth().Click();
+
+            var title = DateTime.Now.AddMonths(1).ToString(FMT.TITLE);
+            Assert.AreEqual(title, CtHeadGraphic().Title);
         }
 
         /// <summary>
@@ -270,15 +160,15 @@
         /// 翌月表示:2ヶ月後
         /// </summary>
         [Test]
-        public void TitleAndGraphWithNextMonth_2_Time()
+        public void TitleWithNextMonth_2_Time()
         {
-            var btnNextMonth = GetBtnNextMonth();
-            btnNextMonth.Click();
-            btnNextMonth.Click();
+            ShowFormMain(DB, TAB_IDX);
 
-            var date = DateTime.Now.AddMonths(2);
-            HeaderTitleTest(date.ToString(FMT.TITLE));
-            GraphicLabelTest(date);
+            TsGraphicBtnNextMonth().Click();
+            TsGraphicBtnNextMonth().Click();
+
+            var title = DateTime.Now.AddMonths(2).ToString(FMT.TITLE);
+            Assert.AreEqual(title, CtHeadGraphic().Title);
         }
 
         /// <summary>
@@ -286,16 +176,16 @@
         /// 翌月表示:3ヶ月後
         /// </summary>
         [Test]
-        public void TitleAndGraphWithNextMonth_3_Time()
+        public void TitleWithNextMonth_3_Time()
         {
-            var btnNextMonth = GetBtnNextMonth();
-            btnNextMonth.Click();
-            btnNextMonth.Click();
-            btnNextMonth.Click();
+            ShowFormMain(DB, TAB_IDX);
 
-            var date = DateTime.Now.AddMonths(3);
-            HeaderTitleTest(date.ToString(FMT.TITLE));
-            GraphicLabelTest(date);
+            TsGraphicBtnNextMonth().Click();
+            TsGraphicBtnNextMonth().Click();
+            TsGraphicBtnNextMonth().Click();
+
+            var title = DateTime.Now.AddMonths(3).ToString(FMT.TITLE);
+            Assert.AreEqual(title, CtHeadGraphic().Title);
         }
 
         /// <summary>
@@ -303,14 +193,14 @@
         /// 翌年表示:1年後
         /// </summary>
         [Test]
-        public void TitleAndGraphWithNextYear_1_Time()
+        public void TitleWithNextYear_1_Time()
         {
-            var btnNextYear = GetBtnNextYear();
-            btnNextYear.Click();
+            ShowFormMain(DB, TAB_IDX);
 
-            var date = DateTime.Now.AddYears(1);
-            HeaderTitleTest(date.ToString(FMT.TITLE));
-            GraphicLabelTest(date);
+            TsGraphicBtnNextYear().Click();
+
+            var title = DateTime.Now.AddYears(1).ToString(FMT.TITLE);
+            Assert.AreEqual(title, CtHeadGraphic().Title);
         }
 
         /// <summary>
@@ -318,15 +208,15 @@
         /// 翌年表示:2年後
         /// </summary>
         [Test]
-        public void TitleAndGraphWithNextYear_2_Time()
+        public void TitleWithNextYear_2_Time()
         {
-            var btnNextYear = GetBtnNextYear();
-            btnNextYear.Click();
-            btnNextYear.Click();
+            ShowFormMain(DB, TAB_IDX);
 
-            var date = DateTime.Now.AddYears(2);
-            HeaderTitleTest(date.ToString(FMT.TITLE));
-            GraphicLabelTest(date);
+            TsGraphicBtnNextYear().Click();
+            TsGraphicBtnNextYear().Click();
+
+            var title = DateTime.Now.AddYears(2).ToString(FMT.TITLE);
+            Assert.AreEqual(title, CtHeadGraphic().Title);
         }
 
         /// <summary>
@@ -334,16 +224,226 @@
         /// 翌年表示:3年後
         /// </summary>
         [Test]
-        public void TitleAndGraphWithNextYear_3_Time()
+        public void TitleWithNextYear_3_Time()
         {
-            var btnNextYear = GetBtnNextYear();
-            btnNextYear.Click();
-            btnNextYear.Click();
-            btnNextYear.Click();
+            ShowFormMain(DB, TAB_IDX);
 
-            var date = DateTime.Now.AddYears(3);
-            HeaderTitleTest(date.ToString(FMT.TITLE));
-            GraphicLabelTest(date);
+            TsGraphicBtnNextYear().Click();
+            TsGraphicBtnNextYear().Click();
+            TsGraphicBtnNextYear().Click();
+
+            var title = DateTime.Now.AddYears(3).ToString(FMT.TITLE);
+            Assert.AreEqual(title, CtHeadGraphic().Title);
+        }
+
+        /// <summary>
+        /// ラベルのテスト
+        /// </summary>
+        /// <param name="date">日付</param>
+        private void TestGraphicLabel(DateTime date)
+        {
+            var now = date.AddMonths(2);
+            foreach (var label in new string[] { "LblX6", "LblX5", "LblX4", "LblX3", "LblX2", "LblX1" })
+            {
+                var lblX = new LabelTester(label, form);
+                Assert.AreEqual((now = now.AddMonths(-2)).ToString(FMT.MONTH), lblX.Text, label);
+            }
+        }
+
+        /// <summary>
+        /// ラベルテスト
+        /// 初期表示:システム年月
+        /// </summary>
+        [Test]
+        public void LabelWithInitial()
+        {
+            ShowFormMain(DB, TAB_IDX);
+
+            //明示的に描画イベントを呼び出し
+            var g = CtPboxGraph().CreateGraphics();
+            TsPboxGraph().FireEvent("Paint", new PaintEventArgs(g, System.Drawing.Rectangle.Empty));
+
+            TestGraphicLabel(DateTime.Now);
+        }
+
+        /// <summary>
+        /// ラベルテスト
+        /// 前年表示:1年前
+        /// </summary>
+        [Test]
+        public void LabelWithPrevYear_1_Time()
+        {
+            ShowFormMain(DB, TAB_IDX);
+
+            TsGraphicBtnPrevYear().Click();
+
+            TestGraphicLabel(DateTime.Now.AddYears(-1));
+        }
+
+        /// <summary>
+        /// ラベルテスト
+        /// 前年表示:2年前
+        /// </summary>
+        [Test]
+        public void LabelWithPrevYear_2_Time()
+        {
+            ShowFormMain(DB, TAB_IDX);
+
+            TsGraphicBtnPrevYear().Click();
+            TsGraphicBtnPrevYear().Click();
+
+            TestGraphicLabel(DateTime.Now.AddYears(-2));
+        }
+
+        /// <summary>
+        /// ラベルテスト
+        /// 前年表示:3年前
+        /// </summary>
+        [Test]
+        public void LabelWithPrevYear_3_Time()
+        {
+            ShowFormMain(DB, TAB_IDX);
+
+            TsGraphicBtnPrevYear().Click();
+            TsGraphicBtnPrevYear().Click();
+            TsGraphicBtnPrevYear().Click();
+
+            TestGraphicLabel(DateTime.Now.AddYears(-3));
+        }
+
+        /// <summary>
+        /// ラベルテスト
+        /// 前月表示:1ヶ月前
+        /// </summary>
+        [Test]
+        public void LabelWithPrevMonth_1_Time()
+        {
+            ShowFormMain(DB, TAB_IDX);
+
+            TsGraphicBtnPrevMonth().Click();
+
+            TestGraphicLabel(DateTime.Now.AddMonths(-1));
+        }
+
+        /// <summary>
+        /// ラベルテスト
+        /// 前月表示:2ヶ月前
+        /// </summary>
+        [Test]
+        public void LabelWithPrevMonth_2_Time()
+        {
+            ShowFormMain(DB, TAB_IDX);
+
+            TsGraphicBtnPrevMonth().Click();
+            TsGraphicBtnPrevMonth().Click();
+
+            TestGraphicLabel(DateTime.Now.AddMonths(-2));
+        }
+
+        /// <summary>
+        /// ラベルテスト
+        /// 前月表示:3ヶ月前
+        /// </summary>
+        [Test]
+        public void LabelWithPrevMonth_3_Time()
+        {
+            ShowFormMain(DB, TAB_IDX);
+
+            TsGraphicBtnPrevMonth().Click();
+            TsGraphicBtnPrevMonth().Click();
+            TsGraphicBtnPrevMonth().Click();
+
+            TestGraphicLabel(DateTime.Now.AddMonths(-3));
+        }
+
+        /// <summary>
+        /// ラベルテスト
+        /// 翌月表示:1ヶ月後
+        /// </summary>
+        [Test]
+        public void LabelWithNextMonth_1_Time()
+        {
+            ShowFormMain(DB, TAB_IDX);
+
+            TsGraphicBtnNextMonth().Click();
+
+            TestGraphicLabel(DateTime.Now.AddMonths(1));
+        }
+
+        /// <summary>
+        /// ラベルテスト
+        /// 翌月表示:2ヶ月後
+        /// </summary>
+        [Test]
+        public void LabelWithNextMonth_2_Time()
+        {
+            ShowFormMain(DB, TAB_IDX);
+
+            TsGraphicBtnNextMonth().Click();
+            TsGraphicBtnNextMonth().Click();
+
+            TestGraphicLabel(DateTime.Now.AddMonths(2));
+        }
+
+        /// <summary>
+        /// ラベルテスト
+        /// 翌月表示:3ヶ月後
+        /// </summary>
+        [Test]
+        public void LabelWithNextMonth_3_Time()
+        {
+            ShowFormMain(DB, TAB_IDX);
+
+            TsGraphicBtnNextMonth().Click();
+            TsGraphicBtnNextMonth().Click();
+            TsGraphicBtnNextMonth().Click();
+
+            TestGraphicLabel(DateTime.Now.AddMonths(3));
+        }
+
+        /// <summary>
+        /// ラベルテスト
+        /// 翌年表示:1年後
+        /// </summary>
+        [Test]
+        public void LabelWithNextYear_1_Time()
+        {
+            ShowFormMain(DB, TAB_IDX);
+
+            TsGraphicBtnNextYear().Click();
+
+            TestGraphicLabel(DateTime.Now.AddYears(1));
+        }
+
+        /// <summary>
+        /// ラベルテスト
+        /// 翌年表示:2年後
+        /// </summary>
+        [Test]
+        public void LabelWithNextYear_2_Time()
+        {
+            ShowFormMain(DB, TAB_IDX);
+
+            TsGraphicBtnNextYear().Click();
+            TsGraphicBtnNextYear().Click();
+
+            TestGraphicLabel(DateTime.Now.AddYears(2));
+        }
+
+        /// <summary>
+        /// ラベルテスト
+        /// 翌年表示:3年後
+        /// </summary>
+        [Test]
+        public void LabelWithNextYear_3_Time()
+        {
+            ShowFormMain(DB, TAB_IDX);
+
+            TsGraphicBtnNextYear().Click();
+            TsGraphicBtnNextYear().Click();
+            TsGraphicBtnNextYear().Click();
+
+            TestGraphicLabel(DateTime.Now.AddYears(3));
         }
     }
 }
