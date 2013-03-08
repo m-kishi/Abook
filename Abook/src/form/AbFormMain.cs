@@ -11,6 +11,9 @@
     /// </summary>
     public partial class AbFormMain : Form
     {
+        /// <summary>DB ファイル</summary>
+        private string DB;
+
         /// <summary>
         /// アプリケーションメイン
         /// </summary>
@@ -19,14 +22,16 @@
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new AbFormMain());
+            Application.Run(new AbFormMain(CSV.DB));
         }
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public AbFormMain()
+        /// <param name="DB">DB ファイル</param>
+        public AbFormMain(string DB)
         {
+            this.DB = DB;
             InitializeComponent();
         }
 
@@ -38,7 +43,7 @@
             Icon = SystemIcons.Application;
             try
             {
-                InitFormMain(AbDBManager.Load(CSV.DB));
+                InitFormMain(AbDBManager.Load(DB));
             }
             catch (Exception ex)
             {

@@ -122,7 +122,7 @@
             {
                 var expenses = AbDBManager.Load(DgvExpense, out errLine);
 
-                AbDBManager.Store(CSV.DB, expenses);
+                AbDBManager.Store(DB, expenses);
 
                 InitFormMain(expenses);
 
