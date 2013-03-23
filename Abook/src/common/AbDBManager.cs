@@ -39,7 +39,7 @@
             }
 
             var expenses = new List<AbExpense>();
-            using (var tp = new TextFieldParser(file, System.Text.Encoding.UTF8))
+            using (var tp = new TextFieldParser(file, CSV.ENCODING))
             {
                 var line = 0;
                 try
@@ -123,16 +123,18 @@
                 AbException.Throw(EX.DB_RECORD_NOTHING);
             }
 
-            using (var sw = new System.IO.StreamWriter(file, false, System.Text.Encoding.UTF8))
+            using (var sw = new System.IO.StreamWriter(file, false, CSV.ENCODING))
             {
                 var line = 0;
                 try
                 {
+                    sw.NewLine = CSV.LF;
                     foreach (var exp in expenses)
                     {
                         line++;
                         sw.WriteLine(exp.ToCSV());
                     }
+                    sw.Close();
                 }
                 catch (Exception ex)
                 {

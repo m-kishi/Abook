@@ -1,6 +1,7 @@
 ﻿namespace Abook
 {
     using System;
+    using System.Text;
 
     /// <summary>
     /// 定数クラス
@@ -39,6 +40,10 @@
             public const string DELIMITER = ",";
             /// <summary>フィールド数</summary>
             public const int FIELD = 4;
+            /// <summary>文字コード(UTF-8 BOM なし)</summary>
+            public static readonly Encoding ENCODING = new UTF8Encoding(false);
+            /// <summary>改行文字(LF)</summary>
+            public const string LF = "\n";
         }
 
         /// <summary>DataGridView</summary>
