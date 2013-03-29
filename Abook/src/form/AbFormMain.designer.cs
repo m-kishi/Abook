@@ -37,10 +37,10 @@
             System.Windows.Forms.DataGridViewCellStyle styleExpense = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle styleSpecial = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle styleBalance = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle stylePrvYear = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle stylePrvDate = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle stylePrvName = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle stylePrvICst = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle stylePrvOCst = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle stylePrvCost = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle stylePrvBlnc = new System.Windows.Forms.DataGridViewCellStyle();
             this.MenuStrip     = new System.Windows.Forms.MenuStrip();
             this.MenuFile      = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuExit      = new System.Windows.Forms.ToolStripMenuItem();
@@ -103,10 +103,10 @@
             this.ColBalance    = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TabPrivate = new System.Windows.Forms.TabPage();
             this.DgvPrivate = new System.Windows.Forms.DataGridView();
-            this.ColPrvYear = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColPrvDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColPrvName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColPrvICst = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColPrvOCst = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColPrvCost = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColPrvBlnc = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MenuStrip.SuspendLayout();
             this.TabControl.SuspendLayout();
             this.TabExpense.SuspendLayout();
@@ -761,7 +761,7 @@
             this.DgvPrivate.AllowUserToDeleteRows = false;
             this.DgvPrivate.AllowUserToResizeColumns = false;
             this.DgvPrivate.AllowUserToResizeRows = false;
-            this.DgvPrivate.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.ColPrvYear, this.ColPrvName, this.ColPrvICst, this.ColPrvOCst });
+            this.DgvPrivate.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.ColPrvDate, this.ColPrvName, this.ColPrvCost, this.ColPrvBlnc });
             this.DgvPrivate.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DgvPrivate.Location = new System.Drawing.Point(6, 6);
             this.DgvPrivate.MultiSelect = false;
@@ -774,16 +774,16 @@
             this.DgvPrivate.Size = new System.Drawing.Size(392, 275);
             this.DgvPrivate.TabIndex = 48;
             // 
-            // ColPrvYear
+            // ColPrvDate
             // 
-            stylePrvYear.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.ColPrvYear.DefaultCellStyle = stylePrvYear;
-            this.ColPrvYear.HeaderText = "年";
-            this.ColPrvYear.Name = "ColPrvYear";
-            this.ColPrvYear.ReadOnly = true;
-            this.ColPrvYear.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.ColPrvYear.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.ColPrvYear.Width = 45;
+            stylePrvDate.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.ColPrvDate.DefaultCellStyle = stylePrvDate;
+            this.ColPrvDate.HeaderText = "年月";
+            this.ColPrvDate.Name = "ColPrvDate";
+            this.ColPrvDate.ReadOnly = true;
+            this.ColPrvDate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ColPrvDate.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ColPrvDate.Width = 65;
             // 
             // ColPrvName
             // 
@@ -795,27 +795,27 @@
             this.ColPrvName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.ColPrvName.Width = 120;
             // 
-            // ColPrvICst
+            // ColPrvCost
             // 
-            stylePrvICst.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            stylePrvICst.Format = "N0";
-            this.ColPrvICst.DefaultCellStyle = stylePrvICst;
-            this.ColPrvICst.HeaderText = "入金";
-            this.ColPrvICst.Name = "ColPrvICst";
-            this.ColPrvICst.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.ColPrvICst.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.ColPrvICst.Width = 90;
+            stylePrvCost.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            stylePrvCost.Format = "C0";
+            this.ColPrvCost.DefaultCellStyle = stylePrvCost;
+            this.ColPrvCost.HeaderText = "金額";
+            this.ColPrvCost.Name = "ColPrvCost";
+            this.ColPrvCost.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ColPrvCost.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ColPrvCost.Width = 80;
             // 
-            // ColPrvOCst
+            // ColPrvBlnc
             // 
-            stylePrvOCst.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            stylePrvOCst.Format = "N0";
-            this.ColPrvOCst.DefaultCellStyle = stylePrvOCst;
-            this.ColPrvOCst.HeaderText = "出金";
-            this.ColPrvOCst.Name = "ColPrvOCst";
-            this.ColPrvOCst.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.ColPrvOCst.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.ColPrvOCst.Width = 90;
+            stylePrvBlnc.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            stylePrvBlnc.Format = "C0";
+            this.ColPrvBlnc.DefaultCellStyle = stylePrvBlnc;
+            this.ColPrvBlnc.HeaderText = "収支";
+            this.ColPrvBlnc.Name = "ColPrvBlnc";
+            this.ColPrvBlnc.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ColPrvBlnc.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ColPrvBlnc.Width = 80;
             // 
             // AbFormMain
             // 
@@ -911,9 +911,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ColBalance;
         private System.Windows.Forms.TabPage TabPrivate;
         private System.Windows.Forms.DataGridView DgvPrivate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColPrvYear;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColPrvDate;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColPrvName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColPrvICst;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColPrvOCst;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColPrvCost;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColPrvBlnc;
     }
 }
