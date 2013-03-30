@@ -71,6 +71,9 @@
             expenses.Add(new AbExpense("2011-03-31", "BNUS", TYPE.BNUS, "300000"));
             expenses.Add(new AbExpense("2011-03-31", "SPCL", TYPE.SPCL, "20000"));
             expenses.Add(new AbExpense("2011-03-31", "SPCL", TYPE.SPCL, "21000"));
+            expenses.Add(new AbExpense("2011-03-31", "PRVI", TYPE.PRVI, "10000"));
+            expenses.Add(new AbExpense("2011-03-31", "PRVI", TYPE.PRVI, "15000"));
+            expenses.Add(new AbExpense("2011-03-31", "PRVO", TYPE.PRVO, "12000"));
             return expenses;
         }
 

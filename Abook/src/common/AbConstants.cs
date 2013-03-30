@@ -164,6 +164,16 @@
             public const string PRVI = "秘密入";
             /// <summary>秘密出</summary>
             public const string PRVO = "秘密出";
+
+            /// <summary>支出集計対象外</summary>
+            public static readonly string[] EXCEPTS =
+            {
+                TYPE.EARN,
+                TYPE.BNUS,
+                TYPE.SPCL,
+                TYPE.PRVI,
+                TYPE.PRVO
+            };
         }
     }
 }

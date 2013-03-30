@@ -55,7 +55,7 @@
                 dic.Add(gObj.Key, gObj.Sum(exp => exp.Cost));
             }
 
-            var excepts = new string[] { TYPE.EARN, TYPE.BNUS, TYPE.SPCL };
+            var excepts = TYPE.EXCEPTS;
             var total = expenses.Where(exp => !excepts.Contains(exp.Type)).Sum(exp => exp.Cost);
             dic.Add(TYPE.TTAL, total);
 

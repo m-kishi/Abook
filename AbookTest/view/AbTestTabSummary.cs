@@ -44,6 +44,9 @@
                 sw.WriteLine(ToCSV(dtNow, "name", TYPE.INSU,   "2700"));
                 sw.WriteLine(ToCSV(dtNow, "name", TYPE.OTHR,    "500"));
                 sw.WriteLine(ToCSV(dtNow, "name", TYPE.EARN, "150000"));
+                sw.WriteLine(ToCSV(dtNow, "name", TYPE.PRVI,  "20000"));
+                sw.WriteLine(ToCSV(dtNow, "name", TYPE.PRVO,  "10000"));
+
 
                 var dtPrevYear1 = DateTime.Now.AddYears(-1).ToString(FMT.DATE);
                 sw.WriteLine(ToCSV(dtPrevYear1, "name", TYPE.FOOD,  "10100"));
@@ -59,6 +62,8 @@
                 sw.WriteLine(ToCSV(dtPrevYear1, "name", TYPE.INSU,   "2800"));
                 sw.WriteLine(ToCSV(dtPrevYear1, "name", TYPE.OTHR,    "600"));
                 sw.WriteLine(ToCSV(dtPrevYear1, "name", TYPE.EARN, "150100"));
+                sw.WriteLine(ToCSV(dtPrevYear1, "name", TYPE.PRVI,  "20000"));
+                sw.WriteLine(ToCSV(dtPrevYear1, "name", TYPE.PRVO,  "10000"));
 
                 var dtPrevYear2 = DateTime.Now.AddYears(-2).ToString(FMT.DATE);
                 sw.WriteLine(ToCSV(dtPrevYear2, "name", TYPE.FOOD,  "10200"));
@@ -74,6 +79,8 @@
                 sw.WriteLine(ToCSV(dtPrevYear2, "name", TYPE.INSU,   "2900"));
                 sw.WriteLine(ToCSV(dtPrevYear2, "name", TYPE.OTHR,    "700"));
                 sw.WriteLine(ToCSV(dtPrevYear2, "name", TYPE.EARN, "150200"));
+                sw.WriteLine(ToCSV(dtPrevYear2, "name", TYPE.PRVI,  "20000"));
+                sw.WriteLine(ToCSV(dtPrevYear2, "name", TYPE.PRVO,  "10000"));
 
                 var dtPrevMonth1 = DateTime.Now.AddMonths(-1).ToString(FMT.DATE);
                 sw.WriteLine(ToCSV(dtPrevMonth1, "name", TYPE.FOOD,  "10300"));
@@ -89,6 +96,8 @@
                 sw.WriteLine(ToCSV(dtPrevMonth1, "name", TYPE.INSU,   "3000"));
                 sw.WriteLine(ToCSV(dtPrevMonth1, "name", TYPE.OTHR,    "800"));
                 sw.WriteLine(ToCSV(dtPrevMonth1, "name", TYPE.EARN, "150300"));
+                sw.WriteLine(ToCSV(dtPrevMonth1, "name", TYPE.PRVI,  "20000"));
+                sw.WriteLine(ToCSV(dtPrevMonth1, "name", TYPE.PRVO,  "10000"));
 
                 var dtPrevMonth2 = DateTime.Now.AddMonths(-2).ToString(FMT.DATE);
                 sw.WriteLine(ToCSV(dtPrevMonth2, "name", TYPE.FOOD,  "10400"));
@@ -104,6 +113,8 @@
                 sw.WriteLine(ToCSV(dtPrevMonth2, "name", TYPE.INSU,   "3100"));
                 sw.WriteLine(ToCSV(dtPrevMonth2, "name", TYPE.OTHR,    "900"));
                 sw.WriteLine(ToCSV(dtPrevMonth2, "name", TYPE.EARN, "150400"));
+                sw.WriteLine(ToCSV(dtPrevMonth2, "name", TYPE.PRVI,  "20000"));
+                sw.WriteLine(ToCSV(dtPrevMonth2, "name", TYPE.PRVO,  "10000"));
 
                 var dtNextMonth1 = DateTime.Now.AddMonths(1).ToString(FMT.DATE);
                 sw.WriteLine(ToCSV(dtNextMonth1, "name", TYPE.FOOD,  "10500"));
@@ -119,6 +130,8 @@
                 sw.WriteLine(ToCSV(dtNextMonth1, "name", TYPE.INSU,   "3200"));
                 sw.WriteLine(ToCSV(dtNextMonth1, "name", TYPE.OTHR,   "1000"));
                 sw.WriteLine(ToCSV(dtNextMonth1, "name", TYPE.EARN, "150500"));
+                sw.WriteLine(ToCSV(dtNextMonth1, "name", TYPE.PRVI,  "20000"));
+                sw.WriteLine(ToCSV(dtNextMonth1, "name", TYPE.PRVO,  "10000"));
 
                 var dtNextMonth2 = DateTime.Now.AddMonths(2).ToString(FMT.DATE);
                 sw.WriteLine(ToCSV(dtNextMonth2, "name", TYPE.FOOD,  "10600"));
@@ -134,6 +147,8 @@
                 sw.WriteLine(ToCSV(dtNextMonth2, "name", TYPE.INSU,   "3300"));
                 sw.WriteLine(ToCSV(dtNextMonth2, "name", TYPE.OTHR,   "1100"));
                 sw.WriteLine(ToCSV(dtNextMonth2, "name", TYPE.EARN, "150600"));
+                sw.WriteLine(ToCSV(dtNextMonth2, "name", TYPE.PRVI,  "20000"));
+                sw.WriteLine(ToCSV(dtNextMonth2, "name", TYPE.PRVO,  "10000"));
 
                 var dtNextYear1 = DateTime.Now.AddYears(1).ToString(FMT.DATE);
                 sw.WriteLine(ToCSV(dtNextYear1, "name", TYPE.FOOD,  "10700"));
@@ -149,6 +164,8 @@
                 sw.WriteLine(ToCSV(dtNextYear1, "name", TYPE.INSU,   "3400"));
                 sw.WriteLine(ToCSV(dtNextYear1, "name", TYPE.OTHR,   "1200"));
                 sw.WriteLine(ToCSV(dtNextYear1, "name", TYPE.EARN, "150700"));
+                sw.WriteLine(ToCSV(dtNextYear1, "name", TYPE.PRVI,  "20000"));
+                sw.WriteLine(ToCSV(dtNextYear1, "name", TYPE.PRVO,  "10000"));
 
                 var dtNextYear2 = DateTime.Now.AddYears(2).ToString(FMT.DATE);
                 sw.WriteLine(ToCSV(dtNextYear2, "name", TYPE.FOOD,  "10800"));
@@ -164,6 +181,8 @@
                 sw.WriteLine(ToCSV(dtNextYear2, "name", TYPE.INSU,   "3500"));
                 sw.WriteLine(ToCSV(dtNextYear2, "name", TYPE.OTHR,   "1300"));
                 sw.WriteLine(ToCSV(dtNextYear2, "name", TYPE.EARN, "150800"));
+                sw.WriteLine(ToCSV(dtNextYear2, "name", TYPE.PRVI,  "20000"));
+                sw.WriteLine(ToCSV(dtNextYear2, "name", TYPE.PRVO,  "10000"));
             }
         }
 

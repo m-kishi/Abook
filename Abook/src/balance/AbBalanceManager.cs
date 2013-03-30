@@ -128,7 +128,7 @@
                 AbException.Throw(EX.EXPENSES_NULL);
             }
 
-            var excepts = new string[] { TYPE.EARN, TYPE.BNUS, TYPE.SPCL };
+            var excepts = TYPE.EXCEPTS;
             var expenseExpenses = expenses.Where(exp => !excepts.Contains(exp.Type));
             if (expenseExpenses != null && expenseExpenses.Count() > 0)
             {
@@ -178,8 +178,9 @@
                 earn = earnExpenses.Sum(exp => exp.Cost);
             }
 
+            var excepts = targets.Concat((new string[] { TYPE.PRVI, TYPE.PRVO }).ToList());
             var expense = decimal.Zero;
-            var expenseExpenses = expenses.Where(exp => !targets.Contains(exp.Type));
+            var expenseExpenses = expenses.Where(exp => !excepts.Contains(exp.Type));
             if (expenseExpenses != null && expenseExpenses.Count() > 0)
             {
                 expense = expenseExpenses.Sum(exp => exp.Cost);
