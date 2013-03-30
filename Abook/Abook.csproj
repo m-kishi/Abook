@@ -99,5 +99,8 @@
     <Compile Include="src\graphic\AbGraphicData.cs" />
     <Compile Include="src\graphic\AbGraphicLine.cs" />
     <Compile Include="src\graphic\AbGraphicManager.cs" />
+    <Compile Include="src\private\AbPrivate.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

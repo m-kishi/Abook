@@ -74,6 +74,8 @@
             public const string DAILY_GROUP = "{0}-01";
             /// <summary>月別"yyyy-MM"</summary>
             public const string MONTHLY_GROUP = "yyyy-MM";
+            /// <summary>年月"yyyy-MM"</summary>
+            public const string YEAR_MONTH = "yyyy-MM";
         }
 
         /// <summary>グラフ</summary>
@@ -145,6 +147,10 @@
             public const string BNUS = "特入";
             /// <summary>特出</summary>
             public const string SPCL = "特出";
+            /// <summary>秘密入</summary>
+            public const string PRVI = "秘密入";
+            /// <summary>秘密出</summary>
+            public const string PRVO = "秘密出";
         }
     }
 }

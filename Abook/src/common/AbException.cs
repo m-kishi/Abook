@@ -60,6 +60,8 @@
             /// <summary>登録するデータがありません。</summary>
             public const string DB_RECORD_NOTHING = "登録するデータがありません。";
 
+            /// <summary>支出レコードがありません。</summary>
+            public const string EXPENSE_NULL = "支出レコードがありません。";
             /// <summary>支出レコードリストがありません。</summary>
             public const string EXPENSES_NULL = "支出レコードリストがありません。";
             /// <summary>集計値リストがありません。</summary>
@@ -75,6 +77,9 @@
             public const string SPECIAL_MINUS = "特出がマイナスです。";
             /// <summary>収支が合いません。</summary>
             public const string BALANCE_INCORRECT = "収支が合いません。";
+
+            /// <summary>種別が正しくありません。</summary>
+            public const string TYPE_PRIVATE_ERR = "種別が正しくありません。";
         }
     }
 }
