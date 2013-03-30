@@ -29,6 +29,19 @@
             public const string SPECIAL = "ColSpecial";
             /// <summary>収支</summary>
             public const string BALANCE = "ColBalance";
+
+            /// <summary>秘密収支</summary>
+            public static class PRIVATE
+            {
+                /// <summary>年月</summary>
+                public const string DATE = "ColPrvDate";
+                /// <summary>名称</summary>
+                public const string NAME = "ColPrvName";
+                /// <summary>金額</summary>
+                public const string COST = "ColPrvCost";
+                /// <summary>収支</summary>
+                public const string BLNC = "ColPrvBlnc";
+            }
         }
 
         /// <summary>CSV</summary>

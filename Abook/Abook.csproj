@@ -93,6 +93,9 @@
     <Compile Include="src\form\AbTabGraphic.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="src\form\AbTabPrivate.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="src\form\AbTabSummary.cs">
       <SubType>Form</SubType>
     </Compile>

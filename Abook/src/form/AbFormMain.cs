@@ -66,6 +66,7 @@
             var summaries = AbSummary.GetSummaries(expenses);
             InitTabExpense(expenses);
             InitTabBalance(expenses);
+            InitTabPrivate(expenses);
             InitTabSummary(summaries);
             InitTabGraphic(summaries);
         }
