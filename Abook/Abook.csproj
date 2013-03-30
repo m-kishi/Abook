@@ -102,5 +102,6 @@
     <Compile Include="src\private\AbPrivate.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="src\private\AbPrivateManager.cs" />
   </ItemGroup>
 </Project>
