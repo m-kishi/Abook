@@ -11,7 +11,7 @@
     /// </summary>
     public partial class AbFormMain
     {
-        /// <summary>支出データ管理</summary>
+        /// <summary>支出情報管理</summary>
         private AbExpenseManager abExpenseManager;
 
         /// <summary>
@@ -27,7 +27,7 @@
         /// <summary>
         /// 集計タブ表示
         /// </summary>
-        /// <param name="ExpenseManager">支出データ管理処理</param>
+        /// <param name="ExpenseManager">支出情報管理処理</param>
         private void SetTabSummary(Action ExpenseManager)
         {
             ExpenseManager();

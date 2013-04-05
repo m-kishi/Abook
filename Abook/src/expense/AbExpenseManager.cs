@@ -7,7 +7,7 @@
     using FMT = Abook.AbConstants.FMT;
 
     /// <summary>
-    /// 支出データ管理クラス
+    /// 支出情報管理クラス
     /// </summary>
     public class AbExpenseManager
     {

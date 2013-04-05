@@ -8,7 +8,7 @@
     using FMT = Abook.AbConstants.FMT;
 
     /// <summary>
-    /// 支出データ管理テスト
+    /// 支出情報管理テスト
     /// </summary>
     [TestFixture]
     public class AbTestExpenseManager
@@ -17,7 +17,7 @@
         private DateTime argDate;
         /// <summary>引数:集計値リスト</summary>
         private List<AbSummary> argSummaries;
-        /// <summary>対象:支出データ管理</summary>
+        /// <summary>対象:支出情報管理</summary>
         private AbExpenseManager abExpenseManager;
 
         [SetUp]
