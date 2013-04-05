@@ -346,7 +346,7 @@
 
         /// <summary>
         /// DB ファイル書き出し
-        /// 引数:支出レコードリストが NULL
+        /// 引数:支出情報リストが NULL
         /// </summary>
         [Test]
         public void StoreWithNullExpenses()
@@ -360,7 +360,7 @@
 
         /// <summary>
         /// DB ファイル書き出し
-        /// 引数:支出レコードリストが空リスト
+        /// 引数:支出情報リストが空リスト
         /// </summary>
         [Test]
         public void StoreWithEmptyExpenses()

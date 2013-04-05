@@ -29,9 +29,9 @@
         }
 
         /// <summary>
-        /// 支出レコードリスト生成
+        /// 支出情報リスト生成
         /// </summary>
-        /// <returns>支出レコードリスト</returns>
+        /// <returns>支出情報リスト</returns>
         private List<AbExpense> GenerateExpenses()
         {
             var expenses = new List<AbExpense>();

@@ -14,7 +14,7 @@
     [TestFixture]
     public class AbTestBalanceManager
     {
-        /// <summary>引数:支出レコードリスト</summary>
+        /// <summary>引数:支出情報リスト</summary>
         private List<AbExpense> argExpenses;
         /// <summary>対象:収支データ管理</summary>
         private AbBalanceManager abBalanceManager;
@@ -30,9 +30,9 @@
         }
 
         /// <summary>
-        /// 支出レコードリスト生成
+        /// 支出情報リスト生成
         /// </summary>
-        /// <returns>支出レコードリスト</returns>
+        /// <returns>支出情報リスト</returns>
         private List<AbExpense> GenerateExpenses()
         {
             var expenses = new List<AbExpense>();
@@ -128,7 +128,7 @@
 
         /// <summary>
         /// コンストラクタ
-        /// 引数:支出レコードリストが NULL
+        /// 引数:支出情報リストが NULL
         /// </summary>
         [Test]
         public void AbBalanceManagerWithNullExpenses()
@@ -142,7 +142,7 @@
 
         /// <summary>
         /// コンストラクタ
-        /// 引数:支出レコードリストが空
+        /// 引数:支出情報リストが空
         /// </summary>
         [Test]
         public void AbBalanceManagerWithEmptyExpenses()

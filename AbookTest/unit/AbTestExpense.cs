@@ -7,7 +7,7 @@
     using FMT = Abook.AbConstants.FMT;
 
     /// <summary>
-    /// 支出レコードテスト
+    /// 支出情報テスト
     /// </summary>
     [TestFixture]
     public class AbTestExpense
@@ -20,7 +20,7 @@
         private string argType;
         /// <summary>引数:金額</summary>
         private string argCost;
-        /// <summary>対象:支出レコード</summary>
+        /// <summary>対象:支出情報</summary>
         private AbExpense abExpense;
 
         [SetUp]

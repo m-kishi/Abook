@@ -60,10 +60,10 @@
             /// <summary>登録するデータがありません。</summary>
             public const string DB_RECORD_NOTHING = "登録するデータがありません。";
 
-            /// <summary>支出レコードがありません。</summary>
-            public const string EXPENSE_NULL = "支出レコードがありません。";
-            /// <summary>支出レコードリストがありません。</summary>
-            public const string EXPENSES_NULL = "支出レコードリストがありません。";
+            /// <summary>支出情報がありません。</summary>
+            public const string EXPENSE_NULL = "支出情報がありません。";
+            /// <summary>支出情報リストがありません。</summary>
+            public const string EXPENSES_NULL = "支出情報リストがありません。";
             /// <summary>集計値リストがありません。</summary>
             public const string SUMMARIES_NULL = "集計値リストがありません。";
 

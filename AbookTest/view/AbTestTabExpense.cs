@@ -98,7 +98,7 @@
 
             /// <summary>
             /// DataGridView
-            /// 支出レコードのテスト
+            /// 支出情報のテスト
             /// </summary>
             [Test]
             public void DgvWithExistData()

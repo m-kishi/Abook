@@ -17,7 +17,7 @@
         /// <summary>
         /// 秘密収支タブ初期化
         /// </summary>
-        /// <param name="expenses">支出レコードリスト</param>
+        /// <param name="expenses">支出情報リスト</param>
         private void InitTabPrivate(List<AbExpense> expenses)
         {
             abPrivateManager = new AbPrivateManager(expenses);

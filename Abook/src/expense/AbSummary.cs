@@ -29,7 +29,7 @@
         /// コンストラクタ
         /// </summary>
         /// <param name="date">集計日付</param>
-        /// <param name="expenses">支出レコードリスト</param>
+        /// <param name="expenses">支出情報リスト</param>
         public AbSummary(DateTime date, List<AbExpense> expenses)
         {
             Year = date.Year;
@@ -41,7 +41,7 @@
         /// <summary>
         /// 種別ごとの集計
         /// </summary>
-        /// <param name="expenses">支出レコードリスト</param>
+        /// <param name="expenses">支出情報リスト</param>
         /// <returns>種別ごとの集計</returns>
         private Dictionary<string, decimal> SummaryByType(List<AbExpense> expenses)
         {
@@ -69,7 +69,7 @@
         /// <summary>
         /// 名前ごとの集計
         /// </summary>
-        /// <param name="expenses">支出レコードリスト</param>
+        /// <param name="expenses">支出情報リスト</param>
         /// <returns>名前ごとの集計</returns>
         private Dictionary<string, decimal> SummaryByName(List<AbExpense> expenses)
         {
@@ -119,7 +119,7 @@
         /// <summary>
         /// 集計値リスト生成
         /// </summary>
-        /// <param name="expenses">支出レコードリスト</param>
+        /// <param name="expenses">支出情報リスト</param>
         /// <returns>集計値リスト</returns>
         public static List<AbSummary> GetSummaries(List<AbExpense> expenses)
         {

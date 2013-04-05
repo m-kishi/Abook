@@ -19,7 +19,7 @@
         /// <summary>
         /// 支出タブ初期化
         /// </summary>
-        /// <param name="expenses">支出レコードリスト</param>
+        /// <param name="expenses">支出情報リスト</param>
         private void InitTabExpense(List<AbExpense> expenses)
         {
             abComplete = new AbComplete(expenses);
@@ -29,7 +29,7 @@
         /// <summary>
         /// 支出タブ表示
         /// </summary>
-        /// <param name="expenses">支出レコードリスト</param>
+        /// <param name="expenses">支出情報リスト</param>
         private void SetTabExpense(List<AbExpense> expenses)
         {
             if (expenses != null && expenses.Count > 0)

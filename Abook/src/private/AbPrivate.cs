@@ -25,8 +25,8 @@
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        /// <param name="expense">支出レコード</param>
-        /// <param name="balance">収支        </param>
+        /// <param name="expense">支出情報</param>
+        /// <param name="balance">収支    </param>
         public AbPrivate(AbExpense expense, decimal balance)
         {
             if (expense == null) { AbException.Throw(EX.EXPENSE_NULL); }
@@ -40,7 +40,7 @@
         /// <summary>
         /// 年月設定
         /// </summary>
-        /// <param name="expense">支出レコード</param>
+        /// <param name="expense">支出情報</param>
         /// <returns>年月</returns>
         private string ParseDate(AbExpense expense)
         {
@@ -50,7 +50,7 @@
         /// <summary>
         /// 名称設定
         /// </summary>
-        /// <param name="expense">支出レコード</param>
+        /// <param name="expense">支出情報</param>
         /// <returns>名称</returns>
         private string ParseName(AbExpense expense)
         {
@@ -60,7 +60,7 @@
         /// <summary>
         /// 金額設定
         /// </summary>
-        /// <param name="expense">支出レコード</param>
+        /// <param name="expense">支出情報</param>
         /// <returns>金額</returns>
         private decimal ParseCost(AbExpense expense)
         {

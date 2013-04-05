@@ -60,7 +60,7 @@
         /// <summary>
         /// メイン画面初期化
         /// </summary>
-        /// <param name="expenses">支出レコードリスト</param>
+        /// <param name="expenses">支出情報リスト</param>
         private void InitFormMain(List<AbExpense> expenses)
         {
             var summaries = AbSummary.GetSummaries(expenses);

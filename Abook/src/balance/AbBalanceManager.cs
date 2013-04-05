@@ -18,7 +18,7 @@
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        /// <param name="abExpenses">支出レコードリスト</param>
+        /// <param name="abExpenses">支出情報リスト</param>
         public AbBalanceManager(List<AbExpense> expenses)
         {
             abBalances = new List<AbBalance>();
@@ -61,8 +61,8 @@
         /// 年度内の支出を取得
         /// </summary>
         /// <param name="year">年度</param>
-        /// <param name="expenses">支出レコードリスト</param>
-        /// <returns>年度内の支出レコードリスト</returns>
+        /// <param name="expenses">支出情報リスト</param>
+        /// <returns>年度内の支出情報リスト</returns>
         private List<AbExpense> SelectExpenses(int year, List<AbExpense> expenses)
         {
             var dtStr = DateTime.ParseExact(
@@ -81,7 +81,7 @@
         /// 収支データ生成
         /// </summary>
         /// <param name="year">年度</param>
-        /// <param name="expenses">支出レコードリスト</param>
+        /// <param name="expenses">支出情報リスト</param>
         /// <returns>収支データ</returns>
         private AbBalance CreateBalance(int year, List<AbExpense> expenses)
         {
@@ -96,7 +96,7 @@
         /// <summary>
         /// 収入取得
         /// </summary>
-        /// <param name="expenses">支出レコードリスト</param>
+        /// <param name="expenses">支出情報リスト</param>
         /// <returns>収入</returns>
         private decimal GetEarn(List<AbExpense> expenses)
         {
@@ -118,7 +118,7 @@
         /// <summary>
         /// 支出取得
         /// </summary>
-        /// <param name="expenses">支出レコードリスト</param>
+        /// <param name="expenses">支出情報リスト</param>
         /// <returns>支出</returns>
         private decimal GetExpense(List<AbExpense> expenses)
         {
@@ -140,7 +140,7 @@
         /// <summary>
         /// 特出取得
         /// </summary>
-        /// <param name="expenses">支出レコードリスト</param>
+        /// <param name="expenses">支出情報リスト</param>
         /// <returns>特出</returns>
         private decimal GetSpecial(List<AbExpense> expenses)
         {
@@ -161,7 +161,7 @@
         /// <summary>
         /// 収支取得
         /// </summary>
-        /// <param name="expenses">支出レコードリスト</param>
+        /// <param name="expenses">支出情報リスト</param>
         /// <returns>収支</returns>
         private decimal GetBalance(List<AbExpense> expenses)
         {

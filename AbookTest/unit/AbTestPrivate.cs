@@ -15,7 +15,7 @@
     {
         /// <summary>引数:収支</summary>
         private decimal argBalance;
-        /// <summary>引数:支出レコード</summary>
+        /// <summary>引数:支出情報</summary>
         private AbExpense argExpense;
         /// <summary>対象:秘密収支情報</summary>
         private AbPrivate abPrivate;

@@ -13,7 +13,7 @@
     [TestFixture]
     public class AbTestComplete
     {
-        /// <summary>引数:支出レコードリスト</summary>
+        /// <summary>引数:支出情報リスト</summary>
         private List<AbExpense> argExpenses;
         /// <summary>対象:自動補完</summary>
         private AbComplete abComplete;
@@ -26,9 +26,9 @@
         }
 
         /// <summary>
-        /// 支出レコードリスト生成
+        /// 支出情報リスト生成
         /// </summary>
-        /// <returns>支出レコードリスト</returns>
+        /// <returns>支出情報リスト</returns>
         private List<AbExpense> GenerateExpenses()
         {
             var expenses = new List<AbExpense>();
@@ -50,7 +50,7 @@
 
         /// <summary>
         /// コンストラクタ
-        /// 引数:支出レコードリストが NULL
+        /// 引数:支出情報リストが NULL
         /// </summary>
         [Test]
         public void AbCompleteWithNullExpenses()
@@ -84,7 +84,7 @@
 
         /// <summary>
         /// 種別取得
-        /// 支出レコードが空リスト
+        /// 支出情報が空リスト
         /// </summary>
         [Test]
         public void GetTypeWithEmptyExpenses()

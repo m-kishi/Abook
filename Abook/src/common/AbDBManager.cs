@@ -18,7 +18,7 @@
         /// DB ファイル読み込み
         /// </summary>
         /// <param name="file">DB ファイル名</param>
-        /// <returns>支出レコードリスト</returns>
+        /// <returns>支出情報リスト</returns>
         public static List<AbExpense> Load(string file)
         {
             if (string.IsNullOrEmpty(file))
@@ -71,7 +71,7 @@
         /// </summary>
         /// <param name="dgv">DataGridView</param>
         /// <param name="errLine">エラー行参照</param>
-        /// <returns>支出レコードリスト</returns>
+        /// <returns>支出情報リスト</returns>
         public static List<AbExpense> Load(DataGridView dgv, out int errLine)
         {
             errLine = 0;
@@ -110,7 +110,7 @@
         /// DB ファイル書き出し
         /// </summary>
         /// <param name="file">DB ファイル名</param>
-        /// <param name="expenses">支出レコードリスト</param>
+        /// <param name="expenses">支出情報リスト</param>
         public static void Store(string file, List<AbExpense> expenses)
         {
             if (string.IsNullOrEmpty(file))

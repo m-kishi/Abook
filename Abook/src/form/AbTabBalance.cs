@@ -17,7 +17,7 @@
         /// <summary>
         /// 収支タブ初期化
         /// </summary>
-        /// <param name="expenses">支出レコードリスト</param>
+        /// <param name="expenses">支出情報リスト</param>
         private void InitTabBalance(List<AbExpense> expenses)
         {
             abBalanceManager = new AbBalanceManager(expenses);
