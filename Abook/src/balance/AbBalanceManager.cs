@@ -8,11 +8,11 @@
     using TYPE = Abook.AbConstants.TYPE;
 
     /// <summary>
-    /// 収支データ管理クラス
+    /// 収支情報管理クラス
     /// </summary>
     public class AbBalanceManager
     {
-        /// <summary>収支データリスト</summary>
+        /// <summary>収支情報リスト</summary>
         public List<AbBalance> abBalances;
 
         /// <summary>
@@ -78,11 +78,11 @@
         }
 
         /// <summary>
-        /// 収支データ生成
+        /// 収支情報生成
         /// </summary>
         /// <param name="year">年度</param>
         /// <param name="expenses">支出情報リスト</param>
-        /// <returns>収支データ</returns>
+        /// <returns>収支情報</returns>
         private AbBalance CreateBalance(int year, List<AbExpense> expenses)
         {
             var earn = GetEarn(expenses);
@@ -189,9 +189,9 @@
         }
 
         /// <summary>
-        /// 収支データリスト
+        /// 収支情報リスト
         /// </summary>
-        /// <returns>収支データリスト</returns>
+        /// <returns>収支情報リスト</returns>
         public IEnumerable<AbBalance> Balances()
         {
             foreach (var bln in abBalances.OrderBy(bln => bln.Year))

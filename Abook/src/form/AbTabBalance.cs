@@ -11,7 +11,7 @@
     /// </summary>
     public partial class AbFormMain
     {
-        /// <summary>収支データ管理</summary>
+        /// <summary>収支情報管理</summary>
         private AbBalanceManager abBalanceManager;
 
         /// <summary>

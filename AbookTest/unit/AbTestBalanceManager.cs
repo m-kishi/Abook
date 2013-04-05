@@ -9,14 +9,14 @@
     using TYPE = Abook.AbConstants.TYPE;
 
     /// <summary>
-    /// 収支データ管理テスト
+    /// 収支情報管理テスト
     /// </summary>
     [TestFixture]
     public class AbTestBalanceManager
     {
         /// <summary>引数:支出情報リスト</summary>
         private List<AbExpense> argExpenses;
-        /// <summary>対象:収支データ管理</summary>
+        /// <summary>対象:収支情報管理</summary>
         private AbBalanceManager abBalanceManager;
 
         /// <summary>

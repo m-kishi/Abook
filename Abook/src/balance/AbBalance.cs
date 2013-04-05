@@ -4,7 +4,7 @@
     using EX = Abook.AbException.EX;
 
     /// <summary>
-    /// 収支データクラス
+    /// 収支情報クラス
     /// </summary>
     public class AbBalance
     {

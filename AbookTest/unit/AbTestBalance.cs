@@ -6,7 +6,7 @@
     using EX = Abook.AbException.EX;
 
     /// <summary>
-    /// 収支データテスト
+    /// 収支情報テスト
     /// </summary>
     [TestFixture]
     public class AbTestBalance
@@ -21,7 +21,7 @@
         private decimal argSpecial;
         /// <summary>引数:収支</summary>
         private decimal argBalance;
-        /// <summary>対象:収支データ</summary>
+        /// <summary>対象:収支情報</summary>
         private AbBalance abBalance;
 
         [SetUp]
