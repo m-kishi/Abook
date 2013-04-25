@@ -18,7 +18,7 @@
         /// DB ファイル読み込み
         /// </summary>
         /// <param name="file">DB ファイル名</param>
-        /// <returns>支出レコードリスト</returns>
+        /// <returns>支出情報リスト</returns>
         public static List<AbExpense> Load(string file)
         {
             if (string.IsNullOrEmpty(file))
@@ -39,7 +39,7 @@
             }
 
             var expenses = new List<AbExpense>();
-            using (var tp = new TextFieldParser(file, System.Text.Encoding.UTF8))
+            using (var tp = new TextFieldParser(file, CSV.ENCODING))
             {
                 var line = 0;
                 try
@@ -71,7 +71,7 @@
         /// </summary>
         /// <param name="dgv">DataGridView</param>
         /// <param name="errLine">エラー行参照</param>
-        /// <returns>支出レコードリスト</returns>
+        /// <returns>支出情報リスト</returns>
         public static List<AbExpense> Load(DataGridView dgv, out int errLine)
         {
             errLine = 0;
@@ -110,7 +110,7 @@
         /// DB ファイル書き出し
         /// </summary>
         /// <param name="file">DB ファイル名</param>
-        /// <param name="expenses">支出レコードリスト</param>
+        /// <param name="expenses">支出情報リスト</param>
         public static void Store(string file, List<AbExpense> expenses)
         {
             if (string.IsNullOrEmpty(file))
@@ -123,16 +123,18 @@
                 AbException.Throw(EX.DB_RECORD_NOTHING);
             }
 
-            using (var sw = new System.IO.StreamWriter(file, false, System.Text.Encoding.UTF8))
+            using (var sw = new System.IO.StreamWriter(file, false, CSV.ENCODING))
             {
                 var line = 0;
                 try
                 {
+                    sw.NewLine = CSV.LF;
                     foreach (var exp in expenses)
                     {
                         line++;
                         sw.WriteLine(exp.ToCSV());
                     }
+                    sw.Close();
                 }
                 catch (Exception ex)
                 {

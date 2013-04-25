@@ -1,6 +1,7 @@
 ﻿namespace Abook
 {
     using System;
+    using System.Text;
 
     /// <summary>
     /// 定数クラス
@@ -28,6 +29,19 @@
             public const string SPECIAL = "ColSpecial";
             /// <summary>収支</summary>
             public const string BALANCE = "ColBalance";
+
+            /// <summary>秘密収支</summary>
+            public static class PRIVATE
+            {
+                /// <summary>年月</summary>
+                public const string DATE = "ColPrvDate";
+                /// <summary>名称</summary>
+                public const string NAME = "ColPrvName";
+                /// <summary>金額</summary>
+                public const string COST = "ColPrvCost";
+                /// <summary>収支</summary>
+                public const string BLNC = "ColPrvBlnc";
+            }
         }
 
         /// <summary>CSV</summary>
@@ -39,6 +53,10 @@
             public const string DELIMITER = ",";
             /// <summary>フィールド数</summary>
             public const int FIELD = 4;
+            /// <summary>文字コード(UTF-8 BOM なし)</summary>
+            public static readonly Encoding ENCODING = new UTF8Encoding(false);
+            /// <summary>改行文字(LF)</summary>
+            public const string LF = "\n";
         }
 
         /// <summary>DataGridView</summary>
@@ -69,6 +87,8 @@
             public const string DAILY_GROUP = "{0}-01";
             /// <summary>月別"yyyy-MM"</summary>
             public const string MONTHLY_GROUP = "yyyy-MM";
+            /// <summary>年月"yyyy-MM"</summary>
+            public const string YEAR_MONTH = "yyyy-MM";
         }
 
         /// <summary>グラフ</summary>
@@ -140,6 +160,20 @@
             public const string BNUS = "特入";
             /// <summary>特出</summary>
             public const string SPCL = "特出";
+            /// <summary>秘密入</summary>
+            public const string PRVI = "秘密入";
+            /// <summary>秘密出</summary>
+            public const string PRVO = "秘密出";
+
+            /// <summary>支出集計対象外</summary>
+            public static readonly string[] EXCEPTS =
+            {
+                TYPE.EARN,
+                TYPE.BNUS,
+                TYPE.SPCL,
+                TYPE.PRVI,
+                TYPE.PRVO
+            };
         }
     }
 }

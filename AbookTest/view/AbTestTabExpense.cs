@@ -8,6 +8,7 @@
     using NUnit.Extensions.Forms;
     using EX   = Abook.AbException.EX;
     using COL  = Abook.AbConstants.COL;
+    using CSV  = Abook.AbConstants.CSV;
     using FMT  = Abook.AbConstants.FMT;
     using DGV  = Abook.AbConstants.DGV;
     using TYPE = Abook.AbConstants.TYPE;
@@ -33,8 +34,9 @@
         [TestFixtureSetUp]
         protected void TestFixtureSetUp()
         {
-            using (StreamWriter sw = new StreamWriter(DB_EXIST, false, System.Text.Encoding.UTF8))
+            using (StreamWriter sw = new StreamWriter(DB_EXIST, false, CSV.ENCODING))
             {
+                sw.NewLine = CSV.LF;
                 for (var i = 1; i <= 15; i++)
                 {
                     var date = (new DateTime(2012, 1, i)).ToString(FMT.DATE);
@@ -96,7 +98,7 @@
 
             /// <summary>
             /// DataGridView
-            /// 支出レコードのテスト
+            /// 支出情報のテスト
             /// </summary>
             [Test]
             public void DgvWithExistData()

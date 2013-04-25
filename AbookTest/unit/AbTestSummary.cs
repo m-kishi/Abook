@@ -17,7 +17,7 @@
     {
         /// <summary>引数:日付</summary>
         private DateTime argDate;
-        /// <summary>引数:支出レコードリスト</summary>
+        /// <summary>引数:支出情報リスト</summary>
         private List<AbExpense> argExpenses;
         /// <summary>対象:集計値</summary>
         private AbSummary abSummary;
@@ -31,9 +31,9 @@
         }
 
         /// <summary>
-        /// 支出レコードリスト生成
+        /// 支出情報リスト生成
         /// </summary>
-        /// <returns>支出レコードリスト</returns>
+        /// <returns>支出情報リスト</returns>
         private List<AbExpense> GenerateExpenses()
         {
             var expenses = new List<AbExpense>();
@@ -71,6 +71,9 @@
             expenses.Add(new AbExpense("2011-03-31", "BNUS", TYPE.BNUS, "300000"));
             expenses.Add(new AbExpense("2011-03-31", "SPCL", TYPE.SPCL, "20000"));
             expenses.Add(new AbExpense("2011-03-31", "SPCL", TYPE.SPCL, "21000"));
+            expenses.Add(new AbExpense("2011-03-31", "PRVI", TYPE.PRVI, "10000"));
+            expenses.Add(new AbExpense("2011-03-31", "PRVI", TYPE.PRVI, "15000"));
+            expenses.Add(new AbExpense("2011-03-31", "PRVO", TYPE.PRVO, "12000"));
             return expenses;
         }
 
@@ -96,7 +99,7 @@
 
         /// <summary>
         /// コンストラクタ
-        /// 引数:支出レコードリストが NULL
+        /// 引数:支出情報リストが NULL
         /// </summary>
         [Test]
         public void AbSummaryWithNullExpenses()
@@ -130,7 +133,7 @@
 
         /// <summary>
         /// 集計値取得
-        /// 支出レコードリストが空リスト
+        /// 支出情報リストが空リスト
         /// </summary>
         [Test]
         public void GetCostByTypeWithEmptyExpenses()
@@ -210,7 +213,7 @@
 
         /// <summary>
         /// 集計値取得
-        /// 支出レコードリストが空リスト
+        /// 支出情報リストが空リスト
         /// </summary>
         [Test]
         public void GetCostByNameWithEmptyExpenses()
@@ -275,7 +278,7 @@
     [TestFixture]
     public class AbTestStaticSummary
     {
-        /// <summary>引数:支出レコードリスト</summary>
+        /// <summary>引数:支出情報リスト</summary>
         private List<AbExpense> argExpenses;
         /// <summary>対象:集計値リスト</summary>
         private List<AbSummary> abSummaries;
@@ -288,9 +291,9 @@
         }
 
         /// <summary>
-        /// 支出レコードリスト生成
+        /// 支出情報リスト生成
         /// </summary>
-        /// <returns>支出レコードリスト</returns>
+        /// <returns>支出情報リスト</returns>
         private List<AbExpense> GenerateExpenses()
         {
             var expenses = new List<AbExpense>();
@@ -365,7 +368,7 @@
 
         /// <summary>
         /// 集計値リスト生成
-        /// 引数:支出レコードリストが NULL
+        /// 引数:支出情報リストが NULL
         /// </summary>
         [Test]
         public void GetSummariesWithNullExpenses()
@@ -379,7 +382,7 @@
 
         /// <summary>
         /// 集計値リスト生成
-        /// 引数:支出レコードリストが空リスト
+        /// 引数:支出情報リストが空リスト
         /// </summary>
         [Test]
         public void GetSummariesWithEmptyExpenses()

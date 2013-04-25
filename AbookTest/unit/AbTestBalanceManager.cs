@@ -9,14 +9,14 @@
     using TYPE = Abook.AbConstants.TYPE;
 
     /// <summary>
-    /// 収支データ管理テスト
+    /// 収支情報管理テスト
     /// </summary>
     [TestFixture]
     public class AbTestBalanceManager
     {
-        /// <summary>引数:支出レコードリスト</summary>
+        /// <summary>引数:支出情報リスト</summary>
         private List<AbExpense> argExpenses;
-        /// <summary>対象:収支データ管理</summary>
+        /// <summary>対象:収支情報管理</summary>
         private AbBalanceManager abBalanceManager;
 
         /// <summary>
@@ -30,12 +30,13 @@
         }
 
         /// <summary>
-        /// 支出レコードリスト生成
+        /// 支出情報リスト生成
         /// </summary>
-        /// <returns>支出レコードリスト</returns>
+        /// <returns>支出情報リスト</returns>
         private List<AbExpense> GenerateExpenses()
         {
             var expenses = new List<AbExpense>();
+            expenses.Add(new AbExpense("2011-04-01", "nameY", TYPE.PRVI,  "10000"));
             expenses.Add(new AbExpense("2011-04-01", "name1", TYPE.FOOD,  "90000"));
             expenses.Add(new AbExpense("2011-04-30", "name2", TYPE.EARN, "100000"));
             expenses.Add(new AbExpense("2011-05-01", "name3", TYPE.SPCL,  "60000"));
@@ -49,6 +50,7 @@
             expenses.Add(new AbExpense("2011-11-11", "name1", TYPE.FRND,  "50000"));
             expenses.Add(new AbExpense("2011-11-30", "name2", TYPE.EARN, "400000"));
             expenses.Add(new AbExpense("2011-12-12", "name3", TYPE.PLAY,  "40000"));
+            expenses.Add(new AbExpense("2011-12-31", "nameY", TYPE.PRVI,  "10000"));
             expenses.Add(new AbExpense("2012-01-01", "name4", TYPE.HOUS,  "30000"));
             expenses.Add(new AbExpense("2012-01-01", "name5", TYPE.SPCL,  "40000"));
             expenses.Add(new AbExpense("2012-02-28", "name6", TYPE.EARN, "500000"));
@@ -65,6 +67,7 @@
             expenses.Add(new AbExpense("2013-03-09", "name7", TYPE.SPCL,  "60000"));
             expenses.Add(new AbExpense("2013-03-31", "name8", TYPE.EARN, "400000"));
             expenses.Add(new AbExpense("2013-03-31", "nameX", TYPE.BNUS, "250000"));
+            expenses.Add(new AbExpense("2013-03-31", "nameY", TYPE.PRVO,   "5000"));
             return expenses;
         }
 
@@ -125,7 +128,7 @@
 
         /// <summary>
         /// コンストラクタ
-        /// 引数:支出レコードリストが NULL
+        /// 引数:支出情報リストが NULL
         /// </summary>
         [Test]
         public void AbBalanceManagerWithNullExpenses()
@@ -139,7 +142,7 @@
 
         /// <summary>
         /// コンストラクタ
-        /// 引数:支出レコードリストが空
+        /// 引数:支出情報リストが空
         /// </summary>
         [Test]
         public void AbBalanceManagerWithEmptyExpenses()

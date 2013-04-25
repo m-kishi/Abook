@@ -93,11 +93,18 @@
     <Compile Include="src\form\AbTabGraphic.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="src\form\AbTabPrivate.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="src\form\AbTabSummary.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="src\graphic\AbGraphicData.cs" />
     <Compile Include="src\graphic\AbGraphicLine.cs" />
     <Compile Include="src\graphic\AbGraphicManager.cs" />
+    <Compile Include="src\private\AbPrivate.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\private\AbPrivateManager.cs" />
   </ItemGroup>
 </Project>

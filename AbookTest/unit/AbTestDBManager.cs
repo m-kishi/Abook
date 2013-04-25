@@ -8,6 +8,7 @@
     using NUnit.Framework;
     using EX  = Abook.AbException.EX;
     using COL = Abook.AbConstants.COL;
+    using CSV = Abook.AbConstants.CSV;
     using FMT = Abook.AbConstants.FMT;
 
     /// <summary>
@@ -33,22 +34,25 @@
         public void TestFixtureSetUp()
         {
             //CSVのフィールド数が少ない
-            using (StreamWriter sw = new StreamWriter("LessCSVFields.db", false, System.Text.Encoding.UTF8))
+            using (StreamWriter sw = new StreamWriter("LessCSVFields.db", false, CSV.ENCODING))
             {
+                sw.NewLine = CSV.LF;
                 sw.WriteLine("\"column1\",\"column2\",\"column3\"");
                 sw.Close();
             }
 
             //CSVのフィールド数が多い
-            using (StreamWriter sw = new StreamWriter("MoreCSVFields.db", false, System.Text.Encoding.UTF8))
+            using (StreamWriter sw = new StreamWriter("MoreCSVFields.db", false, CSV.ENCODING))
             {
+                sw.NewLine = CSV.LF;
                 sw.WriteLine("\"column1\",\"column2\",\"column3\",\"column4\",\"column5\"");
                 sw.Close();
             }
 
             //日付が不正
-            using (StreamWriter sw = new StreamWriter("InvalidDateFormat.db", false, System.Text.Encoding.UTF8))
+            using (StreamWriter sw = new StreamWriter("InvalidDateFormat.db", false, CSV.ENCODING))
             {
+                sw.NewLine = CSV.LF;
                 sw.WriteLine("\"2011-02-31\",\"name\",\"type\",\"1000\"");
                 sw.Close();
             }
@@ -57,8 +61,9 @@
             File.Create("NoData.db").Close();
 
             //テストデータ
-            using (StreamWriter sw = new StreamWriter("InData.db", false, System.Text.Encoding.UTF8))
+            using (StreamWriter sw = new StreamWriter("InData.db", false, CSV.ENCODING))
             {
+                sw.NewLine = CSV.LF;
                 sw.WriteLine("\"2009-04-01\",\"name1\",\"type1\",\"100\"");
                 sw.WriteLine("\"2009-04-01\",\"name2\",\"type2\",\"200\"");
                 sw.WriteLine("\"2009-04-02\",\"name3\",\"type3\",\"300\"");
@@ -341,7 +346,7 @@
 
         /// <summary>
         /// DB ファイル書き出し
-        /// 引数:支出レコードリストが NULL
+        /// 引数:支出情報リストが NULL
         /// </summary>
         [Test]
         public void StoreWithNullExpenses()
@@ -355,7 +360,7 @@
 
         /// <summary>
         /// DB ファイル書き出し
-        /// 引数:支出レコードリストが空リスト
+        /// 引数:支出情報リストが空リスト
         /// </summary>
         [Test]
         public void StoreWithEmptyExpenses()

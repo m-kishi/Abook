@@ -11,13 +11,13 @@
     /// </summary>
     public partial class AbFormMain
     {
-        /// <summary>収支データ管理</summary>
+        /// <summary>収支情報管理</summary>
         private AbBalanceManager abBalanceManager;
 
         /// <summary>
         /// 収支タブ初期化
         /// </summary>
-        /// <param name="expenses">支出レコードリスト</param>
+        /// <param name="expenses">支出情報リスト</param>
         private void InitTabBalance(List<AbExpense> expenses)
         {
             abBalanceManager = new AbBalanceManager(expenses);

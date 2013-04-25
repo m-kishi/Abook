@@ -16,7 +16,7 @@
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        /// <param name="expenses">支出レコードリスト</param>
+        /// <param name="expenses">支出情報リスト</param>
         public AbComplete(List<AbExpense> expenses)
         {
             dicComp = new Dictionary<string, string>();

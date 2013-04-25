@@ -8,17 +8,17 @@
     using TYPE = Abook.AbConstants.TYPE;
 
     /// <summary>
-    /// 収支データ管理クラス
+    /// 収支情報管理クラス
     /// </summary>
     public class AbBalanceManager
     {
-        /// <summary>収支データリスト</summary>
+        /// <summary>収支情報リスト</summary>
         public List<AbBalance> abBalances;
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        /// <param name="abExpenses">支出レコードリスト</param>
+        /// <param name="abExpenses">支出情報リスト</param>
         public AbBalanceManager(List<AbExpense> expenses)
         {
             abBalances = new List<AbBalance>();
@@ -61,8 +61,8 @@
         /// 年度内の支出を取得
         /// </summary>
         /// <param name="year">年度</param>
-        /// <param name="expenses">支出レコードリスト</param>
-        /// <returns>年度内の支出レコードリスト</returns>
+        /// <param name="expenses">支出情報リスト</param>
+        /// <returns>年度内の支出情報リスト</returns>
         private List<AbExpense> SelectExpenses(int year, List<AbExpense> expenses)
         {
             var dtStr = DateTime.ParseExact(
@@ -78,11 +78,11 @@
         }
 
         /// <summary>
-        /// 収支データ生成
+        /// 収支情報生成
         /// </summary>
         /// <param name="year">年度</param>
-        /// <param name="expenses">支出レコードリスト</param>
-        /// <returns>収支データ</returns>
+        /// <param name="expenses">支出情報リスト</param>
+        /// <returns>収支情報</returns>
         private AbBalance CreateBalance(int year, List<AbExpense> expenses)
         {
             var earn = GetEarn(expenses);
@@ -96,7 +96,7 @@
         /// <summary>
         /// 収入取得
         /// </summary>
-        /// <param name="expenses">支出レコードリスト</param>
+        /// <param name="expenses">支出情報リスト</param>
         /// <returns>収入</returns>
         private decimal GetEarn(List<AbExpense> expenses)
         {
@@ -118,7 +118,7 @@
         /// <summary>
         /// 支出取得
         /// </summary>
-        /// <param name="expenses">支出レコードリスト</param>
+        /// <param name="expenses">支出情報リスト</param>
         /// <returns>支出</returns>
         private decimal GetExpense(List<AbExpense> expenses)
         {
@@ -128,7 +128,7 @@
                 AbException.Throw(EX.EXPENSES_NULL);
             }
 
-            var excepts = new string[] { TYPE.EARN, TYPE.BNUS, TYPE.SPCL };
+            var excepts = TYPE.EXCEPTS;
             var expenseExpenses = expenses.Where(exp => !excepts.Contains(exp.Type));
             if (expenseExpenses != null && expenseExpenses.Count() > 0)
             {
@@ -140,7 +140,7 @@
         /// <summary>
         /// 特出取得
         /// </summary>
-        /// <param name="expenses">支出レコードリスト</param>
+        /// <param name="expenses">支出情報リスト</param>
         /// <returns>特出</returns>
         private decimal GetSpecial(List<AbExpense> expenses)
         {
@@ -161,7 +161,7 @@
         /// <summary>
         /// 収支取得
         /// </summary>
-        /// <param name="expenses">支出レコードリスト</param>
+        /// <param name="expenses">支出情報リスト</param>
         /// <returns>収支</returns>
         private decimal GetBalance(List<AbExpense> expenses)
         {
@@ -178,8 +178,9 @@
                 earn = earnExpenses.Sum(exp => exp.Cost);
             }
 
+            var excepts = targets.Concat((new string[] { TYPE.PRVI, TYPE.PRVO }).ToList());
             var expense = decimal.Zero;
-            var expenseExpenses = expenses.Where(exp => !targets.Contains(exp.Type));
+            var expenseExpenses = expenses.Where(exp => !excepts.Contains(exp.Type));
             if (expenseExpenses != null && expenseExpenses.Count() > 0)
             {
                 expense = expenseExpenses.Sum(exp => exp.Cost);
@@ -188,9 +189,9 @@
         }
 
         /// <summary>
-        /// 収支データリスト
+        /// 収支情報リスト
         /// </summary>
-        /// <returns>収支データリスト</returns>
+        /// <returns>収支情報リスト</returns>
         public IEnumerable<AbBalance> Balances()
         {
             foreach (var bln in abBalances.OrderBy(bln => bln.Year))
