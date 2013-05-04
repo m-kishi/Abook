@@ -27,9 +27,7 @@
             }
 
             var balance = decimal.Zero;
-            var privates = expenses.Where(exp =>
-                exp.Type == TYPE.PRVI || exp.Type == TYPE.PRVO
-            );
+            var privates = expenses.Where(exp => TYPE.PRIVATE.Contains(exp.Type));
             foreach (var exp in privates)
             {
                 var prv = new AbPrivate(exp, balance);

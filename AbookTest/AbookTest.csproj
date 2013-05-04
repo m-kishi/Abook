@@ -23,6 +23,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <StartAction>Program</StartAction>
+    <StartProgram>C:\Program Files\NUnit 2.5.10\bin\net-2.0\nunit.exe</StartProgram>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
