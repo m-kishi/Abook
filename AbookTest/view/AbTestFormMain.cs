@@ -26,9 +26,9 @@
         {
             using (StreamWriter sw = new StreamWriter(DB_INVALID, false, System.Text.Encoding.UTF8))
             {
-                sw.WriteLine(ToCSV("2012-01-01", "name1", "type1", "10000"));
-                sw.WriteLine(ToCSV("2012-02-30", "name2", "type2", "20000"));
-                sw.WriteLine(ToCSV("2012-03-05", "name3", "type3", "30000"));
+                sw.WriteLine(ToCSV("2012-01-01", "name1", "食費", "10000"));
+                sw.WriteLine(ToCSV("2012-02-30", "name2", "食費", "20000"));
+                sw.WriteLine(ToCSV("2012-03-05", "name3", "食費", "30000"));
             }
         }
 

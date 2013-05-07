@@ -35,15 +35,15 @@
         private List<AbExpense> GenerateExpenses()
         {
             var expenses = new List<AbExpense>();
-            expenses.Add(new AbExpense("2009-04-01", "name", "type", "100"));
-            expenses.Add(new AbExpense("2010-04-01", "name", "type", "200"));
-            expenses.Add(new AbExpense("2011-02-01", "name", "type", "300"));
-            expenses.Add(new AbExpense("2011-03-01", "name", "type", "400"));
-            expenses.Add(new AbExpense("2011-04-01", "name", "type", "500"));
-            expenses.Add(new AbExpense("2011-05-01", "name", "type", "600"));
-            expenses.Add(new AbExpense("2011-06-01", "name", "type", "700"));
-            expenses.Add(new AbExpense("2012-04-01", "name", "type", "800"));
-            expenses.Add(new AbExpense("2013-04-01", "name", "type", "900"));
+            expenses.Add(new AbExpense("2009-04-01", "name", "食費", "100"));
+            expenses.Add(new AbExpense("2010-04-01", "name", "食費", "200"));
+            expenses.Add(new AbExpense("2011-02-01", "name", "食費", "300"));
+            expenses.Add(new AbExpense("2011-03-01", "name", "食費", "400"));
+            expenses.Add(new AbExpense("2011-04-01", "name", "食費", "500"));
+            expenses.Add(new AbExpense("2011-05-01", "name", "食費", "600"));
+            expenses.Add(new AbExpense("2011-06-01", "name", "食費", "700"));
+            expenses.Add(new AbExpense("2012-04-01", "name", "食費", "800"));
+            expenses.Add(new AbExpense("2013-04-01", "name", "食費", "900"));
             return expenses;
         }
 
@@ -231,7 +231,7 @@
         [Test]
         public void GetCostWithCurrent()
         {
-            Assert.AreEqual(500, abExpenseManager.GetCost("type"));
+            Assert.AreEqual(500, abExpenseManager.GetCost("食費"));
         }
 
         /// <summary>
@@ -264,7 +264,7 @@
             argSummaries = new List<AbSummary>();
             abExpenseManager = new AbExpenseManager(argDate, argSummaries);
 
-            Assert.AreEqual(0, abExpenseManager.GetCost("type"));
+            Assert.AreEqual(0, abExpenseManager.GetCost("食費"));
         }
 
         /// <summary>
@@ -275,7 +275,7 @@
         public void PrevYearWith_1_Time()
         {
             abExpenseManager.PrevYear();
-            Assert.AreEqual(200, abExpenseManager.GetCost("type"));
+            Assert.AreEqual(200, abExpenseManager.GetCost("食費"));
         }
 
         /// <summary>
@@ -287,7 +287,7 @@
         {
             abExpenseManager.PrevYear();
             abExpenseManager.PrevYear();
-            Assert.AreEqual(100, abExpenseManager.GetCost("type"));
+            Assert.AreEqual(100, abExpenseManager.GetCost("食費"));
         }
 
         /// <summary>
@@ -300,7 +300,7 @@
             abExpenseManager.PrevYear();
             abExpenseManager.PrevYear();
             abExpenseManager.PrevYear();
-            Assert.AreEqual(0, abExpenseManager.GetCost("type"));
+            Assert.AreEqual(0, abExpenseManager.GetCost("食費"));
         }
 
         /// <summary>
@@ -311,7 +311,7 @@
         public void PrevMonthWith_1_Time()
         {
             abExpenseManager.PrevMonth();
-            Assert.AreEqual(400, abExpenseManager.GetCost("type"));
+            Assert.AreEqual(400, abExpenseManager.GetCost("食費"));
         }
 
         /// <summary>
@@ -323,7 +323,7 @@
         {
             abExpenseManager.PrevMonth();
             abExpenseManager.PrevMonth();
-            Assert.AreEqual(300, abExpenseManager.GetCost("type"));
+            Assert.AreEqual(300, abExpenseManager.GetCost("食費"));
         }
 
         /// <summary>
@@ -336,7 +336,7 @@
             abExpenseManager.PrevMonth();
             abExpenseManager.PrevMonth();
             abExpenseManager.PrevMonth();
-            Assert.AreEqual(0, abExpenseManager.GetCost("type"));
+            Assert.AreEqual(0, abExpenseManager.GetCost("食費"));
         }
 
         /// <summary>
@@ -347,7 +347,7 @@
         public void NextMonthWith_1_Time()
         {
             abExpenseManager.NextMonth();
-            Assert.AreEqual(600, abExpenseManager.GetCost("type"));
+            Assert.AreEqual(600, abExpenseManager.GetCost("食費"));
         }
 
         /// <summary>
@@ -359,7 +359,7 @@
         {
             abExpenseManager.NextMonth();
             abExpenseManager.NextMonth();
-            Assert.AreEqual(700, abExpenseManager.GetCost("type"));
+            Assert.AreEqual(700, abExpenseManager.GetCost("食費"));
         }
 
         /// <summary>
@@ -372,7 +372,7 @@
             abExpenseManager.NextMonth();
             abExpenseManager.NextMonth();
             abExpenseManager.NextMonth();
-            Assert.AreEqual(0, abExpenseManager.GetCost("type"));
+            Assert.AreEqual(0, abExpenseManager.GetCost("食費"));
         }
 
         /// <summary>
@@ -383,7 +383,7 @@
         public void NextYearWith_1_Time()
         {
             abExpenseManager.NextYear();
-            Assert.AreEqual(800, abExpenseManager.GetCost("type"));
+            Assert.AreEqual(800, abExpenseManager.GetCost("食費"));
         }
 
         /// <summary>
@@ -395,7 +395,7 @@
         {
             abExpenseManager.NextYear();
             abExpenseManager.NextYear();
-            Assert.AreEqual(900, abExpenseManager.GetCost("type"));
+            Assert.AreEqual(900, abExpenseManager.GetCost("食費"));
         }
 
         /// <summary>
@@ -408,7 +408,7 @@
             abExpenseManager.NextYear();
             abExpenseManager.NextYear();
             abExpenseManager.NextYear();
-            Assert.AreEqual(0, abExpenseManager.GetCost("type"));
+            Assert.AreEqual(0, abExpenseManager.GetCost("食費"));
         }
     }
 }

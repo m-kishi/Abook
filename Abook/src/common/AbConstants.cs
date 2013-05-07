@@ -165,6 +165,30 @@
             /// <summary>秘密出</summary>
             public const string PRVO = "秘密出";
 
+            /// <summary>
+            /// 支出情報で指定可能な種別
+            /// </summary>
+            public static readonly string[] EXPENCE =
+            {
+                TYPE.FOOD,
+                TYPE.OTFD,
+                TYPE.GOOD,
+                TYPE.FRND,
+                TYPE.TRFC,
+                TYPE.PLAY,
+                TYPE.HOUS,
+                TYPE.ENGY,
+                TYPE.CNCT,
+                TYPE.MEDI,
+                TYPE.INSU,
+                TYPE.OTHR,
+                TYPE.EARN,
+                TYPE.BNUS,
+                TYPE.SPCL,
+                TYPE.PRVI,
+                TYPE.PRVO,
+            };
+
             /// <summary>秘密収支関連</summary>
             public static readonly string[] PRIVATE =
             {
