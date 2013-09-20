@@ -41,10 +41,14 @@
                 {
                     var date = (new DateTime(2012, 1, i)).ToString(FMT.DATE);
                     var name = "name" + i.ToString("D2");
-                    var type = "type" + i.ToString("D2");
+                    var type = TYPE.FOOD;
                     var cost = (i * 100M).ToString();
                     sw.WriteLine(ToCSV(date, name, type, cost));
                 }
+            }
+            if (System.IO.File.Exists(DB_ENTRY))
+            {
+                System.IO.File.Delete(DB_ENTRY);
             }
             System.IO.File.Copy(DB_EXIST, DB_ENTRY);
         }
@@ -112,7 +116,7 @@
 
                     var date = string.Format("2012-01-{0:D2}", i);
                     var name = string.Format("name{0:D2}", i);
-                    var type = string.Format("type{0:D2}", i);
+                    var type = TYPE.FOOD;
                     var cost = i * 100M;
 
                     Assert.AreEqual(date, row.Cells[COL.DATE].Value, "DATE");
@@ -238,7 +242,7 @@
 
                 TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.V)));
 
-                Assert.AreEqual("type01", dgvExpense.Rows[idxRow].Cells[COL.TYPE].Value);
+                Assert.AreEqual(TYPE.FOOD, dgvExpense.Rows[idxRow].Cells[COL.TYPE].Value);
             }
 
             /// <summary>
@@ -302,7 +306,7 @@
 
                 TsDgvExpense().FireEvent("CellEndEdit", (new DataGridViewCellEventArgs(1, idxRow)));
 
-                Assert.AreEqual("type01", dgvExpense.Rows[idxRow].Cells[COL.TYPE].Value);
+                Assert.AreEqual(TYPE.FOOD, dgvExpense.Rows[idxRow].Cells[COL.TYPE].Value);
             }
 
             /// <summary>

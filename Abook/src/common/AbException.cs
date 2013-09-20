@@ -36,6 +36,8 @@
             public const string TYPE_NULL = "種別がありません。";
             /// <summary>金額がありません。</summary>
             public const string COST_NULL = "金額がありません。";
+            /// <summary>種別が正しくありません。</summary>
+            public const string TYPE_WRONG = "種別が正しくありません。";
             /// <summary>金額がマイナスです。</summary>
             public const string COST_MINUS = "金額がマイナスです。";
             /// <summary>日付が正しくありません。</summary>

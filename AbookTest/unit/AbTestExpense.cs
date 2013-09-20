@@ -177,6 +177,20 @@
 
         /// <summary>
         /// コンストラクタ
+        /// 引数:種別が不正
+        /// </summary>
+        [Test]
+        public void AbExpenseWithWrongType()
+        {
+            argType = "wrong";
+            var ex = Assert.Throws<AbException>(() =>
+                { new AbExpense(argDate, argName, argType, argCost); }
+            );
+            Assert.AreEqual(EX.TYPE_WRONG, ex.Message);
+        }
+
+        /// <summary>
+        /// コンストラクタ
         /// 引数:金額が NULL
         /// </summary>
         [Test]

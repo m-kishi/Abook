@@ -6,6 +6,7 @@
     using System.Windows.Forms;
     using NUnit.Framework;
     using NUnit.Extensions.Forms;
+    using CSV  = Abook.AbConstants.CSV;
     using FMT  = Abook.AbConstants.FMT;
     using TYPE = Abook.AbConstants.TYPE;
 
@@ -28,7 +29,7 @@
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            using (StreamWriter sw = new StreamWriter(DB_EXIST, false, System.Text.Encoding.UTF8))
+            using (StreamWriter sw = new StreamWriter(DB_EXIST, false, CSV.ENCODING))
             {
                 var dtNow = DateTime.Now.ToString(FMT.DATE);
                 sw.WriteLine(ToCSV(dtNow, "name", TYPE.FOOD,  "10000"));

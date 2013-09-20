@@ -165,15 +165,85 @@
             /// <summary>秘密出</summary>
             public const string PRVO = "秘密出";
 
-            /// <summary>支出集計対象外</summary>
-            public static readonly string[] EXCEPTS =
+            /// <summary>
+            /// 支出情報で指定可能な種別
+            /// </summary>
+            public static readonly string[] EXPENCE =
             {
+                TYPE.FOOD,
+                TYPE.OTFD,
+                TYPE.GOOD,
+                TYPE.FRND,
+                TYPE.TRFC,
+                TYPE.PLAY,
+                TYPE.HOUS,
+                TYPE.ENGY,
+                TYPE.CNCT,
+                TYPE.MEDI,
+                TYPE.INSU,
+                TYPE.OTHR,
                 TYPE.EARN,
                 TYPE.BNUS,
                 TYPE.SPCL,
                 TYPE.PRVI,
+                TYPE.PRVO,
+            };
+
+            /// <summary>秘密収支関連</summary>
+            public static readonly string[] PRIVATE =
+            {
+                TYPE.PRVI,
                 TYPE.PRVO
             };
+
+            /// <summary>集計タブ</summary>
+            public static class SUMMARY
+            {
+                /// <summary>集計タブでの支出対象</summary>
+                public static readonly string[] EXPE =
+                {
+                    TYPE.FOOD,
+                    TYPE.OTFD,
+                    TYPE.GOOD,
+                    TYPE.FRND,
+                    TYPE.TRFC,
+                    TYPE.PLAY,
+                    TYPE.HOUS,
+                    TYPE.ENGY,
+                    TYPE.CNCT,
+                    TYPE.MEDI,
+                    TYPE.INSU,
+                    TYPE.OTHR,
+                };
+            }
+
+            /// <summary>収支タブ</summary>
+            public static class BALANCE
+            {
+                /// <summary>収支タブでの収入対象</summary>
+                public static readonly string[] EARN =
+                {
+                    TYPE.EARN,
+                    TYPE.BNUS,
+                };
+
+                /// <summary>収支タブでの支出対象</summary>
+                public static readonly string[] EXPE =
+                {
+                    TYPE.FOOD,
+                    TYPE.OTFD,
+                    TYPE.GOOD,
+                    TYPE.FRND,
+                    TYPE.TRFC,
+                    TYPE.PLAY,
+                    TYPE.HOUS,
+                    TYPE.ENGY,
+                    TYPE.CNCT,
+                    TYPE.MEDI,
+                    TYPE.INSU,
+                    TYPE.OTHR,
+                };
+            }
         }
     }
 }

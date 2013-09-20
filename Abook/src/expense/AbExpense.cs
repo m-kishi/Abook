@@ -1,8 +1,10 @@
 ﻿namespace Abook
 {
     using System;
-    using EX  = Abook.AbException.EX;
-    using FMT = Abook.AbConstants.FMT;
+    using System.Linq;
+    using EX   = Abook.AbException.EX;
+    using FMT  = Abook.AbConstants.FMT;
+    using TYPE = Abook.AbConstants.TYPE;
 
     /// <summary>
     /// 支出情報クラス
@@ -80,6 +82,10 @@
             if (string.IsNullOrEmpty(type))
             {
                 AbException.Throw(EX.TYPE_NULL);
+            }
+            if (!TYPE.EXPENCE.Contains(type))
+            {
+                AbException.Throw(EX.TYPE_WRONG);
             }
             return type;
         }

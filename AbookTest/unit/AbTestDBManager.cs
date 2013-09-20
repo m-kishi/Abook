@@ -64,9 +64,9 @@
             using (StreamWriter sw = new StreamWriter("InData.db", false, CSV.ENCODING))
             {
                 sw.NewLine = CSV.LF;
-                sw.WriteLine("\"2009-04-01\",\"name1\",\"type1\",\"100\"");
-                sw.WriteLine("\"2009-04-01\",\"name2\",\"type2\",\"200\"");
-                sw.WriteLine("\"2009-04-02\",\"name3\",\"type3\",\"300\"");
+                sw.WriteLine("\"2009-04-01\",\"name1\",\"食費\",\"100\"");
+                sw.WriteLine("\"2009-04-01\",\"name2\",\"食費\",\"200\"");
+                sw.WriteLine("\"2009-04-02\",\"name3\",\"食費\",\"300\"");
                 sw.Close();
             }
         }
@@ -111,9 +111,9 @@
 
             expected = new List<AbExpense>()
             {
-                new AbExpense("2009-04-01", "name1", "type1", "100"),
-                new AbExpense("2009-04-01", "name2", "type2", "200"),
-                new AbExpense("2009-04-02", "name3", "type3", "300")
+                new AbExpense("2009-04-01", "name1", "食費", "100"),
+                new AbExpense("2009-04-01", "name2", "食費", "200"),
+                new AbExpense("2009-04-02", "name3", "食費", "300")
             };
         }
 
@@ -250,7 +250,7 @@
             var row = argDgv.Rows[argDgv.Rows.Count - 1];
             row.Cells[COL.DATE].Value = "2011-02-31";
             row.Cells[COL.NAME].Value = "name";
-            row.Cells[COL.TYPE].Value = "type";
+            row.Cells[COL.TYPE].Value = "食費";
             row.Cells[COL.COST].Value = "1000";
 
             var ex = Assert.Throws<AbException>(() =>
