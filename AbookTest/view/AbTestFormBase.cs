@@ -306,6 +306,15 @@
             return CtControl<DataGridView>("DgvBalance");
         }
 
+        /// <summary>
+        /// 秘密収支ビュー取得
+        /// </summary>
+        /// <returns>秘密収支ビュー</returns>
+        protected DataGridView CtDgvPrivate()
+        {
+            return CtControl<DataGridView>("DgvPrivate");
+        }
+
         #endregion
     }
 }
