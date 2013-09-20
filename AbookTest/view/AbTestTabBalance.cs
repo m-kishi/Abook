@@ -7,6 +7,7 @@
     using NUnit.Framework;
     using NUnit.Extensions.Forms;
     using COL  = Abook.AbConstants.COL;
+    using CSV  = Abook.AbConstants.CSV;
     using TYPE = Abook.AbConstants.TYPE;
 
     /// <summary>
@@ -28,7 +29,7 @@
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            using (StreamWriter sw = new StreamWriter(DB_EXIST, false, System.Text.Encoding.UTF8))
+            using (StreamWriter sw = new StreamWriter(DB_EXIST, false, CSV.ENCODING))
             {
                 sw.WriteLine(ToCSV("2009-04-01", "name", TYPE.EARN, "800000"));
                 sw.WriteLine(ToCSV("2009-04-01", "name", TYPE.EARN, "900000"));
