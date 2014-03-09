@@ -86,6 +86,8 @@
         /// </summary>
         private void LabelControl_TypeNameClick(object sender, EventArgs e)
         {
+            var subFromType = new AbSubType();
+            subFromType.ShowDialog();
         }
     }
 }
