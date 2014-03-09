@@ -71,7 +71,7 @@
         {
             /// <summary>CSV("date","name","type","cost")</summary>
             public const string CSV = "\"{0}\",\"{1}\",\"{2}\",\"{3}\"";
-            /// <summary>日付"yyyy/MM/dd"</summary>
+            /// <summary>日付"yyyy-MM-dd"</summary>
             public const string DATE = "yyyy-MM-dd";
             /// <summary>月"MM"</summary>
             public const string MONTH = "MM";
