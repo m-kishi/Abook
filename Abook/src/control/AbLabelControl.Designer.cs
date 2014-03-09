@@ -41,6 +41,7 @@
             this._Label.Size = new System.Drawing.Size(32, 12);
             this._Label.TabIndex = 0;
             this._Label.Text = "Label";
+            this._Label.TextChanged += new System.EventHandler(this._Label_TextChanged);
             // 
             // _Value
             // 

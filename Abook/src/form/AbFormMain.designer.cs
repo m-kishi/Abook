@@ -101,12 +101,12 @@
             this.ColExpense    = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColSpecial    = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColBalance    = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TabPrivate = new System.Windows.Forms.TabPage();
-            this.DgvPrivate = new System.Windows.Forms.DataGridView();
-            this.ColPrvDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColPrvName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColPrvCost = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColPrvBlnc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TabPrivate    = new System.Windows.Forms.TabPage();
+            this.DgvPrivate    = new System.Windows.Forms.DataGridView();
+            this.ColPrvDate    = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColPrvName    = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColPrvCost    = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColPrvBlnc    = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MenuStrip.SuspendLayout();
             this.TabControl.SuspendLayout();
             this.TabExpense.SuspendLayout();
@@ -305,6 +305,7 @@
             this.LblFood.Name = "LblFood";
             this.LblFood.Size = new System.Drawing.Size(120, 12);
             this.LblFood.TabIndex = 8;
+            this.LblFood.TypeNameClick += new System.EventHandler(this.LabelControl_TypeNameClick);
             // 
             // LblOtfd
             // 
@@ -313,6 +314,7 @@
             this.LblOtfd.Name = "LblOtfd";
             this.LblOtfd.Size = new System.Drawing.Size(120, 12);
             this.LblOtfd.TabIndex = 9;
+            this.LblOtfd.TypeNameClick += new System.EventHandler(this.LabelControl_TypeNameClick);
             // 
             // LblGood
             // 
@@ -321,6 +323,7 @@
             this.LblGood.Name = "LblGood";
             this.LblGood.Size = new System.Drawing.Size(120, 12);
             this.LblGood.TabIndex = 10;
+            this.LblGood.TypeNameClick += new System.EventHandler(this.LabelControl_TypeNameClick);
             // 
             // LblFrnd
             // 
@@ -329,6 +332,7 @@
             this.LblFrnd.Name = "LblFrnd";
             this.LblFrnd.Size = new System.Drawing.Size(120, 12);
             this.LblFrnd.TabIndex = 11;
+            this.LblFrnd.TypeNameClick += new System.EventHandler(this.LabelControl_TypeNameClick);
             // 
             // LblTrfc
             // 
@@ -337,6 +341,7 @@
             this.LblTrfc.Name = "LblTrfc";
             this.LblTrfc.Size = new System.Drawing.Size(120, 12);
             this.LblTrfc.TabIndex = 12;
+            this.LblTrfc.TypeNameClick += new System.EventHandler(this.LabelControl_TypeNameClick);
             // 
             // LblPlay
             // 
@@ -345,6 +350,7 @@
             this.LblPlay.Name = "LblPlay";
             this.LblPlay.Size = new System.Drawing.Size(120, 12);
             this.LblPlay.TabIndex = 13;
+            this.LblPlay.TypeNameClick += new System.EventHandler(this.LabelControl_TypeNameClick);
             // 
             // LblHous
             // 
@@ -353,6 +359,7 @@
             this.LblHous.Name = "LblHous";
             this.LblHous.Size = new System.Drawing.Size(120, 12);
             this.LblHous.TabIndex = 14;
+            this.LblHous.TypeNameClick += new System.EventHandler(this.LabelControl_TypeNameClick);
             // 
             // LblEngy
             // 
@@ -361,6 +368,7 @@
             this.LblEngy.Name = "LblEngy";
             this.LblEngy.Size = new System.Drawing.Size(120, 12);
             this.LblEngy.TabIndex = 15;
+            this.LblEngy.TypeNameClick += new System.EventHandler(this.LabelControl_TypeNameClick);
             // 
             // LblCnct
             // 
@@ -369,6 +377,7 @@
             this.LblCnct.Name = "LblCnct";
             this.LblCnct.Size = new System.Drawing.Size(120, 12);
             this.LblCnct.TabIndex = 16;
+            this.LblCnct.TypeNameClick += new System.EventHandler(this.LabelControl_TypeNameClick);
             // 
             // LblMedi
             // 
@@ -377,6 +386,7 @@
             this.LblMedi.Name = "LblMedi";
             this.LblMedi.Size = new System.Drawing.Size(120, 12);
             this.LblMedi.TabIndex = 17;
+            this.LblMedi.TypeNameClick += new System.EventHandler(this.LabelControl_TypeNameClick);
             // 
             // LblInsu
             // 
@@ -385,6 +395,7 @@
             this.LblInsu.Name = "LblInsu";
             this.LblInsu.Size = new System.Drawing.Size(120, 12);
             this.LblInsu.TabIndex = 18;
+            this.LblInsu.TypeNameClick += new System.EventHandler(this.LabelControl_TypeNameClick);
             // 
             // LblOthr
             // 
@@ -393,6 +404,7 @@
             this.LblOthr.Name = "LblOthr";
             this.LblOthr.Size = new System.Drawing.Size(120, 12);
             this.LblOthr.TabIndex = 19;
+            this.LblOthr.TypeNameClick += new System.EventHandler(this.LabelControl_TypeNameClick);
             // 
             // LblTtal
             // 

@@ -80,5 +80,12 @@
         {
             SetTabSummary(abExpenseManager.NextYear);
         }
+
+        /// <summary>
+        /// 種別名クリック
+        /// </summary>
+        private void LabelControl_TypeNameClick(object sender, EventArgs e)
+        {
+        }
     }
 }
