@@ -49,9 +49,12 @@
         /// 現在集計値の日付を取得
         /// </summary>
         /// <returns>現在集計値の日付</returns>
-        private DateTime CurrentDate()
+        public DateTime CurrentDate
         {
-            return new DateTime(abCurrentSummary.Year, abCurrentSummary.Month, 1);
+            get
+            {
+                return new DateTime(abCurrentSummary.Year, abCurrentSummary.Month, 1);
+            }
         }
 
         /// <summary>
@@ -59,7 +62,7 @@
         /// </summary>
         public string Title
         {
-            get { return CurrentDate().ToString(FMT.TITLE); }
+            get { return CurrentDate.ToString(FMT.TITLE); }
         }
 
         /// <summary>
@@ -77,7 +80,7 @@
         /// </summary>
         public void PrevYear()
         {
-            var date = CurrentDate().AddYears(-1);
+            var date = CurrentDate.AddYears(-1);
             SetCurrentSummary(date);
         }
 
@@ -86,7 +89,7 @@
         /// </summary>
         public void PrevMonth()
         {
-            var date = CurrentDate().AddMonths(-1);
+            var date = CurrentDate.AddMonths(-1);
             SetCurrentSummary(date);
         }
 
@@ -95,7 +98,7 @@
         /// </summary>
         public void NextMonth()
         {
-            var date = CurrentDate().AddMonths(1);
+            var date = CurrentDate.AddMonths(1);
             SetCurrentSummary(date);
         }
 
@@ -104,7 +107,7 @@
         /// </summary>
         public void NextYear()
         {
-            var date = CurrentDate().AddYears(1);
+            var date = CurrentDate.AddYears(1);
             SetCurrentSummary(date);
         }
     }

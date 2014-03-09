@@ -86,7 +86,12 @@
         /// </summary>
         private void LabelControl_TypeNameClick(object sender, EventArgs e)
         {
-            var subFromType = new AbSubType();
+            var label = (Label)sender;
+            var subFromType = new AbSubType(
+                this,
+                label.Text,
+                abExpenseManager.CurrentDate
+            );
             subFromType.ShowDialog();
         }
     }
