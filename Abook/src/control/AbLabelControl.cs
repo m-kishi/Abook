@@ -1,6 +1,7 @@
 ﻿namespace Abook
 {
     using System;
+    using System.Drawing;
     using System.Linq;
     using System.Windows.Forms;
     using TYPE = Abook.AbConstants.TYPE;
@@ -16,6 +17,12 @@
 
         /// <summary>種別名クリック</summary>
         public event EventHandler TypeNameClick;
+
+        /// <summary>通常フォント</summary>
+        private static readonly Font FONT_REGULAR   = new Font("MS UI Gothic", 9F, FontStyle.Regular  , GraphicsUnit.Point, ((byte)(128)));
+
+        /// <summary>下線フォント</summary>
+        private static readonly Font FONT_UNDERLINE = new Font("MS UI Gothic", 9F, FontStyle.Underline, GraphicsUnit.Point, ((byte)(128)));
 
         /// <summary>
         /// コンストラクタ
@@ -44,13 +51,12 @@
         }
 
         /// <summary>
-        /// 下線表示とイベント設定
+        /// イベント設定
         /// </summary>
         private void _Label_TextChanged(object sender, EventArgs e)
         {
             if (TYPE.SUMMARY.EXPE.Contains(_Label.Text))
             {
-                _Label.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
                 _Label.Click += new System.EventHandler(this._Label_Click);
                 _Label.MouseEnter += new System.EventHandler(this._Label_MouseEnter);
                 _Label.MouseLeave += new System.EventHandler(this._Label_MouseLeave);
@@ -63,6 +69,10 @@
         private void _Label_MouseEnter(object sender, EventArgs e)
         {
             this.Cursor = Cursors.Hand;
+            if (TYPE.SUMMARY.EXPE.Contains(_Label.Text))
+            {
+                _Label.Font = FONT_UNDERLINE;
+            }
         }
 
         /// <summary>
@@ -71,6 +81,10 @@
         private void _Label_MouseLeave(object sender, EventArgs e)
         {
             this.Cursor = Cursors.Default;
+            if (TYPE.SUMMARY.EXPE.Contains(_Label.Text))
+            {
+                _Label.Font = FONT_REGULAR;
+            }
         }
 
         /// <summary>
