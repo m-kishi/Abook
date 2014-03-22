@@ -226,6 +226,16 @@
             return (new ControlTester("PboxGraph", form));
         }
 
+        /// <summary>
+        /// ラベルコントロール中のラベル取得
+        /// </summary>
+        /// <param name="name">コントロール名</param>
+        /// <returns>ラベルコントロール中のラベル取得</returns>
+        protected ControlTester TsAbLabelLabel(string name)
+        {
+            return (new ControlTester(name + "._Label", form));
+        }
+
         #endregion
 
         #region "Control 取得メソッド"
@@ -277,6 +287,16 @@
         protected AbLabelControl CtAbLabel(string name)
         {
             return CtControl<AbLabelControl>(name);
+        }
+
+        /// <summary>
+        /// ラベルコントロール中のラベル取得
+        /// </summary>
+        /// <param name="name">コントロール名</param>
+        /// <returns>ラベルコントロール中のラベル</returns>
+        protected Label CtAbLabelLabel(string name)
+        {
+            return CtControl<Label>(name + "._Label");
         }
 
         /// <summary>
