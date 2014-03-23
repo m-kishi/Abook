@@ -65,7 +65,7 @@
     <Compile Include="unit\AbTestDBManager.cs" />
     <Compile Include="unit\AbTestExpense.cs" />
     <Compile Include="unit\AbTestExpenseManager.cs" />
-    <Compile Include="unit\AbTestGraphManager.cs" />
+    <Compile Include="unit\AbTestGraphicManager.cs" />
     <Compile Include="unit\AbTestPrivate.cs" />
     <Compile Include="unit\AbTestPrivateManager.cs" />
     <Compile Include="unit\AbTestSummary.cs" />
