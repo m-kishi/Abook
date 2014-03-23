@@ -12,7 +12,7 @@
     public partial class AbFormMain : Form
     {
         /// <summary>DB ファイル</summary>
-        private string DB;
+        public string DB { get; private set; }
 
         /// <summary>
         /// アプリケーションメイン
