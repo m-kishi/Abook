@@ -1,6 +1,8 @@
 ﻿namespace Abook
 {
     using System;
+    using System.Threading;
+    using System.Windows.Forms;
 
     /// <summary>
     /// 例外クラス
@@ -23,6 +25,26 @@
         public static void Throw(string message)
         {
             throw new AbException(message);
+        }
+
+        /// <summary>
+        /// システム例外処理
+        /// </summary>
+        public static void ApplicationThreadException(object sender, ThreadExceptionEventArgs e)
+        {
+            try
+            {
+                MessageBox.Show(
+                    e.Exception.Message,
+                    "エラー",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+            }
+            finally
+            {
+                Application.Exit();
+            }
         }
 
         /// <summary>例外メッセージ</summary>
