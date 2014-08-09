@@ -227,10 +227,10 @@
         }
 
         /// <summary>
-        /// ラベルコントロール中のラベル取得
+        /// ラベルコントロール中のLabel取得
         /// </summary>
         /// <param name="name">コントロール名</param>
-        /// <returns>ラベルコントロール中のラベル取得</returns>
+        /// <returns>ラベルコントロール中のLabel取得</returns>
         protected ControlTester TsAbLabelLabel(string name)
         {
             return (new ControlTester(name + "._Label", form));
@@ -300,10 +300,10 @@
         }
 
         /// <summary>
-        /// ラベルコントロール中のラベル取得
+        /// ラベルコントロール中のLabel取得
         /// </summary>
         /// <param name="name">コントロール名</param>
-        /// <returns>ラベルコントロール中のラベル</returns>
+        /// <returns>ラベルコントロール中のLabel</returns>
         protected Label CtAbLabelLabel(string name)
         {
             return CtControl<Label>(name + "._Label");

@@ -862,7 +862,7 @@
 
         /// <summary>
         /// マウスオン・オフのテスト
-        /// 種別明細対象のラベルコントロール
+        /// 種別明細対象のラベルコントロール(Label)
         /// </summary>
         [TestCase("LblFood")]
         [TestCase("LblOtfd")]
@@ -876,7 +876,7 @@
         [TestCase("LblMedi")]
         [TestCase("LblInsu")]
         [TestCase("LblOthr")]
-        public void MouseOnOffWithTargetAbLabel(string lblName)
+        public void MouseOnOffWithTargetAbLabelLabel(string lblName)
         {
             ShowFormMain(DB_EXIST, TAB_IDX);
 
@@ -924,11 +924,11 @@
 
         /// <summary>
         /// マウスオン・オフのテスト
-        /// 種別明細対象外のラベルコントロール
+        /// 種別明細対象外のラベルコントロール(Label)
         /// </summary>
         [TestCase("LblTtal")]
         [TestCase("LblBlnc")]
-        public void MouseOnOffWithNotTargetAbLabel(string lblName)
+        public void MouseOnOffWithNotTargetAbLabelLabel(string lblName)
         {
             ShowFormMain(DB_EXIST, TAB_IDX);
 
@@ -966,7 +966,7 @@
 
         /// <summary>
         /// 種別名クリックのテスト
-        /// 種別明細対象のラベルコントロール
+        /// 種別明細対象のラベルコントロール(Label)
         /// </summary>
         [TestCase("LblFood", TYPE.FOOD)]
         [TestCase("LblOtfd", TYPE.OTFD)]
@@ -980,7 +980,7 @@
         [TestCase("LblMedi", TYPE.MEDI)]
         [TestCase("LblInsu", TYPE.INSU)]
         [TestCase("LblOthr", TYPE.OTHR)]
-        public void ClickWithTargetAbLabel(string lblName, string type)
+        public void ClickWithTargetAbLabelLabel(string lblName, string type)
         {
             //種別明細サブフォームの表示テスト
             ModalFormHandler = (name, hWnd, form) =>
@@ -1038,11 +1038,11 @@
 
         /// <summary>
         /// 種別名クリックのテスト
-        /// 種別明細対象外のラベルコントロール
+        /// 種別明細対象外のラベルコントロール(Label)
         /// </summary>
         [TestCase("LblTtal", TYPE.TTAL)]
         [TestCase("LblBlnc", TYPE.BLNC)]
-        public void ClickWithNotTargetAbLabel(string lblName, string type)
+        public void ClickWithNotTargetAbLabelLabel(string lblName, string type)
         {
             ShowFormMain(DB_EXIST, TAB_IDX);
 
