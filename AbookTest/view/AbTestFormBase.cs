@@ -236,6 +236,16 @@
             return (new ControlTester(name + "._Label", form));
         }
 
+        /// <summary>
+        /// ラベルコントロール中のValue取得
+        /// </summary>
+        /// <param name="name">コントロール名</param>
+        /// <returns>ラベルコントロール中のValue取得</returns>
+        protected ControlTester TsAbLabelValue(string name)
+        {
+            return (new ControlTester(name + "._Value", form));
+        }
+
         #endregion
 
         #region "Control 取得メソッド"
@@ -297,6 +307,16 @@
         protected Label CtAbLabelLabel(string name)
         {
             return CtControl<Label>(name + "._Label");
+        }
+
+        /// <summary>
+        /// ラベルコントロール中のValue取得
+        /// </summary>
+        /// <param name="name">コントロール名</param>
+        /// <returns>ラベルコントロール中のValue</returns>
+        protected Label CtAbLabelValue(string name)
+        {
+            return CtControl<Label>(name + "._Value");
         }
 
         /// <summary>

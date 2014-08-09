@@ -893,6 +893,37 @@
 
         /// <summary>
         /// マウスオン・オフのテスト
+        /// 種別明細対象のラベルコントロール(Value)
+        /// </summary>
+        [TestCase("LblFood")]
+        [TestCase("LblOtfd")]
+        [TestCase("LblGood")]
+        [TestCase("LblFrnd")]
+        [TestCase("LblTrfc")]
+        [TestCase("LblPlay")]
+        [TestCase("LblHous")]
+        [TestCase("LblEngy")]
+        [TestCase("LblCnct")]
+        [TestCase("LblMedi")]
+        [TestCase("LblInsu")]
+        [TestCase("LblOthr")]
+        public void MouseOnOffWithTargetAbLabelValue(string lblName)
+        {
+            ShowFormMain(DB_EXIST, TAB_IDX);
+
+            var ctValue = CtAbLabelValue(lblName);
+            Assert.IsFalse(ctValue.Font.Underline);
+
+            var tsValue = TsAbLabelValue(lblName);
+            tsValue.FireEvent("MouseEnter", new EventArgs());
+            Assert.IsTrue(ctValue.Font.Underline);
+
+            tsValue.FireEvent("MouseLeave", new EventArgs());
+            Assert.IsFalse(ctValue.Font.Underline);
+        }
+
+        /// <summary>
+        /// マウスオン・オフのテスト
         /// 種別明細対象外のラベルコントロール
         /// </summary>
         [TestCase("LblTtal")]
@@ -910,6 +941,27 @@
 
             tsLabel.FireEvent("MouseLeave", new EventArgs());
             Assert.IsFalse(ctLabel.Font.Underline);
+        }
+
+        /// <summary>
+        /// マウスオン・オフのテスト
+        /// 種別明細対象外のラベルコントロール(Value)
+        /// </summary>
+        [TestCase("LblTtal")]
+        [TestCase("LblBlnc")]
+        public void MouseOnOffWithNotTargetAbLabelValue(string lblName)
+        {
+            ShowFormMain(DB_EXIST, TAB_IDX);
+
+            var ctValue = CtAbLabelValue(lblName);
+            Assert.IsFalse(ctValue.Font.Underline);
+
+            var tsValue = TsAbLabelValue(lblName);
+            tsValue.FireEvent("MouseEnter", new EventArgs());
+            Assert.IsFalse(ctValue.Font.Underline);
+
+            tsValue.FireEvent("MouseLeave", new EventArgs());
+            Assert.IsFalse(ctValue.Font.Underline);
         }
 
         /// <summary>
@@ -950,6 +1002,42 @@
 
         /// <summary>
         /// 種別名クリックのテスト
+        /// 種別明細対象のラベルコントロール(Value)
+        /// </summary>
+        [TestCase("LblFood", TYPE.FOOD)]
+        [TestCase("LblOtfd", TYPE.OTFD)]
+        [TestCase("LblGood", TYPE.GOOD)]
+        [TestCase("LblFrnd", TYPE.FRND)]
+        [TestCase("LblTrfc", TYPE.TRFC)]
+        [TestCase("LblPlay", TYPE.PLAY)]
+        [TestCase("LblHous", TYPE.HOUS)]
+        [TestCase("LblEngy", TYPE.ENGY)]
+        [TestCase("LblCnct", TYPE.CNCT)]
+        [TestCase("LblMedi", TYPE.MEDI)]
+        [TestCase("LblInsu", TYPE.INSU)]
+        [TestCase("LblOthr", TYPE.OTHR)]
+        public void ClickWithTargetAbLabelValue(string lblName, string type)
+        {
+            //種別明細サブフォームの表示テスト
+            ModalFormHandler = (name, hWnd, form) =>
+            {
+                //フォーム名テスト
+                Assert.AreEqual(name, "AbSubType");
+
+                //フォームタイトル
+                Assert.AreEqual(type, form.Text);
+
+                // 閉じる
+                form.Close();
+            };
+
+            ShowFormMain(DB_EXIST, TAB_IDX);
+
+            TsAbLabelValue(lblName).Click();
+        }
+
+        /// <summary>
+        /// 種別名クリックのテスト
         /// 種別明細対象外のラベルコントロール
         /// </summary>
         [TestCase("LblTtal", TYPE.TTAL)]
@@ -960,6 +1048,20 @@
 
             //クリックしても何も起きない
             TsAbLabelLabel(lblName).Click();
+        }
+
+        /// <summary>
+        /// 種別名クリックのテスト
+        /// 種別明細対象外のラベルコントロール(Value)
+        /// </summary>
+        [TestCase("LblTtal", TYPE.TTAL)]
+        [TestCase("LblBlnc", TYPE.BLNC)]
+        public void ClickWithNotTargetAbLabelValue(string lblName, string type)
+        {
+            ShowFormMain(DB_EXIST, TAB_IDX);
+
+            //クリックしても何も起きない
+            TsAbLabelValue(lblName).Click();
         }
     }
 }
