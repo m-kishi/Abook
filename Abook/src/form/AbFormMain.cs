@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Drawing;
+    using System.Threading;
     using System.Windows.Forms;
     using CSV = Abook.AbConstants.CSV;
 
@@ -20,6 +21,9 @@
         [STAThread]
         public static void Main()
         {
+            Application.ThreadException += new ThreadExceptionEventHandler(AbException.ApplicationThreadException);
+            Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new AbFormMain(CSV.DB));

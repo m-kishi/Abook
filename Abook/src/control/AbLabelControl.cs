@@ -58,8 +58,11 @@
             if (TYPE.SUMMARY.EXPE.Contains(_Label.Text))
             {
                 _Label.Click += new System.EventHandler(this._Label_Click);
+                _Value.Click += new System.EventHandler(this._Value_Click);
                 _Label.MouseEnter += new System.EventHandler(this._Label_MouseEnter);
+                _Value.MouseEnter += new System.EventHandler(this._Value_MouseEnter);
                 _Label.MouseLeave += new System.EventHandler(this._Label_MouseLeave);
+                _Value.MouseLeave += new System.EventHandler(this._Value_MouseLeave);
             }
         }
 
@@ -76,6 +79,18 @@
         }
 
         /// <summary>
+        /// マウスオン
+        /// </summary>
+        private void _Value_MouseEnter(object sender, EventArgs e)
+        {
+            this.Cursor = Cursors.Hand;
+            if (TYPE.SUMMARY.EXPE.Contains(_Label.Text))
+            {
+                _Value.Font = FONT_UNDERLINE;
+            }
+        }
+
+        /// <summary>
         /// マウスオフ
         /// </summary>
         private void _Label_MouseLeave(object sender, EventArgs e)
@@ -88,11 +103,31 @@
         }
 
         /// <summary>
+        /// マウスオフ
+        /// </summary>
+        private void _Value_MouseLeave(object sender, EventArgs e)
+        {
+            this.Cursor = Cursors.Default;
+            if (TYPE.SUMMARY.EXPE.Contains(_Label.Text))
+            {
+                _Value.Font = FONT_REGULAR;
+            }
+        }
+
+        /// <summary>
         /// 種別名クリック
         /// </summary>
         private void _Label_Click(object sender, EventArgs e)
         {
             TypeNameClick(sender, e);
+        }
+
+        /// <summary>
+        /// 金額クリック
+        /// </summary>
+        private void _Value_Click(object sender, EventArgs e)
+        {
+            TypeNameClick(_Label, e);
         }
     }
 }
