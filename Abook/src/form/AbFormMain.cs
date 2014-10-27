@@ -84,6 +84,13 @@
         }
 
         /// <summary>
+        /// アップロード
+        /// </summary>
+        private void MenuUpload_Click(object sender, EventArgs e)
+        {
+        }
+
+        /// <summary>
         /// バージョン情報表示
         /// </summary>
         private void MenuVersion_Click(object sender, EventArgs e)
