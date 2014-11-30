@@ -79,6 +79,9 @@
     <Compile Include="src\form\AbFormMain.designer.cs">
       <DependentUpon>AbFormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="src\form\AbFormMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="src\form\AbFormVersion.cs">
       <SubType>Form</SubType>
     </Compile>
