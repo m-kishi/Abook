@@ -1,6 +1,7 @@
 ﻿namespace Abook
 {
     using System;
+    using System.Collections.Generic;
     using System.Text;
 
     /// <summary>
@@ -89,6 +90,8 @@
             public const string MONTHLY_GROUP = "yyyy-MM";
             /// <summary>年月"yyyy-MM"</summary>
             public const string YEAR_MONTH = "yyyy-MM";
+            /// <summary>SQL(INSERT INTO expenses (date,name,type,cost) VALUES ('date','name','type','cost');</summary>
+            public const string SQL = "INSERT INTO expenses (date,name,type,cost) VALUES ('{0}','{1}','{2}','{3}');";
         }
 
         /// <summary>グラフ</summary>
@@ -164,6 +167,14 @@
             public const string PRVI = "秘密入";
             /// <summary>秘密出</summary>
             public const string PRVO = "秘密出";
+
+            /// <summary>種別IDの変換テーブル</summary>
+            public static readonly Dictionary<string, string> ID = new Dictionary<string,string>()
+            {
+                { FOOD, "FOOD" }, { OTFD, "OTFD" }, { GOOD, "GOOD" }, { FRND, "FRND" }, { TRFC, "TRFC" }, { PLAY, "PLAY" },
+                { HOUS, "HOUS" }, { ENGY, "ENGY" }, { CNCT, "CNCT" }, { MEDI, "MEDI" }, { INSU, "INSU" }, { OTHR, "OTHR" },
+                { EARN, "EARN" }, { TTAL, "TTAL" }, { BLNC, "BLNC" }, { BNUS, "BNUS" }, { SPCL, "SPCL" }, { PRVI, "PRVI" }, { PRVO, "PRVO" },
+            };
 
             /// <summary>
             /// 支出情報で指定可能な種別
