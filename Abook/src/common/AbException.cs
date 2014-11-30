@@ -104,6 +104,23 @@
 
             /// <summary>種別が正しくありません。</summary>
             public const string TYPE_PRIVATE_ERR = "種別が正しくありません。";
+
+            /// <summary>URL がありません。</summary>
+            public const string URL_NULL = "URL がありません。";
+            /// <summary>UPD ファイルがありません。</summary>
+            public const string UPD_NULL = "UPD ファイルがありません。";
+            /// <summary>{0} 行目: {1}</summary>
+            public const string UPD_PREPARE = "{0} 行目: {1}";
+            /// <summary>UPD ファイルの作成に失敗しました。</summary>
+            public const string UPD_CREATE = "UPD ファイルの作成に失敗しました。\r\n: {0}";
+            /// <summary>UPD ファイルが見つかりませんでした。</summary>
+            public const string UPD_DOES_NOT_EXIST = "UPD ファイルが見つかりませんでした。";
+            /// <summary>サーバへのアップロードに失敗しました。</summary>
+            public const string UPD_REQ_FAILED = "サーバへのアップロードに失敗しました。";
+            /// <summary>サーバからの応答の取得に失敗しました。</summary>
+            public const string UPD_RES_FAILED = "サーバからの応答の取得に失敗しました。";
+            /// <summary>アップロードするデータがありません。</summary>
+            public const string UPD_RECORD_NOTHING = "アップロードするデータがありません。";
         }
     }
 }

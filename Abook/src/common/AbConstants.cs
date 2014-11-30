@@ -60,6 +60,21 @@
             public const string LF = "\n";
         }
 
+        /// <summary>UPD</summary>
+        public static class UPD
+        {
+            /// <summary>UPD ファイル</summary>
+            public const string FILE = "Abook.sql";
+            /// <summary>リクエスト URL</summary>
+            public const string URL = "http://10.0.2.2:9999/linkage/abookdb";
+            /// <summary>改行文字(LF)</summary>
+            public const string LF = "\n";
+            /// <summary>ステータスコード(200)</summary>
+            public const string SUCCESS = "200";
+            /// <summary>文字コード(UTF-8 BOM なし)</summary>
+            public static readonly Encoding ENCODING = new UTF8Encoding(false);
+        }
+
         /// <summary>DataGridView</summary>
         public static class DGV
         {

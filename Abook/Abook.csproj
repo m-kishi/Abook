@@ -55,6 +55,7 @@
     <Compile Include="src\common\AbConstants.cs" />
     <Compile Include="src\common\AbDBManager.cs" />
     <Compile Include="src\common\AbException.cs" />
+    <Compile Include="src\common\AbUploaders.cs" />
     <Compile Include="src\common\AbUtilities.cs" />
     <Compile Include="src\control\AbHeaderControl.cs">
       <SubType>UserControl</SubType>
