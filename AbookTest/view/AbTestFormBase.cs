@@ -64,6 +64,20 @@
         }
 
         /// <summary>
+        /// フォーム表示
+        /// アップロードテスト用の表示
+        /// </summary>
+        /// <param name="db">DB ファイル</param>
+        /// <param name="upd">UPD ファイル</param>
+        /// <param name="url">リクエスト URL</param>
+        protected void ShowFormMain(string db, string upd, string url)
+        {
+            form = new AbFormMain(db);
+            form.SetUploadParameters(upd, url);
+            form.Show();
+        }
+
+        /// <summary>
         /// 支出情報 CSV 生成
         /// </summary>
         /// <param name="date">日付</param>
@@ -88,6 +102,15 @@
         protected ToolStripMenuItemTester TsMenuExit()
         {
             return (new ToolStripMenuItemTester("MenuExit", form));
+        }
+
+        /// <summary>
+        /// アップロードメニュー取得
+        /// </summary>
+        /// <returns>アップロードメニュー</returns>
+        protected ToolStripMenuItemTester TsMenuUpload()
+        {
+            return (new ToolStripMenuItemTester("MenuUpload", form));
         }
 
         /// <summary>
