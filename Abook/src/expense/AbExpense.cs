@@ -5,6 +5,7 @@
     using EX   = Abook.AbException.EX;
     using FMT  = Abook.AbConstants.FMT;
     using TYPE = Abook.AbConstants.TYPE;
+    using UTIL = Abook.AbUtilities;
 
     /// <summary>
     /// 支出情報クラス
@@ -128,6 +129,16 @@
         public string ToCSV()
         {
             return string.Format(FMT.CSV, Date.ToString(FMT.DATE), Name, Type, Cost);
+        }
+
+        /// <summary>
+        /// SQL 形式
+        /// </summary>
+        /// <returns>SQL 形式</returns>
+        public string ToSQL()
+        {
+            var type = UTIL.ToTypeId(Type);
+            return string.Format(FMT.SQL, Date.ToString(FMT.DATE), Name, type, Cost);
         }
     }
 }

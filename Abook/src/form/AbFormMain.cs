@@ -6,6 +6,7 @@
     using System.Threading;
     using System.Windows.Forms;
     using CSV = Abook.AbConstants.CSV;
+    using UPD = Abook.AbConstants.UPD;
 
     /// <summary>
     /// メイン画面フォーム
@@ -26,7 +27,11 @@
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new AbFormMain(CSV.DB));
+
+            AbFormMain form = null;
+            form = new AbFormMain(CSV.DB);
+            form.SetUploadParameters(UPD.FILE, UPD.URL);
+            Application.Run(form);
         }
 
         /// <summary>

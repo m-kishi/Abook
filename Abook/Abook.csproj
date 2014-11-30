@@ -55,6 +55,7 @@
     <Compile Include="src\common\AbConstants.cs" />
     <Compile Include="src\common\AbDBManager.cs" />
     <Compile Include="src\common\AbException.cs" />
+    <Compile Include="src\common\AbUploaders.cs" />
     <Compile Include="src\common\AbUtilities.cs" />
     <Compile Include="src\control\AbHeaderControl.cs">
       <SubType>UserControl</SubType>
@@ -78,6 +79,9 @@
     <Compile Include="src\form\AbFormMain.designer.cs">
       <DependentUpon>AbFormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="src\form\AbFormMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="src\form\AbFormVersion.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -89,6 +93,12 @@
     </Compile>
     <Compile Include="src\form\AbSubType.Designer.cs">
       <DependentUpon>AbSubType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\form\AbSubUpload.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\form\AbSubUpload.Designer.cs">
+      <DependentUpon>AbSubUpload.cs</DependentUpon>
     </Compile>
     <Compile Include="src\form\AbTabBalance.cs">
       <SubType>Form</SubType>
@@ -112,5 +122,16 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="src\private\AbPrivateManager.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="img\progress_bar.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="src\form\AbSubUpload.resx">
+      <DependentUpon>AbSubUpload.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
 </Project>

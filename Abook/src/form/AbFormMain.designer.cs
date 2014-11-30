@@ -44,6 +44,8 @@
             this.MenuStrip     = new System.Windows.Forms.MenuStrip();
             this.MenuFile      = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuExit      = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuData      = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuUpload    = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuHelp      = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuVersion   = new System.Windows.Forms.ToolStripMenuItem();
             this.TabControl    = new System.Windows.Forms.TabControl();
@@ -120,7 +122,7 @@
             // 
             // MenuStrip
             // 
-            this.MenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { this.MenuFile, this.MenuHelp });
+            this.MenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { this.MenuFile, this.MenuData, this.MenuHelp });
             this.MenuStrip.Location = new System.Drawing.Point(0, 0);
             this.MenuStrip.Name = "MenuStrip";
             this.MenuStrip.Size = new System.Drawing.Size(416, 24);
@@ -139,6 +141,20 @@
             this.MenuExit.Size = new System.Drawing.Size(110, 22);
             this.MenuExit.Text = "終了(&Q)";
             this.MenuExit.Click += new System.EventHandler(this.MenuExit_Click);
+            // 
+            // MenuData
+            // 
+            this.MenuData.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.MenuUpload });
+            this.MenuData.Name = "MenuData";
+            this.MenuData.Size = new System.Drawing.Size(61, 20);
+            this.MenuData.Text = "データ(&D)";
+            // 
+            // MenuUpload
+            // 
+            this.MenuUpload.Name = "MenuUpload";
+            this.MenuUpload.Size = new System.Drawing.Size(152, 22);
+            this.MenuUpload.Text = "アップロード(&U)";
+            this.MenuUpload.Click += new System.EventHandler(this.MenuUpload_Click);
             // 
             // MenuHelp
             // 
@@ -864,6 +880,8 @@
         private System.Windows.Forms.MenuStrip MenuStrip;
         private System.Windows.Forms.ToolStripMenuItem MenuFile;
         private System.Windows.Forms.ToolStripMenuItem MenuExit;
+        private System.Windows.Forms.ToolStripMenuItem MenuData;
+        private System.Windows.Forms.ToolStripMenuItem MenuUpload;
         private System.Windows.Forms.ToolStripMenuItem MenuHelp;
         private System.Windows.Forms.ToolStripMenuItem MenuVersion;
         private System.Windows.Forms.TabControl TabControl;

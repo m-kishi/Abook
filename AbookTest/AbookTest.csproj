@@ -59,6 +59,7 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="tool\AbWebServer.cs" />
     <Compile Include="unit\AbTestBalance.cs" />
     <Compile Include="unit\AbTestBalanceManager.cs" />
     <Compile Include="unit\AbTestComplete.cs" />
@@ -69,10 +70,13 @@
     <Compile Include="unit\AbTestPrivate.cs" />
     <Compile Include="unit\AbTestPrivateManager.cs" />
     <Compile Include="unit\AbTestSummary.cs" />
+    <Compile Include="unit\AbTestUploaders.cs" />
+    <Compile Include="unit\AbTestUtilities.cs" />
     <Compile Include="view\AbTestFormBase.cs" />
     <Compile Include="view\AbTestFormMain.cs" />
     <Compile Include="view\AbTestMenu.cs" />
     <Compile Include="view\AbTestSubType.cs" />
+    <Compile Include="view\AbTestSubUpload.cs" />
     <Compile Include="view\AbTestTabBalance.cs" />
     <Compile Include="view\AbTestTabExpense.cs" />
     <Compile Include="view\AbTestTabGraphic.cs" />

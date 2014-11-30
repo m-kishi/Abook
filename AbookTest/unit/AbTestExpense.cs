@@ -268,5 +268,16 @@
             var expected = string.Format(FMT.CSV, argDate, argName, argType, argCost);
             Assert.AreEqual(expected, abExpense.ToCSV());
         }
+
+        /// <summary>
+        /// SQL 形式
+        /// </summary>
+        [Test]
+        public void ToSQL()
+        {
+            var type = AbUtilities.ToTypeId(argType);
+            var expected = string.Format(FMT.SQL, argDate, argName, type, argCost);
+            Assert.AreEqual(expected, abExpense.ToSQL());
+        }
     }
 }

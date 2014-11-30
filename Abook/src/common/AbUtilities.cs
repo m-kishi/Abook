@@ -1,7 +1,9 @@
 ﻿namespace Abook
 {
     using System;
+    using EX = Abook.AbException.EX;
     using FMT = Abook.AbConstants.FMT;
+    using TYPE = Abook.AbConstants.TYPE;
 
     /// <summary>
     /// ユーティリティクラス
@@ -16,6 +18,18 @@
         public static string ToYen(decimal cost)
         {
             return string.Format(FMT.YEN, cost);
+        }
+
+        /// <summary>
+        /// 種別IDへの変換
+        /// </summary>
+        /// <param name="type">種別</param>
+        /// <returns>種別ID</returns>
+        public static string ToTypeId(string type)
+        {
+            if (string.IsNullOrEmpty(type)) { AbException.Throw(EX.TYPE_NULL ); }
+            if (!TYPE.ID.ContainsKey(type)) { AbException.Throw(EX.TYPE_WRONG); }
+            return TYPE.ID[type];
         }
     }
 }
