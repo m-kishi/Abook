@@ -59,6 +59,7 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="tool\AbWebServer.cs" />
     <Compile Include="unit\AbTestBalance.cs" />
     <Compile Include="unit\AbTestBalanceManager.cs" />
     <Compile Include="unit\AbTestComplete.cs" />
