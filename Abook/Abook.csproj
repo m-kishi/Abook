@@ -91,6 +91,12 @@
     <Compile Include="src\form\AbSubType.Designer.cs">
       <DependentUpon>AbSubType.cs</DependentUpon>
     </Compile>
+    <Compile Include="src\form\AbSubUpload.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\form\AbSubUpload.Designer.cs">
+      <DependentUpon>AbSubUpload.cs</DependentUpon>
+    </Compile>
     <Compile Include="src\form\AbTabBalance.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -113,5 +119,16 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="src\private\AbPrivateManager.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="img\progress_bar.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="src\form\AbSubUpload.resx">
+      <DependentUpon>AbSubUpload.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
 </Project>
