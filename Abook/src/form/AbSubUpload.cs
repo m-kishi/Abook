@@ -9,13 +9,12 @@
     /// </summary>
     public partial class AbSubUpload : Form
     {
-        /// <summary>DB ファイル</summary>
+        /// <summary>DBファイル</summary>
         private string DB { get; set; }
-        /// <summary>UPD ファイル</summary>
+        /// <summary>UPDファイル</summary>
         private string UPD { get; set; }
-        /// <summary>リクエスト URL</summary>
+        /// <summary>リクエストURL</summary>
         private string URL { get; set; }
-
         /// <summary>処理中フラグ</summary>
         public bool IsRunning { get; private set; }
         /// <summary>サーバからの応答</summary>
@@ -24,9 +23,9 @@
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        /// <param name="DB">DB ファイル</param>
-        /// <param name="UPD">UPD ファイル</param>
-        /// <param name="URL">リクエスト URL</param>
+        /// <param name="DB">DBファイル</param>
+        /// <param name="UPD">UPDファイル</param>
+        /// <param name="URL">リクエストURL</param>
         public AbSubUpload(string DB, string UPD, string URL)
         {
             this.DB  = DB;

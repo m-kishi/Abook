@@ -14,13 +14,10 @@
     {
         /// <summary>内部保持用</summary>
         private decimal _cost = decimal.Zero;
-
         /// <summary>種別名クリック</summary>
         public event EventHandler TypeNameClick;
-
         /// <summary>通常フォント</summary>
         private static readonly Font FONT_REGULAR   = new Font("MS UI Gothic", 9F, FontStyle.Regular  , GraphicsUnit.Point, ((byte)(128)));
-
         /// <summary>下線フォント</summary>
         private static readonly Font FONT_UNDERLINE = new Font("MS UI Gothic", 9F, FontStyle.Underline, GraphicsUnit.Point, ((byte)(128)));
 

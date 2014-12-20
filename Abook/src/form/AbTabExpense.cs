@@ -85,7 +85,7 @@
         }
 
         /// <summary>
-        /// DataGridView へペースト
+        /// DataGridViewへペースト
         /// </summary>
         private void DgvExpense_KeyDown(object sender, KeyEventArgs e)
         {
@@ -102,7 +102,7 @@
         }
 
         /// <summary>
-        /// DB ファイルへ書き出し
+        /// DBファイルへ書き出し
         /// </summary>
         private void BtnEntry_Click(object sender, EventArgs e)
         {

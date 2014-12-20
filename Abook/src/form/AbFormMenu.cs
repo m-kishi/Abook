@@ -12,17 +12,16 @@
     /// </summary>
     public partial class AbFormMain : Form
     {
-        /// <summary>UPD ファイル</summary>
+        /// <summary>UPDファイル</summary>
         public string UPD_FILE { get; set; }
-
-        /// <summary>リクエスト URL</summary>
+        /// <summary>リクエストURL</summary>
         public string UPD_URL { get; set; }
 
         /// <summary>
         /// アップロードのパラメタ設定
         /// </summary>
-        /// <param name="UPD">UPD ファイル</param>
-        /// <param name="URL">リクエスト URL</param>
+        /// <param name="UPD">UPDファイル</param>
+        /// <param name="URL">リクエストURL</param>
         public void SetUploadParameters(string UPD, string URL)
         {
             this.UPD_FILE = UPD;

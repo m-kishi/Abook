@@ -17,13 +17,10 @@
     {
         /// <summary>グラフ表示年月</summary>
         private DateTime dtNow;
-
         /// <summary>グラフデータ</summary>
         public List<AbGraphicData> abGraphDatas;
-
         /// <summary>基準線データ</summary>
         private List<AbGraphicLine> abGraphLines;
-
         /// <summary>集計値リスト</summary>
         private List<AbSummary> abSummaries;
 
@@ -112,7 +109,7 @@
         /// <summary>
         /// グラフ描画
         /// </summary>
-        /// <param name="g">Graphics オブジェクト</param>
+        /// <param name="g">Graphicsオブジェクト</param>
         public void DrawGraph(Graphics g)
         {
             foreach (var gl in abGraphLines)

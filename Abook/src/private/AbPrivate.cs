@@ -12,13 +12,10 @@
     {
         /// <summary>年月</summary>
         public string  Date { get; private set; }
-
         /// <summary>名称</summary>
         public string  Name { get; private set; }
-
         /// <summary>金額</summary>
         public decimal Cost { get; private set; }
-
         /// <summary>収支</summary>
         public decimal Blnc { get; private set; }
 

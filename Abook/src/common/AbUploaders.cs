@@ -13,8 +13,8 @@
         /// <summary>
         /// アップロード
         /// </summary>
-        /// <param name="url">リクエスト URL</param>
-        /// <param name="file">UPD ファイル名</param>
+        /// <param name="url">リクエストURL</param>
+        /// <param name="file">UPDファイル名</param>
         /// <returns>サーバからの応答</returns>
         public static string SendUploadRequest(string url, string file)
         {
@@ -49,9 +49,9 @@
         }
 
         /// <summary>
-        /// UPD ファイル書き出し
+        /// UPDファイル書き出し
         /// </summary>
-        /// <param name="file">UPD ファイル名</param>
+        /// <param name="file">UPDファイル名</param>
         /// <param name="expenses">支出情報リスト</param>
         public static void Prepare(string file, List<AbExpense> expenses)
         {

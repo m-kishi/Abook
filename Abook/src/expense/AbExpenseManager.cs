@@ -13,7 +13,6 @@
     {
         /// <summary>集計値</summary>
         private AbSummary abCurrentSummary;
-
         /// <summary>集計値リスト</summary>
         private List<AbSummary> abSummaries;
 

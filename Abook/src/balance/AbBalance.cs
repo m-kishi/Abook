@@ -10,16 +10,12 @@
     {
         /// <summary>年度</summary>
         public int     Year    { get; private set; }
-
         /// <summary>収入</summary>
         public decimal Earn    { get; private set; }
-
         /// <summary>支出</summary>
         public decimal Expense { get; private set; }
-
         /// <summary>特出</summary>
         public decimal Special { get; private set; }
-
         /// <summary>収支</summary>
         public decimal Balance { get; private set; }
 

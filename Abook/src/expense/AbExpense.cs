@@ -14,13 +14,10 @@
     {
         /// <summary>日付</summary>
         public DateTime Date { get; private set; }
-
         /// <summary>名称</summary>
         public string   Name { get; private set; }
-
         /// <summary>種別</summary>
         public string   Type { get; private set; }
-
         /// <summary>金額</summary>
         public decimal  Cost { get; private set; }
 
@@ -123,18 +120,18 @@
         }
 
         /// <summary>
-        /// CSV 形式
+        /// CSV形式
         /// </summary>
-        /// <returns>CSV 形式</returns>
+        /// <returns>CSV形式</returns>
         public string ToCSV()
         {
             return string.Format(FMT.CSV, Date.ToString(FMT.DATE), Name, Type, Cost);
         }
 
         /// <summary>
-        /// SQL 形式
+        /// SQL形式
         /// </summary>
-        /// <returns>SQL 形式</returns>
+        /// <returns>SQL形式</returns>
         public string ToSQL()
         {
             var type = UTIL.ToTypeId(Type);

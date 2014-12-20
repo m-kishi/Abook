@@ -13,7 +13,7 @@
     /// </summary>
     public partial class AbFormMain : Form
     {
-        /// <summary>DB ファイル</summary>
+        /// <summary>DBファイル</summary>
         public string DB { get; private set; }
 
         /// <summary>
@@ -37,7 +37,7 @@
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        /// <param name="DB">DB ファイル</param>
+        /// <param name="DB">DBファイル</param>
         public AbFormMain(string DB)
         {
             this.DB = DB;

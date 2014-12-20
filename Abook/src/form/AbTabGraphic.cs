@@ -33,7 +33,7 @@
         /// <summary>
         /// グラフタブ表示
         /// </summary>
-        /// <param name="g">Graphics オブジェクト</param>
+        /// <param name="g">Graphicsオブジェクト</param>
         /// <param name="GraphicManager">グラフデータ管理</param>
         private void SetViewGraph(Graphics g, Action GraphicManager)
         {

@@ -14,14 +14,11 @@
     public partial class AbSummary
     {
         /// <summary>集計年</summary>
-        public int Year { get; private set; }
-
+        public int Year  { get; private set; }
         /// <summary>集計月</summary>
         public int Month { get; private set; }
-
         /// <summary>種別ごとの集計値</summary>
         private Dictionary<string, decimal> dicSumByType;
-
         /// <summary>名前ごとの集計値</summary>
         private Dictionary<string, decimal> dicSumByName;
 
@@ -112,7 +109,7 @@
 
     /// <summary>
     /// 集計値クラス
-    /// static メソッド定義
+    /// staticメソッド定義
     /// </summary>
     public partial class AbSummary
     {

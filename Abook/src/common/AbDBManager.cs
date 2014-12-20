@@ -10,14 +10,14 @@
     using CSV = Abook.AbConstants.CSV;
 
     /// <summary>
-    /// DB ファイル管理クラス
+    /// DBファイル管理クラス
     /// </summary>
     public static class AbDBManager
     {
         /// <summary>
-        /// DB ファイル読み込み
+        /// DBファイル読み込み
         /// </summary>
-        /// <param name="file">DB ファイル名</param>
+        /// <param name="file">DBファイル名</param>
         /// <returns>支出情報リスト</returns>
         public static List<AbExpense> Load(string file)
         {
@@ -67,7 +67,7 @@
         }
 
         /// <summary>
-        /// DataGridView から読み込み
+        /// DataGridViewから読み込み
         /// </summary>
         /// <param name="dgv">DataGridView</param>
         /// <param name="errLine">エラー行参照</param>
@@ -107,9 +107,9 @@
         }
 
         /// <summary>
-        /// DB ファイル書き出し
+        /// DBファイル書き出し
         /// </summary>
-        /// <param name="file">DB ファイル名</param>
+        /// <param name="file">DBファイル名</param>
         /// <param name="expenses">支出情報リスト</param>
         public static void Store(string file, List<AbExpense> expenses)
         {

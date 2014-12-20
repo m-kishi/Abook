@@ -15,7 +15,7 @@
         /// <param name="message">メッセージ</param>
         private AbException(string message) : base(message)
         {
-            //外部から new 不可
+            //外部からnew不可
         }
 
         /// <summary>
@@ -69,14 +69,14 @@
             /// <summary>金額が大き過ぎます。</summary>
             public const string COST_OVERFLOW = "金額が大き過ぎます。";
 
-            /// <summary>DB ファイルがありません。</summary>
-            public const string DB_NULL = "DB ファイルがありません。";
+            /// <summary>DBファイルがありません。</summary>
+            public const string DB_NULL = "DBファイルがありません。";
             /// <summary>{0} 行目: {1}</summary>
             public const string DB_LOAD = "{0} 行目: {1}";
             /// <summary>{0} 行目: {1}</summary>
             public const string DB_STORE = "{0} 行目: {1}";
-            /// <summary>DB ファイルの作成に失敗しました。</summary>
-            public const string DB_CREATE = "DB ファイルの作成に失敗しました。";
+            /// <summary>DBファイルの作成に失敗しました。</summary>
+            public const string DB_CREATE = "DBファイルの作成に失敗しました。";
             /// <summary>フィールド数が少ないです。</summary>
             public const string DB_FIELD_LESS = "フィールド数が少ないです。";
             /// <summary>フィールド数が多いです。</summary>
@@ -105,16 +105,16 @@
             /// <summary>種別が正しくありません。</summary>
             public const string TYPE_PRIVATE_ERR = "種別が正しくありません。";
 
-            /// <summary>URL がありません。</summary>
-            public const string URL_NULL = "URL がありません。";
-            /// <summary>UPD ファイルがありません。</summary>
-            public const string UPD_NULL = "UPD ファイルがありません。";
+            /// <summary>URLがありません。</summary>
+            public const string URL_NULL = "URLがありません。";
+            /// <summary>UPDファイルがありません。</summary>
+            public const string UPD_NULL = "UPDファイルがありません。";
             /// <summary>{0} 行目: {1}</summary>
             public const string UPD_PREPARE = "{0} 行目: {1}";
-            /// <summary>UPD ファイルの作成に失敗しました。</summary>
-            public const string UPD_CREATE = "UPD ファイルの作成に失敗しました。\r\n: {0}";
-            /// <summary>UPD ファイルが見つかりませんでした。</summary>
-            public const string UPD_DOES_NOT_EXIST = "UPD ファイルが見つかりませんでした。";
+            /// <summary>UPDファイルの作成に失敗しました。</summary>
+            public const string UPD_CREATE = "UPDファイルの作成に失敗しました。\r\n: {0}";
+            /// <summary>UPDファイルが見つかりませんでした。</summary>
+            public const string UPD_DOES_NOT_EXIST = "UPDファイルが見つかりませんでした。";
             /// <summary>サーバへのアップロードに失敗しました。</summary>
             public const string UPD_REQ_FAILED = "サーバへのアップロードに失敗しました。";
             /// <summary>サーバからの応答の取得に失敗しました。</summary>

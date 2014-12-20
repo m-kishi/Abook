@@ -48,13 +48,13 @@
         /// <summary>CSV</summary>
         public static class CSV
         {
-            /// <summary>DB ファイル</summary>
+            /// <summary>DBファイル</summary>
             public const string DB = "Abook.db";
             /// <summary>区切り文字</summary>
             public const string DELIMITER = ",";
             /// <summary>フィールド数</summary>
             public const int FIELD = 4;
-            /// <summary>文字コード(UTF-8 BOM なし)</summary>
+            /// <summary>文字コード(UTF-8 BOM無し)</summary>
             public static readonly Encoding ENCODING = new UTF8Encoding(false);
             /// <summary>改行文字(LF)</summary>
             public const string LF = "\n";
@@ -63,15 +63,15 @@
         /// <summary>UPD</summary>
         public static class UPD
         {
-            /// <summary>UPD ファイル</summary>
+            /// <summary>UPDファイル</summary>
             public const string FILE = "Abook.sql";
-            /// <summary>リクエスト URL</summary>
+            /// <summary>リクエストURL</summary>
             public const string URL = "http://10.0.2.2:9999/linkage/abookdb";
             /// <summary>改行文字(LF)</summary>
             public const string LF = "\n";
             /// <summary>ステータスコード(200)</summary>
             public const string SUCCESS = "200";
-            /// <summary>文字コード(UTF-8 BOM なし)</summary>
+            /// <summary>文字コード(UTF-8 BOM無し)</summary>
             public static readonly Encoding ENCODING = new UTF8Encoding(false);
         }
 

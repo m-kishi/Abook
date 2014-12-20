@@ -16,10 +16,8 @@
     {
         /// <summary>種別</summary>
         private string Type { get; set; }
-
         /// <summary>対象年月</summary>
         private DateTime DtCurrent { get; set; }
-
         /// <summary>フォーム</summary>
         private AbFormMain MainForm { get; set; }
 
