@@ -13,7 +13,7 @@
     [TestFixture]
     public class AbTestTabGraphic : AbTestFormBase
     {
-        /// <summary>DB ファイル</summary>
+        /// <summary>DBファイル</summary>
         private const string DB = "AbTestTabGraphic.db";
         /// <summary>タブインデックス</summary>
         private const int TAB_IDX = 2;

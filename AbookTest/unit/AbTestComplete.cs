@@ -50,7 +50,7 @@
 
         /// <summary>
         /// コンストラクタ
-        /// 引数:支出情報リストが NULL
+        /// 引数:支出情報リストがNULL
         /// </summary>
         [Test]
         public void AbCompleteWithNullExpenses()
@@ -64,7 +64,7 @@
 
         /// <summary>
         /// 種別取得
-        /// 引数:名称が NULL
+        /// 引数:名称がNULL
         /// </summary>
         [Test]
         public void GetTypeWithNullName()

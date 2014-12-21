@@ -37,7 +37,7 @@
                 sw.Close();
             }
 
-            //出力される UPD ファイル
+            //出力されるUPDファイル
             using (StreamWriter sw = new StreamWriter("Expected.sql", false, UPD.ENCODING))
             {
                 sw.NewLine = UPD.LF;
@@ -70,8 +70,8 @@
         }
 
         /// <summary>
-        /// UPD ファイル書き出し
-        /// 引数:ファイル名が NULL
+        /// UPDファイル書き出し
+        /// 引数:ファイル名がNULL
         /// </summary>
         [Test]
         public void PrepareWithNullFile()
@@ -84,7 +84,7 @@
         }
 
         /// <summary>
-        /// UPD ファイル書き出し
+        /// UPDファイル書き出し
         /// 引数:ファイル名が空文字列
         /// </summary>
         [Test]
@@ -98,8 +98,8 @@
         }
 
         /// <summary>
-        /// UPD ファイル書き出し
-        /// 引数:支出情報リストが NULL
+        /// UPDファイル書き出し
+        /// 引数:支出情報リストがNULL
         /// </summary>
         [Test]
         public void PrepareWithNullExpenses()
@@ -112,7 +112,7 @@
         }
 
         /// <summary>
-        /// UPD ファイル書き出し
+        /// UPDファイル書き出し
         /// 引数:支出情報リストが空リスト
         /// </summary>
         [Test]
@@ -126,7 +126,7 @@
         }
 
         /// <summary>
-        /// UPD ファイル書き出し
+        /// UPDファイル書き出し
         /// </summary>
         [Test]
         public void Prepare()
@@ -139,7 +139,7 @@
 
         /// <summary>
         /// アップロード
-        /// 引数:URL が NULL
+        /// 引数:URLがNULL
         /// </summary>
         [Test]
         public void SendUploadRequestWithNullUrl()
@@ -155,7 +155,7 @@
 
         /// <summary>
         /// アップロード
-        /// 引数:URL が空文字列
+        /// 引数:URLが空文字列
         /// </summary>
         [Test]
         public void SendUploadRequestWithEmptyUrl()
@@ -171,7 +171,7 @@
 
         /// <summary>
         /// アップロード
-        /// 引数:ファイル名が NULL
+        /// 引数:ファイル名がNULL
         /// </summary>
         [Test]
         public void SendUploadRequestWithNullFile()

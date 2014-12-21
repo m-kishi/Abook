@@ -16,9 +16,9 @@
     [TestFixture]
     public class AbTestSubType : NUnitFormTest
     {
-        /// <summary>DB ファイル</summary>
+        /// <summary>DBファイル</summary>
         private const string DB_EMPTY = "AbTestSubTypeEmpty.db";
-        /// <summary>DB ファイル</summary>
+        /// <summary>DBファイル</summary>
         private const string DB_EXIST = "AbTestSubTypeExist.db";
 
         /// <summary>対象:種別明細サブ</summary>
@@ -84,14 +84,14 @@
         }
 
         /// <summary>
-        /// 支出情報 CSV 生成
+        /// 支出情報CSV生成
         /// (AbTestFormBaseと重複:Formが増えるならDRY検討)
         /// </summary>
         /// <param name="date">日付</param>
         /// <param name="name">名前</param>
         /// <param name="type">種別</param>
         /// <param name="cost">金額</param>
-        /// <returns>支出情報 CSV</returns>
+        /// <returns>支出情報CSV</returns>
         protected string ToCSV(string date, string name, string type, string cost)
         {
             const string TEMPLATE = "\"{0}\",\"{1}\",\"{2}\",\"{3}\"";
@@ -101,7 +101,7 @@
         /// <summary>
         /// フォーム表示
         /// </summary>
-        /// <param name="db">DB ファイル</param>
+        /// <param name="db">DBファイル</param>
         protected void ShowSubType(string db)
         {
             var parent = new AbFormMain(db);
@@ -131,7 +131,7 @@
         }
 
         /// <summary>
-        /// Load テスト
+        /// Loadテスト
         /// </summary>
         [Test]
         public void Load()

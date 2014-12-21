@@ -79,7 +79,7 @@
 
         /// <summary>
         /// コンストラクタ
-        /// 引数:日付が NULL
+        /// 引数:日付がNULL
         /// </summary>
         [Test]
         public void AbExpenseWithNullDate()
@@ -121,7 +121,7 @@
 
         /// <summary>
         /// コンストラクタ
-        /// 引数:名称が NULL
+        /// 引数:名称がNULL
         /// </summary>
         [Test]
         public void AbExpenseWithNullName()
@@ -149,7 +149,7 @@
 
         /// <summary>
         /// コンストラクタ
-        /// 引数:種別が NULL
+        /// 引数:種別がNULL
         /// </summary>
         [Test]
         public void AbExpenseWithNullType()
@@ -191,7 +191,7 @@
 
         /// <summary>
         /// コンストラクタ
-        /// 引数:金額が NULL
+        /// 引数:金額がNULL
         /// </summary>
         [Test]
         public void AbExpenseWithNullCost()
@@ -260,7 +260,7 @@
         }
 
         /// <summary>
-        /// CSV 形式
+        /// CSV形式
         /// </summary>
         [Test]
         public void ToCSV()
@@ -270,7 +270,7 @@
         }
 
         /// <summary>
-        /// SQL 形式
+        /// SQL形式
         /// </summary>
         [Test]
         public void ToSQL()

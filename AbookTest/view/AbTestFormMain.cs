@@ -14,9 +14,9 @@
     [TestFixture]
     public class AbTestFormMain : AbTestFormBase
     {
-        /// <summary>DB ファイル</summary>
+        /// <summary>DBファイル</summary>
         private const string DB_EMPTY = "AbTestFormMainEmpty.db";
-        /// <summary>DB ファイル</summary>
+        /// <summary>DBファイル</summary>
         private const string DB_INVALID = "AbTestFormMainInvalid.db";
 
         /// <summary>
@@ -44,7 +44,7 @@
         }
 
         /// <summary>
-        /// Load テスト
+        /// Loadテスト
         /// </summary>
         [Test]
         public void Load()
@@ -54,15 +54,15 @@
         }
 
         /// <summary>
-        /// Load テスト
+        /// Loadテスト
         /// 日付の形式が不正
         /// </summary>
         [Test]
         public void LoadWithInvalidDB()
         {
             //ダイアログの表示テスト
-            // Load イベント中でダイアログを表示させている場合、NUnitで検証不可 -> AssertするとNUnitが落ちる？
-            // => Assert が成功する場合は落ちないのかも...
+            //Loadイベント中でダイアログを表示させている場合、NUnitで検証不可 -> AssertするとNUnitが落ちる？
+            //  => Assert が成功する場合は落ちないのかも...
             DialogBoxHandler = (name, hWnd) =>
             {
                 var tsMessageBox = new MessageBoxTester(hWnd);
@@ -75,7 +75,7 @@
                 var text = string.Format(EX.DB_LOAD, 2, EX.DATE_FORMAT);
                 Assert.AreEqual(text, tsMessageBox.Text);
 
-                // OK ボタンクリック
+                //OKボタンクリック
                 tsMessageBox.ClickOk();
             };
             ShowFormMain(DB_INVALID);

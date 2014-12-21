@@ -87,7 +87,7 @@
 
         /// <summary>
         /// コンストラクタ
-        /// 引数:収支レコードが NULL
+        /// 引数:収支レコードがNULL
         /// </summary>
         [Test]
         public void AbPrivateWithNullExpense()

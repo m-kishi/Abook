@@ -16,9 +16,9 @@
     [TestFixture]
     public class AbTestTabSummary : AbTestFormBase
     {
-        /// <summary>DB ファイル</summary>
+        /// <summary>DBファイル</summary>
         private const string DB_EXIST = "AbTestTabSummaryExist.db";
-        /// <summary>DB ファイル</summary>
+        /// <summary>DBファイル</summary>
         private const string DB_EMPTY = "AbTestTabSummaryEmpty.db";
         /// <summary>タブインデックス</summary>
         private const int TAB_IDX = 1;
@@ -47,7 +47,6 @@
                 sw.WriteLine(ToCSV(dtNow, "name", TYPE.EARN, "150000"));
                 sw.WriteLine(ToCSV(dtNow, "name", TYPE.PRVI,  "20000"));
                 sw.WriteLine(ToCSV(dtNow, "name", TYPE.PRVO,  "10000"));
-
 
                 var dtPrevYear1 = DateTime.Now.AddYears(-1).ToString(FMT.DATE);
                 sw.WriteLine(ToCSV(dtPrevYear1, "name", TYPE.FOOD,  "10100"));
@@ -991,7 +990,7 @@
                 //フォームタイトル
                 Assert.AreEqual(type, form.Text);
 
-                // 閉じる
+                //閉じる
                 form.Close();
             };
 
@@ -1027,7 +1026,7 @@
                 //フォームタイトル
                 Assert.AreEqual(type, form.Text);
 
-                // 閉じる
+                //閉じる
                 form.Close();
             };
 

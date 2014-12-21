@@ -12,7 +12,7 @@
     using FMT = Abook.AbConstants.FMT;
 
     /// <summary>
-    /// DB ファイル管理テスト
+    /// DBファイル管理テスト
     /// </summary>
     [TestFixture]
     public class AbTestDBManager
@@ -118,8 +118,8 @@
         }
 
         /// <summary>
-        /// DB ファイル読み込み
-        /// 引数:ファイル名が NULL
+        /// DBファイル読み込み
+        /// 引数:ファイル名がNULL
         /// </summary>
         [Test]
         public void LoadWithNullFile()
@@ -132,7 +132,7 @@
         }
 
         /// <summary>
-        /// DB ファイル読み込み
+        /// DBファイル読み込み
         /// 引数:ファイル名が空文字列
         /// </summary>
         [Test]
@@ -146,7 +146,7 @@
         }
 
         /// <summary>
-        /// DB ファイル読み込み
+        /// DBファイル読み込み
         /// 引数:ファイル名が存在しない
         /// </summary>
         [Test]
@@ -160,8 +160,8 @@
         }
 
         /// <summary>
-        /// DB ファイル読み込み
-        /// CSV のフィールド数が少ない
+        /// DBファイル読み込み
+        /// CSVのフィールド数が少ない
         /// </summary>
         [Test]
         public void LoadWithLessCSVFields()
@@ -174,8 +174,8 @@
         }
 
         /// <summary>
-        /// DB ファイル読み込み
-        /// CSV のフィールド数が多い
+        /// DBファイル読み込み
+        /// CSVのフィールド数が多い
         /// </summary>
         [Test]
         public void LoadWithMoreCSVFields()
@@ -188,7 +188,7 @@
         }
 
         /// <summary>
-        /// DB ファイル読み込み
+        /// DBファイル読み込み
         /// 読み込むデータが不正
         /// </summary>
         [Test]
@@ -202,7 +202,7 @@
         }
 
         /// <summary>
-        /// DB ファイル読み込み
+        /// DBファイル読み込み
         /// 空ファイルから読み込み
         /// </summary>
         [Test]
@@ -214,8 +214,8 @@
         }
 
         /// <summary>
-        /// DataGridView から読み込み
-        /// 引数:DataGridView が NULL
+        /// DataGridViewから読み込み
+        /// 引数:DataGridViewがNULL
         /// </summary>
         [Test]
         public void LoadWithNullDgv()
@@ -227,8 +227,8 @@
         }
 
         /// <summary>
-        /// DataGridView から読み込み
-        /// 引数:DataGridView が空
+        /// DataGridViewから読み込み
+        /// 引数:DataGridViewが空
         /// </summary>
         [Test]
         public void LoadWithEmptyDgv()
@@ -240,8 +240,8 @@
         }
 
         /// <summary>
-        /// DataGridView から読み込み
-        /// 引数:DataGridView のデータが不正
+        /// DataGridViewから読み込み
+        /// 引数:DataGridViewのデータが不正
         /// </summary>
         [Test]
         public void LoadWithInvalidDateFormatDgv()
@@ -261,7 +261,7 @@
         }
 
         /// <summary>
-        /// DB ファイル読み込み
+        /// DBファイル読み込み
         /// 読み込み件数のチェック
         /// </summary>
         [Test]
@@ -272,7 +272,7 @@
         }
 
         /// <summary>
-        /// DB ファイル読み込み
+        /// DBファイル読み込み
         /// 読み込み件数のチェック
         /// </summary>
         [Test]
@@ -283,7 +283,7 @@
         }
 
         /// <summary>
-        /// DB ファイル読み込み
+        /// DBファイル読み込み
         /// </summary>
         [Test]
         public void LoadFromFile()
@@ -300,7 +300,7 @@
         }
 
         /// <summary>
-        /// DataGridView から読み込み
+        /// DataGridViewから読み込み
         /// </summary>
         [Test]
         public void LoadFromDgv()
@@ -317,8 +317,8 @@
         }
 
         /// <summary>
-        /// DB ファイル書き出し
-        /// 引数:ファイル名が NULL
+        /// DBファイル書き出し
+        /// 引数:ファイル名がNULL
         /// </summary>
         [Test]
         public void StoreWithNullFile()
@@ -331,7 +331,7 @@
         }
 
         /// <summary>
-        /// DB ファイル書き出し
+        /// DBファイル書き出し
         /// 引数:ファイル名が空文字列
         /// </summary>
         [Test]
@@ -345,8 +345,8 @@
         }
 
         /// <summary>
-        /// DB ファイル書き出し
-        /// 引数:支出情報リストが NULL
+        /// DBファイル書き出し
+        /// 引数:支出情報リストがNULL
         /// </summary>
         [Test]
         public void StoreWithNullExpenses()
@@ -359,7 +359,7 @@
         }
 
         /// <summary>
-        /// DB ファイル書き出し
+        /// DBファイル書き出し
         /// 引数:支出情報リストが空リスト
         /// </summary>
         [Test]
@@ -373,7 +373,7 @@
         }
 
         /// <summary>
-        /// DB ファイル書き出し
+        /// DBファイル書き出し
         /// </summary>
         [Test]
         public void Store()

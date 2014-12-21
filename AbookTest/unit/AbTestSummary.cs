@@ -99,7 +99,7 @@
 
         /// <summary>
         /// コンストラクタ
-        /// 引数:支出情報リストが NULL
+        /// 引数:支出情報リストがNULL
         /// </summary>
         [Test]
         public void AbSummaryWithNullExpenses()
@@ -113,7 +113,7 @@
 
         /// <summary>
         /// 集計値取得
-        /// 引数:種別が NULL
+        /// 引数:種別がNULL
         /// </summary>
         [Test]
         public void GetCostByTypeWithNullType()
@@ -193,7 +193,7 @@
 
         /// <summary>
         /// 集計値取得
-        /// 引数:名称が NULL
+        /// 引数:名称がNULL
         /// </summary>
         [Test]
         public void GetCostByNameWithNullName()
@@ -368,7 +368,7 @@
 
         /// <summary>
         /// 集計値リスト生成
-        /// 引数:支出情報リストが NULL
+        /// 引数:支出情報リストがNULL
         /// </summary>
         [Test]
         public void GetSummariesWithNullExpenses()

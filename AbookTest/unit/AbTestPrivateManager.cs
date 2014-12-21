@@ -58,7 +58,7 @@
 
         /// <summary>
         /// コンストラクタ
-        /// 1 行目のテスト
+        /// 1行目のテスト
         /// </summary>
         [Test]
         public void AbPrivateManagerWith1st()
@@ -72,7 +72,7 @@
 
         /// <summary>
         /// コンストラクタ
-        /// 2 行目のテスト
+        /// 2行目のテスト
         /// </summary>
         [Test]
         public void AbPrivateManagerWith2nd()
@@ -86,7 +86,7 @@
 
         /// <summary>
         /// コンストラクタ
-        /// 3 行目のテスト
+        /// 3行目のテスト
         /// </summary>
         [Test]
         public void AbPrivateManagerWith3rd()
@@ -100,7 +100,7 @@
 
         /// <summary>
         /// コンストラクタ
-        /// 4 行目のテスト
+        /// 4行目のテスト
         /// </summary>
         [Test]
         public void AbPrivateManagerWith4th()
@@ -114,7 +114,7 @@
 
         /// <summary>
         /// コンストラクタ
-        /// 5 行目のテスト
+        /// 5行目のテスト
         /// </summary>
         [Test]
         public void AbPrivateManagerWith5th()
@@ -128,7 +128,7 @@
 
         /// <summary>
         /// コンストラクタ
-        /// 6 行目のテスト
+        /// 6行目のテスト
         /// </summary>
         [Test]
         public void AbPrivateManagerWith6th()
@@ -142,7 +142,7 @@
 
         /// <summary>
         /// コンストラクタ
-        /// 引数:支出情報リストが NULL
+        /// 引数:支出情報リストがNULL
         /// </summary>
         [Test]
         public void AbPrivateManagerWithNullExpenses()

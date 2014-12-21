@@ -30,7 +30,7 @@
 
         /// <summary>
         /// コンストラクタ
-        /// 引数:集計値リストが NULL
+        /// 引数:集計値リストがNULL
         /// </summary>
         [Test]
         public void AbGraphManagerWithNullSummaries()

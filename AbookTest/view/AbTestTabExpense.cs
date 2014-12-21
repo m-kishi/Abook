@@ -19,11 +19,11 @@
     /// </summary>
     public abstract class AbTestTabExpenseBase : AbTestFormBase
     {
-        /// <summary>DB ファイル</summary>
+        /// <summary>DBファイル</summary>
         protected const string DB_EXIST = "AbTestTabExpenseExist.db";
-        /// <summary>DB ファイル</summary>
+        /// <summary>DBファイル</summary>
         protected const string DB_EMPTY = "AbTestTabExpenseEmpty.db";
-        /// <summary>DB ファイル</summary>
+        /// <summary>DBファイル</summary>
         protected const string DB_ENTRY = "AbTestTabExpenseEntry.db";
         /// <summary>タブインデックス</summary>
         protected const int TAB_IDX = 0;
@@ -158,14 +158,14 @@
         }
 
         /// <summary>
-        /// DataGridView 操作テスト
+        /// DataGridView操作テスト
         /// </summary>
         [TestFixture]
         public class DataGridViewControl : AbTestTabExpenseBase
         {
             /// <summary>
             /// 入力行の追加
-            /// クリック: 1 回
+            /// クリック: 1回
             /// </summary>
             [Test]
             public void BtnAddRowClickWithOnce()
@@ -183,7 +183,7 @@
 
             /// <summary>
             /// 入力行の追加
-            /// クリック: 2 回
+            /// クリック: 2回
             /// </summary>
             [Test]
             public void BtnAddRowClickWithTwice()
@@ -223,11 +223,11 @@
             }
 
             /// <summary>
-            /// KeyDown テスト
+            /// KeyDownテスト
             /// キー: Ctrl + v
             /// 自動補完:補完候補あり
             /// </summary>
-            /// <remarks>Clipboard を使用するため、RequiresSTA の指定が必要</remarks>
+            /// <remarks>Clipboardを使用するため、RequiresSTAの指定が必要</remarks>
             [Test, RequiresSTA]
             public void KeyDownWithComplemented()
             {
@@ -246,11 +246,11 @@
             }
 
             /// <summary>
-            /// KeyDown テスト
+            /// KeyDownテスト
             /// キー: Ctrl + v
             /// 自動補完:補完候補なし
             /// </summary>
-            /// <remarks>Clipboard を使用するため、RequiresSTA の指定が必要</remarks>
+            /// <remarks>Clipboardを使用するため、RequiresSTAの指定が必要</remarks>
             [Test, RequiresSTA]
             public void KeyDownWithNotComplemented()
             {
@@ -269,10 +269,10 @@
             }
 
             /// <summary>
-            /// KeyDown テスト
+            /// KeyDownテスト
             /// キー: Ctrl + v 以外 => Ctrl + c
             /// </summary>
-            /// <remarks>Clipboard を使用するため、RequiresSTA の指定が必要</remarks>
+            /// <remarks>Clipboardを使用するため、RequiresSTAの指定が必要</remarks>
             [Test, RequiresSTA]
             public void KeyDownWithNotCtrlV()
             {
@@ -290,7 +290,7 @@
             }
 
             /// <summary>
-            /// CellEndEdit テスト
+            /// CellEndEditテスト
             /// セル:名称セル
             /// 自動補完:補完候補あり
             /// </summary>
@@ -310,7 +310,7 @@
             }
 
             /// <summary>
-            /// CellEndEdit テスト
+            /// CellEndEditテスト
             /// セル:名称セル
             /// 自動補完:補完候補なし
             /// </summary>
@@ -330,7 +330,7 @@
             }
 
             /// <summary>
-            /// CellEndEdit テスト
+            /// CellEndEditテスト
             /// セル:名称セル以外
             /// </summary>
             [Test]
@@ -374,7 +374,7 @@
                     var text = "正常に登録しました。";
                     Assert.AreEqual(text, tsMessageBox.Text);
 
-                    // OK ボタンクリック
+                    //OKボタンクリック
                     tsMessageBox.ClickOk();
                 };
 
@@ -387,7 +387,7 @@
 
             /// <summary>
             /// 登録ボタンクリック
-            /// 入力行 0 件のエラー
+            /// 入力行0件のエラー
             /// </summary>
             [Test]
             public void ErrorWithRowCountZero()
@@ -405,7 +405,7 @@
                     var text = "レコードが1件もありません。";
                     Assert.AreEqual(text, tsMessageBox.Text);
 
-                    // OK ボタンクリック
+                    //OKボタンクリック
                     tsMessageBox.ClickOk();
                 };
 
@@ -436,7 +436,7 @@
                     var text = "正常に登録しました。";
                     Assert.AreEqual(text, tsMessageBox.Text);
 
-                    // OK ボタンクリック
+                    //OKボタンクリック
                     tsMessageBox.ClickOk();
                 };
 
@@ -477,7 +477,7 @@
                     var text = string.Format(EX.DB_STORE, 2, EX.DATE_FORMAT);
                     Assert.AreEqual(text, tsMessageBox.Text);
 
-                    // OK ボタンクリック
+                    //OKボタンクリック
                     tsMessageBox.ClickOk();
 
                     //エラー行が選択される
@@ -511,7 +511,7 @@
                     var text = string.Format(EX.DB_STORE, 5, EX.COST_FORMAT);
                     Assert.AreEqual(text, tsMessageBox.Text);
 
-                    // OK ボタンクリック
+                    //OKボタンクリック
                     tsMessageBox.ClickOk();
 
                     //エラー行が選択される

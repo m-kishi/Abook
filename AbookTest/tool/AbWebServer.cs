@@ -11,10 +11,10 @@
     {
         /// <summary>URL</summary>
         private const string uriPrefix = "http://*:9999/";
-        /// <summary>成功用 URL</summary>
-        public const string URL_SUCCESS = "http://localhost:9999/SUCCESS";
-        /// <summary>失敗用 URL</summary>
-        public const string URL_FAILURE = "http://localhost:9999/FAILURE";
+        /// <summary>成功用URL</summary>
+        public  const string URL_SUCCESS = "http://localhost:9999/SUCCESS";
+        /// <summary>失敗用URL</summary>
+        public  const string URL_FAILURE = "http://localhost:9999/FAILURE";
 
         /// <summary>スレッド継続判定</summary>
         private static bool running;

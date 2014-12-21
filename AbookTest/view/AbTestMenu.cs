@@ -14,7 +14,7 @@
     [TestFixture]
     public class AbTestMenu : AbTestFormBase
     {
-        /// <summary>DB ファイル</summary>
+        /// <summary>DBファイル</summary>
         private const string DB = "AbTestMenu.db";
 
         /// <summary>
@@ -70,7 +70,7 @@
                 //テスト環境でアセンブリ情報の取得は不可
                 Assert.IsNull(System.Reflection.Assembly.GetEntryAssembly());
 
-                // OK ボタンクリック
+                //OKボタンクリック
                 (new ButtonTester("BtnOK", form)).Click();
             };
 
@@ -99,7 +99,7 @@
                 var text = "アップロードします。";
                 Assert.AreEqual(text, tsMessageBox.Text);
 
-                // OK ボタンクリック
+                //OKボタンクリック
                 tsMessageBox.ClickOk();
 
                 //アップロードサブフォームの表示テスト
@@ -123,7 +123,7 @@
                         var text3 = "アップロードに成功しました。";
                         Assert.AreEqual(text3, tsMessageBox3.Text);
 
-                        // OK ボタンクリック
+                        //OKボタンクリック
                         tsMessageBox3.ClickOk();
                     };
                 };
@@ -154,7 +154,7 @@
                 var text = "アップロードします。";
                 Assert.AreEqual(text, tsMessageBox.Text);
 
-                // OK ボタンクリック
+                //OKボタンクリック
                 tsMessageBox.ClickCancel();
             };
 
@@ -183,7 +183,7 @@
                 var text = "アップロードします。";
                 Assert.AreEqual(text, tsMessageBox.Text);
 
-                // OK ボタンクリック
+                //OKボタンクリック
                 tsMessageBox.ClickOk();
 
                 //アップロードサブフォームの表示テスト
@@ -220,11 +220,11 @@
                             var text4 = "アップロードに失敗しました。";
                             Assert.AreEqual(text4, tsMessageBox4.Text);
 
-                            // OK ボタンクリック
+                            //OKボタンクリック
                             tsMessageBox4.ClickOk();
                         };
 
-                        // OK ボタンクリック
+                        //OKボタンクリック
                         tsMessageBox3.ClickOk();
                     };
                 };

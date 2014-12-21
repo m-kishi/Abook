@@ -49,7 +49,7 @@
 
         /// <summary>
         /// コンストラクタ
-        /// 引数:集計値リストが NULL
+        /// 引数:集計値リストがNULL
         /// </summary>
         [Test]
         public void AbExpenseManagerWithNullSummaries()
@@ -236,7 +236,7 @@
 
         /// <summary>
         /// 集計値取得
-        /// 引数:種別が NULL
+        /// 引数:種別がNULL
         /// </summary>
         [Test]
         public void GetCostWithNullType()

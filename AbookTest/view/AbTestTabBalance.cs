@@ -16,9 +16,9 @@
     [TestFixture]
     public class AbTestTabBalance : AbTestFormBase
     {
-        /// <summary>DB ファイル</summary>
+        /// <summary>DBファイル</summary>
         private const string DB_EXIST = "AbTestTabBalanceExist.db";
-        /// <summary>DB ファイル</summary>
+        /// <summary>DBファイル</summary>
         private const string DB_EMPTY = "AbTestTabBalanceEmpty.db";
         /// <summary>タブインデックス</summary>
         private const int TAB_IDX = 3;
