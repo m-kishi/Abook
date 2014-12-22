@@ -5,7 +5,7 @@
     using System.Windows.Forms;
     using NUnit.Framework;
     using NUnit.Extensions.Forms;
-    using EX = Abook.AbException.EX;
+    using EX  = Abook.AbException.EX;
     using CSV = Abook.AbConstants.CSV;
 
     /// <summary>
