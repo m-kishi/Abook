@@ -1,8 +1,8 @@
 ﻿namespace Abook
 {
     using System;
-    using EX = Abook.AbException.EX;
-    using FMT = Abook.AbConstants.FMT;
+    using EX   = Abook.AbException.EX;
+    using FMT  = Abook.AbConstants.FMT;
     using TYPE = Abook.AbConstants.TYPE;
 
     /// <summary>
