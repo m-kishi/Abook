@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using EX = Abook.AbException.EX;
+    using CHK = Abook.AbUtilities.CHK;
 
     /// <summary>
     /// 自動補完クラス
@@ -19,12 +19,9 @@
         /// <param name="expenses">支出情報リスト</param>
         public AbComplete(List<AbExpense> expenses)
         {
-            dicComp = new Dictionary<string, string>();
-            if (expenses == null)
-            {
-                AbException.Throw(EX.EXPENSES_NULL);
-            }
+            CHK.ChkExpNull(expenses);
 
+            dicComp = new Dictionary<string, string>();
             foreach (var name in expenses.GroupBy(exp => exp.Name).Select(gObj => gObj.Key))
             {
                 var max = 0;

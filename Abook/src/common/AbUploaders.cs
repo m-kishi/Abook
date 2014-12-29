@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using EX  = Abook.AbException.EX;
+    using CHK = Abook.AbUtilities.CHK;
     using UPD = Abook.AbConstants.UPD;
 
     /// <summary>
@@ -18,9 +19,9 @@
         /// <returns>サーバからの応答</returns>
         public static string SendUploadRequest(string url, string file)
         {
-            if (string.IsNullOrEmpty(url )) { AbException.Throw(EX.URL_NULL); }
-            if (string.IsNullOrEmpty(file)) { AbException.Throw(EX.UPD_NULL); }
-            if (!System.IO.File.Exists(file)) { AbException.Throw(EX.UPD_DOES_NOT_EXIST); }
+            CHK.ChkUrlNull(url);
+            CHK.ChkUpdNull(file);
+            CHK.ChkUpdExist(file);
 
             string result = string.Empty;
             using (var wc = new System.Net.WebClient())
@@ -55,8 +56,8 @@
         /// <param name="expenses">支出情報リスト</param>
         public static void Prepare(string file, List<AbExpense> expenses)
         {
-            if (string.IsNullOrEmpty(file)) { AbException.Throw(EX.UPD_NULL); }
-            if (expenses == null || expenses.Count <= 0) { AbException.Throw(EX.UPD_RECORD_NOTHING); }
+            CHK.ChkUpdNull(file);
+            CHK.ChkUpdCount(expenses);
 
             try
             {

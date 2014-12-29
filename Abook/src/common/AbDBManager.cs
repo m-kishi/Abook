@@ -6,6 +6,7 @@
     using System.Windows.Forms;
     using Microsoft.VisualBasic.FileIO;
     using EX  = Abook.AbException.EX;
+    using CHK = Abook.AbUtilities.CHK;
     using COL = Abook.AbConstants.COL;
     using CSV = Abook.AbConstants.CSV;
 
@@ -21,10 +22,7 @@
         /// <returns>支出情報リスト</returns>
         public static List<AbExpense> Load(string file)
         {
-            if (string.IsNullOrEmpty(file))
-            {
-                AbException.Throw(EX.DB_NULL);
-            }
+            CHK.ChkCsvNull(file);
 
             if (System.IO.File.Exists(file) == false)
             {
@@ -113,15 +111,8 @@
         /// <param name="expenses">支出情報リスト</param>
         public static void Store(string file, List<AbExpense> expenses)
         {
-            if (string.IsNullOrEmpty(file))
-            {
-                AbException.Throw(EX.DB_NULL);
-            }
-
-            if (expenses == null || expenses.Count <= 0)
-            {
-                AbException.Throw(EX.DB_RECORD_NOTHING);
-            }
+            CHK.ChkCsvNull(file);
+            CHK.ChkExpCount(expenses);
 
             using (var sw = new System.IO.StreamWriter(file, false, CSV.ENCODING))
             {

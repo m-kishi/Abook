@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using EX   = Abook.AbException.EX;
+    using CHK  = Abook.AbUtilities.CHK;
     using TYPE = Abook.AbConstants.TYPE;
 
     /// <summary>
@@ -20,12 +20,9 @@
         /// <param name="expenses">支出情報リスト</param>
         public AbPrivateManager(List<AbExpense> expenses)
         {
-            abPrivates = new List<AbPrivate>();
-            if (expenses == null)
-            {
-                AbException.Throw(EX.EXPENSES_NULL);
-            }
+            CHK.ChkExpNull(expenses);
 
+            abPrivates = new List<AbPrivate>();
             var balance = decimal.Zero;
             var privates = expenses.Where(exp => TYPE.PRIVATE.Contains(exp.Type));
             foreach (var exp in privates)

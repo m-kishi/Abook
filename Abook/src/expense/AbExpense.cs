@@ -3,8 +3,8 @@
     using System;
     using System.Linq;
     using EX   = Abook.AbException.EX;
+    using CHK  = Abook.AbUtilities.CHK;
     using FMT  = Abook.AbConstants.FMT;
-    using TYPE = Abook.AbConstants.TYPE;
     using UTIL = Abook.AbUtilities;
 
     /// <summary>
@@ -43,10 +43,8 @@
         /// <returns>日付</returns>
         private DateTime ParseDate(string date)
         {
-            if (string.IsNullOrEmpty(date))
-            {
-                AbException.Throw(EX.DATE_NULL);
-            }
+            CHK.ChkDateNull(date);
+
             var dt = DateTime.MinValue;
             var st = System.Globalization.DateTimeStyles.None;
             if (!DateTime.TryParseExact(date, FMT.DATE, null, st, out dt))
@@ -63,10 +61,7 @@
         /// <returns>名称</returns>
         private string ParseName(string name)
         {
-            if (string.IsNullOrEmpty(name))
-            {
-                AbException.Throw(EX.NAME_NULL);
-            }
+            CHK.ChkNameNull(name);
             return name;
         }
 
@@ -77,14 +72,8 @@
         /// <returns>種別</returns>
         private string ParseType(string type)
         {
-            if (string.IsNullOrEmpty(type))
-            {
-                AbException.Throw(EX.TYPE_NULL);
-            }
-            if (!TYPE.EXPENCE.Contains(type))
-            {
-                AbException.Throw(EX.TYPE_WRONG);
-            }
+            CHK.ChkTypeNull(type);
+            CHK.ChkTypeWrong(type);
             return type;
         }
 
@@ -95,10 +84,8 @@
         /// <returns>金額</returns>
         private decimal ParseCost(string cost)
         {
-            if (string.IsNullOrEmpty(cost))
-            {
-                AbException.Throw(EX.COST_NULL);
-            }
+            CHK.ChkCostNull(cost);
+
             var ct = decimal.Zero;
             try
             {

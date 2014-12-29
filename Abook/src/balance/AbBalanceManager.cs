@@ -3,8 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using EX   = Abook.AbException.EX;
-    using FMT  = Abook.AbConstants.FMT;
+    using CHK  = Abook.AbUtilities.CHK;
     using TYPE = Abook.AbConstants.TYPE;
 
     /// <summary>
@@ -21,10 +20,7 @@
         /// <param name="abExpenses">支出情報リスト</param>
         public AbBalanceManager(List<AbExpense> expenses)
         {
-            if (expenses == null)
-            {
-                AbException.Throw(EX.EXPENSES_NULL);
-            }
+            CHK.ChkExpNull(expenses);
 
             abBalances = expenses.Where(exp =>
                 !TYPE.PRIVATE.Contains(exp.Type)

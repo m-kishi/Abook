@@ -3,8 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using EX  = Abook.AbException.EX;
     using FMT = Abook.AbConstants.FMT;
+    using CHK = Abook.AbUtilities.CHK;
 
     /// <summary>
     /// 支出情報管理クラス
@@ -23,10 +23,8 @@
         /// <param name="summaries">集計値リスト</param>
         public AbExpenseManager(DateTime date, List<AbSummary> summaries)
         {
-            if (summaries == null)
-            {
-                AbException.Throw(EX.SUMMARIES_NULL);
-            }
+            CHK.ChkSumNull(summaries);
+
             this.abSummaries = summaries;
             SetCurrentSummary(date);
         }

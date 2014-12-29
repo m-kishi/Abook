@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Drawing;
     using System.Linq;
-    using EX    = Abook.AbException.EX;
+    using CHK   = Abook.AbUtilities.CHK;
     using FMT   = Abook.AbConstants.FMT;
     using NAME  = Abook.AbConstants.NAME;
     using TYPE  = Abook.AbConstants.TYPE;
@@ -31,11 +31,9 @@
         /// <param name="summaries">集計値リスト</param>
         public AbGraphicManager(DateTime date, List<AbSummary> summaries)
         {
+            CHK.ChkSumNull(summaries);
+
             this.dtNow = date;
-            if (summaries == null)
-            {
-                AbException.Throw(EX.SUMMARIES_NULL);
-            }
             this.abSummaries = summaries;
 
             SetGraphLine();

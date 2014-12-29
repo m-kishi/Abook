@@ -5,7 +5,7 @@
     using System.Drawing;
     using System.Linq;
     using System.Windows.Forms;
-    using EX  = Abook.AbException.EX;
+    using CHK = Abook.AbUtilities.CHK;
     using COL = Abook.AbConstants.COL;
     using FMT = Abook.AbConstants.FMT;
 
@@ -66,7 +66,7 @@
         /// <returns>対象の支出情報リスト</returns>
         private List<AbExpense> FilterByDateType(List<AbExpense> expenses)
         {
-            if (expenses == null) { AbException.Throw(EX.EXPENSES_NULL); }
+            CHK.ChkExpNull(expenses);
             return expenses.Where(exp =>
                    exp.Date.Year  == DtCurrent.Year
                 && exp.Date.Month == DtCurrent.Month
