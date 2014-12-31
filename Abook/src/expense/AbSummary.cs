@@ -87,7 +87,7 @@
         /// <returns>集計値</returns>
         public decimal GetCostByType(string type)
         {
-            if (string.IsNullOrEmpty(type)) { return decimal.Zero; }
+            if (string.IsNullOrEmpty(type)) return decimal.Zero;
             return dicSumByType.ContainsKey(type) ? dicSumByType[type] : decimal.Zero;
         }
 
@@ -98,7 +98,7 @@
         /// <returns>集計値</returns>
         public decimal GetCostByName(string name)
         {
-            if (string.IsNullOrEmpty(name)) { return decimal.Zero; }
+            if (string.IsNullOrEmpty(name)) return decimal.Zero;
             return dicSumByName.ContainsKey(name) ? dicSumByName[name] : decimal.Zero;
         }
     }

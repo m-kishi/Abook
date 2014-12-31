@@ -51,7 +51,7 @@
         /// <returns>種別</returns>
         public string GetType(string name)
         {
-            if (string.IsNullOrEmpty(name)) { return string.Empty; }
+            if (string.IsNullOrEmpty(name)) return string.Empty;
             return dicComp.ContainsKey(name) ? dicComp[name] : string.Empty;
         }
     }

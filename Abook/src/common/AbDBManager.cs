@@ -50,8 +50,8 @@
                         line++;
 
                         var fields = tp.ReadFields();
-                        if (fields.Length < CSV.FIELD) { AbException.Throw(EX.DB_FIELD_LESS); }
-                        if (fields.Length > CSV.FIELD) { AbException.Throw(EX.DB_FIELD_MORE); }
+                        if (fields.Length < CSV.FIELD) AbException.Throw(EX.DB_FIELD_LESS);
+                        if (fields.Length > CSV.FIELD) AbException.Throw(EX.DB_FIELD_MORE);
                         expenses.Add(new AbExpense(fields[0], fields[1], fields[2], fields[3]));
                     }
                 }
