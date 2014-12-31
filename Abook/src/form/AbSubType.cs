@@ -8,6 +8,7 @@
     using CHK = Abook.AbUtilities.CHK;
     using COL = Abook.AbConstants.COL;
     using FMT = Abook.AbConstants.FMT;
+    using MSG = Abook.AbUtilities.MSG;
 
     /// <summary>
     /// 種別明細サブフォーム
@@ -49,12 +50,7 @@
             }
             catch (AbException ex)
             {
-                MessageBox.Show(
-                    ex.Message,
-                    "エラー",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error
-                );
+                MSG.Error(ex.Message);
                 this.Close();
             }
         }

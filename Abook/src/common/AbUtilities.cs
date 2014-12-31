@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Windows.Forms;
     using EX   = Abook.AbException.EX;
     using FMT  = Abook.AbConstants.FMT;
     using TYPE = Abook.AbConstants.TYPE;
@@ -221,6 +222,91 @@
             public static void ChkUpdCount(List<AbExpense> exp)
             {
                 if (exp == null || exp.Count <= 0) AbException.Throw(EX.UPD_RECORD_NOTHING);
+            }
+        }
+
+        /// <summary>
+        /// メッセージボックス
+        /// </summary>
+        public static class MSG
+        {
+            /// <summary>
+            /// OKダイアログ
+            /// </summary>
+            /// <param name="title">タイトル</param>
+            /// <param name="message">メッセージ</param>
+            /// <returns>ダイアログリザルト</returns>
+            public static DialogResult OK(string title, string message)
+            {
+                return MessageBox.Show(
+                    message,
+                    title,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Asterisk
+                );
+            }
+
+            /// <summary>
+            /// エラーダイアログ
+            /// </summary>
+            /// <param name="message">メッセージ</param>
+            /// <returns>ダイアログリザルト</returns>
+            public static DialogResult Error(string message)
+            {
+                return MessageBox.Show(
+                    message,
+                    "エラー",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+            }
+
+            /// <summary>
+            /// エラーダイアログ
+            /// </summary>
+            /// <param name="title">タイトル</param>
+            /// <param name="message">メッセージ</param>
+            /// <returns>ダイアログリザルト</returns>
+            public static DialogResult Error(string title, string message)
+            {
+                return MessageBox.Show(
+                    message,
+                    title,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+            }
+
+            /// <summary>
+            /// 警告ダイアログ
+            /// </summary>
+            /// <param name="title">タイトル</param>
+            /// <param name="message">メッセージ</param>
+            /// <returns>ダイアログリザルト</returns>
+            public static DialogResult Warning(string title, string message)
+            {
+                return MessageBox.Show(
+                    message,
+                    title,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+            }
+
+            /// <summary>
+            /// 確認ダイアログ
+            /// </summary>
+            /// <param name="title">タイトル</param>
+            /// <param name="message">メッセージ</param>
+            /// <returns>ダイアログリザルト</returns>
+            public static DialogResult Confirm(string title, string message)
+            {
+                return MessageBox.Show(
+                    message,
+                    title,
+                    MessageBoxButtons.OKCancel,
+                    MessageBoxIcon.Question
+                );
             }
         }
     }

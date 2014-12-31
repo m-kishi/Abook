@@ -398,7 +398,7 @@
                     var tsMessageBox = new MessageBoxTester(hWnd);
 
                     //タイトル
-                    var title = "エラー";
+                    var title = "警告";
                     Assert.AreEqual(title, tsMessageBox.Title);
 
                     //テキスト

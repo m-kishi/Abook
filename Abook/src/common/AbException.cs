@@ -3,6 +3,7 @@
     using System;
     using System.Threading;
     using System.Windows.Forms;
+    using MSG = Abook.AbUtilities.MSG;
 
     /// <summary>
     /// 例外クラス
@@ -34,12 +35,7 @@
         {
             try
             {
-                MessageBox.Show(
-                    e.Exception.Message,
-                    "エラー",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error
-                );
+                MSG.Error(e.Exception.Message);
             }
             finally
             {

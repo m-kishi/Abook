@@ -3,6 +3,7 @@
     using System;
     using System.ComponentModel;
     using System.Windows.Forms;
+    using MSG = Abook.AbUtilities.MSG;
 
     /// <summary>
     /// アップロードサブフォーム
@@ -68,12 +69,7 @@
             IsRunning = false;
             if (e.Error != null)
             {
-                MessageBox.Show(
-                    e.Error.Message,
-                    "エラー",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error
-                );
+                MSG.Error(e.Error.Message);
                 DialogResult = DialogResult.Abort;
             }
             else if (e.Cancelled)

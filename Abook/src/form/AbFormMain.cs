@@ -6,6 +6,7 @@
     using System.Threading;
     using System.Windows.Forms;
     using CSV = Abook.AbConstants.CSV;
+    using MSG = Abook.AbUtilities.MSG;
     using UPD = Abook.AbConstants.UPD;
 
     /// <summary>
@@ -56,12 +57,7 @@
             }
             catch (Exception ex)
             {
-                MessageBox.Show(
-                    ex.Message,
-                    "エラー",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error
-                );
+                MSG.Error(ex.Message);
                 Application.Exit();
             }
         }

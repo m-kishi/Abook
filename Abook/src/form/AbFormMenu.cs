@@ -5,6 +5,7 @@
     using System.Drawing;
     using System.Threading;
     using System.Windows.Forms;
+    using MSG = Abook.AbUtilities.MSG;
     using UPD = Abook.AbConstants.UPD;
 
     /// <summary>
@@ -33,33 +34,18 @@
         /// </summary>
         private void MenuUpload_Click(object sender, EventArgs e)
         {
-            var dialogResult = MessageBox.Show(
-                "アップロードします。",
-                "確認",
-                MessageBoxButtons.OKCancel,
-                MessageBoxIcon.Question
-            );
+            var dialogResult = MSG.Confirm("確認", "アップロードします。");
             if (dialogResult == DialogResult.OK)
             {
                 var formUpload = new AbSubUpload(DB, UPD_FILE, UPD_URL);
                 var result = formUpload.ShowDialog(this);
                 if (result == DialogResult.OK)
                 {
-                    MessageBox.Show(
-                        "アップロードに成功しました。",
-                        "アップロード完了",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Asterisk
-                    );
+                    MSG.OK("アップロード完了", "アップロードに成功しました。");
                 }
                 else if (result != DialogResult.Cancel)
                 {
-                    MessageBox.Show(
-                        "アップロードに失敗しました。",
-                        "アップロード失敗",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error
-                    );
+                    MSG.Error("アップロード失敗", "アップロードに失敗しました。");
                 }
                 formUpload.Dispose();
             }
