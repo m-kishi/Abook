@@ -45,7 +45,7 @@
             this.Text = Type;
             try
             {
-                var expenses = AbDBManager.Load(MainForm.DB);
+                var expenses = AbDBManager.Load(MainForm.CSV_FILE);
                 SetDgvExpense(FilterByDateType(expenses));
             }
             catch (AbException ex)

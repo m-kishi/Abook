@@ -100,7 +100,7 @@
             /// <param name="csv">CSVファイル名</param>
             public static void ChkCsvNull(string csv)
             {
-                if (string.IsNullOrEmpty(csv)) AbException.Throw(EX.DB_NULL);
+                if (string.IsNullOrEmpty(csv)) AbException.Throw(EX.CSV_NULL);
             }
 
             /// <summary>
@@ -127,7 +127,7 @@
             /// <param name="exp">支出情報リスト</param>
             public static void ChkExpCount(List<AbExpense> exp)
             {
-                if (exp == null || exp.Count <= 0) AbException.Throw(EX.DB_RECORD_NOTHING);
+                if (exp == null || exp.Count <= 0) AbException.Throw(EX.CSV_RECORD_NOTHING);
             }
 
             /// <summary>

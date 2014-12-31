@@ -474,7 +474,7 @@
                     Assert.AreEqual(title, tsMessageBox.Title);
 
                     //テキスト
-                    var text = string.Format(EX.DB_STORE, 2, EX.DATE_FORMAT);
+                    var text = string.Format(EX.CSV_STORE, 2, EX.DATE_FORMAT);
                     Assert.AreEqual(text, tsMessageBox.Text);
 
                     //OKボタンクリック
@@ -508,7 +508,7 @@
                     Assert.AreEqual(title, tsMessageBox.Title);
 
                     //テキスト
-                    var text = string.Format(EX.DB_STORE, 5, EX.COST_FORMAT);
+                    var text = string.Format(EX.CSV_STORE, 5, EX.COST_FORMAT);
                     Assert.AreEqual(text, tsMessageBox.Text);
 
                     //OKボタンクリック

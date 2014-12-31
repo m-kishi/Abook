@@ -128,7 +128,7 @@
             var ex = Assert.Throws<AbException>(() =>
                 { AbDBManager.Load(argInFile); }
             );
-            Assert.AreEqual(EX.DB_NULL, ex.Message);
+            Assert.AreEqual(EX.CSV_NULL, ex.Message);
         }
 
         /// <summary>
@@ -142,7 +142,7 @@
             var ex = Assert.Throws<AbException>(() =>
                 { AbDBManager.Load(argInFile); }
             );
-            Assert.AreEqual(EX.DB_NULL, ex.Message);
+            Assert.AreEqual(EX.CSV_NULL, ex.Message);
         }
 
         /// <summary>
@@ -170,7 +170,7 @@
             var ex = Assert.Throws<AbException>(() =>
                 { AbDBManager.Load(argInFile); }
             );
-            Assert.AreEqual(string.Format(EX.DB_LOAD, 1, EX.DB_FIELD_LESS), ex.Message);
+            Assert.AreEqual(string.Format(EX.CSV_LOAD, 1, EX.CSV_FIELD_LESS), ex.Message);
         }
 
         /// <summary>
@@ -184,7 +184,7 @@
             var ex = Assert.Throws<AbException>(() =>
                 { AbDBManager.Load(argInFile); }
             );
-            Assert.AreEqual(string.Format(EX.DB_LOAD, 1, EX.DB_FIELD_MORE), ex.Message);
+            Assert.AreEqual(string.Format(EX.CSV_LOAD, 1, EX.CSV_FIELD_MORE), ex.Message);
         }
 
         /// <summary>
@@ -198,7 +198,7 @@
             var ex = Assert.Throws<AbException>(() =>
                 { AbDBManager.Load(argInFile); }
             );
-            Assert.AreEqual(string.Format(EX.DB_LOAD, 1, EX.DATE_FORMAT), ex.Message);
+            Assert.AreEqual(string.Format(EX.CSV_LOAD, 1, EX.DATE_FORMAT), ex.Message);
         }
 
         /// <summary>
@@ -257,7 +257,7 @@
                 { AbDBManager.Load(argDgv, out argLine); }
             );
             Assert.AreEqual(argDgv.Rows.Count, argLine);
-            Assert.AreEqual(string.Format(EX.DB_STORE, argLine, EX.DATE_FORMAT), ex.Message);
+            Assert.AreEqual(string.Format(EX.CSV_STORE, argLine, EX.DATE_FORMAT), ex.Message);
         }
 
         /// <summary>
@@ -327,7 +327,7 @@
             var ex = Assert.Throws<AbException>(() =>
                 { AbDBManager.Store(argOutFile, argExpenses); }
             );
-            Assert.AreEqual(EX.DB_NULL, ex.Message);
+            Assert.AreEqual(EX.CSV_NULL, ex.Message);
         }
 
         /// <summary>
@@ -341,7 +341,7 @@
             var ex = Assert.Throws<AbException>(() =>
                 { AbDBManager.Store(argOutFile, argExpenses); }
             );
-            Assert.AreEqual(EX.DB_NULL, ex.Message);
+            Assert.AreEqual(EX.CSV_NULL, ex.Message);
         }
 
         /// <summary>
@@ -355,7 +355,7 @@
             var ex = Assert.Throws<AbException>(() =>
                 { AbDBManager.Store(argOutFile, argExpenses); }
             );
-            Assert.AreEqual(EX.DB_RECORD_NOTHING, ex.Message);
+            Assert.AreEqual(EX.CSV_RECORD_NOTHING, ex.Message);
         }
 
         /// <summary>
@@ -369,7 +369,7 @@
             var ex = Assert.Throws<AbException>(() =>
                 { AbDBManager.Store(argOutFile, argExpenses); }
             );
-            Assert.AreEqual(EX.DB_RECORD_NOTHING, ex.Message);
+            Assert.AreEqual(EX.CSV_RECORD_NOTHING, ex.Message);
         }
 
         /// <summary>

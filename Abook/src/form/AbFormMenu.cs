@@ -37,7 +37,7 @@
             var dialogResult = MSG.Confirm("確認", "アップロードします。");
             if (dialogResult == DialogResult.OK)
             {
-                var formUpload = new AbSubUpload(DB, UPD_FILE, UPD_URL);
+                var formUpload = new AbSubUpload(CSV_FILE, UPD_FILE, UPD_URL);
                 var result = formUpload.ShowDialog(this);
                 if (result == DialogResult.OK)
                 {

@@ -16,9 +16,9 @@
     public static class AbDBManager
     {
         /// <summary>
-        /// DBファイル読み込み
+        /// CSVファイル読み込み
         /// </summary>
-        /// <param name="file">DBファイル名</param>
+        /// <param name="file">CSVファイル名</param>
         /// <returns>支出情報リスト</returns>
         public static List<AbExpense> Load(string file)
         {
@@ -32,7 +32,7 @@
                 }
                 catch
                 {
-                    AbException.Throw(EX.DB_CREATE);
+                    AbException.Throw(EX.CSV_CREATE);
                 }
             }
 
@@ -50,14 +50,14 @@
                         line++;
 
                         var fields = tp.ReadFields();
-                        if (fields.Length < CSV.FIELD) AbException.Throw(EX.DB_FIELD_LESS);
-                        if (fields.Length > CSV.FIELD) AbException.Throw(EX.DB_FIELD_MORE);
+                        if (fields.Length < CSV.FIELD) AbException.Throw(EX.CSV_FIELD_LESS);
+                        if (fields.Length > CSV.FIELD) AbException.Throw(EX.CSV_FIELD_MORE);
                         expenses.Add(new AbExpense(fields[0], fields[1], fields[2], fields[3]));
                     }
                 }
                 catch (AbException ex)
                 {
-                    var message = string.Format(EX.DB_LOAD, line, ex.Message);
+                    var message = string.Format(EX.CSV_LOAD, line, ex.Message);
                     AbException.Throw(message);
                 }
             }
@@ -97,7 +97,7 @@
                 }
                 catch (AbException ex)
                 {
-                    var message = string.Format(EX.DB_LOAD, errLine, ex.Message);
+                    var message = string.Format(EX.CSV_LOAD, errLine, ex.Message);
                     AbException.Throw(message);
                 }
             }
@@ -105,9 +105,9 @@
         }
 
         /// <summary>
-        /// DBファイル書き出し
+        /// CSVファイル書き出し
         /// </summary>
-        /// <param name="file">DBファイル名</param>
+        /// <param name="file">CSVファイル名</param>
         /// <param name="expenses">支出情報リスト</param>
         public static void Store(string file, List<AbExpense> expenses)
         {
@@ -129,7 +129,7 @@
                 }
                 catch (Exception ex)
                 {
-                    var message = string.Format(EX.DB_STORE, line, ex.Message);
+                    var message = string.Format(EX.CSV_STORE, line, ex.Message);
                     AbException.Throw(message);
                 }
             }

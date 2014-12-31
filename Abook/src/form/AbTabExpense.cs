@@ -103,7 +103,7 @@
         }
 
         /// <summary>
-        /// DBファイルへ書き出し
+        /// CSVファイルへ書き出し
         /// </summary>
         private void BtnEntry_Click(object sender, EventArgs e)
         {
@@ -118,7 +118,7 @@
             {
                 var expenses = AbDBManager.Load(DgvExpense, out errLine);
 
-                AbDBManager.Store(DB, expenses);
+                AbDBManager.Store(CSV_FILE, expenses);
 
                 InitFormMain(expenses);
 

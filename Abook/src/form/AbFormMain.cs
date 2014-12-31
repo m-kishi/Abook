@@ -14,8 +14,8 @@
     /// </summary>
     public partial class AbFormMain : Form
     {
-        /// <summary>DBファイル</summary>
-        public string DB { get; private set; }
+        /// <summary>CSVファイル</summary>
+        public string CSV_FILE { get; private set; }
 
         /// <summary>
         /// アプリケーションメイン
@@ -30,7 +30,7 @@
             Application.SetCompatibleTextRenderingDefault(false);
 
             AbFormMain form = null;
-            form = new AbFormMain(CSV.DB);
+            form = new AbFormMain(CSV.FILE);
             form.SetUploadParameters(UPD.FILE, UPD.URL);
             Application.Run(form);
         }
@@ -38,10 +38,10 @@
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        /// <param name="DB">DBファイル</param>
-        public AbFormMain(string DB)
+        /// <param name="CSV">CSVファイル</param>
+        public AbFormMain(string CSV)
         {
-            this.DB = DB;
+            this.CSV_FILE = CSV;
             InitializeComponent();
         }
 
@@ -53,7 +53,7 @@
             Icon = SystemIcons.Application;
             try
             {
-                InitFormMain(AbDBManager.Load(DB));
+                InitFormMain(AbDBManager.Load(CSV_FILE));
             }
             catch (Exception ex)
             {

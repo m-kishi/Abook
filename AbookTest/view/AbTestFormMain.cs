@@ -72,7 +72,7 @@
                 Assert.AreEqual(title, tsMessageBox.Title);
 
                 //テキストテスト
-                var text = string.Format(EX.DB_LOAD, 2, EX.DATE_FORMAT);
+                var text = string.Format(EX.CSV_LOAD, 2, EX.DATE_FORMAT);
                 Assert.AreEqual(text, tsMessageBox.Text);
 
                 //OKボタンクリック

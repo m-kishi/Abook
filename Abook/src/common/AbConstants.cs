@@ -48,8 +48,8 @@
         /// <summary>CSV</summary>
         public static class CSV
         {
-            /// <summary>DBファイル</summary>
-            public const string DB = "Abook.db";
+            /// <summary>CSVファイル</summary>
+            public const string FILE = "Abook.db";
             /// <summary>区切り文字</summary>
             public const string DELIMITER = ",";
             /// <summary>フィールド数</summary>

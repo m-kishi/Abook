@@ -10,8 +10,8 @@
     /// </summary>
     public partial class AbSubUpload : Form
     {
-        /// <summary>DBファイル</summary>
-        private string DB { get; set; }
+        /// <summary>CSVファイル</summary>
+        private string CSV { get; set; }
         /// <summary>UPDファイル</summary>
         private string UPD { get; set; }
         /// <summary>リクエストURL</summary>
@@ -24,12 +24,12 @@
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        /// <param name="DB">DBファイル</param>
+        /// <param name="CSV">CSVファイル</param>
         /// <param name="UPD">UPDファイル</param>
         /// <param name="URL">リクエストURL</param>
-        public AbSubUpload(string DB, string UPD, string URL)
+        public AbSubUpload(string CSV, string UPD, string URL)
         {
-            this.DB  = DB;
+            this.CSV = CSV;
             this.UPD = UPD;
             this.URL = URL;
             InitializeComponent();
@@ -57,7 +57,7 @@
         /// </summary>
         private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            AbUploaders.Prepare(UPD, AbDBManager.Load(DB));
+            AbUploaders.Prepare(UPD, AbDBManager.Load(CSV));
             e.Result = AbUploaders.SendUploadRequest(URL, UPD);
         }
 

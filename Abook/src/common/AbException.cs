@@ -65,20 +65,20 @@
             /// <summary>金額が大き過ぎます。</summary>
             public const string COST_OVERFLOW = "金額が大き過ぎます。";
 
-            /// <summary>DBファイルがありません。</summary>
-            public const string DB_NULL = "DBファイルがありません。";
+            /// <summary>CSVファイルがありません。</summary>
+            public const string CSV_NULL = "CSVファイルがありません。";
             /// <summary>{0} 行目: {1}</summary>
-            public const string DB_LOAD = "{0} 行目: {1}";
+            public const string CSV_LOAD = "{0} 行目: {1}";
             /// <summary>{0} 行目: {1}</summary>
-            public const string DB_STORE = "{0} 行目: {1}";
-            /// <summary>DBファイルの作成に失敗しました。</summary>
-            public const string DB_CREATE = "DBファイルの作成に失敗しました。";
+            public const string CSV_STORE = "{0} 行目: {1}";
+            /// <summary>CSVファイルの作成に失敗しました。</summary>
+            public const string CSV_CREATE = "CSVファイルの作成に失敗しました。";
             /// <summary>フィールド数が少ないです。</summary>
-            public const string DB_FIELD_LESS = "フィールド数が少ないです。";
+            public const string CSV_FIELD_LESS = "フィールド数が少ないです。";
             /// <summary>フィールド数が多いです。</summary>
-            public const string DB_FIELD_MORE = "フィールド数が多いです。";
+            public const string CSV_FIELD_MORE = "フィールド数が多いです。";
             /// <summary>登録するデータがありません。</summary>
-            public const string DB_RECORD_NOTHING = "登録するデータがありません。";
+            public const string CSV_RECORD_NOTHING = "登録するデータがありません。";
 
             /// <summary>支出情報がありません。</summary>
             public const string EXPENSE_NULL = "支出情報がありません。";
