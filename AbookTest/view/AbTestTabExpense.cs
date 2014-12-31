@@ -19,12 +19,12 @@
     /// </summary>
     public abstract class AbTestTabExpenseBase : AbTestFormBase
     {
-        /// <summary>DBファイル</summary>
-        protected const string DB_EXIST = "AbTestTabExpenseExist.db";
-        /// <summary>DBファイル</summary>
-        protected const string DB_EMPTY = "AbTestTabExpenseEmpty.db";
-        /// <summary>DBファイル</summary>
-        protected const string DB_ENTRY = "AbTestTabExpenseEntry.db";
+        /// <summary>CSVファイル</summary>
+        protected const string CSV_EXIST = "AbTestTabExpenseExist.db";
+        /// <summary>CSVファイル</summary>
+        protected const string CSV_EMPTY = "AbTestTabExpenseEmpty.db";
+        /// <summary>CSVファイル</summary>
+        protected const string CSV_ENTRY = "AbTestTabExpenseEntry.db";
         /// <summary>タブインデックス</summary>
         protected const int TAB_IDX = 0;
 
@@ -34,7 +34,7 @@
         [TestFixtureSetUp]
         protected void TestFixtureSetUp()
         {
-            using (StreamWriter sw = new StreamWriter(DB_EXIST, false, CSV.ENCODING))
+            using (StreamWriter sw = new StreamWriter(CSV_EXIST, false, CSV.ENCODING))
             {
                 sw.NewLine = CSV.LF;
                 for (var i = 1; i <= 15; i++)
@@ -46,11 +46,11 @@
                     sw.WriteLine(ToCSV(date, name, type, cost));
                 }
             }
-            if (System.IO.File.Exists(DB_ENTRY))
+            if (System.IO.File.Exists(CSV_ENTRY))
             {
-                System.IO.File.Delete(DB_ENTRY);
+                System.IO.File.Delete(CSV_ENTRY);
             }
-            System.IO.File.Copy(DB_EXIST, DB_ENTRY);
+            System.IO.File.Copy(CSV_EXIST, CSV_ENTRY);
         }
 
         /// <summary>
@@ -59,9 +59,9 @@
         [TestFixtureTearDown]
         protected void TestFixtureTearDown()
         {
-            if (System.IO.File.Exists(DB_EXIST)) System.IO.File.Delete(DB_EXIST);
-            if (System.IO.File.Exists(DB_EMPTY)) System.IO.File.Delete(DB_EMPTY);
-            if (System.IO.File.Exists(DB_ENTRY)) System.IO.File.Delete(DB_ENTRY);
+            if (System.IO.File.Exists(CSV_EXIST)) System.IO.File.Delete(CSV_EXIST);
+            if (System.IO.File.Exists(CSV_EMPTY)) System.IO.File.Delete(CSV_EMPTY);
+            if (System.IO.File.Exists(CSV_ENTRY)) System.IO.File.Delete(CSV_ENTRY);
         }
     }
 
@@ -83,7 +83,7 @@
             [Test]
             public void CountWithEmptyData()
             {
-                ShowFormMain(DB_EMPTY, TAB_IDX);
+                ShowFormMain(CSV_EMPTY, TAB_IDX);
 
                 Assert.AreEqual(0, CtDgvExpense().Rows.Count);
             }
@@ -95,7 +95,7 @@
             [Test]
             public void CountWithExistData()
             {
-                ShowFormMain(DB_EXIST, TAB_IDX);
+                ShowFormMain(CSV_EXIST, TAB_IDX);
 
                 Assert.AreEqual(15, CtDgvExpense().Rows.Count);
             }
@@ -107,7 +107,7 @@
             [Test]
             public void DgvWithExistData()
             {
-                ShowFormMain(DB_EXIST, TAB_IDX);
+                ShowFormMain(CSV_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 for (var i = 1; i <= 15; i++)
@@ -133,7 +133,7 @@
             [Test]
             public void DgvWithSelectedCell()
             {
-                ShowFormMain(DB_EXIST, TAB_IDX);
+                ShowFormMain(CSV_EXIST, TAB_IDX);
 
                 var cell = CtDgvExpense().SelectedCells[0];
                 Assert.True(cell.Selected);
@@ -149,7 +149,7 @@
             [Test]
             public void DgvWithScrollBar()
             {
-                ShowFormMain(DB_EXIST, TAB_IDX);
+                ShowFormMain(CSV_EXIST, TAB_IDX);
 
                 var cell = CtDgvExpense().SelectedCells[0];
                 Assert.AreEqual(CtDgvExpense().FirstDisplayedCell.RowIndex, cell.RowIndex - 9); //最終行から 9 行上の行がFirstDisplayedCell
@@ -170,7 +170,7 @@
             [Test]
             public void BtnAddRowClickWithOnce()
             {
-                ShowFormMain(DB_EXIST, TAB_IDX);
+                ShowFormMain(CSV_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var initRowCount = dgvExpense.Rows.Count;
@@ -188,7 +188,7 @@
             [Test]
             public void BtnAddRowClickWithTwice()
             {
-                ShowFormMain(DB_EXIST, TAB_IDX);
+                ShowFormMain(CSV_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var initRowCount = dgvExpense.Rows.Count;
@@ -207,7 +207,7 @@
             [Test]
             public void BtnAddRowClickWithInitialDate()
             {
-                ShowFormMain(DB_EXIST, TAB_IDX);
+                ShowFormMain(CSV_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var initRowCount = dgvExpense.Rows.Count;
@@ -231,7 +231,7 @@
             [Test, RequiresSTA]
             public void KeyDownWithComplemented()
             {
-                ShowFormMain(DB_EXIST, TAB_IDX);
+                ShowFormMain(CSV_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -254,7 +254,7 @@
             [Test, RequiresSTA]
             public void KeyDownWithNotComplemented()
             {
-                ShowFormMain(DB_EXIST, TAB_IDX);
+                ShowFormMain(CSV_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -276,7 +276,7 @@
             [Test, RequiresSTA]
             public void KeyDownWithNotCtrlV()
             {
-                ShowFormMain(DB_EXIST, TAB_IDX);
+                ShowFormMain(CSV_EXIST, TAB_IDX);
 
                 TsBtnAddRow().Click();
 
@@ -297,7 +297,7 @@
             [Test]
             public void DgvExpenseCellEndEditWithComplemented()
             {
-                ShowFormMain(DB_EXIST, TAB_IDX);
+                ShowFormMain(CSV_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -317,7 +317,7 @@
             [Test]
             public void DgvExpenseCellEndEditWithNotComplemented()
             {
-                ShowFormMain(DB_EXIST, TAB_IDX);
+                ShowFormMain(CSV_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -336,7 +336,7 @@
             [Test]
             public void DgvExpenseCellEndEditWithNotNameCell()
             {
-                ShowFormMain(DB_EXIST, TAB_IDX);
+                ShowFormMain(CSV_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -378,11 +378,11 @@
                     tsMessageBox.ClickOk();
                 };
 
-                ShowFormMain(DB_EXIST, TAB_IDX);
+                ShowFormMain(CSV_EXIST, TAB_IDX);
 
                 TsBtnEntry().Click();
 
-                NUnit.Framework.FileAssert.AreEqual(DB_ENTRY, DB_EXIST);
+                NUnit.Framework.FileAssert.AreEqual(CSV_ENTRY, CSV_EXIST);
             }
 
             /// <summary>
@@ -409,7 +409,7 @@
                     tsMessageBox.ClickOk();
                 };
 
-                ShowFormMain(DB_EXIST, TAB_IDX);
+                ShowFormMain(CSV_EXIST, TAB_IDX);
 
                 CtDgvExpense().Rows.Clear();
 
@@ -440,7 +440,7 @@
                     tsMessageBox.ClickOk();
                 };
 
-                ShowFormMain(DB_EXIST, TAB_IDX);
+                ShowFormMain(CSV_EXIST, TAB_IDX);
 
                 TsBtnAddRow().Click();
 
@@ -454,7 +454,7 @@
 
                 TsBtnEntry().Click();
 
-                NUnit.Framework.FileAssert.AreEqual(DB_ENTRY, DB_EXIST);
+                NUnit.Framework.FileAssert.AreEqual(CSV_ENTRY, CSV_EXIST);
             }
 
             /// <summary>
@@ -484,7 +484,7 @@
                     Assert.AreEqual(1, CtDgvExpense().SelectedRows[0].Index);
                 };
 
-                ShowFormMain(DB_EXIST, TAB_IDX);
+                ShowFormMain(CSV_EXIST, TAB_IDX);
 
                 CtDgvExpense().Rows[1].Cells[COL.DATE].Value = "2013-02-31";
 
@@ -518,7 +518,7 @@
                     Assert.AreEqual(4, CtDgvExpense().SelectedRows[0].Index);
                 };
 
-                ShowFormMain(DB_EXIST, TAB_IDX);
+                ShowFormMain(CSV_EXIST, TAB_IDX);
 
                 CtDgvExpense().Rows[4].Cells[COL.COST].Value = "XXXXXXXX";
 

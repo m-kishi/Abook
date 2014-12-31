@@ -16,10 +16,10 @@
     [TestFixture]
     public class AbTestSubType : NUnitFormTest
     {
-        /// <summary>DBファイル</summary>
-        private const string DB_EMPTY = "AbTestSubTypeEmpty.db";
-        /// <summary>DBファイル</summary>
-        private const string DB_EXIST = "AbTestSubTypeExist.db";
+        /// <summary>CSVファイル</summary>
+        private const string CSV_EMPTY = "AbTestSubTypeEmpty.db";
+        /// <summary>CSVファイル</summary>
+        private const string CSV_EXIST = "AbTestSubTypeExist.db";
 
         /// <summary>対象:種別明細サブ</summary>
         protected AbSubType form;
@@ -54,7 +54,7 @@
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            using (StreamWriter sw = new StreamWriter(DB_EXIST, false, CSV.ENCODING))
+            using (StreamWriter sw = new StreamWriter(CSV_EXIST, false, CSV.ENCODING))
             {
                 sw.NewLine = CSV.LF;
                 sw.WriteLine(ToCSV("2014-02-26", "name01", TYPE.FOOD, "1000"));
@@ -79,8 +79,8 @@
         [TestFixtureTearDown]
         public void TestFixtureTearDown()
         {
-            if (System.IO.File.Exists(DB_EMPTY)) System.IO.File.Delete(DB_EMPTY);
-            if (System.IO.File.Exists(DB_EXIST)) System.IO.File.Delete(DB_EXIST);
+            if (System.IO.File.Exists(CSV_EMPTY)) System.IO.File.Delete(CSV_EMPTY);
+            if (System.IO.File.Exists(CSV_EXIST)) System.IO.File.Delete(CSV_EXIST);
         }
 
         /// <summary>
@@ -101,10 +101,10 @@
         /// <summary>
         /// フォーム表示
         /// </summary>
-        /// <param name="db">DBファイル</param>
-        protected void ShowSubType(string db)
+        /// <param name="csv">CSVファイル</param>
+        protected void ShowSubType(string csv)
         {
-            var parent = new AbFormMain(db);
+            var parent = new AbFormMain(csv);
             var current = new DateTime(2014, 3, 1);
 
             form = new AbSubType(parent, TYPE.FOOD, current);
@@ -136,7 +136,7 @@
         [Test]
         public void Load()
         {
-            ShowSubType(DB_EMPTY);
+            ShowSubType(CSV_EMPTY);
             Assert.IsTrue(CtAbSubType().Visible);
         }
 
@@ -146,7 +146,7 @@
         [Test]
         public void LoadWithTypeName()
         {
-            ShowSubType(DB_EMPTY);
+            ShowSubType(CSV_EMPTY);
             Assert.AreEqual(TYPE.FOOD, form.Text);
         }
 
@@ -156,7 +156,7 @@
         [Test]
         public void DgvExpenseWithCount()
         {
-            ShowSubType(DB_EXIST);
+            ShowSubType(CSV_EXIST);
 
             Assert.AreEqual(3, CtDgvExpense().Rows.Count);
         }
@@ -168,7 +168,7 @@
         [Test]
         public void DgvExpenseWithCountWithEmptyData()
         {
-            ShowSubType(DB_EMPTY);
+            ShowSubType(CSV_EMPTY);
 
             Assert.AreEqual(0, CtDgvExpense().Rows.Count);
         }
@@ -180,7 +180,7 @@
         [Test]
         public void DgvExpenseWithCountWithOutOfDate()
         {
-            var parent = new AbFormMain(DB_EXIST);
+            var parent = new AbFormMain(CSV_EXIST);
             var current = new DateTime(2014, 5, 1);
 
             form = new AbSubType(parent, TYPE.FOOD, current);
@@ -196,7 +196,7 @@
         [Test]
         public void DgvExpenseWithCountWithEmptyType()
         {
-            var parent = new AbFormMain(DB_EXIST);
+            var parent = new AbFormMain(CSV_EXIST);
             var current = new DateTime(2014, 3, 1);
 
             form = new AbSubType(parent, TYPE.HOUS, current);
@@ -211,7 +211,7 @@
         [Test]
         public void DgvExpenseWithDate()
         {
-            ShowSubType(DB_EXIST);
+            ShowSubType(CSV_EXIST);
 
             var dgvExpense = CtDgvExpense();
             Assert.AreEqual("2014-03-01", dgvExpense.Rows[0].Cells[COL.DATE].Value);
@@ -225,7 +225,7 @@
         [Test]
         public void DgvExpenseWithName()
         {
-            ShowSubType(DB_EXIST);
+            ShowSubType(CSV_EXIST);
 
             var dgvExpense = CtDgvExpense();
             Assert.AreEqual("name04", dgvExpense.Rows[0].Cells[COL.NAME].Value);
@@ -239,7 +239,7 @@
         [Test]
         public void DgvExpenseWithType()
         {
-            ShowSubType(DB_EXIST);
+            ShowSubType(CSV_EXIST);
 
             var dgvExpense = CtDgvExpense();
             Assert.AreEqual(TYPE.FOOD, dgvExpense.Rows[0].Cells[COL.TYPE].Value);
@@ -253,7 +253,7 @@
         [Test]
         public void DgvExpenseWithCost()
         {
-            ShowSubType(DB_EXIST);
+            ShowSubType(CSV_EXIST);
 
             var dgvExpense = CtDgvExpense();
             Assert.AreEqual(1300, dgvExpense.Rows[0].Cells[COL.COST].Value);

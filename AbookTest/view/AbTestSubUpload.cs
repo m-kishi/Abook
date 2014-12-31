@@ -19,8 +19,8 @@
         private const string VALID_URL   = "http://localhost:9999/";
         /// <summary>リクエストURL</summary>
         private const string INVALID_URL = "http://localhost:9000/";
-        /// <summary>DBファイル</summary>
-        private const string DB_FILE = "AbTestSubUpload.db";
+        /// <summary>CSVファイル</summary>
+        private const string CSV_FILE = "AbTestSubUpload.db";
         /// <summary>UPDファイル</summary>
         private const string UPD_FILE = "AbTestSubUpload.sql";
 
@@ -58,7 +58,7 @@
         public void TestFixtureSetUp()
         {
             AbWebServer.Start();
-            using (StreamWriter sw = new StreamWriter(DB_FILE, false, CSV.ENCODING))
+            using (StreamWriter sw = new StreamWriter(CSV_FILE, false, CSV.ENCODING))
             {
                 sw.NewLine = CSV.LF;
                 sw.WriteLine(ToCSV("2014-11-01", "name1", "食費", "100"));
@@ -75,7 +75,7 @@
         public void TestFixtureTearDown()
         {
             AbWebServer.Finish();
-            if (System.IO.File.Exists(DB_FILE )) System.IO.File.Delete(DB_FILE );
+            if (System.IO.File.Exists(CSV_FILE)) System.IO.File.Delete(CSV_FILE);
             if (System.IO.File.Exists(UPD_FILE)) System.IO.File.Delete(UPD_FILE);
         }
 
@@ -97,11 +97,11 @@
         /// <summary>
         /// フォーム表示
         /// </summary>
-        /// <param name="db">DBファイル</param>
+        /// <param name="csv">CSVファイル</param>
         /// <param name="url">リクエストURL</param>
-        protected void ShowSubUpload(string db, string url)
+        protected void ShowSubUpload(string csv, string url)
         {
-            form = new AbSubUpload(db, UPD_FILE, url);
+            form = new AbSubUpload(csv, UPD_FILE, url);
             Assert.AreEqual("アップロード", form.Text);
 
             //フォームのShownイベント起動のために必要
@@ -125,7 +125,7 @@
         [Test]
         public void UploadWithSuccess()
         {
-            ShowSubUpload(DB_FILE, VALID_URL);
+            ShowSubUpload(CSV_FILE, VALID_URL);
 
             //処理完了まで待機
             while (form.IsRunning)
@@ -160,7 +160,7 @@
                 tsMessageBox.ClickOk();
             };
 
-            ShowSubUpload(DB_FILE, INVALID_URL);
+            ShowSubUpload(CSV_FILE, INVALID_URL);
 
             //処理完了まで待機
             while (form.IsRunning)
@@ -178,7 +178,7 @@
         [Test]
         public void Cancel()
         {
-            ShowSubUpload(DB_FILE, VALID_URL);
+            ShowSubUpload(CSV_FILE, VALID_URL);
 
             //処理が一瞬で終わる場合はキャンセルが間に合わない
             if (!form.IsDisposed)

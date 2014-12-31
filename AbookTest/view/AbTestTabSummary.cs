@@ -16,10 +16,10 @@
     [TestFixture]
     public class AbTestTabSummary : AbTestFormBase
     {
-        /// <summary>DBファイル</summary>
-        private const string DB_EXIST = "AbTestTabSummaryExist.db";
-        /// <summary>DBファイル</summary>
-        private const string DB_EMPTY = "AbTestTabSummaryEmpty.db";
+        /// <summary>CSVファイル</summary>
+        private const string CSV_EXIST = "AbTestTabSummaryExist.db";
+        /// <summary>CSVファイル</summary>
+        private const string CSV_EMPTY = "AbTestTabSummaryEmpty.db";
         /// <summary>タブインデックス</summary>
         private const int TAB_IDX = 1;
 
@@ -29,7 +29,7 @@
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            using (StreamWriter sw = new StreamWriter(DB_EXIST, false, CSV.ENCODING))
+            using (StreamWriter sw = new StreamWriter(CSV_EXIST, false, CSV.ENCODING))
             {
                 var dtNow = DateTime.Now.ToString(FMT.DATE);
                 sw.WriteLine(ToCSV(dtNow, "name", TYPE.FOOD,  "10000"));
@@ -192,8 +192,8 @@
         [TestFixtureTearDown]
         public void TestFixtureTearDown()
         {
-            if (System.IO.File.Exists(DB_EXIST)) System.IO.File.Delete(DB_EXIST);
-            if (System.IO.File.Exists(DB_EMPTY)) System.IO.File.Delete(DB_EMPTY);
+            if (System.IO.File.Exists(CSV_EXIST)) System.IO.File.Delete(CSV_EXIST);
+            if (System.IO.File.Exists(CSV_EMPTY)) System.IO.File.Delete(CSV_EMPTY);
         }
 
         /// <summary>
@@ -203,7 +203,7 @@
         [Test]
         public void TitleWithInitial()
         {
-            ShowFormMain(DB_EXIST, TAB_IDX);
+            ShowFormMain(CSV_EXIST, TAB_IDX);
 
             var title = DateTime.Now.ToString(FMT.TITLE);
             Assert.AreEqual(title, CtHeadSummary().Title);
@@ -216,7 +216,7 @@
         [Test]
         public void TitleWithPrevYear_1_Time()
         {
-            ShowFormMain(DB_EXIST, TAB_IDX);
+            ShowFormMain(CSV_EXIST, TAB_IDX);
 
             TsSummaryBtnPrevYear().Click();
 
@@ -231,7 +231,7 @@
         [Test]
         public void TitleWithPrevYear_2_Time()
         {
-            ShowFormMain(DB_EXIST, TAB_IDX);
+            ShowFormMain(CSV_EXIST, TAB_IDX);
 
             TsSummaryBtnPrevYear().Click();
             TsSummaryBtnPrevYear().Click();
@@ -247,7 +247,7 @@
         [Test]
         public void TitleWithPrevYear_3_Time()
         {
-            ShowFormMain(DB_EXIST, TAB_IDX);
+            ShowFormMain(CSV_EXIST, TAB_IDX);
 
             TsSummaryBtnPrevYear().Click();
             TsSummaryBtnPrevYear().Click();
@@ -264,7 +264,7 @@
         [Test]
         public void TitleWithPrevMonth_1_Time()
         {
-            ShowFormMain(DB_EXIST, TAB_IDX);
+            ShowFormMain(CSV_EXIST, TAB_IDX);
 
             TsSummaryBtnPrevMonth().Click();
 
@@ -279,7 +279,7 @@
         [Test]
         public void TitleWithPrevMonth_2_Time()
         {
-            ShowFormMain(DB_EXIST, TAB_IDX);
+            ShowFormMain(CSV_EXIST, TAB_IDX);
 
             TsSummaryBtnPrevMonth().Click();
             TsSummaryBtnPrevMonth().Click();
@@ -295,7 +295,7 @@
         [Test]
         public void TitleWithPrevMonth_3_Time()
         {
-            ShowFormMain(DB_EXIST, TAB_IDX);
+            ShowFormMain(CSV_EXIST, TAB_IDX);
 
             TsSummaryBtnPrevMonth().Click();
             TsSummaryBtnPrevMonth().Click();
@@ -312,7 +312,7 @@
         [Test]
         public void TitleWithNextMonth_1_Time()
         {
-            ShowFormMain(DB_EXIST, TAB_IDX);
+            ShowFormMain(CSV_EXIST, TAB_IDX);
 
             TsSummaryBtnNextMonth().Click();
 
@@ -327,7 +327,7 @@
         [Test]
         public void TitleWithNextMonth_2_Time()
         {
-            ShowFormMain(DB_EXIST, TAB_IDX);
+            ShowFormMain(CSV_EXIST, TAB_IDX);
 
             TsSummaryBtnNextMonth().Click();
             TsSummaryBtnNextMonth().Click();
@@ -343,7 +343,7 @@
         [Test]
         public void TitleWithNextMonth_3_Time()
         {
-            ShowFormMain(DB_EXIST, TAB_IDX);
+            ShowFormMain(CSV_EXIST, TAB_IDX);
 
             TsSummaryBtnNextMonth().Click();
             TsSummaryBtnNextMonth().Click();
@@ -360,7 +360,7 @@
         [Test]
         public void TitleWithNextYear_1_Time()
         {
-            ShowFormMain(DB_EXIST, TAB_IDX);
+            ShowFormMain(CSV_EXIST, TAB_IDX);
 
             TsSummaryBtnNextYear().Click();
 
@@ -375,7 +375,7 @@
         [Test]
         public void TitleWithNextYear_2_Time()
         {
-            ShowFormMain(DB_EXIST, TAB_IDX);
+            ShowFormMain(CSV_EXIST, TAB_IDX);
 
             TsSummaryBtnNextYear().Click();
             TsSummaryBtnNextYear().Click();
@@ -391,7 +391,7 @@
         [Test]
         public void TitleWithNextYear_3_Time()
         {
-            ShowFormMain(DB_EXIST, TAB_IDX);
+            ShowFormMain(CSV_EXIST, TAB_IDX);
 
             TsSummaryBtnNextYear().Click();
             TsSummaryBtnNextYear().Click();
@@ -430,7 +430,7 @@
         [Test]
         public void LabelWithInitial()
         {
-            ShowFormMain(DB_EXIST, TAB_IDX);
+            ShowFormMain(CSV_EXIST, TAB_IDX);
 
             LabelControlTest(
                 new decimal[] { 10000, 15000, 1200, 5000, 200, 3000, 40000, 8000, 2000, 1700, 2700, 500, 89300, 60700 }
@@ -444,7 +444,7 @@
         [Test]
         public void LabelWithPrevYear_1_Time()
         {
-            ShowFormMain(DB_EXIST, TAB_IDX);
+            ShowFormMain(CSV_EXIST, TAB_IDX);
 
             TsSummaryBtnPrevYear().Click();
 
@@ -460,7 +460,7 @@
         [Test]
         public void LabelWithPrevYear_2_Time()
         {
-            ShowFormMain(DB_EXIST, TAB_IDX);
+            ShowFormMain(CSV_EXIST, TAB_IDX);
 
             TsSummaryBtnPrevYear().Click();
             TsSummaryBtnPrevYear().Click();
@@ -477,7 +477,7 @@
         [Test]
         public void LabelWithPrevYear_3_Time()
         {
-            ShowFormMain(DB_EXIST, TAB_IDX);
+            ShowFormMain(CSV_EXIST, TAB_IDX);
 
             TsSummaryBtnPrevYear().Click();
             TsSummaryBtnPrevYear().Click();
@@ -495,7 +495,7 @@
         [Test]
         public void LabelWithPrevMonth_1_Time()
         {
-            ShowFormMain(DB_EXIST, TAB_IDX);
+            ShowFormMain(CSV_EXIST, TAB_IDX);
 
             TsSummaryBtnPrevMonth().Click();
 
@@ -511,7 +511,7 @@
         [Test]
         public void LabelWithPrevMonth_2_Time()
         {
-            ShowFormMain(DB_EXIST, TAB_IDX);
+            ShowFormMain(CSV_EXIST, TAB_IDX);
 
             TsSummaryBtnPrevMonth().Click();
             TsSummaryBtnPrevMonth().Click();
@@ -528,7 +528,7 @@
         [Test]
         public void LabelWithPrevMonth_3_Time()
         {
-            ShowFormMain(DB_EXIST, TAB_IDX);
+            ShowFormMain(CSV_EXIST, TAB_IDX);
 
             TsSummaryBtnPrevMonth().Click();
             TsSummaryBtnPrevMonth().Click();
@@ -546,7 +546,7 @@
         [Test]
         public void LabelWithNextMonth_1_Time()
         {
-            ShowFormMain(DB_EXIST, TAB_IDX);
+            ShowFormMain(CSV_EXIST, TAB_IDX);
 
             TsSummaryBtnNextMonth().Click();
 
@@ -562,7 +562,7 @@
         [Test]
         public void LabelWithNextMonth_2_Time()
         {
-            ShowFormMain(DB_EXIST, TAB_IDX);
+            ShowFormMain(CSV_EXIST, TAB_IDX);
 
             TsSummaryBtnNextMonth().Click();
             TsSummaryBtnNextMonth().Click();
@@ -579,7 +579,7 @@
         [Test]
         public void LabelWithNextMonth_3_Time()
         {
-            ShowFormMain(DB_EXIST, TAB_IDX);
+            ShowFormMain(CSV_EXIST, TAB_IDX);
 
             TsSummaryBtnNextMonth().Click();
             TsSummaryBtnNextMonth().Click();
@@ -597,7 +597,7 @@
         [Test]
         public void LabelWithNextYear_1_Time()
         {
-            ShowFormMain(DB_EXIST, TAB_IDX);
+            ShowFormMain(CSV_EXIST, TAB_IDX);
 
             TsSummaryBtnNextYear().Click();
 
@@ -613,7 +613,7 @@
         [Test]
         public void LabelWithNextYear_2_Time()
         {
-            ShowFormMain(DB_EXIST, TAB_IDX);
+            ShowFormMain(CSV_EXIST, TAB_IDX);
 
             TsSummaryBtnNextYear().Click();
             TsSummaryBtnNextYear().Click();
@@ -630,7 +630,7 @@
         [Test]
         public void LabelWithNextYear_3_Time()
         {
-            ShowFormMain(DB_EXIST, TAB_IDX);
+            ShowFormMain(CSV_EXIST, TAB_IDX);
 
             TsSummaryBtnNextYear().Click();
             TsSummaryBtnNextYear().Click();
@@ -648,7 +648,7 @@
         [Test]
         public void LabelWithEmptyWithInitial()
         {
-            ShowFormMain(DB_EMPTY, TAB_IDX);
+            ShowFormMain(CSV_EMPTY, TAB_IDX);
 
             LabelControlTest(
                 new decimal[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
@@ -662,7 +662,7 @@
         [Test]
         public void LabelWithEmptyWithPrevYear_1_Time()
         {
-            ShowFormMain(DB_EMPTY, TAB_IDX);
+            ShowFormMain(CSV_EMPTY, TAB_IDX);
 
             TsSummaryBtnPrevYear().Click();
 
@@ -678,7 +678,7 @@
         [Test]
         public void LabelWithEmptyWithPrevYear_2_Time()
         {
-            ShowFormMain(DB_EMPTY, TAB_IDX);
+            ShowFormMain(CSV_EMPTY, TAB_IDX);
 
             TsSummaryBtnPrevYear().Click();
             TsSummaryBtnPrevYear().Click();
@@ -695,7 +695,7 @@
         [Test]
         public void LabelWithEmptyWithPrevYear_3_Time()
         {
-            ShowFormMain(DB_EMPTY, TAB_IDX);
+            ShowFormMain(CSV_EMPTY, TAB_IDX);
 
             TsSummaryBtnPrevYear().Click();
             TsSummaryBtnPrevYear().Click();
@@ -713,7 +713,7 @@
         [Test]
         public void LabelWithEmptyWithPrevMonth_1_Time()
         {
-            ShowFormMain(DB_EMPTY, TAB_IDX);
+            ShowFormMain(CSV_EMPTY, TAB_IDX);
 
             TsSummaryBtnPrevMonth().Click();
 
@@ -729,7 +729,7 @@
         [Test]
         public void LabelWithEmptyWithPrevMonth_2_Time()
         {
-            ShowFormMain(DB_EMPTY, TAB_IDX);
+            ShowFormMain(CSV_EMPTY, TAB_IDX);
 
             TsSummaryBtnPrevMonth().Click();
             TsSummaryBtnPrevMonth().Click();
@@ -746,7 +746,7 @@
         [Test]
         public void LabelWithEmptyWithPrevMonth_3_Time()
         {
-            ShowFormMain(DB_EMPTY, TAB_IDX);
+            ShowFormMain(CSV_EMPTY, TAB_IDX);
 
             TsSummaryBtnPrevMonth().Click();
             TsSummaryBtnPrevMonth().Click();
@@ -764,7 +764,7 @@
         [Test]
         public void LabelWithEmptyWithNextMonth_1_Time()
         {
-            ShowFormMain(DB_EMPTY, TAB_IDX);
+            ShowFormMain(CSV_EMPTY, TAB_IDX);
 
             TsSummaryBtnNextMonth().Click();
 
@@ -780,7 +780,7 @@
         [Test]
         public void LabelWithEmptyWithNextMonth_2_Time()
         {
-            ShowFormMain(DB_EMPTY, TAB_IDX);
+            ShowFormMain(CSV_EMPTY, TAB_IDX);
 
             TsSummaryBtnNextMonth().Click();
             TsSummaryBtnNextMonth().Click();
@@ -797,7 +797,7 @@
         [Test]
         public void LabelWithEmptyWithNextMonth_3_Time()
         {
-            ShowFormMain(DB_EMPTY, TAB_IDX);
+            ShowFormMain(CSV_EMPTY, TAB_IDX);
 
             TsSummaryBtnNextMonth().Click();
             TsSummaryBtnNextMonth().Click();
@@ -815,7 +815,7 @@
         [Test]
         public void LabelWithEmptyWithNextYear_1_Time()
         {
-            ShowFormMain(DB_EMPTY, TAB_IDX);
+            ShowFormMain(CSV_EMPTY, TAB_IDX);
 
             TsSummaryBtnNextYear().Click();
 
@@ -831,7 +831,7 @@
         [Test]
         public void LabelWithEmptyWithNextYear_2_Time()
         {
-            ShowFormMain(DB_EMPTY, TAB_IDX);
+            ShowFormMain(CSV_EMPTY, TAB_IDX);
 
             TsSummaryBtnNextYear().Click();
             TsSummaryBtnNextYear().Click();
@@ -848,7 +848,7 @@
         [Test]
         public void LabelWithEmptyWithNextYear_3_Time()
         {
-            ShowFormMain(DB_EMPTY, TAB_IDX);
+            ShowFormMain(CSV_EMPTY, TAB_IDX);
 
             TsSummaryBtnNextYear().Click();
             TsSummaryBtnNextYear().Click();
@@ -877,7 +877,7 @@
         [TestCase("LblOthr")]
         public void MouseOnOffWithTargetAbLabelLabel(string lblName)
         {
-            ShowFormMain(DB_EXIST, TAB_IDX);
+            ShowFormMain(CSV_EXIST, TAB_IDX);
 
             var ctLabel = CtAbLabelLabel(lblName);
             Assert.IsFalse(ctLabel.Font.Underline);
@@ -908,7 +908,7 @@
         [TestCase("LblOthr")]
         public void MouseOnOffWithTargetAbLabelValue(string lblName)
         {
-            ShowFormMain(DB_EXIST, TAB_IDX);
+            ShowFormMain(CSV_EXIST, TAB_IDX);
 
             var ctValue = CtAbLabelValue(lblName);
             Assert.IsFalse(ctValue.Font.Underline);
@@ -929,7 +929,7 @@
         [TestCase("LblBlnc")]
         public void MouseOnOffWithNotTargetAbLabelLabel(string lblName)
         {
-            ShowFormMain(DB_EXIST, TAB_IDX);
+            ShowFormMain(CSV_EXIST, TAB_IDX);
 
             var ctLabel = CtAbLabelLabel(lblName);
             Assert.IsFalse(ctLabel.Font.Underline);
@@ -950,7 +950,7 @@
         [TestCase("LblBlnc")]
         public void MouseOnOffWithNotTargetAbLabelValue(string lblName)
         {
-            ShowFormMain(DB_EXIST, TAB_IDX);
+            ShowFormMain(CSV_EXIST, TAB_IDX);
 
             var ctValue = CtAbLabelValue(lblName);
             Assert.IsFalse(ctValue.Font.Underline);
@@ -994,7 +994,7 @@
                 form.Close();
             };
 
-            ShowFormMain(DB_EXIST, TAB_IDX);
+            ShowFormMain(CSV_EXIST, TAB_IDX);
 
             TsAbLabelLabel(lblName).Click();
         }
@@ -1030,7 +1030,7 @@
                 form.Close();
             };
 
-            ShowFormMain(DB_EXIST, TAB_IDX);
+            ShowFormMain(CSV_EXIST, TAB_IDX);
 
             TsAbLabelValue(lblName).Click();
         }
@@ -1043,7 +1043,7 @@
         [TestCase("LblBlnc", TYPE.BLNC)]
         public void ClickWithNotTargetAbLabelLabel(string lblName, string type)
         {
-            ShowFormMain(DB_EXIST, TAB_IDX);
+            ShowFormMain(CSV_EXIST, TAB_IDX);
 
             //クリックしても何も起きない
             TsAbLabelLabel(lblName).Click();
@@ -1057,7 +1057,7 @@
         [TestCase("LblBlnc", TYPE.BLNC)]
         public void ClickWithNotTargetAbLabelValue(string lblName, string type)
         {
-            ShowFormMain(DB_EXIST, TAB_IDX);
+            ShowFormMain(CSV_EXIST, TAB_IDX);
 
             //クリックしても何も起きない
             TsAbLabelValue(lblName).Click();

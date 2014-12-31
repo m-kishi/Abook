@@ -14,10 +14,10 @@
     [TestFixture]
     public class AbTestFormMain : AbTestFormBase
     {
-        /// <summary>DBファイル</summary>
-        private const string DB_EMPTY = "AbTestFormMainEmpty.db";
-        /// <summary>DBファイル</summary>
-        private const string DB_INVALID = "AbTestFormMainInvalid.db";
+        /// <summary>CSVファイル</summary>
+        private const string CSV_EMPTY = "AbTestFormMainEmpty.db";
+        /// <summary>CSVファイル</summary>
+        private const string CSV_INVALID = "AbTestFormMainInvalid.db";
 
         /// <summary>
         /// TestFixtureSetUp
@@ -25,7 +25,7 @@
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            using (StreamWriter sw = new StreamWriter(DB_INVALID, false, CSV.ENCODING))
+            using (StreamWriter sw = new StreamWriter(CSV_INVALID, false, CSV.ENCODING))
             {
                 sw.WriteLine(ToCSV("2012-01-01", "name1", "食費", "10000"));
                 sw.WriteLine(ToCSV("2012-02-30", "name2", "食費", "20000"));
@@ -39,8 +39,8 @@
         [TestFixtureTearDown]
         public void TestFixtureTearDown()
         {
-            if (System.IO.File.Exists(DB_EMPTY  )) System.IO.File.Delete(DB_EMPTY);
-            if (System.IO.File.Exists(DB_INVALID)) System.IO.File.Delete(DB_INVALID);
+            if (System.IO.File.Exists(CSV_EMPTY  )) System.IO.File.Delete(CSV_EMPTY);
+            if (System.IO.File.Exists(CSV_INVALID)) System.IO.File.Delete(CSV_INVALID);
         }
 
         /// <summary>
@@ -49,7 +49,7 @@
         [Test]
         public void Load()
         {
-            ShowFormMain(DB_EMPTY);
+            ShowFormMain(CSV_EMPTY);
             Assert.IsTrue(CtAbFormMain().Visible);
         }
 
@@ -78,7 +78,7 @@
                 //OKボタンクリック
                 tsMessageBox.ClickOk();
             };
-            ShowFormMain(DB_INVALID);
+            ShowFormMain(CSV_INVALID);
         }
     }
 }

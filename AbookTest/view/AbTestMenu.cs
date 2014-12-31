@@ -14,8 +14,8 @@
     [TestFixture]
     public class AbTestMenu : AbTestFormBase
     {
-        /// <summary>DBファイル</summary>
-        private const string DB = "AbTestMenu.db";
+        /// <summary>CSVファイル</summary>
+        private const string CSV_FILE = "AbTestMenu.db";
 
         /// <summary>
         /// TestFixtureSetUp
@@ -24,7 +24,7 @@
         public void TestFixtureSetUp()
         {
             AbWebServer.Start();
-            using (var sw = new System.IO.StreamWriter(DB, false, CSV.ENCODING))
+            using (var sw = new System.IO.StreamWriter(CSV_FILE, false, CSV.ENCODING))
             {
                 sw.NewLine = CSV.LF;
                 sw.WriteLine("\"2014-11-01\",\"おにぎり\",\"食費\",\"108\"");
@@ -39,7 +39,7 @@
         public void TestFixtureTearDown()
         {
             AbWebServer.Finish();
-            if (System.IO.File.Exists(DB)) System.IO.File.Delete(DB);
+            if (System.IO.File.Exists(CSV_FILE)) System.IO.File.Delete(CSV_FILE);
         }
 
         /// <summary>
@@ -48,7 +48,7 @@
         [Test]
         public void MenuExitClick()
         {
-            ShowFormMain(DB);
+            ShowFormMain(CSV_FILE);
 
             TsMenuExit().Click();
 
@@ -74,7 +74,7 @@
                 (new ButtonTester("BtnOK", form)).Click();
             };
 
-            ShowFormMain(DB);
+            ShowFormMain(CSV_FILE);
 
             TsMenuVersion().Click();
         }
@@ -129,7 +129,7 @@
                 };
             };
 
-            ShowFormMain(DB, "MenuUploadClick.sql", AbWebServer.URL_SUCCESS);
+            ShowFormMain(CSV_FILE, "MenuUploadClick.sql", AbWebServer.URL_SUCCESS);
 
             TsMenuUpload().Click();
         }
@@ -158,7 +158,7 @@
                 tsMessageBox.ClickCancel();
             };
 
-            ShowFormMain(DB);
+            ShowFormMain(CSV_FILE);
 
             TsMenuUpload().Click();
         }
@@ -230,7 +230,7 @@
                 };
             };
 
-            ShowFormMain(DB, "MenuUploadClick.sql", AbWebServer.URL_FAILURE);
+            ShowFormMain(CSV_FILE, "MenuUploadClick.sql", AbWebServer.URL_FAILURE);
 
             TsMenuUpload().Click();
         }

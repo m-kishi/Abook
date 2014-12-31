@@ -16,10 +16,10 @@
     [TestFixture]
     public class AbTestTabBalance : AbTestFormBase
     {
-        /// <summary>DBファイル</summary>
-        private const string DB_EXIST = "AbTestTabBalanceExist.db";
-        /// <summary>DBファイル</summary>
-        private const string DB_EMPTY = "AbTestTabBalanceEmpty.db";
+        /// <summary>CSVファイル</summary>
+        private const string CSV_EXIST = "AbTestTabBalanceExist.db";
+        /// <summary>CSVファイル</summary>
+        private const string CSV_EMPTY = "AbTestTabBalanceEmpty.db";
         /// <summary>タブインデックス</summary>
         private const int TAB_IDX = 3;
 
@@ -29,7 +29,7 @@
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            using (StreamWriter sw = new StreamWriter(DB_EXIST, false, CSV.ENCODING))
+            using (StreamWriter sw = new StreamWriter(CSV_EXIST, false, CSV.ENCODING))
             {
                 sw.WriteLine(ToCSV("2009-04-01", "name", TYPE.EARN, "800000"));
                 sw.WriteLine(ToCSV("2009-04-01", "name", TYPE.EARN, "900000"));
@@ -83,8 +83,8 @@
         [TestFixtureTearDown]
         public void TestFixtureTearDown()
         {
-            if (System.IO.File.Exists(DB_EXIST)) System.IO.File.Delete(DB_EXIST);
-            if (System.IO.File.Exists(DB_EMPTY)) System.IO.File.Delete(DB_EMPTY);
+            if (System.IO.File.Exists(CSV_EXIST)) System.IO.File.Delete(CSV_EXIST);
+            if (System.IO.File.Exists(CSV_EMPTY)) System.IO.File.Delete(CSV_EMPTY);
         }
 
         /// <summary>
@@ -93,7 +93,7 @@
         [Test]
         public void DgvBalanceWithCount()
         {
-            ShowFormMain(DB_EXIST, TAB_IDX);
+            ShowFormMain(CSV_EXIST, TAB_IDX);
 
             Assert.AreEqual(4, CtDgvBalance().Rows.Count);
         }
@@ -105,7 +105,7 @@
         [Test]
         public void DgvBalanceWithCountWithEmptyData()
         {
-            ShowFormMain(DB_EMPTY, TAB_IDX);
+            ShowFormMain(CSV_EMPTY, TAB_IDX);
 
             Assert.AreEqual(0, CtDgvBalance().Rows.Count);
         }
@@ -116,7 +116,7 @@
         [Test]
         public void DgvBalanceWithYear()
         {
-            ShowFormMain(DB_EXIST, TAB_IDX);
+            ShowFormMain(CSV_EXIST, TAB_IDX);
 
             var dgvBalance = CtDgvBalance();
             Assert.AreEqual(2009, dgvBalance.Rows[0].Cells[COL.YEAR].Value);
@@ -131,7 +131,7 @@
         [Test]
         public void DgvBalanceWithEarn()
         {
-            ShowFormMain(DB_EXIST, TAB_IDX);
+            ShowFormMain(CSV_EXIST, TAB_IDX);
 
             var dgvBalance = CtDgvBalance();
             Assert.AreEqual(2325000, dgvBalance.Rows[0].Cells[COL.EARN].Value);
@@ -146,7 +146,7 @@
         [Test]
         public void DgvBalanceWithExpense()
         {
-            ShowFormMain(DB_EXIST, TAB_IDX);
+            ShowFormMain(CSV_EXIST, TAB_IDX);
 
             var dgvBalance = CtDgvBalance();
             Assert.AreEqual(1100000, dgvBalance.Rows[0].Cells[COL.EXPENSE].Value);
@@ -161,7 +161,7 @@
         [Test]
         public void DgvBalanceWithSpecial()
         {
-            ShowFormMain(DB_EXIST, TAB_IDX);
+            ShowFormMain(CSV_EXIST, TAB_IDX);
 
             var dgvBalance = CtDgvBalance();
             Assert.AreEqual(180000, dgvBalance.Rows[0].Cells[COL.SPECIAL].Value);
@@ -176,7 +176,7 @@
         [Test]
         public void DgvBalanceWithBalance()
         {
-            ShowFormMain(DB_EXIST, TAB_IDX);
+            ShowFormMain(CSV_EXIST, TAB_IDX);
 
             var dgvBalance = CtDgvBalance();
             Assert.AreEqual( 1045000, dgvBalance.Rows[0].Cells[COL.BALANCE].Value);

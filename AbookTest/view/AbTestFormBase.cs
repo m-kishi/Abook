@@ -44,10 +44,10 @@
         /// <summary>
         /// フォーム表示
         /// </summary>
-        /// <param name="db">DBファイル</param>
-        protected void ShowFormMain(string db)
+        /// <param name="csv">CSVファイル</param>
+        protected void ShowFormMain(string csv)
         {
-            form = new AbFormMain(db);
+            form = new AbFormMain(csv);
             form.Show();
         }
 
@@ -55,11 +55,11 @@
         /// フォーム表示
         /// フォーム表示時にタブを選択
         /// </summary>
-        /// <param name="db">DBファイル</param>
+        /// <param name="csv">CSVファイル</param>
         /// <param name="idxTab">タブインデックス</param>
-        protected void ShowFormMain(string db, int idxTab)
+        protected void ShowFormMain(string csv, int idxTab)
         {
-            ShowFormMain(db);
+            ShowFormMain(csv);
             TsTabControl().SelectTab(idxTab);
         }
 
@@ -67,12 +67,12 @@
         /// フォーム表示
         /// アップロードテスト用の表示
         /// </summary>
-        /// <param name="db">DBファイル</param>
+        /// <param name="csv">CSVファイル</param>
         /// <param name="upd">UPDファイル</param>
         /// <param name="url">リクエストURL</param>
-        protected void ShowFormMain(string db, string upd, string url)
+        protected void ShowFormMain(string csv, string upd, string url)
         {
-            form = new AbFormMain(db);
+            form = new AbFormMain(csv);
             form.SetUploadParameters(upd, url);
             form.Show();
         }
