@@ -16,7 +16,24 @@
         /// <summary>UPDファイル</summary>
         public string UPD_FILE { get; set; }
         /// <summary>リクエストURL</summary>
-        public string UPD_URL { get; set; }
+        public string REQU_URL { get; set; }
+
+        /// <summary>
+        /// アプリケーション終了
+        /// </summary>
+        private void MenuExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        /// <summary>
+        /// バージョン情報表示
+        /// </summary>
+        private void MenuVersion_Click(object sender, EventArgs e)
+        {
+            var formVersion = new AbFormVersion();
+            formVersion.ShowDialog();
+        }
 
         /// <summary>
         /// アップロードのパラメタ設定
@@ -26,7 +43,7 @@
         public void SetUploadParameters(string UPD, string URL)
         {
             this.UPD_FILE = UPD;
-            this.UPD_URL  = URL;
+            this.REQU_URL = URL;
         }
 
         /// <summary>
@@ -37,7 +54,7 @@
             var dialogResult = MSG.Confirm("確認", "アップロードします。");
             if (dialogResult == DialogResult.OK)
             {
-                var formUpload = new AbSubUpload(CSV_FILE, UPD_FILE, UPD_URL);
+                var formUpload = new AbSubUpload(CSV_FILE, UPD_FILE, REQU_URL);
                 var result = formUpload.ShowDialog(this);
                 if (result == DialogResult.OK)
                 {

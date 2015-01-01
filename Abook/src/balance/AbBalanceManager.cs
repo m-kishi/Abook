@@ -12,15 +12,15 @@
     public class AbBalanceManager
     {
         /// <summary>収支情報リスト</summary>
-        public List<AbBalance> abBalances;
+        private List<AbBalance> abBalances;
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        /// <param name="abExpenses">支出情報リスト</param>
+        /// <param name="expenses">支出情報リスト</param>
         public AbBalanceManager(List<AbExpense> expenses)
         {
-            CHK.ChkExpNull(expenses);
+            CHK.ExpNull(expenses);
 
             abBalances = expenses.Where(exp =>
                 !TYPE.PRIVATE.Contains(exp.Type)
@@ -29,13 +29,13 @@
                 exp.Date.Month == 2 ? exp.Date.Year - 1 :
                 exp.Date.Month == 1 ? exp.Date.Year - 1 :
                                       exp.Date.Year
-            ).Select(exp =>
+            ).Select(gObj =>
                 new AbBalance(
-                    exp.Key,
-                    exp.Where(e => TYPE.BALANCE.EARN.Contains(e.Type)).Sum(e => e.Cost),
-                    exp.Where(e => TYPE.BALANCE.EXPE.Contains(e.Type)).Sum(e => e.Cost),
-                    exp.Where(e => e.Type == TYPE.SPCL).Sum(e => e.Cost),
-                    exp.Sum  (e => TYPE.BALANCE.EARN.Contains(e.Type) ? e.Cost : -e.Cost)
+                    gObj.Key,
+                    gObj.Where(exp => TYPE.BALANCE.EARN.Contains(exp.Type)).Sum(exp => exp.Cost),
+                    gObj.Where(exp => TYPE.BALANCE.EXPE.Contains(exp.Type)).Sum(exp => exp.Cost),
+                    gObj.Where(exp => exp.Type == TYPE.SPCL).Sum(exp => exp.Cost),
+                    gObj.Sum  (exp => TYPE.BALANCE.EARN.Contains(exp.Type) ? exp.Cost : -exp.Cost)
                 )
             ).ToList();
 
@@ -59,10 +59,8 @@
         /// <returns>収支情報リスト</returns>
         public IEnumerable<AbBalance> Balances()
         {
-            foreach (var bln in abBalances.OrderBy(bln => bln.Year))
-            {
-                yield return bln;
-            }
+            var orderd = abBalances.OrderBy(bln => bln.Year);
+            foreach (var bln in orderd) yield return bln;
         }
     }
 }

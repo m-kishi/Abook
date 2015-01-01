@@ -37,7 +37,7 @@
                 DgvPrivate.Rows.Add(privates.Count());
                 foreach (var prv in privates)
                 {
-                    DataGridViewRow row = DgvPrivate.Rows[i++];
+                    var row = DgvPrivate.Rows[i++];
                     row.Cells[COL.DATE].Value = prv.Date;
                     row.Cells[COL.NAME].Value = prv.Name;
                     row.Cells[COL.COST].Value = prv.Cost;

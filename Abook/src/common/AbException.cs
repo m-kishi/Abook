@@ -107,7 +107,7 @@
             public const string UPD_NULL = "UPDファイルがありません。";
             /// <summary>{0} 行目: {1}</summary>
             public const string UPD_PREPARE = "{0} 行目: {1}";
-            /// <summary>UPDファイルの作成に失敗しました。</summary>
+            /// <summary>UPDファイルの作成に失敗しました。\r\n: {0}</summary>
             public const string UPD_CREATE = "UPDファイルの作成に失敗しました。\r\n: {0}";
             /// <summary>UPDファイルが見つかりませんでした。</summary>
             public const string UPD_DOES_NOT_EXIST = "UPDファイルが見つかりませんでした。";

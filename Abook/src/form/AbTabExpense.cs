@@ -80,7 +80,7 @@
         {
             if (DgvExpense.CurrentCell.ColumnIndex == 1)
             {
-                DataGridViewRow row = DgvExpense.Rows[DgvExpense.CurrentCell.RowIndex];
+                var row = DgvExpense.Rows[DgvExpense.CurrentCell.RowIndex];
                 row.Cells[COL.TYPE].Value = abComplete.GetType(row.Cells[COL.NAME].Value as string);
             }
         }
@@ -96,7 +96,7 @@
                 DgvExpense.CurrentCell.Value = value;
                 if (DgvExpense.CurrentCell.ColumnIndex == 1)
                 {
-                    DataGridViewRow row = DgvExpense.Rows[DgvExpense.CurrentCell.RowIndex];
+                    var row = DgvExpense.Rows[DgvExpense.CurrentCell.RowIndex];
                     row.Cells[COL.TYPE].Value = abComplete.GetType(value);
                 }
             }

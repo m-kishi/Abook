@@ -3,8 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using FMT = Abook.AbConstants.FMT;
     using CHK = Abook.AbUtilities.CHK;
+    using FMT = Abook.AbConstants.FMT;
 
     /// <summary>
     /// 支出情報管理クラス
@@ -23,9 +23,9 @@
         /// <param name="summaries">集計値リスト</param>
         public AbExpenseManager(DateTime date, List<AbSummary> summaries)
         {
-            CHK.ChkSumNull(summaries);
+            CHK.SumNull(summaries);
 
-            this.abSummaries = summaries;
+            abSummaries = summaries;
             SetCurrentSummary(date);
         }
 
@@ -39,7 +39,7 @@
             var currentSummary = abSummaries.Where(sum =>
                 sum.Year == date.Year && sum.Month == date.Month
             ).FirstOrDefault();
-            abCurrentSummary = currentSummary == null ? emptySummary : currentSummary;
+            abCurrentSummary = (currentSummary == null) ? emptySummary : currentSummary;
         }
 
         /// <summary>

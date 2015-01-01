@@ -62,7 +62,7 @@
         /// <returns>対象の支出情報リスト</returns>
         private List<AbExpense> FilterByDateType(List<AbExpense> expenses)
         {
-            CHK.ChkExpNull(expenses);
+            CHK.ExpNull(expenses);
             return expenses.Where(exp =>
                    exp.Date.Year  == DtCurrent.Year
                 && exp.Date.Month == DtCurrent.Month

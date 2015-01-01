@@ -3,8 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using FMT  = Abook.AbConstants.FMT;
     using CHK  = Abook.AbUtilities.CHK;
+    using FMT  = Abook.AbConstants.FMT;
     using NAME = Abook.AbConstants.NAME;
     using TYPE = Abook.AbConstants.TYPE;
 
@@ -42,7 +42,7 @@
         /// <returns>種別ごとの集計</returns>
         private Dictionary<string, decimal> SummaryByType(List<AbExpense> expenses)
         {
-            CHK.ChkExpNull(expenses);
+            CHK.ExpNull(expenses);
 
             var dic = new Dictionary<string, decimal>();
             foreach (var gObj in expenses.GroupBy(exp => exp.Type))
@@ -50,10 +50,12 @@
                 dic.Add(gObj.Key, gObj.Sum(exp => exp.Cost));
             }
 
+            //合計
             var excepts = TYPE.SUMMARY.EXPE;
             var total = expenses.Where(exp => excepts.Contains(exp.Type)).Sum(exp => exp.Cost);
             dic.Add(TYPE.TTAL, total);
 
+            //収入
             var earn = dic.ContainsKey(TYPE.EARN) ? dic[TYPE.EARN] : decimal.Zero;
             var balance = earn - total;
             dic.Add(TYPE.BLNC, balance);
@@ -68,7 +70,7 @@
         /// <returns>名前ごとの集計</returns>
         private Dictionary<string, decimal> SummaryByName(List<AbExpense> expenses)
         {
-            CHK.ChkExpNull(expenses);
+            CHK.ExpNull(expenses);
 
             var dic = new Dictionary<string, decimal>();
             var names = new string[] { NAME.EL, NAME.GS, NAME.WT };
@@ -116,7 +118,7 @@
         /// <returns>集計値リスト</returns>
         public static List<AbSummary> GetSummaries(List<AbExpense> expenses)
         {
-            CHK.ChkExpNull(expenses);
+            CHK.ExpNull(expenses);
 
             var summaries = new List<AbSummary>();
             var expGroups = expenses.GroupBy(exp =>

@@ -54,10 +54,10 @@
             public const string DELIMITER = ",";
             /// <summary>フィールド数</summary>
             public const int FIELD = 4;
-            /// <summary>文字コード(UTF-8 BOM無し)</summary>
-            public static readonly Encoding ENCODING = new UTF8Encoding(false);
             /// <summary>改行文字(LF)</summary>
             public const string LF = "\n";
+            /// <summary>文字コード(UTF-8 BOM無し)</summary>
+            public static readonly Encoding ENCODING = new UTF8Encoding(false);
         }
 
         /// <summary>UPD</summary>
@@ -79,7 +79,7 @@
         public static class DGV
         {
             /// <summary>追加入力行数</summary>
-            public const int NEW_ROW_SIZE = 15;
+            public const int NEW_ROW_SIZE = 30;
         }
 
         /// <summary>フォーマット</summary>
@@ -91,10 +91,6 @@
             public const string DATE = "yyyy-MM-dd";
             /// <summary>月"MM"</summary>
             public const string MONTH = "MM";
-            /// <summary>年度開始日(04/01)</summary>
-            public const string START_YEAR = "04-01";
-            /// <summary>対象年月日(年/月日)</summary>
-            public const string TARGET_YEAR = "{0}-{1}";
             /// <summary>通貨:円"{0:c}"</summary>
             public const string YEN = "{0:c}";
             /// <summary>タイトル(yyyy年MM月)</summary>
@@ -192,35 +188,17 @@
             };
 
             /// <summary>
-            /// 支出情報で指定可能な種別
+            /// 支出情報として指定可能な種別
             /// </summary>
             public static readonly string[] EXPENCE =
             {
-                TYPE.FOOD,
-                TYPE.OTFD,
-                TYPE.GOOD,
-                TYPE.FRND,
-                TYPE.TRFC,
-                TYPE.PLAY,
-                TYPE.HOUS,
-                TYPE.ENGY,
-                TYPE.CNCT,
-                TYPE.MEDI,
-                TYPE.INSU,
-                TYPE.OTHR,
-                TYPE.EARN,
-                TYPE.BNUS,
-                TYPE.SPCL,
-                TYPE.PRVI,
-                TYPE.PRVO,
+                TYPE.FOOD, TYPE.OTFD, TYPE.GOOD, TYPE.FRND, TYPE.TRFC, TYPE.PLAY,
+                TYPE.HOUS, TYPE.ENGY, TYPE.CNCT, TYPE.MEDI, TYPE.INSU, TYPE.OTHR,
+                TYPE.EARN, TYPE.BNUS, TYPE.SPCL, TYPE.PRVI, TYPE.PRVO,
             };
 
-            /// <summary>秘密収支関連</summary>
-            public static readonly string[] PRIVATE =
-            {
-                TYPE.PRVI,
-                TYPE.PRVO
-            };
+            /// <summary>秘密収支に属する種別</summary>
+            public static readonly string[] PRIVATE = { TYPE.PRVI, TYPE.PRVO };
 
             /// <summary>集計タブ</summary>
             public static class SUMMARY
@@ -228,18 +206,8 @@
                 /// <summary>集計タブでの支出対象</summary>
                 public static readonly string[] EXPE =
                 {
-                    TYPE.FOOD,
-                    TYPE.OTFD,
-                    TYPE.GOOD,
-                    TYPE.FRND,
-                    TYPE.TRFC,
-                    TYPE.PLAY,
-                    TYPE.HOUS,
-                    TYPE.ENGY,
-                    TYPE.CNCT,
-                    TYPE.MEDI,
-                    TYPE.INSU,
-                    TYPE.OTHR,
+                    TYPE.FOOD, TYPE.OTFD, TYPE.GOOD, TYPE.FRND, TYPE.TRFC, TYPE.PLAY,
+                    TYPE.HOUS, TYPE.ENGY, TYPE.CNCT, TYPE.MEDI, TYPE.INSU, TYPE.OTHR,
                 };
             }
 
@@ -247,27 +215,13 @@
             public static class BALANCE
             {
                 /// <summary>収支タブでの収入対象</summary>
-                public static readonly string[] EARN =
-                {
-                    TYPE.EARN,
-                    TYPE.BNUS,
-                };
+                public static readonly string[] EARN = { TYPE.EARN, TYPE.BNUS, };
 
                 /// <summary>収支タブでの支出対象</summary>
                 public static readonly string[] EXPE =
                 {
-                    TYPE.FOOD,
-                    TYPE.OTFD,
-                    TYPE.GOOD,
-                    TYPE.FRND,
-                    TYPE.TRFC,
-                    TYPE.PLAY,
-                    TYPE.HOUS,
-                    TYPE.ENGY,
-                    TYPE.CNCT,
-                    TYPE.MEDI,
-                    TYPE.INSU,
-                    TYPE.OTHR,
+                    TYPE.FOOD, TYPE.OTFD, TYPE.GOOD, TYPE.FRND, TYPE.TRFC, TYPE.PLAY,
+                    TYPE.HOUS, TYPE.ENGY, TYPE.CNCT, TYPE.MEDI, TYPE.INSU, TYPE.OTHR,
                 };
             }
         }

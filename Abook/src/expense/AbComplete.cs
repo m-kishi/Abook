@@ -19,7 +19,7 @@
         /// <param name="expenses">支出情報リスト</param>
         public AbComplete(List<AbExpense> expenses)
         {
-            CHK.ChkExpNull(expenses);
+            CHK.ExpNull(expenses);
 
             dicComp = new Dictionary<string, string>();
             foreach (var name in expenses.GroupBy(exp => exp.Name).Select(gObj => gObj.Key))

@@ -43,7 +43,7 @@
         /// <returns>日付</returns>
         private DateTime ParseDate(string date)
         {
-            CHK.ChkDateNull(date);
+            CHK.DateNull(date);
 
             var dt = DateTime.MinValue;
             var st = System.Globalization.DateTimeStyles.None;
@@ -61,7 +61,7 @@
         /// <returns>名称</returns>
         private string ParseName(string name)
         {
-            CHK.ChkNameNull(name);
+            CHK.NameNull(name);
             return name;
         }
 
@@ -72,8 +72,8 @@
         /// <returns>種別</returns>
         private string ParseType(string type)
         {
-            CHK.ChkTypeNull(type);
-            CHK.ChkTypeWrong(type);
+            CHK.TypeNull(type);
+            CHK.TypeWrong(type);
             return type;
         }
 
@@ -84,7 +84,7 @@
         /// <returns>金額</returns>
         private decimal ParseCost(string cost)
         {
-            CHK.ChkCostNull(cost);
+            CHK.CostNull(cost);
 
             var ct = decimal.Zero;
             try

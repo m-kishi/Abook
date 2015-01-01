@@ -30,8 +30,8 @@
         /// <returns>種別ID</returns>
         public static string ToTypeId(string type)
         {
-            CHK.ChkTypeNull(type);
-            CHK.ChkTypeIdWrong(type);
+            CHK.TypeNull(type);
+            CHK.TypeIdWrong(type);
             return TYPE.ID[type];
         }
 
@@ -44,7 +44,7 @@
             /// NULLチェック(日付)
             /// </summary>
             /// <param name="date">日付</param>
-            public static void ChkDateNull(string date)
+            public static void DateNull(string date)
             {
                 if (string.IsNullOrEmpty(date)) AbException.Throw(EX.DATE_NULL);
             }
@@ -53,7 +53,7 @@
             /// NULLチェック(名称)
             /// </summary>
             /// <param name="name">名称</param>
-            public static void ChkNameNull(string name)
+            public static void NameNull(string name)
             {
                 if (string.IsNullOrEmpty(name)) AbException.Throw(EX.NAME_NULL);
             }
@@ -62,7 +62,7 @@
             /// NULLチェック(種別)
             /// </summary>
             /// <param name="type">種別</param>
-            public static void ChkTypeNull(string type)
+            public static void TypeNull(string type)
             {
                 if (string.IsNullOrEmpty(type)) AbException.Throw(EX.TYPE_NULL);
             }
@@ -71,7 +71,7 @@
             /// 種別チェック
             /// </summary>
             /// <param name="type">種別</param>
-            public static void ChkTypeWrong(string type)
+            public static void TypeWrong(string type)
             {
                 if (!TYPE.EXPENCE.Contains(type)) AbException.Throw(EX.TYPE_WRONG);
             }
@@ -80,7 +80,7 @@
             /// 種別チェック
             /// </summary>
             /// <param name="type">種別</param>
-            public static void ChkTypeIdWrong(string type)
+            public static void TypeIdWrong(string type)
             {
                 if (!TYPE.ID.ContainsKey(type)) AbException.Throw(EX.TYPE_WRONG);
             }
@@ -89,7 +89,7 @@
             /// NULLチェック(金額)
             /// </summary>
             /// <param name="cost">金額</param>
-            public static void ChkCostNull(string cost)
+            public static void CostNull(string cost)
             {
                 if (string.IsNullOrEmpty(cost)) AbException.Throw(EX.COST_NULL);
             }
@@ -98,7 +98,7 @@
             /// NULLチェック(CSVファイル名)
             /// </summary>
             /// <param name="csv">CSVファイル名</param>
-            public static void ChkCsvNull(string csv)
+            public static void CsvNull(string csv)
             {
                 if (string.IsNullOrEmpty(csv)) AbException.Throw(EX.CSV_NULL);
             }
@@ -107,7 +107,7 @@
             /// NULLチェック(支出情報)
             /// </summary>
             /// <param name="exp">支出情報</param>
-            public static void ChkExpNull(AbExpense exp)
+            public static void ExpNull(AbExpense exp)
             {
                 if (exp == null) AbException.Throw(EX.EXPENSE_NULL);
             }
@@ -116,7 +116,7 @@
             /// NULLチェック(支出情報リスト)
             /// </summary>
             /// <param name="exp">支出情報リスト</param>
-            public static void ChkExpNull(List<AbExpense> exp)
+            public static void ExpNull(List<AbExpense> exp)
             {
                 if (exp == null) AbException.Throw(EX.EXPENSES_NULL);
             }
@@ -125,7 +125,7 @@
             /// 件数チェック(支出情報リスト)
             /// </summary>
             /// <param name="exp">支出情報リスト</param>
-            public static void ChkExpCount(List<AbExpense> exp)
+            public static void ExpCount(List<AbExpense> exp)
             {
                 if (exp == null || exp.Count <= 0) AbException.Throw(EX.CSV_RECORD_NOTHING);
             }
@@ -134,7 +134,7 @@
             /// NULLチェック(集計値リスト)
             /// </summary>
             /// <param name="sum">集計値リスト</param>
-            public static void ChkSumNull(List<AbSummary> sum)
+            public static void SumNull(List<AbSummary> sum)
             {
                 if (sum == null) AbException.Throw(EX.SUMMARIES_NULL);
             }
@@ -192,7 +192,7 @@
             /// NULLチェック(リクエストURL)
             /// </summary>
             /// <param name="url">リクエストURL</param>
-            public static void ChkUrlNull(string url)
+            public static void UrlNull(string url)
             {
                 if (string.IsNullOrEmpty(url)) AbException.Throw(EX.URL_NULL);
             }
@@ -201,7 +201,7 @@
             /// NULLチェック(UPDファイル名)
             /// </summary>
             /// <param name="upd">UPDファイル名</param>
-            public static void ChkUpdNull(string upd)
+            public static void UpdNull(string upd)
             {
                 if (string.IsNullOrEmpty(upd)) AbException.Throw(EX.UPD_NULL);
             }
@@ -210,7 +210,7 @@
             /// 存在チェック(UPDファイル名)
             /// </summary>
             /// <param name="upd">UPDファイル名</param>
-            public static void ChkUpdExist(string upd)
+            public static void UpdExist(string upd)
             {
                 if (!System.IO.File.Exists(upd)) AbException.Throw(EX.UPD_DOES_NOT_EXIST);
             }
@@ -219,7 +219,7 @@
             /// 件数チェック(支出情報リスト)
             /// </summary>
             /// <param name="exp">支出情報リスト</param>
-            public static void ChkUpdCount(List<AbExpense> exp)
+            public static void UpdCount(List<AbExpense> exp)
             {
                 if (exp == null || exp.Count <= 0) AbException.Throw(EX.UPD_RECORD_NOTHING);
             }

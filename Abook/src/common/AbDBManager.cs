@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Windows.Forms;
     using Microsoft.VisualBasic.FileIO;
@@ -22,13 +23,13 @@
         /// <returns>支出情報リスト</returns>
         public static List<AbExpense> Load(string file)
         {
-            CHK.ChkCsvNull(file);
+            CHK.CsvNull(file);
 
-            if (System.IO.File.Exists(file) == false)
+            if (!File.Exists(file))
             {
                 try
                 {
-                    System.IO.File.Create(file).Close();
+                    File.Create(file).Close();
                 }
                 catch
                 {
@@ -111,10 +112,10 @@
         /// <param name="expenses">支出情報リスト</param>
         public static void Store(string file, List<AbExpense> expenses)
         {
-            CHK.ChkCsvNull(file);
-            CHK.ChkExpCount(expenses);
+            CHK.CsvNull(file);
+            CHK.ExpCount(expenses);
 
-            using (var sw = new System.IO.StreamWriter(file, false, CSV.ENCODING))
+            using (var sw = new StreamWriter(file, false, CSV.ENCODING))
             {
                 var line = 0;
                 try

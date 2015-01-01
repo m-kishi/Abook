@@ -27,7 +27,7 @@
         /// <param name="balance">収支    </param>
         public AbPrivate(AbExpense expense, decimal balance)
         {
-            CHK.ChkExpNull(expense);
+            CHK.ExpNull(expense);
 
             Date = ParseDate(expense);
             Name = ParseName(expense);

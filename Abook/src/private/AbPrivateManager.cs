@@ -20,7 +20,7 @@
         /// <param name="expenses">支出情報リスト</param>
         public AbPrivateManager(List<AbExpense> expenses)
         {
-            CHK.ChkExpNull(expenses);
+            CHK.ExpNull(expenses);
 
             abPrivates = new List<AbPrivate>();
             var balance = decimal.Zero;
@@ -39,10 +39,7 @@
         /// <returns>秘密収支情報リスト</returns>
         public IEnumerable<AbPrivate> Privates()
         {
-            foreach (var prv in abPrivates)
-            {
-                yield return prv;
-            }
+            foreach (var prv in abPrivates) yield return prv;
         }
     }
 }

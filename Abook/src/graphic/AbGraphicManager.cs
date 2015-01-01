@@ -31,10 +31,10 @@
         /// <param name="summaries">集計値リスト</param>
         public AbGraphicManager(DateTime date, List<AbSummary> summaries)
         {
-            CHK.ChkSumNull(summaries);
+            CHK.SumNull(summaries);
 
-            this.dtNow = date;
-            this.abSummaries = summaries;
+            dtNow = date;
+            abSummaries = summaries;
 
             SetGraphLine();
             SetGraphData(() => { });
@@ -74,7 +74,7 @@
                 var selectedSummary = abSummaries.Where(sum =>
                     sum.Year == dt.Year && sum.Month == dt.Month
                 ).FirstOrDefault();
-                var summary = selectedSummary == null ? emptySummary : selectedSummary;
+                var summary = (selectedSummary == null) ? emptySummary : selectedSummary;
 
                 valF = summary.GetCostByType(TYPE.FOOD);
                 valO = summary.GetCostByType(TYPE.OTFD);

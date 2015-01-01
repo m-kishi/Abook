@@ -75,22 +75,5 @@
             InitTabSummary(summaries);
             InitTabGraphic(summaries);
         }
-
-        /// <summary>
-        /// アプリケーション終了
-        /// </summary>
-        private void MenuExit_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
-        /// <summary>
-        /// バージョン情報表示
-        /// </summary>
-        private void MenuVersion_Click(object sender, EventArgs e)
-        {
-            var formVersion = new AbFormVersion();
-            formVersion.ShowDialog();
-        }
     }
 }
