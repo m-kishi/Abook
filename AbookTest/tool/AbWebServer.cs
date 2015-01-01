@@ -2,6 +2,7 @@
 {
     using System;
     using System.Net;
+    using System.Text;
     using System.Threading;
 
     /// <summary>
@@ -10,7 +11,7 @@
     public static class AbWebServer
     {
         /// <summary>URL</summary>
-        private const string uriPrefix = "http://*:9999/";
+        private const string URI_PREFIX  = "http://*:9999/";
         /// <summary>成功用URL</summary>
         public  const string URL_SUCCESS = "http://localhost:9999/SUCCESS";
         /// <summary>失敗用URL</summary>
@@ -32,7 +33,7 @@
             try
             {
                 listener = new HttpListener();
-                listener.Prefixes.Add(uriPrefix);
+                listener.Prefixes.Add(URI_PREFIX);
                 listener.Start();
             }
             catch (Exception ex)
@@ -50,13 +51,13 @@
                     if (req.RawUrl.Contains("SUCCESS"))
                     {
                         res.StatusCode = 200;
-                        var buffer = System.Text.UTF8Encoding.UTF8.GetBytes("200");
+                        var buffer = Encoding.UTF8.GetBytes("200");
                         res.OutputStream.Write(buffer, 0, buffer.Length);
                     }
                     if (req.RawUrl.Contains("FAILURE"))
                     {
                         res.StatusCode = 500;
-                        var buffer = System.Text.Encoding.UTF8.GetBytes("AbWebServer Internal Error");
+                        var buffer = Encoding.UTF8.GetBytes("AbWebServer Internal Error");
                         res.OutputStream.Write(buffer, 0, buffer.Length);
                     }
                     res.Close();
@@ -73,15 +74,6 @@
             running = false;
             if (thread   != null) { thread  .Abort(); thread   = null; }
             if (listener != null) { listener.Close(); listener = null; }
-        }
-
-        /// <summary>
-        /// サーバ状態
-        /// </summary>
-        /// <returns>true:起動中、false:停止中</returns>
-        public static bool IsRunning()
-        {
-            return running;
         }
     }
 }
