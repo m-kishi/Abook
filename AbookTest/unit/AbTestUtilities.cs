@@ -2,11 +2,17 @@
 {
     using Abook;
     using System;
+    using System.Collections.Generic;
+    using System.IO;
     using NUnit.Framework;
+    using EX   = Abook.AbException.EX;
+    using CHK  = Abook.AbUtilities.CHK;
+    using TYPE = Abook.AbConstants.TYPE;
 
     /// <summary>
     /// ユーティリティテスト
     /// </summary>
+    [TestFixture]
     public class AbTestUtilities
     {
         /// <summary>
@@ -52,6 +58,685 @@
         {
             var actual = AbUtilities.ToTypeId(type);
             Assert.AreEqual(expected, actual);
+        }
+
+        /// <summary>
+        /// チェックユーティリティテスト
+        /// </summary>
+        [TestFixture]
+        public class ChkTest
+        {
+            /// <summary>UPDファイル名</summary>
+            private const string UPD_FILE = "ChkTestUpd.sql";
+
+            [TestFixtureSetUp]
+            public void TestFixtureSetUp()
+            {
+                if (!File.Exists(UPD_FILE)) File.Create(UPD_FILE).Close();
+            }
+
+            [TestFixtureTearDown]
+            public void TestFixtureTearDown()
+            {
+                if (File.Exists(UPD_FILE)) File.Delete(UPD_FILE);
+            }
+
+            /// <summary>
+            /// NULLチェック(日付)
+            /// </summary>
+            [Test]
+            public void DateNull()
+            {
+                var argDate = "2015-01-01";
+                Assert.DoesNotThrow(() => CHK.DateNull(argDate));
+            }
+
+            /// <summary>
+            /// NULLチェック(日付)
+            /// 引数:日付がNULL
+            /// </summary>
+            [Test]
+            public void DateNullWithNullDate()
+            {
+                string argDate = null;
+                var ex = Assert.Throws<AbException>(() =>
+                    CHK.DateNull(argDate)
+                );
+                Assert.AreEqual(EX.DATE_NULL, ex.Message);
+            }
+
+            /// <summary>
+            /// NULLチェック(日付)
+            /// 引数:日付が空文字列
+            /// </summary>
+            [Test]
+            public void DateNullWithEmptyDate()
+            {
+                var argDate = string.Empty;
+                var ex = Assert.Throws<AbException>(() =>
+                    CHK.DateNull(argDate)
+                );
+                Assert.AreEqual(EX.DATE_NULL, ex.Message);
+            }
+
+            /// <summary>
+            /// NULLチェック(名称)
+            /// </summary>
+            [Test]
+            public void NameNull()
+            {
+                var argName = "おにぎり";
+                Assert.DoesNotThrow(() => CHK.NameNull(argName));
+            }
+
+            /// <summary>
+            /// NULLチェック(名称)
+            /// 引数:名称がNULL
+            /// </summary>
+            [Test]
+            public void NameNullWithNullName()
+            {
+                string argName = null;
+                var ex = Assert.Throws<AbException>(() =>
+                    CHK.NameNull(argName)
+                );
+                Assert.AreEqual(EX.NAME_NULL, ex.Message);
+            }
+
+            /// <summary>
+            /// NULLチェック(名称)
+            /// 引数:名称が空文字列
+            /// </summary>
+            [Test]
+            public void NameNullWithEmptyName()
+            {
+                var argName = string.Empty;
+                var ex = Assert.Throws<AbException>(() =>
+                    CHK.NameNull(argName)
+                );
+                Assert.AreEqual(EX.NAME_NULL, ex.Message);
+            }
+
+            /// <summary>
+            /// NULLチェック(種別)
+            /// </summary>
+            [Test]
+            public void TypeNull()
+            {
+                var argType = TYPE.FOOD;
+                Assert.DoesNotThrow(() => CHK.TypeNull(argType));
+            }
+
+            /// <summary>
+            /// NULLチェック(種別)
+            /// 引数:種別がNULL
+            /// </summary>
+            [Test]
+            public void TypeNullWithNullType()
+            {
+                string argType = null;
+                var ex = Assert.Throws<AbException>(() =>
+                    CHK.TypeNull(argType)
+                );
+                Assert.AreEqual(EX.TYPE_NULL, ex.Message);
+            }
+
+            /// <summary>
+            /// NULLチェック(種別)
+            /// 引数:種別が空文字列
+            /// </summary>
+            [Test]
+            public void TypeNullWithEmptyType()
+            {
+                var argType = string.Empty;
+                var ex = Assert.Throws<AbException>(() =>
+                    CHK.TypeNull(argType)
+                );
+                Assert.AreEqual(EX.TYPE_NULL, ex.Message);
+            }
+
+            /// <summary>
+            /// 種別チェック
+            /// </summary>
+            /// <param name="type">種別</param>
+            /// <param name="isError">true: エラー、false: OK</param>
+            [Test]
+            [TestCase(TYPE.FOOD, false)]
+            [TestCase(TYPE.OTFD, false)]
+            [TestCase(TYPE.GOOD, false)]
+            [TestCase(TYPE.FRND, false)]
+            [TestCase(TYPE.TRFC, false)]
+            [TestCase(TYPE.PLAY, false)]
+            [TestCase(TYPE.HOUS, false)]
+            [TestCase(TYPE.ENGY, false)]
+            [TestCase(TYPE.CNCT, false)]
+            [TestCase(TYPE.MEDI, false)]
+            [TestCase(TYPE.INSU, false)]
+            [TestCase(TYPE.OTHR, false)]
+            [TestCase(TYPE.EARN, false)]
+            [TestCase(TYPE.TTAL,  true)]
+            [TestCase(TYPE.BLNC,  true)]
+            [TestCase(TYPE.BNUS, false)]
+            [TestCase(TYPE.SPCL, false)]
+            [TestCase(TYPE.PRVI, false)]
+            [TestCase(TYPE.PRVO, false)]
+            public void TypeWrong(string type, bool isError)
+            {
+                if (isError)
+                {
+                    var ex = Assert.Throws<AbException>(() =>
+                        CHK.TypeWrong(type)
+                    );
+                    Assert.AreEqual(EX.TYPE_WRONG, ex.Message);
+                }
+                else
+                {
+                    Assert.DoesNotThrow(() => CHK.TypeWrong(type));
+                }
+            }
+
+            /// <summary>
+            /// 種別チェック
+            /// </summary>
+            /// <param name="type">種別</param>
+            /// <param name="isError">true: エラー、false: OK</param>
+            [Test]
+            [TestCase(TYPE.FOOD, false)]
+            [TestCase(TYPE.OTFD, false)]
+            [TestCase(TYPE.GOOD, false)]
+            [TestCase(TYPE.FRND, false)]
+            [TestCase(TYPE.TRFC, false)]
+            [TestCase(TYPE.PLAY, false)]
+            [TestCase(TYPE.HOUS, false)]
+            [TestCase(TYPE.ENGY, false)]
+            [TestCase(TYPE.CNCT, false)]
+            [TestCase(TYPE.MEDI, false)]
+            [TestCase(TYPE.INSU, false)]
+            [TestCase(TYPE.OTHR, false)]
+            [TestCase(TYPE.EARN, false)]
+            [TestCase(TYPE.TTAL, false)]
+            [TestCase(TYPE.BLNC, false)]
+            [TestCase(TYPE.BNUS, false)]
+            [TestCase(TYPE.SPCL, false)]
+            [TestCase(TYPE.PRVI, false)]
+            [TestCase(TYPE.PRVO, false)]
+            [TestCase("type wrong", true)]
+            public void TypeIdWrong(string type, bool isError)
+            {
+                if (isError)
+                {
+                    var ex = Assert.Throws<AbException>(() =>
+                        CHK.TypeIdWrong(type)
+                    );
+                    Assert.AreEqual(EX.TYPE_WRONG, ex.Message);
+                }
+                else
+                {
+                    Assert.DoesNotThrow(() => CHK.TypeIdWrong(type));
+                }
+            }
+
+            /// <summary>
+            /// NULLチェック(金額)
+            /// </summary>
+            [Test]
+            public void CostNull()
+            {
+                var argCost = "999999";
+                Assert.DoesNotThrow(() => CHK.CostNull(argCost));
+            }
+
+            /// <summary>
+            /// NULLチェック(金額)
+            /// 引数:金額がNULL
+            /// </summary>
+            [Test]
+            public void CostNullWithNullCost()
+            {
+                string argCost = null;
+                var ex = Assert.Throws<AbException>(() =>
+                    CHK.CostNull(argCost)
+                );
+                Assert.AreEqual(EX.COST_NULL, ex.Message);
+            }
+
+            /// <summary>
+            /// NULLチェック(金額)
+            /// 引数:金額が空文字列
+            /// </summary>
+            [Test]
+            public void CostNullWithEmptyCost()
+            {
+                var argCost = string.Empty;
+                var ex = Assert.Throws<AbException>(() =>
+                    CHK.CostNull(argCost)
+                );
+                Assert.AreEqual(EX.COST_NULL, ex.Message);
+            }
+
+            /// <summary>
+            /// NULLチェック(CSVファイル名)
+            /// </summary>
+            [Test]
+            public void CsvNull()
+            {
+                var argCsv = "999999";
+                Assert.DoesNotThrow(() => CHK.CsvNull(argCsv));
+            }
+
+            /// <summary>
+            /// NULLチェック(CSVファイル名)
+            /// 引数:CSVファイル名がNULL
+            /// </summary>
+            [Test]
+            public void CsvNullWithNullCsv()
+            {
+                string argCsv = null;
+                var ex = Assert.Throws<AbException>(() =>
+                    CHK.CsvNull(argCsv)
+                );
+                Assert.AreEqual(EX.CSV_NULL, ex.Message);
+            }
+
+            /// <summary>
+            /// NULLチェック(CSVファイル名)
+            /// 引数:CSVファイル名が空文字列
+            /// </summary>
+            [Test]
+            public void CsvNullWithEmptyCsv()
+            {
+                var argCsv = string.Empty;
+                var ex = Assert.Throws<AbException>(() =>
+                    CHK.CsvNull(argCsv)
+                );
+                Assert.AreEqual(EX.CSV_NULL, ex.Message);
+            }
+
+            /// <summary>
+            /// NULLチェック(支出情報)
+            /// </summary>
+            [Test]
+            public void ExpNull()
+            {
+                var argExp = new AbExpense("2015-01-01", "おにぎり", TYPE.FOOD, "108");
+                Assert.DoesNotThrow(() => CHK.ExpNull(argExp));
+            }
+
+            /// <summary>
+            /// NULLチェック(支出情報)
+            /// 引数:支出情報がNULL
+            /// </summary>
+            [Test]
+            public void ExpNullWithNullExp()
+            {
+                AbExpense argExp = null;
+                var ex = Assert.Throws<AbException>(() =>
+                    CHK.ExpNull(argExp)
+                );
+                Assert.AreEqual(EX.EXPENSE_NULL, ex.Message);
+            }
+
+            /// <summary>
+            /// NULLチェック(支出情報リスト)
+            /// </summary>
+            [Test]
+            public void ExpNullWithExpenses()
+            {
+                var argExpenses = new List<AbExpense>();
+                argExpenses.Add(new AbExpense("2015-01-01", "name01", TYPE.FOOD, "100"));
+                argExpenses.Add(new AbExpense("2015-01-02", "name02", TYPE.OTFD, "200"));
+                argExpenses.Add(new AbExpense("2015-01-03", "name03", TYPE.GOOD, "300"));
+                Assert.DoesNotThrow(() => CHK.ExpNull(argExpenses));
+            }
+
+            /// <summary>
+            /// NULLチェック(支出情報リスト)
+            /// 引数:支出情報リストがNULL
+            /// </summary>
+            [Test]
+            public void ExpNullWithNullExpenses()
+            {
+                List<AbExpense> argExpenses = null;
+                var ex = Assert.Throws<AbException>(() =>
+                    CHK.ExpNull(argExpenses)
+                );
+                Assert.AreEqual(EX.EXPENSES_NULL, ex.Message);
+            }
+
+            /// <summary>
+            /// 件数チェック(支出情報リスト)
+            /// </summary>
+            [Test]
+            public void ExpCount()
+            {
+                var argExpenses = new List<AbExpense>();
+                argExpenses.Add(new AbExpense("2015-01-01", "name01", TYPE.FOOD, "100"));
+                argExpenses.Add(new AbExpense("2015-01-02", "name02", TYPE.OTFD, "200"));
+                argExpenses.Add(new AbExpense("2015-01-03", "name03", TYPE.GOOD, "300"));
+                Assert.DoesNotThrow(() => CHK.ExpCount(argExpenses));
+            }
+
+            /// <summary>
+            /// 件数チェック(支出情報リスト)
+            /// 引数:支出情報リストがNULL
+            /// </summary>
+            [Test]
+            public void ExpCountWithNullExpenses()
+            {
+                List<AbExpense> argExpenses = null;
+                var ex = Assert.Throws<AbException>(() =>
+                    CHK.ExpCount(argExpenses)
+                );
+                Assert.AreEqual(EX.CSV_RECORD_NOTHING, ex.Message);
+            }
+
+            /// <summary>
+            /// 件数チェック(支出情報リスト)
+            /// 引数:支出情報リストが空リスト
+            /// </summary>
+            [Test]
+            public void ExpCountWithEmptyExpenses()
+            {
+                var argExpenses = new List<AbExpense>();
+                var ex = Assert.Throws<AbException>(() =>
+                    CHK.ExpCount(argExpenses)
+                );
+                Assert.AreEqual(EX.CSV_RECORD_NOTHING, ex.Message);
+            }
+
+            /// <summary>
+            /// NULLチェック(集計値)
+            /// </summary>
+            [Test]
+            public void SumNull()
+            {
+                var argSum = AbSummary.GetSummaries(new List<AbExpense>()
+                {
+                    new AbExpense("2015-01-01", "おにぎり", TYPE.FOOD, "108"),
+                });
+                Assert.DoesNotThrow(() => CHK.SumNull(argSum));
+            }
+
+            /// <summary>
+            /// NULLチェック(集計値)
+            /// 引数:集計値リストがNULL
+            /// </summary>
+            [Test]
+            public void SumNullWithNullSum()
+            {
+                List<AbSummary> argSumarries = null;
+                var ex = Assert.Throws<AbException>(() =>
+                    CHK.SumNull(argSumarries)
+                );
+                Assert.AreEqual(EX.SUMMARIES_NULL, ex.Message);
+            }
+
+            /// <summary>
+            /// マイナスチェック(年度)
+            /// </summary>
+            [Test]
+            public void YearMinus()
+            {
+                var argYear = 9999;
+                Assert.DoesNotThrow(() => CHK.YearMinus(argYear));
+            }
+
+            /// <summary>
+            /// マイナスチェック(年度)
+            /// 引数:年度がマイナス
+            /// </summary>
+            [Test]
+            public void YearMinusWithMinusYear()
+            {
+                var argYear = -1;
+                var ex = Assert.Throws<AbException>(() =>
+                    CHK.YearMinus(argYear)
+                );
+                Assert.AreEqual(EX.YEAR_MINUS, ex.Message);
+            }
+
+            /// <summary>
+            /// マイナスチェック(収入)
+            /// </summary>
+            [Test]
+            public void EarnMinus()
+            {
+                var argEarn = 9999;
+                Assert.DoesNotThrow(() => CHK.EarnMinus(argEarn));
+            }
+
+            /// <summary>
+            /// マイナスチェック(収入)
+            /// 引数:収入がマイナス
+            /// </summary>
+            [Test]
+            public void EarnMinusWithMinusEarn()
+            {
+                var argEarn = -1;
+                var ex = Assert.Throws<AbException>(() =>
+                    CHK.EarnMinus(argEarn)
+                );
+                Assert.AreEqual(EX.EARN_MINUS, ex.Message);
+            }
+
+            /// <summary>
+            /// マイナスチェック(支出)
+            /// </summary>
+            [Test]
+            public void ExpenseMinus()
+            {
+                var argExpense = 9999;
+                Assert.DoesNotThrow(() => CHK.ExpenseMinus(argExpense));
+            }
+
+            /// <summary>
+            /// マイナスチェック(支出)
+            /// 引数:支出がマイナス
+            /// </summary>
+            [Test]
+            public void ExpenseMinusWithMinusExpense()
+            {
+                var argExpense = -1;
+                var ex = Assert.Throws<AbException>(() =>
+                    CHK.ExpenseMinus(argExpense)
+                );
+                Assert.AreEqual(EX.EXPENSE_MINUS, ex.Message);
+            }
+
+            /// <summary>
+            /// マイナスチェック(特出)
+            /// </summary>
+            [Test]
+            public void SpecialMinus()
+            {
+                var argSpecial = 9999;
+                Assert.DoesNotThrow(() => CHK.SpecialMinus(argSpecial));
+            }
+
+            /// <summary>
+            /// マイナスチェック(特出)
+            /// 引数:特出がマイナス
+            /// </summary>
+            [Test]
+            public void SpecialMinusWithMinusSpecial()
+            {
+                var argSpecial = -1;
+                var ex = Assert.Throws<AbException>(() =>
+                    CHK.SpecialMinus(argSpecial)
+                );
+                Assert.AreEqual(EX.SPECIAL_MINUS, ex.Message);
+            }
+
+            /// <summary>
+            /// 整合性チェック(収支)
+            /// </summary>
+            [Test]
+            public void BalanceIncorrect()
+            {
+                var argErn = 90000m;
+                var argExp = 20000m;
+                var argSpc = 10000m;
+                var argBln = 60000m;
+                Assert.DoesNotThrow(() => CHK.BalanceIncorrect(argErn, argExp, argSpc, argBln));
+            }
+
+            /// <summary>
+            /// 整合性チェック(収支)
+            /// 収支が合わない
+            /// </summary>
+            [Test]
+            public void BalanceIncorrectWithIncorrect()
+            {
+                var argErn = 50000m;
+                var argExp = 10000m;
+                var argSpc = 20000m;
+                var argBln = 30000m;
+                var ex = Assert.Throws<AbException>(() =>
+                    CHK.BalanceIncorrect(argErn, argExp, argSpc, argBln)
+                );
+                Assert.AreEqual(EX.BALANCE_INCORRECT, ex.Message);
+            }
+
+            /// <summary>
+            /// NULLチェック(リクエストURL)
+            /// </summary>
+            [Test]
+            public void UrlNull()
+            {
+                var argUrl = "http://localhost:9999";
+                Assert.DoesNotThrow(() => CHK.UrlNull(argUrl));
+            }
+
+            /// <summary>
+            /// NULLチェック(リクエストURL)
+            /// 引数:リクエストURLがNULL
+            /// </summary>
+            [Test]
+            public void UrlNullWithNullUrl()
+            {
+                string argUrl = null;
+                var ex = Assert.Throws<AbException>(() =>
+                    CHK.UrlNull(argUrl)
+                );
+                Assert.AreEqual(EX.URL_NULL, ex.Message);
+            }
+
+            /// <summary>
+            /// NULLチェック(リクエストURL)
+            /// 引数:リクエストURLが空文字列
+            /// </summary>
+            [Test]
+            public void UrlNullWithEmptyUrl()
+            {
+                var argUrl = string.Empty;
+                var ex = Assert.Throws<AbException>(() =>
+                    CHK.UrlNull(argUrl)
+                );
+                Assert.AreEqual(EX.URL_NULL, ex.Message);
+            }
+
+            /// <summary>
+            /// NULLチェック(UPDファイル名)
+            /// </summary>
+            [Test]
+            public void UpdNull()
+            {
+                var argUpd = UPD_FILE;
+                Assert.DoesNotThrow(() => CHK.UpdNull(argUpd));
+            }
+
+            /// <summary>
+            /// NULLチェック(UPDファイル名)
+            /// 引数:UPDファイル名がNULL
+            /// </summary>
+            [Test]
+            public void UpdNullWithNullUpd()
+            {
+                string argUpd = null;
+                var ex = Assert.Throws<AbException>(() =>
+                    CHK.UpdNull(argUpd)
+                );
+                Assert.AreEqual(EX.UPD_NULL, ex.Message);
+            }
+
+            /// <summary>
+            /// NULLチェック(UPDファイル名)
+            /// 引数:UPDファイル名が空文字列
+            /// </summary>
+            [Test]
+            public void UpdNullWithEmptyUpd()
+            {
+                var argUpd = string.Empty;
+                var ex = Assert.Throws<AbException>(() =>
+                    CHK.UpdNull(argUpd)
+                );
+                Assert.AreEqual(EX.UPD_NULL, ex.Message);
+            }
+
+            /// <summary>
+            /// 存在チェック(UPDファイル名)
+            /// </summary>
+            [Test]
+            public void UpdExist()
+            {
+                var argUpd = UPD_FILE;
+                Assert.DoesNotThrow(() => CHK.UpdExist(argUpd));
+            }
+
+            /// <summary>
+            /// 存在チェック(UPDファイル名)
+            /// 引数:UPDファイル名が存在しない
+            /// </summary>
+            [Test]
+            public void UpdExistWithDoesNotExist()
+            {
+                var argUpd = "does not exist";
+                var ex = Assert.Throws<AbException>(() =>
+                    CHK.UpdExist(argUpd)
+                );
+                Assert.AreEqual(EX.UPD_DOES_NOT_EXIST, ex.Message);
+            }
+
+            /// <summary>
+            /// 件数チェック(支出情報リスト)
+            /// </summary>
+            [Test]
+            public void UpdCount()
+            {
+                var argExpenses = new List<AbExpense>()
+                {
+                    new AbExpense("2015-01-01", "おにぎり", TYPE.FOOD, "108"),
+                };
+                Assert.DoesNotThrow(() => CHK.UpdCount(argExpenses));
+            }
+
+            /// <summary>
+            /// 件数チェック(支出情報リスト)
+            /// 引数:支出情報リストがNULL
+            /// </summary>
+            [Test]
+            public void UpdCountWithNullExpenses()
+            {
+                List<AbExpense> argExpenses = null;
+                var ex = Assert.Throws<AbException>(() =>
+                    CHK.UpdCount(argExpenses)
+                );
+                Assert.AreEqual(EX.UPD_RECORD_NOTHING, ex.Message);
+            }
+
+            /// <summary>
+            /// 件数チェック(支出情報リスト)
+            /// 引数:支出情報リストが空リスト
+            /// </summary>
+            [Test]
+            public void UpdCountWithEmptyExpenses()
+            {
+                var argExpenses = new List<AbExpense>();
+                var ex = Assert.Throws<AbException>(() =>
+                    CHK.UpdCount(argExpenses)
+                );
+                Assert.AreEqual(EX.UPD_RECORD_NOTHING, ex.Message);
+            }
         }
     }
 }

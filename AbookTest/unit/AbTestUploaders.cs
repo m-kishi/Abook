@@ -78,7 +78,7 @@
         {
             argFile = null;
             var ex = Assert.Throws<AbException>(() =>
-                { AbUploaders.Prepare(argFile, argExpenses); }
+                AbUploaders.Prepare(argFile, argExpenses)
             );
             Assert.AreEqual(EX.UPD_NULL, ex.Message);
         }
@@ -92,7 +92,7 @@
         {
             argFile = string.Empty;
             var ex = Assert.Throws<AbException>(() =>
-                { AbUploaders.Prepare(argFile, argExpenses); }
+                AbUploaders.Prepare(argFile, argExpenses)
             );
             Assert.AreEqual(EX.UPD_NULL, ex.Message);
         }
@@ -106,7 +106,7 @@
         {
             argExpenses = null;
             var ex = Assert.Throws<AbException>(() =>
-                { AbUploaders.Prepare(argFile, argExpenses); }
+                AbUploaders.Prepare(argFile, argExpenses)
             );
             Assert.AreEqual(EX.UPD_RECORD_NOTHING, ex.Message);
         }
@@ -120,7 +120,7 @@
         {
             argExpenses = new List<AbExpense>();
             var ex = Assert.Throws<AbException>(() =>
-                { AbUploaders.Prepare(argFile, argExpenses); }
+                AbUploaders.Prepare(argFile, argExpenses)
             );
             Assert.AreEqual(EX.UPD_RECORD_NOTHING, ex.Message);
         }
@@ -148,7 +148,7 @@
 
             argUrl = null;
             var ex = Assert.Throws<AbException>(() =>
-                { AbUploaders.SendUploadRequest(argUrl, argFile); }
+                AbUploaders.SendUploadRequest(argUrl, argFile)
             );
             Assert.AreEqual(EX.URL_NULL, ex.Message);
         }
@@ -164,7 +164,7 @@
 
             argUrl = string.Empty;
             var ex = Assert.Throws<AbException>(() =>
-                { AbUploaders.SendUploadRequest(argUrl, argFile); }
+                AbUploaders.SendUploadRequest(argUrl, argFile)
             );
             Assert.AreEqual(EX.URL_NULL, ex.Message);
         }
@@ -180,7 +180,7 @@
 
             argFile = null;
             var ex = Assert.Throws<AbException>(() =>
-                { AbUploaders.SendUploadRequest(argUrl, argFile); }
+                AbUploaders.SendUploadRequest(argUrl, argFile)
             );
             Assert.AreEqual(EX.UPD_NULL, ex.Message);
         }
@@ -196,7 +196,7 @@
 
             argFile = string.Empty;
             var ex = Assert.Throws<AbException>(() =>
-                { AbUploaders.SendUploadRequest(argUrl, argFile); }
+                AbUploaders.SendUploadRequest(argUrl, argFile)
             );
             Assert.AreEqual(EX.UPD_NULL, ex.Message);
         }
@@ -212,7 +212,7 @@
 
             argFile = "does_not_exist.sql";
             var ex = Assert.Throws<AbException>(() =>
-                { AbUploaders.SendUploadRequest(argUrl, argFile); }
+                AbUploaders.SendUploadRequest(argUrl, argFile)
             );
             Assert.AreEqual(EX.UPD_DOES_NOT_EXIST, ex.Message);
         }
@@ -228,7 +228,7 @@
 
             argUrl = "http://localhost:9000";
             var ex = Assert.Throws<AbException>(() =>
-                { AbUploaders.SendUploadRequest(argUrl, argFile); }
+                AbUploaders.SendUploadRequest(argUrl, argFile)
             );
             StringAssert.StartsWith(EX.UPD_REQ_FAILED, ex.Message);
         }
@@ -259,7 +259,7 @@
 
             argUrl = AbWebServer.URL_FAILURE;
             var ex = Assert.Throws<AbException>(() =>
-                { AbUploaders.SendUploadRequest(argUrl, argFile); }
+                AbUploaders.SendUploadRequest(argUrl, argFile)
             );
             StringAssert.Contains(EX.UPD_REQ_FAILED, ex.Message);
             Assert.IsFalse(File.Exists(UPD.FILE));

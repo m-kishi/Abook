@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Windows.Forms;
     using EX   = Abook.AbException.EX;
@@ -212,7 +213,7 @@
             /// <param name="upd">UPDファイル名</param>
             public static void UpdExist(string upd)
             {
-                if (!System.IO.File.Exists(upd)) AbException.Throw(EX.UPD_DOES_NOT_EXIST);
+                if (!File.Exists(upd)) AbException.Throw(EX.UPD_DOES_NOT_EXIST);
             }
 
             /// <summary>

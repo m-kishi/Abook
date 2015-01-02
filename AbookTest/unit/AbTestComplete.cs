@@ -57,7 +57,7 @@
         {
             argExpenses = null;
             var ex = Assert.Throws<AbException>(() =>
-                { new AbComplete(argExpenses); }
+                new AbComplete(argExpenses)
             );
             Assert.AreEqual(EX.EXPENSES_NULL, ex.Message);
         }

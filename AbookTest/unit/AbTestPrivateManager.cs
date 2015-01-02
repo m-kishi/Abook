@@ -149,7 +149,7 @@
         {
             argExpenses = null;
             var ex = Assert.Throws<AbException>(() =>
-                { new AbPrivateManager(argExpenses); }
+                new AbPrivateManager(argExpenses)
             );
             Assert.AreEqual(EX.EXPENSES_NULL, ex.Message);
         }

@@ -86,7 +86,7 @@
         {
             argDate = null;
             var ex = Assert.Throws<AbException>(() =>
-                { new AbExpense(argDate, argName, argType, argCost); }
+                new AbExpense(argDate, argName, argType, argCost)
             );
             Assert.AreEqual(EX.DATE_NULL, ex.Message);
         }
@@ -100,7 +100,7 @@
         {
             argDate = string.Empty;
             var ex = Assert.Throws<AbException>(() =>
-                { new AbExpense(argDate, argName, argType, argCost); }
+                new AbExpense(argDate, argName, argType, argCost)
             );
             Assert.AreEqual(EX.DATE_NULL, ex.Message);
         }
@@ -114,7 +114,7 @@
         {
             argDate = "invalid";
             var ex = Assert.Throws<AbException>(() =>
-                { new AbExpense(argDate, argName, argType, argCost); }
+                new AbExpense(argDate, argName, argType, argCost)
             );
             Assert.AreEqual(EX.DATE_FORMAT, ex.Message);
         }
@@ -128,7 +128,7 @@
         {
             argName = null;
             var ex = Assert.Throws<AbException>(() =>
-                { new AbExpense(argDate, argName, argType, argCost); }
+                new AbExpense(argDate, argName, argType, argCost)
             );
             Assert.AreEqual(EX.NAME_NULL, ex.Message);
         }
@@ -142,7 +142,7 @@
         {
             argName = string.Empty;
             var ex = Assert.Throws<AbException>(() =>
-                { new AbExpense(argDate, argName, argType, argCost); }
+                new AbExpense(argDate, argName, argType, argCost)
             );
             Assert.AreEqual(EX.NAME_NULL, ex.Message);
         }
@@ -156,7 +156,7 @@
         {
             argType = null;
             var ex = Assert.Throws<AbException>(() =>
-                { new AbExpense(argDate, argName, argType, argCost); }
+                new AbExpense(argDate, argName, argType, argCost)
             );
             Assert.AreEqual(EX.TYPE_NULL, ex.Message);
         }
@@ -170,7 +170,7 @@
         {
             argType = string.Empty;
             var ex = Assert.Throws<AbException>(() =>
-                { new AbExpense(argDate, argName, argType, argCost); }
+                new AbExpense(argDate, argName, argType, argCost)
             );
             Assert.AreEqual(EX.TYPE_NULL, ex.Message);
         }
@@ -184,7 +184,7 @@
         {
             argType = "wrong";
             var ex = Assert.Throws<AbException>(() =>
-                { new AbExpense(argDate, argName, argType, argCost); }
+                new AbExpense(argDate, argName, argType, argCost)
             );
             Assert.AreEqual(EX.TYPE_WRONG, ex.Message);
         }
@@ -198,7 +198,7 @@
         {
             argCost = null;
             var ex = Assert.Throws<AbException>(() =>
-                { new AbExpense(argDate, argName, argType, argCost); }
+                new AbExpense(argDate, argName, argType, argCost)
             );
             Assert.AreEqual(EX.COST_NULL, ex.Message);
         }
@@ -212,7 +212,7 @@
         {
             argCost = string.Empty;
             var ex = Assert.Throws<AbException>(() =>
-                { new AbExpense(argDate, argName, argType, argCost); }
+                new AbExpense(argDate, argName, argType, argCost)
             );
             Assert.AreEqual(EX.COST_NULL, ex.Message);
         }
@@ -226,7 +226,7 @@
         {
             argCost = "invalid";
             var ex = Assert.Throws<AbException>(() =>
-                { new AbExpense(argDate, argName, argType, argCost); }
+                new AbExpense(argDate, argName, argType, argCost)
             );
             Assert.AreEqual(EX.COST_FORMAT, ex.Message);
         }
@@ -240,7 +240,7 @@
         {
             argCost = "-100";
             var ex = Assert.Throws<AbException>(() =>
-                { new AbExpense(argDate, argName, argType, argCost); }
+                new AbExpense(argDate, argName, argType, argCost)
             );
             Assert.AreEqual(EX.COST_MINUS, ex.Message);
         }
@@ -254,7 +254,7 @@
         {
             argCost = Convert.ToString(decimal.MaxValue) + "0";
             var ex = Assert.Throws<AbException>(() =>
-                { new AbExpense(argDate, argName, argType, argCost); }
+                new AbExpense(argDate, argName, argType, argCost)
             );
             Assert.AreEqual(EX.COST_OVERFLOW, ex.Message);
         }

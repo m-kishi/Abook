@@ -19,9 +19,6 @@
         /// <summary>対象:収支情報管理</summary>
         private AbBalanceManager abBalanceManager;
 
-        /// <summary>
-        /// SetUp
-        /// </summary>
         [SetUp]
         public void SetUp()
         {
@@ -134,8 +131,8 @@
         public void AbBalanceManagerWithNullExpenses()
         {
             argExpenses = null;
-            var ex = Assert.Throws<AbException>(
-                () => { new AbBalanceManager(argExpenses); }
+            var ex = Assert.Throws<AbException>(() =>
+                new AbBalanceManager(argExpenses)
             );
             Assert.AreEqual(EX.EXPENSES_NULL, ex.Message);
         }

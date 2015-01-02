@@ -106,7 +106,7 @@
         {
             argExpenses = null;
             var ex = Assert.Throws<AbException>(() =>
-                { new AbSummary(argDate, argExpenses); }
+                new AbSummary(argDate, argExpenses)
             );
             Assert.AreEqual(EX.EXPENSES_NULL, ex.Message);
         }
@@ -375,7 +375,7 @@
         {
             argExpenses = null;
             var ex = Assert.Throws<AbException>(() =>
-                { AbSummary.GetSummaries(argExpenses); }
+                AbSummary.GetSummaries(argExpenses)
             );
             Assert.AreEqual(EX.EXPENSES_NULL, ex.Message);
         }
@@ -427,8 +427,8 @@
         public void GetSummariesWith_2011_02_Summary()
         {
             var date = new DateTime(2011, 2, 1);
-            var abSummary = abSummaries.Where(
-                sum => sum.Year == date.Year && sum.Month == date.Month
+            var abSummary = abSummaries.Where(sum =>
+                sum.Year == date.Year && sum.Month == date.Month
             ).FirstOrDefault();
             Assert.IsNull(abSummary);
         }

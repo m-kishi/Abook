@@ -56,7 +56,7 @@
         {
             argSummaries = null;
             var ex = Assert.Throws<AbException>(() =>
-                { new AbExpenseManager(argDate, argSummaries); }
+                new AbExpenseManager(argDate, argSummaries)
             );
             Assert.AreEqual(EX.SUMMARIES_NULL, ex.Message);
         }
