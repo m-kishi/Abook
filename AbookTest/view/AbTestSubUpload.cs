@@ -7,6 +7,7 @@
     using System.Windows.Forms;
     using NUnit.Framework;
     using NUnit.Extensions.Forms;
+    using TT  = AbTestTool;
     using CSV = Abook.AbConstants.CSV;
 
     /// <summary>
@@ -15,15 +16,14 @@
     [TestFixture]
     public class AbTestSubUpload : NUnitFormTest
     {
-        /// <summary>リクエストURL</summary>
-        private const string VALID_URL   = "http://localhost:9999/";
-        /// <summary>リクエストURL</summary>
-        private const string INVALID_URL = "http://localhost:9000/";
         /// <summary>CSVファイル</summary>
         private const string CSV_FILE = "AbTestSubUpload.db";
         /// <summary>UPDファイル</summary>
         private const string UPD_FILE = "AbTestSubUpload.sql";
-
+        /// <summary>リクエストURL</summary>
+        private const string VALID_URL   = "http://localhost:9999/";
+        /// <summary>リクエストURL</summary>
+        private const string INVALID_URL = "http://localhost:9000/";
         /// <summary>対象:種別明細サブ</summary>
         protected AbSubUpload form;
 
@@ -61,9 +61,9 @@
             using (StreamWriter sw = new StreamWriter(CSV_FILE, false, CSV.ENCODING))
             {
                 sw.NewLine = CSV.LF;
-                sw.WriteLine(ToCSV("2014-11-01", "name1", "食費", "100"));
-                sw.WriteLine(ToCSV("2014-11-02", "name2", "雑貨", "200"));
-                sw.WriteLine(ToCSV("2014-11-03", "name3", "家賃", "300"));
+                sw.WriteLine(TT.ToCSV("2014-11-01", "name1", "食費", "100"));
+                sw.WriteLine(TT.ToCSV("2014-11-02", "name2", "雑貨", "200"));
+                sw.WriteLine(TT.ToCSV("2014-11-03", "name3", "家賃", "300"));
                 sw.Close();
             }
         }
@@ -75,23 +75,8 @@
         public void TestFixtureTearDown()
         {
             AbWebServer.Finish();
-            if (System.IO.File.Exists(CSV_FILE)) System.IO.File.Delete(CSV_FILE);
-            if (System.IO.File.Exists(UPD_FILE)) System.IO.File.Delete(UPD_FILE);
-        }
-
-        /// <summary>
-        /// 支出情報CSV生成
-        /// (AbTestFormBase、AbTestSubTypeと重複:これ以上増えるならDRY検討)
-        /// </summary>
-        /// <param name="date">日付</param>
-        /// <param name="name">名前</param>
-        /// <param name="type">種別</param>
-        /// <param name="cost">金額</param>
-        /// <returns>支出情報CSV</returns>
-        protected string ToCSV(string date, string name, string type, string cost)
-        {
-            const string TEMPLATE = "\"{0}\",\"{1}\",\"{2}\",\"{3}\"";
-            return string.Format(TEMPLATE, date, name, type, cost);
+            if (File.Exists(CSV_FILE)) File.Delete(CSV_FILE);
+            if (File.Exists(UPD_FILE)) File.Delete(UPD_FILE);
         }
 
         /// <summary>
@@ -185,7 +170,8 @@
             {
                 var ctBtnCancel = (new Finder<Button>("BtnCancel", form).Find());
                 Assert.IsTrue(ctBtnCancel.Enabled);
-                ButtonTester tsBtnCancel = new ButtonTester("BtnCancel", form);
+
+                var tsBtnCancel = new ButtonTester("BtnCancel", form);
                 tsBtnCancel.Click();
                 Assert.IsFalse(ctBtnCancel.Enabled);
             }

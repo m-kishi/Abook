@@ -22,6 +22,9 @@
         /// <summary>引数:支出情報リスト</summary>
         private List<AbExpense> argExpenses;
 
+        /// <summary>
+        /// TestFixtureSetUp
+        /// </summary>
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
@@ -48,6 +51,9 @@
             }
         }
 
+        /// <summary>
+        /// TestFixtureTearDown
+        /// </summary>
         [TestFixtureTearDown]
         public void TestFixtureTearDown()
         {
@@ -56,6 +62,9 @@
             File.Delete("Expected.sql");
         }
 
+        /// <summary>
+        /// SetUp
+        /// </summary>
         [SetUp]
         public void SetUp()
         {
@@ -63,6 +72,9 @@
             argExpenses = AbDBManager.Load("InData.db");
         }
 
+        /// <summary>
+        /// TearDown
+        /// </summary>
         [TearDown]
         public void TearDown()
         {

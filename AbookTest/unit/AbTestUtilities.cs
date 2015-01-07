@@ -69,12 +69,18 @@
             /// <summary>UPDファイル名</summary>
             private const string UPD_FILE = "ChkTestUpd.sql";
 
+            /// <summary>
+            /// TestFixtureSetUp
+            /// </summary>
             [TestFixtureSetUp]
             public void TestFixtureSetUp()
             {
                 if (!File.Exists(UPD_FILE)) File.Create(UPD_FILE).Close();
             }
 
+            /// <summary>
+            /// TestFixtureTearDown
+            /// </summary>
             [TestFixtureTearDown]
             public void TestFixtureTearDown()
             {
@@ -200,7 +206,6 @@
             /// </summary>
             /// <param name="type">種別</param>
             /// <param name="isError">true: エラー、false: OK</param>
-            [Test]
             [TestCase(TYPE.FOOD, false)]
             [TestCase(TYPE.OTFD, false)]
             [TestCase(TYPE.GOOD, false)]
@@ -240,7 +245,6 @@
             /// </summary>
             /// <param name="type">種別</param>
             /// <param name="isError">true: エラー、false: OK</param>
-            [Test]
             [TestCase(TYPE.FOOD, false)]
             [TestCase(TYPE.OTFD, false)]
             [TestCase(TYPE.GOOD, false)]

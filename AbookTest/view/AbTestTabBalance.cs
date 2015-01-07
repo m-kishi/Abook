@@ -6,6 +6,7 @@
     using System.Windows.Forms;
     using NUnit.Framework;
     using NUnit.Extensions.Forms;
+    using TT   = AbTestTool;
     using COL  = Abook.AbConstants.COL;
     using CSV  = Abook.AbConstants.CSV;
     using TYPE = Abook.AbConstants.TYPE;
@@ -31,49 +32,53 @@
         {
             using (StreamWriter sw = new StreamWriter(CSV_EXIST, false, CSV.ENCODING))
             {
-                sw.WriteLine(ToCSV("2009-04-01", "name", TYPE.EARN, "800000"));
-                sw.WriteLine(ToCSV("2009-04-01", "name", TYPE.EARN, "900000"));
-                sw.WriteLine(ToCSV("2009-04-01", "name", TYPE.FOOD, "200000"));
-                sw.WriteLine(ToCSV("2009-04-01", "name", TYPE.FOOD, "350000"));
-                sw.WriteLine(ToCSV("2009-04-01", "name", TYPE.SPCL,  "80000"));
-                sw.WriteLine(ToCSV("2009-04-01", "name", TYPE.SPCL,  "50000"));
-                sw.WriteLine(ToCSV("2009-04-30", "name", TYPE.BNUS,  "10000"));
-                sw.WriteLine(ToCSV("2009-04-30", "name", TYPE.PRVI,  "11000"));
+                sw.NewLine = CSV.LF;
 
-                sw.WriteLine(ToCSV("2010-03-01", "name", TYPE.EARN, "200000"));
-                sw.WriteLine(ToCSV("2010-03-01", "name", TYPE.EARN, "400000"));
-                sw.WriteLine(ToCSV("2010-03-01", "name", TYPE.FOOD, "300000"));
-                sw.WriteLine(ToCSV("2010-03-01", "name", TYPE.FOOD, "250000"));
-                sw.WriteLine(ToCSV("2010-03-01", "name", TYPE.SPCL,  "20000"));
-                sw.WriteLine(ToCSV("2010-03-01", "name", TYPE.SPCL,  "30000"));
-                sw.WriteLine(ToCSV("2010-03-31", "name", TYPE.BNUS,  "15000"));
-                sw.WriteLine(ToCSV("2010-03-31", "name", TYPE.PRVO,  "10000"));
+                sw.WriteLine(TT.ToCSV("2009-04-01", "name", TYPE.EARN, "800000"));
+                sw.WriteLine(TT.ToCSV("2009-04-01", "name", TYPE.EARN, "900000"));
+                sw.WriteLine(TT.ToCSV("2009-04-01", "name", TYPE.FOOD, "200000"));
+                sw.WriteLine(TT.ToCSV("2009-04-01", "name", TYPE.FOOD, "350000"));
+                sw.WriteLine(TT.ToCSV("2009-04-01", "name", TYPE.SPCL,  "80000"));
+                sw.WriteLine(TT.ToCSV("2009-04-01", "name", TYPE.SPCL,  "50000"));
+                sw.WriteLine(TT.ToCSV("2009-04-30", "name", TYPE.BNUS,  "10000"));
+                sw.WriteLine(TT.ToCSV("2009-04-30", "name", TYPE.PRVI,  "11000"));
 
-                sw.WriteLine(ToCSV("2010-04-01", "name", TYPE.EARN, "600000"));
-                sw.WriteLine(ToCSV("2010-04-01", "name", TYPE.EARN, "800000"));
-                sw.WriteLine(ToCSV("2010-04-01", "name", TYPE.FOOD, "200000"));
-                sw.WriteLine(ToCSV("2010-04-01", "name", TYPE.FOOD, "250000"));
-                sw.WriteLine(ToCSV("2010-04-01", "name", TYPE.SPCL,  "20000"));
-                sw.WriteLine(ToCSV("2010-04-01", "name", TYPE.SPCL,  "40000"));
-                sw.WriteLine(ToCSV("2010-04-30", "name", TYPE.BNUS,   "1000"));
-                sw.WriteLine(ToCSV("2010-04-30", "name", TYPE.PRVI,  "30000"));
+                sw.WriteLine(TT.ToCSV("2010-03-01", "name", TYPE.EARN, "200000"));
+                sw.WriteLine(TT.ToCSV("2010-03-01", "name", TYPE.EARN, "400000"));
+                sw.WriteLine(TT.ToCSV("2010-03-01", "name", TYPE.FOOD, "300000"));
+                sw.WriteLine(TT.ToCSV("2010-03-01", "name", TYPE.FOOD, "250000"));
+                sw.WriteLine(TT.ToCSV("2010-03-01", "name", TYPE.SPCL,  "20000"));
+                sw.WriteLine(TT.ToCSV("2010-03-01", "name", TYPE.SPCL,  "30000"));
+                sw.WriteLine(TT.ToCSV("2010-03-31", "name", TYPE.BNUS,  "15000"));
+                sw.WriteLine(TT.ToCSV("2010-03-31", "name", TYPE.PRVO,  "10000"));
 
-                sw.WriteLine(ToCSV("2011-03-01", "name", TYPE.EARN, "300000"));
-                sw.WriteLine(ToCSV("2011-03-01", "name", TYPE.EARN, "700000"));
-                sw.WriteLine(ToCSV("2011-03-01", "name", TYPE.FOOD, "100000"));
-                sw.WriteLine(ToCSV("2011-03-01", "name", TYPE.FOOD, "450000"));
-                sw.WriteLine(ToCSV("2011-03-01", "name", TYPE.SPCL,  "60000"));
-                sw.WriteLine(ToCSV("2011-03-01", "name", TYPE.SPCL,  "18000"));
-                sw.WriteLine(ToCSV("2011-03-31", "name", TYPE.BNUS,   "2000"));
-                sw.WriteLine(ToCSV("2011-03-31", "name", TYPE.PRVO,   "9000"));
+                sw.WriteLine(TT.ToCSV("2010-04-01", "name", TYPE.EARN, "600000"));
+                sw.WriteLine(TT.ToCSV("2010-04-01", "name", TYPE.EARN, "800000"));
+                sw.WriteLine(TT.ToCSV("2010-04-01", "name", TYPE.FOOD, "200000"));
+                sw.WriteLine(TT.ToCSV("2010-04-01", "name", TYPE.FOOD, "250000"));
+                sw.WriteLine(TT.ToCSV("2010-04-01", "name", TYPE.SPCL,  "20000"));
+                sw.WriteLine(TT.ToCSV("2010-04-01", "name", TYPE.SPCL,  "40000"));
+                sw.WriteLine(TT.ToCSV("2010-04-30", "name", TYPE.BNUS,   "1000"));
+                sw.WriteLine(TT.ToCSV("2010-04-30", "name", TYPE.PRVI,  "30000"));
 
-                sw.WriteLine(ToCSV("2011-04-01", "name", TYPE.EARN,      "0"));
-                sw.WriteLine(ToCSV("2011-04-01", "name", TYPE.EARN,      "0"));
-                sw.WriteLine(ToCSV("2011-04-01", "name", TYPE.FOOD, "300000"));
-                sw.WriteLine(ToCSV("2011-04-01", "name", TYPE.FOOD, "900000"));
-                sw.WriteLine(ToCSV("2011-04-01", "name", TYPE.SPCL,  "80000"));
-                sw.WriteLine(ToCSV("2011-04-01", "name", TYPE.SPCL,  "20000"));
-                sw.WriteLine(ToCSV("2011-04-01", "name", TYPE.PRVI,  "30000"));
+                sw.WriteLine(TT.ToCSV("2011-03-01", "name", TYPE.EARN, "300000"));
+                sw.WriteLine(TT.ToCSV("2011-03-01", "name", TYPE.EARN, "700000"));
+                sw.WriteLine(TT.ToCSV("2011-03-01", "name", TYPE.FOOD, "100000"));
+                sw.WriteLine(TT.ToCSV("2011-03-01", "name", TYPE.FOOD, "450000"));
+                sw.WriteLine(TT.ToCSV("2011-03-01", "name", TYPE.SPCL,  "60000"));
+                sw.WriteLine(TT.ToCSV("2011-03-01", "name", TYPE.SPCL,  "18000"));
+                sw.WriteLine(TT.ToCSV("2011-03-31", "name", TYPE.BNUS,   "2000"));
+                sw.WriteLine(TT.ToCSV("2011-03-31", "name", TYPE.PRVO,   "9000"));
+
+                sw.WriteLine(TT.ToCSV("2011-04-01", "name", TYPE.EARN,      "0"));
+                sw.WriteLine(TT.ToCSV("2011-04-01", "name", TYPE.EARN,      "0"));
+                sw.WriteLine(TT.ToCSV("2011-04-01", "name", TYPE.FOOD, "300000"));
+                sw.WriteLine(TT.ToCSV("2011-04-01", "name", TYPE.FOOD, "900000"));
+                sw.WriteLine(TT.ToCSV("2011-04-01", "name", TYPE.SPCL,  "80000"));
+                sw.WriteLine(TT.ToCSV("2011-04-01", "name", TYPE.SPCL,  "20000"));
+                sw.WriteLine(TT.ToCSV("2011-04-01", "name", TYPE.PRVI,  "30000"));
+
+                sw.Close();
             }
         }
 
@@ -83,8 +88,8 @@
         [TestFixtureTearDown]
         public void TestFixtureTearDown()
         {
-            if (System.IO.File.Exists(CSV_EXIST)) System.IO.File.Delete(CSV_EXIST);
-            if (System.IO.File.Exists(CSV_EMPTY)) System.IO.File.Delete(CSV_EMPTY);
+            if (File.Exists(CSV_EXIST)) File.Delete(CSV_EXIST);
+            if (File.Exists(CSV_EMPTY)) File.Delete(CSV_EMPTY);
         }
 
         /// <summary>
@@ -94,7 +99,6 @@
         public void DgvBalanceWithCount()
         {
             ShowFormMain(CSV_EXIST, TAB_IDX);
-
             Assert.AreEqual(4, CtDgvBalance().Rows.Count);
         }
 
@@ -106,7 +110,6 @@
         public void DgvBalanceWithCountWithEmptyData()
         {
             ShowFormMain(CSV_EMPTY, TAB_IDX);
-
             Assert.AreEqual(0, CtDgvBalance().Rows.Count);
         }
 

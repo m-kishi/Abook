@@ -30,6 +30,9 @@
         /// <summary>期待値:支出リスト</summary>
         private List<AbExpense> expected;
 
+        /// <summary>
+        /// TestFixtureSetUp
+        /// </summary>
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
@@ -71,6 +74,9 @@
             }
         }
 
+        /// <summary>
+        /// TestFixtureTearDown
+        /// </summary>
         [TestFixtureTearDown]
         public void TestFixtureTearDown()
         {
@@ -83,6 +89,9 @@
             File.Delete("InvalidDateFormat.db");
         }
 
+        /// <summary>
+        /// SetUp
+        /// </summary>
         [SetUp]
         public void SetUp()
         {

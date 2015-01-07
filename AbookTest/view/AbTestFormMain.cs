@@ -5,6 +5,7 @@
     using System.IO;
     using NUnit.Framework;
     using NUnit.Extensions.Forms;
+    using TT  = AbTestTool;
     using EX  = Abook.AbException.EX;
     using CSV = Abook.AbConstants.CSV;
 
@@ -27,9 +28,9 @@
         {
             using (StreamWriter sw = new StreamWriter(CSV_INVALID, false, CSV.ENCODING))
             {
-                sw.WriteLine(ToCSV("2012-01-01", "name1", "食費", "10000"));
-                sw.WriteLine(ToCSV("2012-02-30", "name2", "食費", "20000"));
-                sw.WriteLine(ToCSV("2012-03-05", "name3", "食費", "30000"));
+                sw.WriteLine(TT.ToCSV("2012-01-01", "name1", "食費", "10000"));
+                sw.WriteLine(TT.ToCSV("2012-02-30", "name2", "食費", "20000"));
+                sw.WriteLine(TT.ToCSV("2012-03-05", "name3", "食費", "30000"));
             }
         }
 
@@ -39,8 +40,8 @@
         [TestFixtureTearDown]
         public void TestFixtureTearDown()
         {
-            if (System.IO.File.Exists(CSV_EMPTY  )) System.IO.File.Delete(CSV_EMPTY);
-            if (System.IO.File.Exists(CSV_INVALID)) System.IO.File.Delete(CSV_INVALID);
+            if (File.Exists(CSV_EMPTY  )) File.Delete(CSV_EMPTY);
+            if (File.Exists(CSV_INVALID)) File.Delete(CSV_INVALID);
         }
 
         /// <summary>

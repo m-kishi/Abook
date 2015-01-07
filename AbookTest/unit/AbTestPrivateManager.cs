@@ -18,6 +18,9 @@
         /// <summary>対象:秘密収支情報管理</summary>
         private AbPrivateManager abPrivateManager;
 
+        /// <summary>
+        /// SetUp
+        /// </summary>
         [SetUp]
         public void SetUp()
         {

@@ -22,6 +22,9 @@
         /// <summary>対象:集計値</summary>
         private AbSummary abSummary;
 
+        /// <summary>
+        /// SetUp
+        /// </summary>
         [SetUp]
         public void SetUp()
         {
@@ -283,6 +286,9 @@
         /// <summary>対象:集計値リスト</summary>
         private List<AbSummary> abSummaries;
 
+        /// <summary>
+        /// SetUp
+        /// </summary>
         [SetUp]
         public void SetUp()
         {

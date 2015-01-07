@@ -6,6 +6,7 @@
     using System.Windows.Forms;
     using NUnit.Framework;
     using NUnit.Extensions.Forms;
+    using TT   = AbTestTool;
     using EX   = Abook.AbException.EX;
     using COL  = Abook.AbConstants.COL;
     using CSV  = Abook.AbConstants.CSV;
@@ -43,14 +44,15 @@
                     var name = "name" + i.ToString("D2");
                     var type = TYPE.FOOD;
                     var cost = (i * 100M).ToString();
-                    sw.WriteLine(ToCSV(date, name, type, cost));
+                    sw.WriteLine(TT.ToCSV(date, name, type, cost));
                 }
+                sw.Close();
             }
-            if (System.IO.File.Exists(CSV_ENTRY))
+            if (File.Exists(CSV_ENTRY))
             {
-                System.IO.File.Delete(CSV_ENTRY);
+                File.Delete(CSV_ENTRY);
             }
-            System.IO.File.Copy(CSV_EXIST, CSV_ENTRY);
+            File.Copy(CSV_EXIST, CSV_ENTRY);
         }
 
         /// <summary>
@@ -59,9 +61,9 @@
         [TestFixtureTearDown]
         protected void TestFixtureTearDown()
         {
-            if (System.IO.File.Exists(CSV_EXIST)) System.IO.File.Delete(CSV_EXIST);
-            if (System.IO.File.Exists(CSV_EMPTY)) System.IO.File.Delete(CSV_EMPTY);
-            if (System.IO.File.Exists(CSV_ENTRY)) System.IO.File.Delete(CSV_ENTRY);
+            if (File.Exists(CSV_EXIST)) File.Delete(CSV_EXIST);
+            if (File.Exists(CSV_EMPTY)) File.Delete(CSV_EMPTY);
+            if (File.Exists(CSV_ENTRY)) File.Delete(CSV_ENTRY);
         }
     }
 
@@ -84,7 +86,6 @@
             public void CountWithEmptyData()
             {
                 ShowFormMain(CSV_EMPTY, TAB_IDX);
-
                 Assert.AreEqual(0, CtDgvExpense().Rows.Count);
             }
 
@@ -96,7 +97,6 @@
             public void CountWithExistData()
             {
                 ShowFormMain(CSV_EXIST, TAB_IDX);
-
                 Assert.AreEqual(15, CtDgvExpense().Rows.Count);
             }
 

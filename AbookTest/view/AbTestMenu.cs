@@ -2,9 +2,11 @@
 {
     using Abook;
     using System;
+    using System.IO;
     using System.Windows.Forms;
     using NUnit.Framework;
     using NUnit.Extensions.Forms;
+    using TT  = AbTestTool;
     using EX  = Abook.AbException.EX;
     using CSV = Abook.AbConstants.CSV;
 
@@ -24,10 +26,10 @@
         public void TestFixtureSetUp()
         {
             AbWebServer.Start();
-            using (var sw = new System.IO.StreamWriter(CSV_FILE, false, CSV.ENCODING))
+            using (var sw = new StreamWriter(CSV_FILE, false, CSV.ENCODING))
             {
                 sw.NewLine = CSV.LF;
-                sw.WriteLine("\"2014-11-01\",\"おにぎり\",\"食費\",\"108\"");
+                sw.WriteLine(TT.ToCSV("2014-11-01", "おにぎり", "食費", "108"));
                 sw.Close();
             }
         }
@@ -39,7 +41,7 @@
         public void TestFixtureTearDown()
         {
             AbWebServer.Finish();
-            if (System.IO.File.Exists(CSV_FILE)) System.IO.File.Delete(CSV_FILE);
+            if (File.Exists(CSV_FILE)) File.Delete(CSV_FILE);
         }
 
         /// <summary>
@@ -52,7 +54,7 @@
 
             TsMenuExit().Click();
 
-            Assert.IsTrue(this.form.IsDisposed);
+            Assert.IsTrue(form.IsDisposed);
         }
 
         /// <summary>

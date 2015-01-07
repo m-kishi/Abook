@@ -19,6 +19,9 @@
         /// <summary>対象:収支情報管理</summary>
         private AbBalanceManager abBalanceManager;
 
+        /// <summary>
+        /// SetUp
+        /// </summary>
         [SetUp]
         public void SetUp()
         {

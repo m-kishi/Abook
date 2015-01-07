@@ -20,6 +20,9 @@
         /// <summary>対象:秘密収支情報</summary>
         private AbPrivate abPrivate;
 
+        /// <summary>
+        /// SetUp
+        /// </summary>
         [SetUp]
         public void SetUp()
         {

@@ -20,6 +20,9 @@
         /// <summary>対象:グラフデータ管理</summary>
         private AbGraphicManager abGraphicManager;
 
+        /// <summary>
+        /// SetUp
+        /// </summary>
         [SetUp]
         public void SetUp()
         {

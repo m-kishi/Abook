@@ -24,6 +24,9 @@
         /// <summary>対象:収支情報</summary>
         private AbBalance abBalance;
 
+        /// <summary>
+        /// SetUp
+        /// </summary>
         [SetUp]
         public void SetUp()
         {

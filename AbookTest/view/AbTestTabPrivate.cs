@@ -6,6 +6,7 @@
     using System.Windows.Forms;
     using NUnit.Framework;
     using NUnit.Extensions.Forms;
+    using TT   = AbTestTool;
     using COL  = Abook.AbConstants.COL;
     using CSV  = Abook.AbConstants.CSV;
     using TYPE = Abook.AbConstants.TYPE;
@@ -31,16 +32,18 @@
         {
             using (StreamWriter sw = new StreamWriter(CSV_EXIST, false, CSV.ENCODING))
             {
-                sw.WriteLine(ToCSV("2009-04-01", "private01", TYPE.PRVI, "10000"));
-                sw.WriteLine(ToCSV("2009-05-01", "private02", TYPE.PRVI, "20000"));
-                sw.WriteLine(ToCSV("2010-06-01", "private03", TYPE.PRVI, "30000"));
-                sw.WriteLine(ToCSV("2010-06-30", "dummy"    , TYPE.FOOD, "35000"));
-                sw.WriteLine(ToCSV("2010-07-01", "private04", TYPE.PRVO, "40000"));
-                sw.WriteLine(ToCSV("2011-08-01", "private05", TYPE.PRVI, "50000"));
-                sw.WriteLine(ToCSV("2011-09-01", "private06", TYPE.PRVI, "60000"));
-                sw.WriteLine(ToCSV("2011-09-30", "dummy"    , TYPE.SPCL, "65000"));
-                sw.WriteLine(ToCSV("2012-10-01", "private07", TYPE.PRVI, "70000"));
-                sw.WriteLine(ToCSV("2012-11-01", "private08", TYPE.PRVO, "80000"));
+                sw.NewLine = CSV.LF;
+                sw.WriteLine(TT.ToCSV("2009-04-01", "private01", TYPE.PRVI, "10000"));
+                sw.WriteLine(TT.ToCSV("2009-05-01", "private02", TYPE.PRVI, "20000"));
+                sw.WriteLine(TT.ToCSV("2010-06-01", "private03", TYPE.PRVI, "30000"));
+                sw.WriteLine(TT.ToCSV("2010-06-30", "dummy"    , TYPE.FOOD, "35000"));
+                sw.WriteLine(TT.ToCSV("2010-07-01", "private04", TYPE.PRVO, "40000"));
+                sw.WriteLine(TT.ToCSV("2011-08-01", "private05", TYPE.PRVI, "50000"));
+                sw.WriteLine(TT.ToCSV("2011-09-01", "private06", TYPE.PRVI, "60000"));
+                sw.WriteLine(TT.ToCSV("2011-09-30", "dummy"    , TYPE.SPCL, "65000"));
+                sw.WriteLine(TT.ToCSV("2012-10-01", "private07", TYPE.PRVI, "70000"));
+                sw.WriteLine(TT.ToCSV("2012-11-01", "private08", TYPE.PRVO, "80000"));
+                sw.Close();
             }
         }
 
@@ -50,8 +53,8 @@
         [TestFixtureTearDown]
         public void TestFixtureTearDown()
         {
-            if (System.IO.File.Exists(CSV_EXIST)) System.IO.File.Delete(CSV_EXIST);
-            if (System.IO.File.Exists(CSV_EMPTY)) System.IO.File.Delete(CSV_EMPTY);
+            if (File.Exists(CSV_EXIST)) File.Delete(CSV_EXIST);
+            if (File.Exists(CSV_EMPTY)) File.Delete(CSV_EMPTY);
         }
 
         /// <summary>
@@ -61,7 +64,6 @@
         public void DgvPrivateWithCount()
         {
             ShowFormMain(CSV_EXIST, TAB_IDX);
-
             Assert.AreEqual(8, CtDgvPrivate().Rows.Count);
         }
 
@@ -73,7 +75,6 @@
         public void DgvPrivateWithCountWithEmptyData()
         {
             ShowFormMain(CSV_EMPTY, TAB_IDX);
-
             Assert.AreEqual(0, CtDgvPrivate().Rows.Count);
         }
 

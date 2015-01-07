@@ -18,6 +18,9 @@
         /// <summary>対象:自動補完</summary>
         private AbComplete abComplete;
 
+        /// <summary>
+        /// SetUp
+        /// </summary>
         [SetUp]
         public void SetUp()
         {

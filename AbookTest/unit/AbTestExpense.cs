@@ -23,6 +23,9 @@
         /// <summary>対象:支出情報</summary>
         private AbExpense abExpense;
 
+        /// <summary>
+        /// SetUp
+        /// </summary>
         [SetUp]
         public void SetUp()
         {

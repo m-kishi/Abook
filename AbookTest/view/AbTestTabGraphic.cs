@@ -2,6 +2,7 @@
 {
     using Abook;
     using System;
+    using System.IO;
     using System.Windows.Forms;
     using NUnit.Framework;
     using NUnit.Extensions.Forms;
@@ -24,7 +25,7 @@
         [TestFixtureTearDown]
         public void TestFixtureTearDown()
         {
-            if (System.IO.File.Exists(CSV)) System.IO.File.Delete(CSV);
+            if (File.Exists(CSV)) File.Delete(CSV);
         }
 
         /// <summary>

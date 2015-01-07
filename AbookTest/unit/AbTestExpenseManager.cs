@@ -20,6 +20,9 @@
         /// <summary>対象:支出情報管理</summary>
         private AbExpenseManager abExpenseManager;
 
+        /// <summary>
+        /// SetUp
+        /// </summary>
         [SetUp]
         public void SetUp()
         {
