@@ -128,14 +128,14 @@
 
         /// <summary>
         /// コンストラクタ
-        /// 引数:支出情報リストが NULL
+        /// 引数:支出情報リストがNULL
         /// </summary>
         [Test]
         public void AbBalanceManagerWithNullExpenses()
         {
             argExpenses = null;
-            var ex = Assert.Throws<AbException>(
-                () => { new AbBalanceManager(argExpenses); }
+            var ex = Assert.Throws<AbException>(() =>
+                new AbBalanceManager(argExpenses)
             );
             Assert.AreEqual(EX.EXPENSES_NULL, ex.Message);
         }

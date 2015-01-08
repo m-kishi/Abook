@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using EX = Abook.AbException.EX;
+    using CHK = Abook.AbUtilities.CHK;
 
     /// <summary>
     /// 自動補完クラス
@@ -19,12 +19,9 @@
         /// <param name="expenses">支出情報リスト</param>
         public AbComplete(List<AbExpense> expenses)
         {
-            dicComp = new Dictionary<string, string>();
-            if (expenses == null)
-            {
-                AbException.Throw(EX.EXPENSES_NULL);
-            }
+            CHK.ExpNull(expenses);
 
+            dicComp = new Dictionary<string, string>();
             foreach (var name in expenses.GroupBy(exp => exp.Name).Select(gObj => gObj.Key))
             {
                 var max = 0;
@@ -54,7 +51,7 @@
         /// <returns>種別</returns>
         public string GetType(string name)
         {
-            if (string.IsNullOrEmpty(name)) { return string.Empty; }
+            if (string.IsNullOrEmpty(name)) return string.Empty;
             return dicComp.ContainsKey(name) ? dicComp[name] : string.Empty;
         }
     }

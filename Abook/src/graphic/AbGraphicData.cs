@@ -12,17 +12,15 @@
     {
         /// <summary>ペン</summary>
         private Pen pen;
-
         /// <summary>ブラシ</summary>
         private Brush brush;
-
         /// <summary>データ座標</summary>
         private List<Point> Points;
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        /// <param name="brush">Brush オブジェクト</param>
+        /// <param name="brush">Brushオブジェクト</param>
         public AbGraphicData(Brush brush)
         {
             this.brush  = brush;
@@ -44,7 +42,7 @@
         /// <summary>
         /// グラフ描画
         /// </summary>
-        /// <param name="g">Graphics オブジェクト</param>
+        /// <param name="g">Graphicsオブジェクト</param>
         public void DrawData(Graphics g)
         {
             Point? prev = null;

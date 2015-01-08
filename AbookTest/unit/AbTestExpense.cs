@@ -23,6 +23,9 @@
         /// <summary>対象:支出情報</summary>
         private AbExpense abExpense;
 
+        /// <summary>
+        /// SetUp
+        /// </summary>
         [SetUp]
         public void SetUp()
         {
@@ -79,14 +82,14 @@
 
         /// <summary>
         /// コンストラクタ
-        /// 引数:日付が NULL
+        /// 引数:日付がNULL
         /// </summary>
         [Test]
         public void AbExpenseWithNullDate()
         {
             argDate = null;
             var ex = Assert.Throws<AbException>(() =>
-                { new AbExpense(argDate, argName, argType, argCost); }
+                new AbExpense(argDate, argName, argType, argCost)
             );
             Assert.AreEqual(EX.DATE_NULL, ex.Message);
         }
@@ -100,7 +103,7 @@
         {
             argDate = string.Empty;
             var ex = Assert.Throws<AbException>(() =>
-                { new AbExpense(argDate, argName, argType, argCost); }
+                new AbExpense(argDate, argName, argType, argCost)
             );
             Assert.AreEqual(EX.DATE_NULL, ex.Message);
         }
@@ -114,21 +117,21 @@
         {
             argDate = "invalid";
             var ex = Assert.Throws<AbException>(() =>
-                { new AbExpense(argDate, argName, argType, argCost); }
+                new AbExpense(argDate, argName, argType, argCost)
             );
             Assert.AreEqual(EX.DATE_FORMAT, ex.Message);
         }
 
         /// <summary>
         /// コンストラクタ
-        /// 引数:名称が NULL
+        /// 引数:名称がNULL
         /// </summary>
         [Test]
         public void AbExpenseWithNullName()
         {
             argName = null;
             var ex = Assert.Throws<AbException>(() =>
-                { new AbExpense(argDate, argName, argType, argCost); }
+                new AbExpense(argDate, argName, argType, argCost)
             );
             Assert.AreEqual(EX.NAME_NULL, ex.Message);
         }
@@ -142,21 +145,21 @@
         {
             argName = string.Empty;
             var ex = Assert.Throws<AbException>(() =>
-                { new AbExpense(argDate, argName, argType, argCost); }
+                new AbExpense(argDate, argName, argType, argCost)
             );
             Assert.AreEqual(EX.NAME_NULL, ex.Message);
         }
 
         /// <summary>
         /// コンストラクタ
-        /// 引数:種別が NULL
+        /// 引数:種別がNULL
         /// </summary>
         [Test]
         public void AbExpenseWithNullType()
         {
             argType = null;
             var ex = Assert.Throws<AbException>(() =>
-                { new AbExpense(argDate, argName, argType, argCost); }
+                new AbExpense(argDate, argName, argType, argCost)
             );
             Assert.AreEqual(EX.TYPE_NULL, ex.Message);
         }
@@ -170,7 +173,7 @@
         {
             argType = string.Empty;
             var ex = Assert.Throws<AbException>(() =>
-                { new AbExpense(argDate, argName, argType, argCost); }
+                new AbExpense(argDate, argName, argType, argCost)
             );
             Assert.AreEqual(EX.TYPE_NULL, ex.Message);
         }
@@ -184,21 +187,21 @@
         {
             argType = "wrong";
             var ex = Assert.Throws<AbException>(() =>
-                { new AbExpense(argDate, argName, argType, argCost); }
+                new AbExpense(argDate, argName, argType, argCost)
             );
             Assert.AreEqual(EX.TYPE_WRONG, ex.Message);
         }
 
         /// <summary>
         /// コンストラクタ
-        /// 引数:金額が NULL
+        /// 引数:金額がNULL
         /// </summary>
         [Test]
         public void AbExpenseWithNullCost()
         {
             argCost = null;
             var ex = Assert.Throws<AbException>(() =>
-                { new AbExpense(argDate, argName, argType, argCost); }
+                new AbExpense(argDate, argName, argType, argCost)
             );
             Assert.AreEqual(EX.COST_NULL, ex.Message);
         }
@@ -212,7 +215,7 @@
         {
             argCost = string.Empty;
             var ex = Assert.Throws<AbException>(() =>
-                { new AbExpense(argDate, argName, argType, argCost); }
+                new AbExpense(argDate, argName, argType, argCost)
             );
             Assert.AreEqual(EX.COST_NULL, ex.Message);
         }
@@ -226,7 +229,7 @@
         {
             argCost = "invalid";
             var ex = Assert.Throws<AbException>(() =>
-                { new AbExpense(argDate, argName, argType, argCost); }
+                new AbExpense(argDate, argName, argType, argCost)
             );
             Assert.AreEqual(EX.COST_FORMAT, ex.Message);
         }
@@ -240,7 +243,7 @@
         {
             argCost = "-100";
             var ex = Assert.Throws<AbException>(() =>
-                { new AbExpense(argDate, argName, argType, argCost); }
+                new AbExpense(argDate, argName, argType, argCost)
             );
             Assert.AreEqual(EX.COST_MINUS, ex.Message);
         }
@@ -254,13 +257,13 @@
         {
             argCost = Convert.ToString(decimal.MaxValue) + "0";
             var ex = Assert.Throws<AbException>(() =>
-                { new AbExpense(argDate, argName, argType, argCost); }
+                new AbExpense(argDate, argName, argType, argCost)
             );
             Assert.AreEqual(EX.COST_OVERFLOW, ex.Message);
         }
 
         /// <summary>
-        /// CSV 形式
+        /// CSV形式
         /// </summary>
         [Test]
         public void ToCSV()
@@ -270,7 +273,7 @@
         }
 
         /// <summary>
-        /// SQL 形式
+        /// SQL形式
         /// </summary>
         [Test]
         public void ToSQL()

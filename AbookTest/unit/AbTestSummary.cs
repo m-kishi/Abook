@@ -22,6 +22,9 @@
         /// <summary>対象:集計値</summary>
         private AbSummary abSummary;
 
+        /// <summary>
+        /// SetUp
+        /// </summary>
         [SetUp]
         public void SetUp()
         {
@@ -99,21 +102,21 @@
 
         /// <summary>
         /// コンストラクタ
-        /// 引数:支出情報リストが NULL
+        /// 引数:支出情報リストがNULL
         /// </summary>
         [Test]
         public void AbSummaryWithNullExpenses()
         {
             argExpenses = null;
             var ex = Assert.Throws<AbException>(() =>
-                { new AbSummary(argDate, argExpenses); }
+                new AbSummary(argDate, argExpenses)
             );
             Assert.AreEqual(EX.EXPENSES_NULL, ex.Message);
         }
 
         /// <summary>
         /// 集計値取得
-        /// 引数:種別が NULL
+        /// 引数:種別がNULL
         /// </summary>
         [Test]
         public void GetCostByTypeWithNullType()
@@ -193,7 +196,7 @@
 
         /// <summary>
         /// 集計値取得
-        /// 引数:名称が NULL
+        /// 引数:名称がNULL
         /// </summary>
         [Test]
         public void GetCostByNameWithNullName()
@@ -283,6 +286,9 @@
         /// <summary>対象:集計値リスト</summary>
         private List<AbSummary> abSummaries;
 
+        /// <summary>
+        /// SetUp
+        /// </summary>
         [SetUp]
         public void SetUp()
         {
@@ -368,14 +374,14 @@
 
         /// <summary>
         /// 集計値リスト生成
-        /// 引数:支出情報リストが NULL
+        /// 引数:支出情報リストがNULL
         /// </summary>
         [Test]
         public void GetSummariesWithNullExpenses()
         {
             argExpenses = null;
             var ex = Assert.Throws<AbException>(() =>
-                { AbSummary.GetSummaries(argExpenses); }
+                AbSummary.GetSummaries(argExpenses)
             );
             Assert.AreEqual(EX.EXPENSES_NULL, ex.Message);
         }
@@ -427,8 +433,8 @@
         public void GetSummariesWith_2011_02_Summary()
         {
             var date = new DateTime(2011, 2, 1);
-            var abSummary = abSummaries.Where(
-                sum => sum.Year == date.Year && sum.Month == date.Month
+            var abSummary = abSummaries.Where(sum =>
+                sum.Year == date.Year && sum.Month == date.Month
             ).FirstOrDefault();
             Assert.IsNull(abSummary);
         }

@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="tool\AbWebServer.cs" />
+    <Compile Include="tool\AbTestTool.cs" />
     <Compile Include="unit\AbTestBalance.cs" />
     <Compile Include="unit\AbTestBalanceManager.cs" />
     <Compile Include="unit\AbTestComplete.cs" />

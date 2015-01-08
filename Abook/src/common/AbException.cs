@@ -3,6 +3,7 @@
     using System;
     using System.Threading;
     using System.Windows.Forms;
+    using MSG = Abook.AbUtilities.MSG;
 
     /// <summary>
     /// 例外クラス
@@ -15,7 +16,7 @@
         /// <param name="message">メッセージ</param>
         private AbException(string message) : base(message)
         {
-            //外部から new 不可
+            //外部からnew不可
         }
 
         /// <summary>
@@ -34,12 +35,7 @@
         {
             try
             {
-                MessageBox.Show(
-                    e.Exception.Message,
-                    "エラー",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error
-                );
+                MSG.Error(e.Exception.Message);
             }
             finally
             {
@@ -69,20 +65,20 @@
             /// <summary>金額が大き過ぎます。</summary>
             public const string COST_OVERFLOW = "金額が大き過ぎます。";
 
-            /// <summary>DB ファイルがありません。</summary>
-            public const string DB_NULL = "DB ファイルがありません。";
+            /// <summary>CSVファイルがありません。</summary>
+            public const string CSV_NULL = "CSVファイルがありません。";
             /// <summary>{0} 行目: {1}</summary>
-            public const string DB_LOAD = "{0} 行目: {1}";
+            public const string CSV_LOAD = "{0} 行目: {1}";
             /// <summary>{0} 行目: {1}</summary>
-            public const string DB_STORE = "{0} 行目: {1}";
-            /// <summary>DB ファイルの作成に失敗しました。</summary>
-            public const string DB_CREATE = "DB ファイルの作成に失敗しました。";
+            public const string CSV_STORE = "{0} 行目: {1}";
+            /// <summary>CSVファイルの作成に失敗しました。</summary>
+            public const string CSV_CREATE = "CSVファイルの作成に失敗しました。";
             /// <summary>フィールド数が少ないです。</summary>
-            public const string DB_FIELD_LESS = "フィールド数が少ないです。";
+            public const string CSV_FIELD_LESS = "フィールド数が少ないです。";
             /// <summary>フィールド数が多いです。</summary>
-            public const string DB_FIELD_MORE = "フィールド数が多いです。";
+            public const string CSV_FIELD_MORE = "フィールド数が多いです。";
             /// <summary>登録するデータがありません。</summary>
-            public const string DB_RECORD_NOTHING = "登録するデータがありません。";
+            public const string CSV_RECORD_NOTHING = "登録するデータがありません。";
 
             /// <summary>支出情報がありません。</summary>
             public const string EXPENSE_NULL = "支出情報がありません。";
@@ -105,16 +101,16 @@
             /// <summary>種別が正しくありません。</summary>
             public const string TYPE_PRIVATE_ERR = "種別が正しくありません。";
 
-            /// <summary>URL がありません。</summary>
-            public const string URL_NULL = "URL がありません。";
-            /// <summary>UPD ファイルがありません。</summary>
-            public const string UPD_NULL = "UPD ファイルがありません。";
+            /// <summary>URLがありません。</summary>
+            public const string URL_NULL = "URLがありません。";
+            /// <summary>UPDファイルがありません。</summary>
+            public const string UPD_NULL = "UPDファイルがありません。";
             /// <summary>{0} 行目: {1}</summary>
             public const string UPD_PREPARE = "{0} 行目: {1}";
-            /// <summary>UPD ファイルの作成に失敗しました。</summary>
-            public const string UPD_CREATE = "UPD ファイルの作成に失敗しました。\r\n: {0}";
-            /// <summary>UPD ファイルが見つかりませんでした。</summary>
-            public const string UPD_DOES_NOT_EXIST = "UPD ファイルが見つかりませんでした。";
+            /// <summary>UPDファイルの作成に失敗しました。\r\n: {0}</summary>
+            public const string UPD_CREATE = "UPDファイルの作成に失敗しました。\r\n: {0}";
+            /// <summary>UPDファイルが見つかりませんでした。</summary>
+            public const string UPD_DOES_NOT_EXIST = "UPDファイルが見つかりませんでした。";
             /// <summary>サーバへのアップロードに失敗しました。</summary>
             public const string UPD_REQ_FAILED = "サーバへのアップロードに失敗しました。";
             /// <summary>サーバからの応答の取得に失敗しました。</summary>

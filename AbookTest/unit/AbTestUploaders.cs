@@ -22,6 +22,9 @@
         /// <summary>引数:支出情報リスト</summary>
         private List<AbExpense> argExpenses;
 
+        /// <summary>
+        /// TestFixtureSetUp
+        /// </summary>
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
@@ -37,7 +40,7 @@
                 sw.Close();
             }
 
-            //出力される UPD ファイル
+            //出力されるUPDファイル
             using (StreamWriter sw = new StreamWriter("Expected.sql", false, UPD.ENCODING))
             {
                 sw.NewLine = UPD.LF;
@@ -48,6 +51,9 @@
             }
         }
 
+        /// <summary>
+        /// TestFixtureTearDown
+        /// </summary>
         [TestFixtureTearDown]
         public void TestFixtureTearDown()
         {
@@ -56,6 +62,9 @@
             File.Delete("Expected.sql");
         }
 
+        /// <summary>
+        /// SetUp
+        /// </summary>
         [SetUp]
         public void SetUp()
         {
@@ -63,6 +72,9 @@
             argExpenses = AbDBManager.Load("InData.db");
         }
 
+        /// <summary>
+        /// TearDown
+        /// </summary>
         [TearDown]
         public void TearDown()
         {
@@ -70,21 +82,21 @@
         }
 
         /// <summary>
-        /// UPD ファイル書き出し
-        /// 引数:ファイル名が NULL
+        /// UPDファイル書き出し
+        /// 引数:ファイル名がNULL
         /// </summary>
         [Test]
         public void PrepareWithNullFile()
         {
             argFile = null;
             var ex = Assert.Throws<AbException>(() =>
-                { AbUploaders.Prepare(argFile, argExpenses); }
+                AbUploaders.Prepare(argFile, argExpenses)
             );
             Assert.AreEqual(EX.UPD_NULL, ex.Message);
         }
 
         /// <summary>
-        /// UPD ファイル書き出し
+        /// UPDファイル書き出し
         /// 引数:ファイル名が空文字列
         /// </summary>
         [Test]
@@ -92,27 +104,27 @@
         {
             argFile = string.Empty;
             var ex = Assert.Throws<AbException>(() =>
-                { AbUploaders.Prepare(argFile, argExpenses); }
+                AbUploaders.Prepare(argFile, argExpenses)
             );
             Assert.AreEqual(EX.UPD_NULL, ex.Message);
         }
 
         /// <summary>
-        /// UPD ファイル書き出し
-        /// 引数:支出情報リストが NULL
+        /// UPDファイル書き出し
+        /// 引数:支出情報リストがNULL
         /// </summary>
         [Test]
         public void PrepareWithNullExpenses()
         {
             argExpenses = null;
             var ex = Assert.Throws<AbException>(() =>
-                { AbUploaders.Prepare(argFile, argExpenses); }
+                AbUploaders.Prepare(argFile, argExpenses)
             );
             Assert.AreEqual(EX.UPD_RECORD_NOTHING, ex.Message);
         }
 
         /// <summary>
-        /// UPD ファイル書き出し
+        /// UPDファイル書き出し
         /// 引数:支出情報リストが空リスト
         /// </summary>
         [Test]
@@ -120,13 +132,13 @@
         {
             argExpenses = new List<AbExpense>();
             var ex = Assert.Throws<AbException>(() =>
-                { AbUploaders.Prepare(argFile, argExpenses); }
+                AbUploaders.Prepare(argFile, argExpenses)
             );
             Assert.AreEqual(EX.UPD_RECORD_NOTHING, ex.Message);
         }
 
         /// <summary>
-        /// UPD ファイル書き出し
+        /// UPDファイル書き出し
         /// </summary>
         [Test]
         public void Prepare()
@@ -139,7 +151,7 @@
 
         /// <summary>
         /// アップロード
-        /// 引数:URL が NULL
+        /// 引数:URLがNULL
         /// </summary>
         [Test]
         public void SendUploadRequestWithNullUrl()
@@ -148,14 +160,14 @@
 
             argUrl = null;
             var ex = Assert.Throws<AbException>(() =>
-                { AbUploaders.SendUploadRequest(argUrl, argFile); }
+                AbUploaders.SendUploadRequest(argUrl, argFile)
             );
             Assert.AreEqual(EX.URL_NULL, ex.Message);
         }
 
         /// <summary>
         /// アップロード
-        /// 引数:URL が空文字列
+        /// 引数:URLが空文字列
         /// </summary>
         [Test]
         public void SendUploadRequestWithEmptyUrl()
@@ -164,14 +176,14 @@
 
             argUrl = string.Empty;
             var ex = Assert.Throws<AbException>(() =>
-                { AbUploaders.SendUploadRequest(argUrl, argFile); }
+                AbUploaders.SendUploadRequest(argUrl, argFile)
             );
             Assert.AreEqual(EX.URL_NULL, ex.Message);
         }
 
         /// <summary>
         /// アップロード
-        /// 引数:ファイル名が NULL
+        /// 引数:ファイル名がNULL
         /// </summary>
         [Test]
         public void SendUploadRequestWithNullFile()
@@ -180,7 +192,7 @@
 
             argFile = null;
             var ex = Assert.Throws<AbException>(() =>
-                { AbUploaders.SendUploadRequest(argUrl, argFile); }
+                AbUploaders.SendUploadRequest(argUrl, argFile)
             );
             Assert.AreEqual(EX.UPD_NULL, ex.Message);
         }
@@ -196,7 +208,7 @@
 
             argFile = string.Empty;
             var ex = Assert.Throws<AbException>(() =>
-                { AbUploaders.SendUploadRequest(argUrl, argFile); }
+                AbUploaders.SendUploadRequest(argUrl, argFile)
             );
             Assert.AreEqual(EX.UPD_NULL, ex.Message);
         }
@@ -212,7 +224,7 @@
 
             argFile = "does_not_exist.sql";
             var ex = Assert.Throws<AbException>(() =>
-                { AbUploaders.SendUploadRequest(argUrl, argFile); }
+                AbUploaders.SendUploadRequest(argUrl, argFile)
             );
             Assert.AreEqual(EX.UPD_DOES_NOT_EXIST, ex.Message);
         }
@@ -228,7 +240,7 @@
 
             argUrl = "http://localhost:9000";
             var ex = Assert.Throws<AbException>(() =>
-                { AbUploaders.SendUploadRequest(argUrl, argFile); }
+                AbUploaders.SendUploadRequest(argUrl, argFile)
             );
             StringAssert.StartsWith(EX.UPD_REQ_FAILED, ex.Message);
         }
@@ -259,7 +271,7 @@
 
             argUrl = AbWebServer.URL_FAILURE;
             var ex = Assert.Throws<AbException>(() =>
-                { AbUploaders.SendUploadRequest(argUrl, argFile); }
+                AbUploaders.SendUploadRequest(argUrl, argFile)
             );
             StringAssert.Contains(EX.UPD_REQ_FAILED, ex.Message);
             Assert.IsFalse(File.Exists(UPD.FILE));

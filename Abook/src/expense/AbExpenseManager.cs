@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using EX  = Abook.AbException.EX;
+    using CHK = Abook.AbUtilities.CHK;
     using FMT = Abook.AbConstants.FMT;
 
     /// <summary>
@@ -13,7 +13,6 @@
     {
         /// <summary>集計値</summary>
         private AbSummary abCurrentSummary;
-
         /// <summary>集計値リスト</summary>
         private List<AbSummary> abSummaries;
 
@@ -24,11 +23,9 @@
         /// <param name="summaries">集計値リスト</param>
         public AbExpenseManager(DateTime date, List<AbSummary> summaries)
         {
-            if (summaries == null)
-            {
-                AbException.Throw(EX.SUMMARIES_NULL);
-            }
-            this.abSummaries = summaries;
+            CHK.SumNull(summaries);
+
+            abSummaries = summaries;
             SetCurrentSummary(date);
         }
 
@@ -42,7 +39,7 @@
             var currentSummary = abSummaries.Where(sum =>
                 sum.Year == date.Year && sum.Month == date.Month
             ).FirstOrDefault();
-            abCurrentSummary = currentSummary == null ? emptySummary : currentSummary;
+            abCurrentSummary = (currentSummary == null) ? emptySummary : currentSummary;
         }
 
         /// <summary>

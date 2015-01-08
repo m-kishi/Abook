@@ -3,19 +3,19 @@
     using System;
     using System.ComponentModel;
     using System.Windows.Forms;
+    using MSG = Abook.AbUtilities.MSG;
 
     /// <summary>
     /// アップロードサブフォーム
     /// </summary>
     public partial class AbSubUpload : Form
     {
-        /// <summary>DB ファイル</summary>
-        private string DB { get; set; }
-        /// <summary>UPD ファイル</summary>
+        /// <summary>CSVファイル</summary>
+        private string CSV { get; set; }
+        /// <summary>UPDファイル</summary>
         private string UPD { get; set; }
-        /// <summary>リクエスト URL</summary>
+        /// <summary>リクエストURL</summary>
         private string URL { get; set; }
-
         /// <summary>処理中フラグ</summary>
         public bool IsRunning { get; private set; }
         /// <summary>サーバからの応答</summary>
@@ -24,12 +24,12 @@
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        /// <param name="DB">DB ファイル</param>
-        /// <param name="UPD">UPD ファイル</param>
-        /// <param name="URL">リクエスト URL</param>
-        public AbSubUpload(string DB, string UPD, string URL)
+        /// <param name="CSV">CSVファイル</param>
+        /// <param name="UPD">UPDファイル</param>
+        /// <param name="URL">リクエストURL</param>
+        public AbSubUpload(string CSV, string UPD, string URL)
         {
-            this.DB  = DB;
+            this.CSV = CSV;
             this.UPD = UPD;
             this.URL = URL;
             InitializeComponent();
@@ -57,7 +57,7 @@
         /// </summary>
         private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            AbUploaders.Prepare(UPD, AbDBManager.Load(DB));
+            AbUploaders.Prepare(UPD, AbDBManager.Load(CSV));
             e.Result = AbUploaders.SendUploadRequest(URL, UPD);
         }
 
@@ -69,12 +69,7 @@
             IsRunning = false;
             if (e.Error != null)
             {
-                MessageBox.Show(
-                    e.Error.Message,
-                    "エラー",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error
-                );
+                MSG.Error(e.Error.Message);
                 DialogResult = DialogResult.Abort;
             }
             else if (e.Cancelled)

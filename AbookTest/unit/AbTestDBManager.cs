@@ -12,7 +12,7 @@
     using FMT = Abook.AbConstants.FMT;
 
     /// <summary>
-    /// DB ファイル管理テスト
+    /// DBファイル管理テスト
     /// </summary>
     [TestFixture]
     public class AbTestDBManager
@@ -30,6 +30,9 @@
         /// <summary>期待値:支出リスト</summary>
         private List<AbExpense> expected;
 
+        /// <summary>
+        /// TestFixtureSetUp
+        /// </summary>
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
@@ -71,6 +74,9 @@
             }
         }
 
+        /// <summary>
+        /// TestFixtureTearDown
+        /// </summary>
         [TestFixtureTearDown]
         public void TestFixtureTearDown()
         {
@@ -83,6 +89,9 @@
             File.Delete("InvalidDateFormat.db");
         }
 
+        /// <summary>
+        /// SetUp
+        /// </summary>
         [SetUp]
         public void SetUp()
         {
@@ -118,21 +127,21 @@
         }
 
         /// <summary>
-        /// DB ファイル読み込み
-        /// 引数:ファイル名が NULL
+        /// CSVファイル読み込み
+        /// 引数:ファイル名がNULL
         /// </summary>
         [Test]
         public void LoadWithNullFile()
         {
             argInFile = null;
             var ex = Assert.Throws<AbException>(() =>
-                { AbDBManager.Load(argInFile); }
+                AbDBManager.Load(argInFile)
             );
-            Assert.AreEqual(EX.DB_NULL, ex.Message);
+            Assert.AreEqual(EX.CSV_NULL, ex.Message);
         }
 
         /// <summary>
-        /// DB ファイル読み込み
+        /// CSVファイル読み込み
         /// 引数:ファイル名が空文字列
         /// </summary>
         [Test]
@@ -140,13 +149,13 @@
         {
             argInFile = string.Empty;
             var ex = Assert.Throws<AbException>(() =>
-                { AbDBManager.Load(argInFile); }
+                AbDBManager.Load(argInFile)
             );
-            Assert.AreEqual(EX.DB_NULL, ex.Message);
+            Assert.AreEqual(EX.CSV_NULL, ex.Message);
         }
 
         /// <summary>
-        /// DB ファイル読み込み
+        /// CSVファイル読み込み
         /// 引数:ファイル名が存在しない
         /// </summary>
         [Test]
@@ -160,35 +169,35 @@
         }
 
         /// <summary>
-        /// DB ファイル読み込み
-        /// CSV のフィールド数が少ない
+        /// CSVファイル読み込み
+        /// CSVのフィールド数が少ない
         /// </summary>
         [Test]
         public void LoadWithLessCSVFields()
         {
             argInFile = "LessCSVFields.db";
             var ex = Assert.Throws<AbException>(() =>
-                { AbDBManager.Load(argInFile); }
+                AbDBManager.Load(argInFile)
             );
-            Assert.AreEqual(string.Format(EX.DB_LOAD, 1, EX.DB_FIELD_LESS), ex.Message);
+            Assert.AreEqual(string.Format(EX.CSV_LOAD, 1, EX.CSV_FIELD_LESS), ex.Message);
         }
 
         /// <summary>
-        /// DB ファイル読み込み
-        /// CSV のフィールド数が多い
+        /// CSVファイル読み込み
+        /// CSVのフィールド数が多い
         /// </summary>
         [Test]
         public void LoadWithMoreCSVFields()
         {
             argInFile = "MoreCSVFields.db";
             var ex = Assert.Throws<AbException>(() =>
-                { AbDBManager.Load(argInFile); }
+                AbDBManager.Load(argInFile)
             );
-            Assert.AreEqual(string.Format(EX.DB_LOAD, 1, EX.DB_FIELD_MORE), ex.Message);
+            Assert.AreEqual(string.Format(EX.CSV_LOAD, 1, EX.CSV_FIELD_MORE), ex.Message);
         }
 
         /// <summary>
-        /// DB ファイル読み込み
+        /// CSVファイル読み込み
         /// 読み込むデータが不正
         /// </summary>
         [Test]
@@ -196,13 +205,13 @@
         {
             argInFile = "InvalidDateFormat.db";
             var ex = Assert.Throws<AbException>(() =>
-                { AbDBManager.Load(argInFile); }
+                AbDBManager.Load(argInFile)
             );
-            Assert.AreEqual(string.Format(EX.DB_LOAD, 1, EX.DATE_FORMAT), ex.Message);
+            Assert.AreEqual(string.Format(EX.CSV_LOAD, 1, EX.DATE_FORMAT), ex.Message);
         }
 
         /// <summary>
-        /// DB ファイル読み込み
+        /// CSVファイル読み込み
         /// 空ファイルから読み込み
         /// </summary>
         [Test]
@@ -214,8 +223,8 @@
         }
 
         /// <summary>
-        /// DataGridView から読み込み
-        /// 引数:DataGridView が NULL
+        /// DataGridViewから読み込み
+        /// 引数:DataGridViewがNULL
         /// </summary>
         [Test]
         public void LoadWithNullDgv()
@@ -227,8 +236,8 @@
         }
 
         /// <summary>
-        /// DataGridView から読み込み
-        /// 引数:DataGridView が空
+        /// DataGridViewから読み込み
+        /// 引数:DataGridViewが空
         /// </summary>
         [Test]
         public void LoadWithEmptyDgv()
@@ -240,8 +249,8 @@
         }
 
         /// <summary>
-        /// DataGridView から読み込み
-        /// 引数:DataGridView のデータが不正
+        /// DataGridViewから読み込み
+        /// 引数:DataGridViewのデータが不正
         /// </summary>
         [Test]
         public void LoadWithInvalidDateFormatDgv()
@@ -254,14 +263,14 @@
             row.Cells[COL.COST].Value = "1000";
 
             var ex = Assert.Throws<AbException>(() =>
-                { AbDBManager.Load(argDgv, out argLine); }
+                AbDBManager.Load(argDgv, out argLine)
             );
             Assert.AreEqual(argDgv.Rows.Count, argLine);
-            Assert.AreEqual(string.Format(EX.DB_STORE, argLine, EX.DATE_FORMAT), ex.Message);
+            Assert.AreEqual(string.Format(EX.CSV_STORE, argLine, EX.DATE_FORMAT), ex.Message);
         }
 
         /// <summary>
-        /// DB ファイル読み込み
+        /// CSVファイル読み込み
         /// 読み込み件数のチェック
         /// </summary>
         [Test]
@@ -272,7 +281,7 @@
         }
 
         /// <summary>
-        /// DB ファイル読み込み
+        /// CSVファイル読み込み
         /// 読み込み件数のチェック
         /// </summary>
         [Test]
@@ -283,7 +292,7 @@
         }
 
         /// <summary>
-        /// DB ファイル読み込み
+        /// CSVファイル読み込み
         /// </summary>
         [Test]
         public void LoadFromFile()
@@ -300,7 +309,7 @@
         }
 
         /// <summary>
-        /// DataGridView から読み込み
+        /// DataGridViewから読み込み
         /// </summary>
         [Test]
         public void LoadFromDgv()
@@ -317,21 +326,21 @@
         }
 
         /// <summary>
-        /// DB ファイル書き出し
-        /// 引数:ファイル名が NULL
+        /// CSVファイル書き出し
+        /// 引数:ファイル名がNULL
         /// </summary>
         [Test]
         public void StoreWithNullFile()
         {
             argOutFile = null;
             var ex = Assert.Throws<AbException>(() =>
-                { AbDBManager.Store(argOutFile, argExpenses); }
+                AbDBManager.Store(argOutFile, argExpenses)
             );
-            Assert.AreEqual(EX.DB_NULL, ex.Message);
+            Assert.AreEqual(EX.CSV_NULL, ex.Message);
         }
 
         /// <summary>
-        /// DB ファイル書き出し
+        /// CSVファイル書き出し
         /// 引数:ファイル名が空文字列
         /// </summary>
         [Test]
@@ -339,27 +348,27 @@
         {
             argOutFile = string.Empty;
             var ex = Assert.Throws<AbException>(() =>
-                { AbDBManager.Store(argOutFile, argExpenses); }
+                AbDBManager.Store(argOutFile, argExpenses)
             );
-            Assert.AreEqual(EX.DB_NULL, ex.Message);
+            Assert.AreEqual(EX.CSV_NULL, ex.Message);
         }
 
         /// <summary>
-        /// DB ファイル書き出し
-        /// 引数:支出情報リストが NULL
+        /// CSVファイル書き出し
+        /// 引数:支出情報リストがNULL
         /// </summary>
         [Test]
         public void StoreWithNullExpenses()
         {
             argExpenses = null;
             var ex = Assert.Throws<AbException>(() =>
-                { AbDBManager.Store(argOutFile, argExpenses); }
+                AbDBManager.Store(argOutFile, argExpenses)
             );
-            Assert.AreEqual(EX.DB_RECORD_NOTHING, ex.Message);
+            Assert.AreEqual(EX.CSV_RECORD_NOTHING, ex.Message);
         }
 
         /// <summary>
-        /// DB ファイル書き出し
+        /// CSVファイル書き出し
         /// 引数:支出情報リストが空リスト
         /// </summary>
         [Test]
@@ -367,13 +376,13 @@
         {
             argExpenses = new List<AbExpense>();
             var ex = Assert.Throws<AbException>(() =>
-                { AbDBManager.Store(argOutFile, argExpenses); }
+                AbDBManager.Store(argOutFile, argExpenses)
             );
-            Assert.AreEqual(EX.DB_RECORD_NOTHING, ex.Message);
+            Assert.AreEqual(EX.CSV_RECORD_NOTHING, ex.Message);
         }
 
         /// <summary>
-        /// DB ファイル書き出し
+        /// CSVファイル書き出し
         /// </summary>
         [Test]
         public void Store()

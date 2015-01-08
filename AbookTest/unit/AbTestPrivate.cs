@@ -20,6 +20,9 @@
         /// <summary>対象:秘密収支情報</summary>
         private AbPrivate abPrivate;
 
+        /// <summary>
+        /// SetUp
+        /// </summary>
         [SetUp]
         public void SetUp()
         {
@@ -87,21 +90,21 @@
 
         /// <summary>
         /// コンストラクタ
-        /// 引数:収支レコードが NULL
+        /// 引数:支出情報がNULL
         /// </summary>
         [Test]
         public void AbPrivateWithNullExpense()
         {
             argExpense = null;
             var ex = Assert.Throws<AbException>(() =>
-                { new AbPrivate(argExpense, argBalance); }
+                new AbPrivate(argExpense, argBalance)
             );
             Assert.AreEqual(EX.EXPENSE_NULL, ex.Message);
         }
 
         /// <summary>
         /// コンストラクタ
-        /// 引数:収支レコードの種別が不正
+        /// 引数:支出情報の種別が不正
         ///      "秘密入"でも"秘密出"でもない
         /// </summary>
         [Test]
@@ -109,7 +112,7 @@
         {
             argExpense = new AbExpense("2012-04-01", "小遣い", TYPE.FOOD, "100");
             var ex = Assert.Throws<AbException>(() =>
-                { new AbPrivate(argExpense, argBalance); }
+                new AbPrivate(argExpense, argBalance)
             );
             Assert.AreEqual(EX.TYPE_PRIVATE_ERR, ex.Message);
         }

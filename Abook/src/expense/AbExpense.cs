@@ -3,8 +3,8 @@
     using System;
     using System.Linq;
     using EX   = Abook.AbException.EX;
+    using CHK  = Abook.AbUtilities.CHK;
     using FMT  = Abook.AbConstants.FMT;
-    using TYPE = Abook.AbConstants.TYPE;
     using UTIL = Abook.AbUtilities;
 
     /// <summary>
@@ -14,13 +14,10 @@
     {
         /// <summary>日付</summary>
         public DateTime Date { get; private set; }
-
         /// <summary>名称</summary>
         public string   Name { get; private set; }
-
         /// <summary>種別</summary>
         public string   Type { get; private set; }
-
         /// <summary>金額</summary>
         public decimal  Cost { get; private set; }
 
@@ -46,10 +43,8 @@
         /// <returns>日付</returns>
         private DateTime ParseDate(string date)
         {
-            if (string.IsNullOrEmpty(date))
-            {
-                AbException.Throw(EX.DATE_NULL);
-            }
+            CHK.DateNull(date);
+
             var dt = DateTime.MinValue;
             var st = System.Globalization.DateTimeStyles.None;
             if (!DateTime.TryParseExact(date, FMT.DATE, null, st, out dt))
@@ -66,10 +61,7 @@
         /// <returns>名称</returns>
         private string ParseName(string name)
         {
-            if (string.IsNullOrEmpty(name))
-            {
-                AbException.Throw(EX.NAME_NULL);
-            }
+            CHK.NameNull(name);
             return name;
         }
 
@@ -80,14 +72,8 @@
         /// <returns>種別</returns>
         private string ParseType(string type)
         {
-            if (string.IsNullOrEmpty(type))
-            {
-                AbException.Throw(EX.TYPE_NULL);
-            }
-            if (!TYPE.EXPENCE.Contains(type))
-            {
-                AbException.Throw(EX.TYPE_WRONG);
-            }
+            CHK.TypeNull(type);
+            CHK.TypeWrong(type);
             return type;
         }
 
@@ -98,10 +84,8 @@
         /// <returns>金額</returns>
         private decimal ParseCost(string cost)
         {
-            if (string.IsNullOrEmpty(cost))
-            {
-                AbException.Throw(EX.COST_NULL);
-            }
+            CHK.CostNull(cost);
+
             var ct = decimal.Zero;
             try
             {
@@ -123,18 +107,18 @@
         }
 
         /// <summary>
-        /// CSV 形式
+        /// CSV形式
         /// </summary>
-        /// <returns>CSV 形式</returns>
+        /// <returns>CSV形式</returns>
         public string ToCSV()
         {
             return string.Format(FMT.CSV, Date.ToString(FMT.DATE), Name, Type, Cost);
         }
 
         /// <summary>
-        /// SQL 形式
+        /// SQL形式
         /// </summary>
-        /// <returns>SQL 形式</returns>
+        /// <returns>SQL形式</returns>
         public string ToSQL()
         {
             var type = UTIL.ToTypeId(Type);

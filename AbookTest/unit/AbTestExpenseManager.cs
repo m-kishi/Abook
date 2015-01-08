@@ -20,6 +20,9 @@
         /// <summary>対象:支出情報管理</summary>
         private AbExpenseManager abExpenseManager;
 
+        /// <summary>
+        /// SetUp
+        /// </summary>
         [SetUp]
         public void SetUp()
         {
@@ -49,14 +52,14 @@
 
         /// <summary>
         /// コンストラクタ
-        /// 引数:集計値リストが NULL
+        /// 引数:集計値リストがNULL
         /// </summary>
         [Test]
         public void AbExpenseManagerWithNullSummaries()
         {
             argSummaries = null;
             var ex = Assert.Throws<AbException>(() =>
-                { new AbExpenseManager(argDate, argSummaries); }
+                new AbExpenseManager(argDate, argSummaries)
             );
             Assert.AreEqual(EX.SUMMARIES_NULL, ex.Message);
         }
@@ -236,7 +239,7 @@
 
         /// <summary>
         /// 集計値取得
-        /// 引数:種別が NULL
+        /// 引数:種別がNULL
         /// </summary>
         [Test]
         public void GetCostWithNullType()

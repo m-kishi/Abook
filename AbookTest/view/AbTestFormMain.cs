@@ -5,6 +5,7 @@
     using System.IO;
     using NUnit.Framework;
     using NUnit.Extensions.Forms;
+    using TT  = AbTestTool;
     using EX  = Abook.AbException.EX;
     using CSV = Abook.AbConstants.CSV;
 
@@ -14,10 +15,10 @@
     [TestFixture]
     public class AbTestFormMain : AbTestFormBase
     {
-        /// <summary>DB ファイル</summary>
-        private const string DB_EMPTY = "AbTestFormMainEmpty.db";
-        /// <summary>DB ファイル</summary>
-        private const string DB_INVALID = "AbTestFormMainInvalid.db";
+        /// <summary>CSVファイル</summary>
+        private const string CSV_EMPTY = "AbTestFormMainEmpty.db";
+        /// <summary>CSVファイル</summary>
+        private const string CSV_INVALID = "AbTestFormMainInvalid.db";
 
         /// <summary>
         /// TestFixtureSetUp
@@ -25,11 +26,11 @@
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            using (StreamWriter sw = new StreamWriter(DB_INVALID, false, CSV.ENCODING))
+            using (StreamWriter sw = new StreamWriter(CSV_INVALID, false, CSV.ENCODING))
             {
-                sw.WriteLine(ToCSV("2012-01-01", "name1", "食費", "10000"));
-                sw.WriteLine(ToCSV("2012-02-30", "name2", "食費", "20000"));
-                sw.WriteLine(ToCSV("2012-03-05", "name3", "食費", "30000"));
+                sw.WriteLine(TT.ToCSV("2012-01-01", "name1", "食費", "10000"));
+                sw.WriteLine(TT.ToCSV("2012-02-30", "name2", "食費", "20000"));
+                sw.WriteLine(TT.ToCSV("2012-03-05", "name3", "食費", "30000"));
             }
         }
 
@@ -39,30 +40,30 @@
         [TestFixtureTearDown]
         public void TestFixtureTearDown()
         {
-            if (System.IO.File.Exists(DB_EMPTY  )) System.IO.File.Delete(DB_EMPTY);
-            if (System.IO.File.Exists(DB_INVALID)) System.IO.File.Delete(DB_INVALID);
+            if (File.Exists(CSV_EMPTY  )) File.Delete(CSV_EMPTY);
+            if (File.Exists(CSV_INVALID)) File.Delete(CSV_INVALID);
         }
 
         /// <summary>
-        /// Load テスト
+        /// Loadテスト
         /// </summary>
         [Test]
         public void Load()
         {
-            ShowFormMain(DB_EMPTY);
+            ShowFormMain(CSV_EMPTY);
             Assert.IsTrue(CtAbFormMain().Visible);
         }
 
         /// <summary>
-        /// Load テスト
+        /// Loadテスト
         /// 日付の形式が不正
         /// </summary>
         [Test]
         public void LoadWithInvalidDB()
         {
             //ダイアログの表示テスト
-            // Load イベント中でダイアログを表示させている場合、NUnitで検証不可 -> AssertするとNUnitが落ちる？
-            // => Assert が成功する場合は落ちないのかも...
+            //Loadイベント中でダイアログを表示させている場合、NUnitで検証不可 -> AssertするとNUnitが落ちる？
+            //  => Assert が成功する場合は落ちないのかも...
             DialogBoxHandler = (name, hWnd) =>
             {
                 var tsMessageBox = new MessageBoxTester(hWnd);
@@ -72,13 +73,13 @@
                 Assert.AreEqual(title, tsMessageBox.Title);
 
                 //テキストテスト
-                var text = string.Format(EX.DB_LOAD, 2, EX.DATE_FORMAT);
+                var text = string.Format(EX.CSV_LOAD, 2, EX.DATE_FORMAT);
                 Assert.AreEqual(text, tsMessageBox.Text);
 
-                // OK ボタンクリック
+                //OKボタンクリック
                 tsMessageBox.ClickOk();
             };
-            ShowFormMain(DB_INVALID);
+            ShowFormMain(CSV_INVALID);
         }
     }
 }

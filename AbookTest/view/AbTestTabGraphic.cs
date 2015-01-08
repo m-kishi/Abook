@@ -2,6 +2,7 @@
 {
     using Abook;
     using System;
+    using System.IO;
     using System.Windows.Forms;
     using NUnit.Framework;
     using NUnit.Extensions.Forms;
@@ -13,8 +14,8 @@
     [TestFixture]
     public class AbTestTabGraphic : AbTestFormBase
     {
-        /// <summary>DB ファイル</summary>
-        private const string DB = "AbTestTabGraphic.db";
+        /// <summary>CSVファイル</summary>
+        private const string CSV = "AbTestTabGraphic.db";
         /// <summary>タブインデックス</summary>
         private const int TAB_IDX = 2;
 
@@ -24,7 +25,7 @@
         [TestFixtureTearDown]
         public void TestFixtureTearDown()
         {
-            if (System.IO.File.Exists(DB)) System.IO.File.Delete(DB);
+            if (File.Exists(CSV)) File.Delete(CSV);
         }
 
         /// <summary>
@@ -34,7 +35,7 @@
         [Test]
         public void TitleWithInitial()
         {
-            ShowFormMain(DB, TAB_IDX);
+            ShowFormMain(CSV, TAB_IDX);
 
             //明示的に描画イベントを呼び出し
             var g = CtPboxGraph().CreateGraphics();
@@ -51,7 +52,7 @@
         [Test]
         public void TitleWithPrevYear_1_Time()
         {
-            ShowFormMain(DB, TAB_IDX);
+            ShowFormMain(CSV, TAB_IDX);
 
             TsGraphicBtnPrevYear().Click();
 
@@ -66,7 +67,7 @@
         [Test]
         public void TitleWithPrevYear_2_Time()
         {
-            ShowFormMain(DB, TAB_IDX);
+            ShowFormMain(CSV, TAB_IDX);
 
             TsGraphicBtnPrevYear().Click();
             TsGraphicBtnPrevYear().Click();
@@ -82,7 +83,7 @@
         [Test]
         public void TitleWithPrevYear_3_Time()
         {
-            ShowFormMain(DB, TAB_IDX);
+            ShowFormMain(CSV, TAB_IDX);
 
             TsGraphicBtnPrevYear().Click();
             TsGraphicBtnPrevYear().Click();
@@ -99,7 +100,7 @@
         [Test]
         public void TitleWithPrevMonth_1_Time()
         {
-            ShowFormMain(DB, TAB_IDX);
+            ShowFormMain(CSV, TAB_IDX);
 
             TsGraphicBtnPrevMonth().Click();
 
@@ -114,7 +115,7 @@
         [Test]
         public void TitleWithPrevMonth_2_Time()
         {
-            ShowFormMain(DB, TAB_IDX);
+            ShowFormMain(CSV, TAB_IDX);
 
             TsGraphicBtnPrevMonth().Click();
             TsGraphicBtnPrevMonth().Click();
@@ -130,7 +131,7 @@
         [Test]
         public void TitleWithPrevMonth_3_Time()
         {
-            ShowFormMain(DB, TAB_IDX);
+            ShowFormMain(CSV, TAB_IDX);
 
             TsGraphicBtnPrevMonth().Click();
             TsGraphicBtnPrevMonth().Click();
@@ -147,7 +148,7 @@
         [Test]
         public void TitleWithNextMonth_1_Time()
         {
-            ShowFormMain(DB, TAB_IDX);
+            ShowFormMain(CSV, TAB_IDX);
 
             TsGraphicBtnNextMonth().Click();
 
@@ -162,7 +163,7 @@
         [Test]
         public void TitleWithNextMonth_2_Time()
         {
-            ShowFormMain(DB, TAB_IDX);
+            ShowFormMain(CSV, TAB_IDX);
 
             TsGraphicBtnNextMonth().Click();
             TsGraphicBtnNextMonth().Click();
@@ -178,7 +179,7 @@
         [Test]
         public void TitleWithNextMonth_3_Time()
         {
-            ShowFormMain(DB, TAB_IDX);
+            ShowFormMain(CSV, TAB_IDX);
 
             TsGraphicBtnNextMonth().Click();
             TsGraphicBtnNextMonth().Click();
@@ -195,7 +196,7 @@
         [Test]
         public void TitleWithNextYear_1_Time()
         {
-            ShowFormMain(DB, TAB_IDX);
+            ShowFormMain(CSV, TAB_IDX);
 
             TsGraphicBtnNextYear().Click();
 
@@ -210,7 +211,7 @@
         [Test]
         public void TitleWithNextYear_2_Time()
         {
-            ShowFormMain(DB, TAB_IDX);
+            ShowFormMain(CSV, TAB_IDX);
 
             TsGraphicBtnNextYear().Click();
             TsGraphicBtnNextYear().Click();
@@ -226,7 +227,7 @@
         [Test]
         public void TitleWithNextYear_3_Time()
         {
-            ShowFormMain(DB, TAB_IDX);
+            ShowFormMain(CSV, TAB_IDX);
 
             TsGraphicBtnNextYear().Click();
             TsGraphicBtnNextYear().Click();
@@ -257,7 +258,7 @@
         [Test]
         public void LabelWithInitial()
         {
-            ShowFormMain(DB, TAB_IDX);
+            ShowFormMain(CSV, TAB_IDX);
 
             //明示的に描画イベントを呼び出し
             var g = CtPboxGraph().CreateGraphics();
@@ -273,7 +274,7 @@
         [Test]
         public void LabelWithPrevYear_1_Time()
         {
-            ShowFormMain(DB, TAB_IDX);
+            ShowFormMain(CSV, TAB_IDX);
 
             TsGraphicBtnPrevYear().Click();
 
@@ -287,7 +288,7 @@
         [Test]
         public void LabelWithPrevYear_2_Time()
         {
-            ShowFormMain(DB, TAB_IDX);
+            ShowFormMain(CSV, TAB_IDX);
 
             TsGraphicBtnPrevYear().Click();
             TsGraphicBtnPrevYear().Click();
@@ -302,7 +303,7 @@
         [Test]
         public void LabelWithPrevYear_3_Time()
         {
-            ShowFormMain(DB, TAB_IDX);
+            ShowFormMain(CSV, TAB_IDX);
 
             TsGraphicBtnPrevYear().Click();
             TsGraphicBtnPrevYear().Click();
@@ -318,7 +319,7 @@
         [Test]
         public void LabelWithPrevMonth_1_Time()
         {
-            ShowFormMain(DB, TAB_IDX);
+            ShowFormMain(CSV, TAB_IDX);
 
             TsGraphicBtnPrevMonth().Click();
 
@@ -332,7 +333,7 @@
         [Test]
         public void LabelWithPrevMonth_2_Time()
         {
-            ShowFormMain(DB, TAB_IDX);
+            ShowFormMain(CSV, TAB_IDX);
 
             TsGraphicBtnPrevMonth().Click();
             TsGraphicBtnPrevMonth().Click();
@@ -347,7 +348,7 @@
         [Test]
         public void LabelWithPrevMonth_3_Time()
         {
-            ShowFormMain(DB, TAB_IDX);
+            ShowFormMain(CSV, TAB_IDX);
 
             TsGraphicBtnPrevMonth().Click();
             TsGraphicBtnPrevMonth().Click();
@@ -363,7 +364,7 @@
         [Test]
         public void LabelWithNextMonth_1_Time()
         {
-            ShowFormMain(DB, TAB_IDX);
+            ShowFormMain(CSV, TAB_IDX);
 
             TsGraphicBtnNextMonth().Click();
 
@@ -377,7 +378,7 @@
         [Test]
         public void LabelWithNextMonth_2_Time()
         {
-            ShowFormMain(DB, TAB_IDX);
+            ShowFormMain(CSV, TAB_IDX);
 
             TsGraphicBtnNextMonth().Click();
             TsGraphicBtnNextMonth().Click();
@@ -392,7 +393,7 @@
         [Test]
         public void LabelWithNextMonth_3_Time()
         {
-            ShowFormMain(DB, TAB_IDX);
+            ShowFormMain(CSV, TAB_IDX);
 
             TsGraphicBtnNextMonth().Click();
             TsGraphicBtnNextMonth().Click();
@@ -408,7 +409,7 @@
         [Test]
         public void LabelWithNextYear_1_Time()
         {
-            ShowFormMain(DB, TAB_IDX);
+            ShowFormMain(CSV, TAB_IDX);
 
             TsGraphicBtnNextYear().Click();
 
@@ -422,7 +423,7 @@
         [Test]
         public void LabelWithNextYear_2_Time()
         {
-            ShowFormMain(DB, TAB_IDX);
+            ShowFormMain(CSV, TAB_IDX);
 
             TsGraphicBtnNextYear().Click();
             TsGraphicBtnNextYear().Click();
@@ -437,7 +438,7 @@
         [Test]
         public void LabelWithNextYear_3_Time()
         {
-            ShowFormMain(DB, TAB_IDX);
+            ShowFormMain(CSV, TAB_IDX);
 
             TsGraphicBtnNextYear().Click();
             TsGraphicBtnNextYear().Click();

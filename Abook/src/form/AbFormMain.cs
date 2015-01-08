@@ -6,6 +6,7 @@
     using System.Threading;
     using System.Windows.Forms;
     using CSV = Abook.AbConstants.CSV;
+    using MSG = Abook.AbUtilities.MSG;
     using UPD = Abook.AbConstants.UPD;
 
     /// <summary>
@@ -13,8 +14,8 @@
     /// </summary>
     public partial class AbFormMain : Form
     {
-        /// <summary>DB ファイル</summary>
-        public string DB { get; private set; }
+        /// <summary>CSVファイル</summary>
+        public string CSV_FILE { get; private set; }
 
         /// <summary>
         /// アプリケーションメイン
@@ -29,7 +30,7 @@
             Application.SetCompatibleTextRenderingDefault(false);
 
             AbFormMain form = null;
-            form = new AbFormMain(CSV.DB);
+            form = new AbFormMain(CSV.FILE);
             form.SetUploadParameters(UPD.FILE, UPD.URL);
             Application.Run(form);
         }
@@ -37,10 +38,10 @@
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        /// <param name="DB">DB ファイル</param>
-        public AbFormMain(string DB)
+        /// <param name="CSV">CSVファイル</param>
+        public AbFormMain(string CSV)
         {
-            this.DB = DB;
+            this.CSV_FILE = CSV;
             InitializeComponent();
         }
 
@@ -52,16 +53,11 @@
             Icon = SystemIcons.Application;
             try
             {
-                InitFormMain(AbDBManager.Load(DB));
+                InitFormMain(AbDBManager.Load(CSV_FILE));
             }
             catch (Exception ex)
             {
-                MessageBox.Show(
-                    ex.Message,
-                    "エラー",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error
-                );
+                MSG.Error(ex.Message);
                 Application.Exit();
             }
         }
@@ -78,23 +74,6 @@
             InitTabPrivate(expenses);
             InitTabSummary(summaries);
             InitTabGraphic(summaries);
-        }
-
-        /// <summary>
-        /// アプリケーション終了
-        /// </summary>
-        private void MenuExit_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
-        /// <summary>
-        /// バージョン情報表示
-        /// </summary>
-        private void MenuVersion_Click(object sender, EventArgs e)
-        {
-            var formVersion = new AbFormVersion();
-            formVersion.ShowDialog();
         }
     }
 }

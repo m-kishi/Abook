@@ -20,6 +20,9 @@
         /// <summary>対象:グラフデータ管理</summary>
         private AbGraphicManager abGraphicManager;
 
+        /// <summary>
+        /// SetUp
+        /// </summary>
         [SetUp]
         public void SetUp()
         {
@@ -30,14 +33,14 @@
 
         /// <summary>
         /// コンストラクタ
-        /// 引数:集計値リストが NULL
+        /// 引数:集計値リストがNULL
         /// </summary>
         [Test]
         public void AbGraphManagerWithNullSummaries()
         {
             argSummaries = null;
             var ex = Assert.Throws<AbException>(() =>
-                { new AbGraphicManager(argDate, argSummaries); }
+                new AbGraphicManager(argDate, argSummaries)
             );
             Assert.AreEqual(EX.SUMMARIES_NULL, ex.Message);
         }

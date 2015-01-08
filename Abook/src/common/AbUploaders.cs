@@ -2,7 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
+    using System.Text;
     using EX  = Abook.AbException.EX;
+    using CHK = Abook.AbUtilities.CHK;
     using UPD = Abook.AbConstants.UPD;
 
     /// <summary>
@@ -13,22 +16,22 @@
         /// <summary>
         /// アップロード
         /// </summary>
-        /// <param name="url">リクエスト URL</param>
-        /// <param name="file">UPD ファイル名</param>
+        /// <param name="url">リクエストURL</param>
+        /// <param name="upd">UPDファイル名</param>
         /// <returns>サーバからの応答</returns>
-        public static string SendUploadRequest(string url, string file)
+        public static string SendUploadRequest(string url, string upd)
         {
-            if (string.IsNullOrEmpty(url )) { AbException.Throw(EX.URL_NULL); }
-            if (string.IsNullOrEmpty(file)) { AbException.Throw(EX.UPD_NULL); }
-            if (!System.IO.File.Exists(file)) { AbException.Throw(EX.UPD_DOES_NOT_EXIST); }
+            CHK.UrlNull(url);
+            CHK.UpdNull(upd);
+            CHK.UpdExist(upd);
 
             string result = string.Empty;
             using (var wc = new System.Net.WebClient())
             {
                 try
                 {
-                    var res = wc.UploadFile(url, file);
-                    result = System.Text.Encoding.UTF8.GetString(res);
+                    var res = wc.UploadFile(url, upd);
+                    result = Encoding.UTF8.GetString(res);
                 }
                 catch (System.Net.WebException ex)
                 {
@@ -42,26 +45,26 @@
                 }
                 finally
                 {
-                    try { System.IO.File.Delete(file); } catch { }
+                    try { File.Delete(upd); } catch { }
                 }
             }
             return result;
         }
 
         /// <summary>
-        /// UPD ファイル書き出し
+        /// UPDファイル書き出し
         /// </summary>
-        /// <param name="file">UPD ファイル名</param>
+        /// <param name="file">UPDファイル名</param>
         /// <param name="expenses">支出情報リスト</param>
         public static void Prepare(string file, List<AbExpense> expenses)
         {
-            if (string.IsNullOrEmpty(file)) { AbException.Throw(EX.UPD_NULL); }
-            if (expenses == null || expenses.Count <= 0) { AbException.Throw(EX.UPD_RECORD_NOTHING); }
+            CHK.UpdNull(file);
+            CHK.UpdCount(expenses);
 
             try
             {
-                System.IO.File.Delete(file);
-                System.IO.File.Create(file).Close();
+                File.Delete(file);
+                File.Create(file).Close();
             }
             catch (Exception ex)
             {
@@ -69,7 +72,7 @@
                 AbException.Throw(message);
             }
 
-            using (var sw = new System.IO.StreamWriter(file, false, UPD.ENCODING))
+            using (var sw = new StreamWriter(file, false, UPD.ENCODING))
             {
                 var line = 0;
                 try

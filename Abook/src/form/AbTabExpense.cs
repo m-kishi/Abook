@@ -7,6 +7,7 @@
     using CSV = Abook.AbConstants.CSV;
     using DGV = Abook.AbConstants.DGV;
     using FMT = Abook.AbConstants.FMT;
+    using MSG = Abook.AbUtilities.MSG;
 
     /// <summary>
     /// 支出タブ
@@ -79,13 +80,13 @@
         {
             if (DgvExpense.CurrentCell.ColumnIndex == 1)
             {
-                DataGridViewRow row = DgvExpense.Rows[DgvExpense.CurrentCell.RowIndex];
+                var row = DgvExpense.Rows[DgvExpense.CurrentCell.RowIndex];
                 row.Cells[COL.TYPE].Value = abComplete.GetType(row.Cells[COL.NAME].Value as string);
             }
         }
 
         /// <summary>
-        /// DataGridView へペースト
+        /// DataGridViewへペースト
         /// </summary>
         private void DgvExpense_KeyDown(object sender, KeyEventArgs e)
         {
@@ -95,25 +96,20 @@
                 DgvExpense.CurrentCell.Value = value;
                 if (DgvExpense.CurrentCell.ColumnIndex == 1)
                 {
-                    DataGridViewRow row = DgvExpense.Rows[DgvExpense.CurrentCell.RowIndex];
+                    var row = DgvExpense.Rows[DgvExpense.CurrentCell.RowIndex];
                     row.Cells[COL.TYPE].Value = abComplete.GetType(value);
                 }
             }
         }
 
         /// <summary>
-        /// DB ファイルへ書き出し
+        /// CSVファイルへ書き出し
         /// </summary>
         private void BtnEntry_Click(object sender, EventArgs e)
         {
             if (DgvExpense.Rows.Count == 0)
             {
-                MessageBox.Show(
-                    "レコードが1件もありません。",
-                    "エラー",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning
-                );
+                MSG.Warning("警告", "レコードが1件もありません。");
                 return;
             }
 
@@ -122,16 +118,11 @@
             {
                 var expenses = AbDBManager.Load(DgvExpense, out errLine);
 
-                AbDBManager.Store(DB, expenses);
+                AbDBManager.Store(CSV_FILE, expenses);
 
                 InitFormMain(expenses);
 
-                MessageBox.Show(
-                    "正常に登録しました。",
-                    "登録完了",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Asterisk
-                );
+                MSG.OK("登録完了", "正常に登録しました。");
             }
             catch (AbException ex)
             {
@@ -140,12 +131,7 @@
                 DgvExpense.Rows[errIdx].Selected = true;
                 DgvExpense.FirstDisplayedScrollingRowIndex = errIdx;
 
-                MessageBox.Show(
-                    ex.Message,
-                    "エラー",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error
-                );
+                MSG.Error(ex.Message);
                 return;
             }
         }

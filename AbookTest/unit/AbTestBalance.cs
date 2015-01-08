@@ -24,6 +24,9 @@
         /// <summary>対象:収支情報</summary>
         private AbBalance abBalance;
 
+        /// <summary>
+        /// SetUp
+        /// </summary>
         [SetUp]
         public void SetUp()
         {
@@ -32,7 +35,6 @@
             argExpense = 1060641;
             argSpecial =   92490;
             argBalance = 1400504;
-
             abBalance = new AbBalance(argYear, argEarn, argExpense, argSpecial, argBalance);
         }
 
@@ -100,7 +102,7 @@
         {
             argYear = -argYear;
             var ex = Assert.Throws<AbException>(() =>
-                { new AbBalance(argYear, argEarn, argExpense, argSpecial, argBalance); }
+                new AbBalance(argYear, argEarn, argExpense, argSpecial, argBalance)
             );
             Assert.AreEqual(EX.YEAR_MINUS, ex.Message);
         }
@@ -114,7 +116,7 @@
         {
             argEarn = -argEarn;
             var ex = Assert.Throws<AbException>(() =>
-                { new AbBalance(argYear, argEarn, argExpense, argSpecial, argBalance); }
+                new AbBalance(argYear, argEarn, argExpense, argSpecial, argBalance)
             );
             Assert.AreEqual(EX.EARN_MINUS, ex.Message);
         }
@@ -128,7 +130,7 @@
         {
             argExpense = -argExpense;
             var ex = Assert.Throws<AbException>(() =>
-                { new AbBalance(argYear, argEarn, argExpense, argSpecial, argBalance); }
+                new AbBalance(argYear, argEarn, argExpense, argSpecial, argBalance)
             );
             Assert.AreEqual(EX.EXPENSE_MINUS, ex.Message);
         }
@@ -142,7 +144,7 @@
         {
             argSpecial = -argSpecial;
             var ex = Assert.Throws<AbException>(() =>
-                { new AbBalance(argYear, argEarn, argExpense, argSpecial, argBalance); }
+                new AbBalance(argYear, argEarn, argExpense, argSpecial, argBalance)
             );
             Assert.AreEqual(EX.SPECIAL_MINUS, ex.Message);
         }
@@ -156,7 +158,7 @@
         {
             argBalance = 0;
             var ex = Assert.Throws<AbException>(() =>
-                { new AbBalance(argYear, argEarn, argExpense, argSpecial, argBalance); }
+                new AbBalance(argYear, argEarn, argExpense, argSpecial, argBalance)
             );
             Assert.AreEqual(EX.BALANCE_INCORRECT, ex.Message);
         }

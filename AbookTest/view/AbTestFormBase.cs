@@ -44,10 +44,10 @@
         /// <summary>
         /// フォーム表示
         /// </summary>
-        /// <param name="db">DB ファイル</param>
-        protected void ShowFormMain(string db)
+        /// <param name="csv">CSVファイル</param>
+        protected void ShowFormMain(string csv)
         {
-            form = new AbFormMain(db);
+            form = new AbFormMain(csv);
             form.Show();
         }
 
@@ -55,11 +55,11 @@
         /// フォーム表示
         /// フォーム表示時にタブを選択
         /// </summary>
-        /// <param name="db">DB ファイル</param>
+        /// <param name="csv">CSVファイル</param>
         /// <param name="idxTab">タブインデックス</param>
-        protected void ShowFormMain(string db, int idxTab)
+        protected void ShowFormMain(string csv, int idxTab)
         {
-            ShowFormMain(db);
+            ShowFormMain(csv);
             TsTabControl().SelectTab(idxTab);
         }
 
@@ -67,33 +67,19 @@
         /// フォーム表示
         /// アップロードテスト用の表示
         /// </summary>
-        /// <param name="db">DB ファイル</param>
-        /// <param name="upd">UPD ファイル</param>
-        /// <param name="url">リクエスト URL</param>
-        protected void ShowFormMain(string db, string upd, string url)
+        /// <param name="csv">CSVファイル</param>
+        /// <param name="upd">UPDファイル</param>
+        /// <param name="url">リクエストURL</param>
+        protected void ShowFormMain(string csv, string upd, string url)
         {
-            form = new AbFormMain(db);
+            form = new AbFormMain(csv);
             form.SetUploadParameters(upd, url);
             form.Show();
         }
 
-        /// <summary>
-        /// 支出情報 CSV 生成
-        /// </summary>
-        /// <param name="date">日付</param>
-        /// <param name="name">名前</param>
-        /// <param name="type">種別</param>
-        /// <param name="cost">金額</param>
-        /// <returns>支出情報 CSV</returns>
-        protected string ToCSV(string date, string name, string type, string cost)
-        {
-            const string TEMPLATE = "\"{0}\",\"{1}\",\"{2}\",\"{3}\"";
-            return string.Format(TEMPLATE, date, name, type, cost);
-        }
-
         #endregion
 
-        #region "Tester 取得メソッド"
+        #region "Tester取得メソッド"
 
         /// <summary>
         /// 終了メニュー取得
@@ -271,7 +257,7 @@
 
         #endregion
 
-        #region "Control 取得メソッド"
+        #region "Control取得メソッド"
 
         /// <summary>
         /// メイン画面フォーム取得

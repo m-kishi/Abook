@@ -11,10 +11,8 @@
     {
         /// <summary>描画ペン</summary>
         private Pen pen;
-
         /// <summary>開始座標</summary>
         private Point strPoint;
-
         /// <summary>終了座標</summary>
         private Point endPoint;
 
@@ -35,7 +33,7 @@
         /// <summary>
         /// 基準線描画
         /// </summary>
-        /// <param name="g">Graphics オブジェクト</param>
+        /// <param name="g">Graphicsオブジェクト</param>
         public void DrawLine(Graphics g)
         {
             g.DrawLine(pen, strPoint, endPoint);

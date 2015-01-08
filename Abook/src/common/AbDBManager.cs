@@ -2,39 +2,38 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Windows.Forms;
     using Microsoft.VisualBasic.FileIO;
     using EX  = Abook.AbException.EX;
+    using CHK = Abook.AbUtilities.CHK;
     using COL = Abook.AbConstants.COL;
     using CSV = Abook.AbConstants.CSV;
 
     /// <summary>
-    /// DB ファイル管理クラス
+    /// DBファイル管理クラス
     /// </summary>
     public static class AbDBManager
     {
         /// <summary>
-        /// DB ファイル読み込み
+        /// CSVファイル読み込み
         /// </summary>
-        /// <param name="file">DB ファイル名</param>
+        /// <param name="file">CSVファイル名</param>
         /// <returns>支出情報リスト</returns>
         public static List<AbExpense> Load(string file)
         {
-            if (string.IsNullOrEmpty(file))
-            {
-                AbException.Throw(EX.DB_NULL);
-            }
+            CHK.CsvNull(file);
 
-            if (System.IO.File.Exists(file) == false)
+            if (!File.Exists(file))
             {
                 try
                 {
-                    System.IO.File.Create(file).Close();
+                    File.Create(file).Close();
                 }
                 catch
                 {
-                    AbException.Throw(EX.DB_CREATE);
+                    AbException.Throw(EX.CSV_CREATE);
                 }
             }
 
@@ -52,14 +51,14 @@
                         line++;
 
                         var fields = tp.ReadFields();
-                        if (fields.Length < CSV.FIELD) { AbException.Throw(EX.DB_FIELD_LESS); }
-                        if (fields.Length > CSV.FIELD) { AbException.Throw(EX.DB_FIELD_MORE); }
+                        if (fields.Length < CSV.FIELD) AbException.Throw(EX.CSV_FIELD_LESS);
+                        if (fields.Length > CSV.FIELD) AbException.Throw(EX.CSV_FIELD_MORE);
                         expenses.Add(new AbExpense(fields[0], fields[1], fields[2], fields[3]));
                     }
                 }
                 catch (AbException ex)
                 {
-                    var message = string.Format(EX.DB_LOAD, line, ex.Message);
+                    var message = string.Format(EX.CSV_LOAD, line, ex.Message);
                     AbException.Throw(message);
                 }
             }
@@ -67,7 +66,7 @@
         }
 
         /// <summary>
-        /// DataGridView から読み込み
+        /// DataGridViewから読み込み
         /// </summary>
         /// <param name="dgv">DataGridView</param>
         /// <param name="errLine">エラー行参照</param>
@@ -99,7 +98,7 @@
                 }
                 catch (AbException ex)
                 {
-                    var message = string.Format(EX.DB_LOAD, errLine, ex.Message);
+                    var message = string.Format(EX.CSV_LOAD, errLine, ex.Message);
                     AbException.Throw(message);
                 }
             }
@@ -107,23 +106,16 @@
         }
 
         /// <summary>
-        /// DB ファイル書き出し
+        /// CSVファイル書き出し
         /// </summary>
-        /// <param name="file">DB ファイル名</param>
+        /// <param name="file">CSVファイル名</param>
         /// <param name="expenses">支出情報リスト</param>
         public static void Store(string file, List<AbExpense> expenses)
         {
-            if (string.IsNullOrEmpty(file))
-            {
-                AbException.Throw(EX.DB_NULL);
-            }
+            CHK.CsvNull(file);
+            CHK.ExpCount(expenses);
 
-            if (expenses == null || expenses.Count <= 0)
-            {
-                AbException.Throw(EX.DB_RECORD_NOTHING);
-            }
-
-            using (var sw = new System.IO.StreamWriter(file, false, CSV.ENCODING))
+            using (var sw = new StreamWriter(file, false, CSV.ENCODING))
             {
                 var line = 0;
                 try
@@ -138,7 +130,7 @@
                 }
                 catch (Exception ex)
                 {
-                    var message = string.Format(EX.DB_STORE, line, ex.Message);
+                    var message = string.Format(EX.CSV_STORE, line, ex.Message);
                     AbException.Throw(message);
                 }
             }

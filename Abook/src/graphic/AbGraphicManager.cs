@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Drawing;
     using System.Linq;
-    using EX    = Abook.AbException.EX;
+    using CHK   = Abook.AbUtilities.CHK;
     using FMT   = Abook.AbConstants.FMT;
     using NAME  = Abook.AbConstants.NAME;
     using TYPE  = Abook.AbConstants.TYPE;
@@ -17,13 +17,10 @@
     {
         /// <summary>グラフ表示年月</summary>
         private DateTime dtNow;
-
         /// <summary>グラフデータ</summary>
         public List<AbGraphicData> abGraphDatas;
-
         /// <summary>基準線データ</summary>
         private List<AbGraphicLine> abGraphLines;
-
         /// <summary>集計値リスト</summary>
         private List<AbSummary> abSummaries;
 
@@ -34,12 +31,10 @@
         /// <param name="summaries">集計値リスト</param>
         public AbGraphicManager(DateTime date, List<AbSummary> summaries)
         {
-            this.dtNow = date;
-            if (summaries == null)
-            {
-                AbException.Throw(EX.SUMMARIES_NULL);
-            }
-            this.abSummaries = summaries;
+            CHK.SumNull(summaries);
+
+            dtNow = date;
+            abSummaries = summaries;
 
             SetGraphLine();
             SetGraphData(() => { });
@@ -79,7 +74,7 @@
                 var selectedSummary = abSummaries.Where(sum =>
                     sum.Year == dt.Year && sum.Month == dt.Month
                 ).FirstOrDefault();
-                var summary = selectedSummary == null ? emptySummary : selectedSummary;
+                var summary = (selectedSummary == null) ? emptySummary : selectedSummary;
 
                 valF = summary.GetCostByType(TYPE.FOOD);
                 valO = summary.GetCostByType(TYPE.OTFD);
@@ -112,7 +107,7 @@
         /// <summary>
         /// グラフ描画
         /// </summary>
-        /// <param name="g">Graphics オブジェクト</param>
+        /// <param name="g">Graphicsオブジェクト</param>
         public void DrawGraph(Graphics g)
         {
             foreach (var gl in abGraphLines)

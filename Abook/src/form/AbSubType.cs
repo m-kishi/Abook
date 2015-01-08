@@ -5,9 +5,10 @@
     using System.Drawing;
     using System.Linq;
     using System.Windows.Forms;
-    using EX  = Abook.AbException.EX;
+    using CHK = Abook.AbUtilities.CHK;
     using COL = Abook.AbConstants.COL;
     using FMT = Abook.AbConstants.FMT;
+    using MSG = Abook.AbUtilities.MSG;
 
     /// <summary>
     /// 種別明細サブフォーム
@@ -16,10 +17,8 @@
     {
         /// <summary>種別</summary>
         private string Type { get; set; }
-
         /// <summary>対象年月</summary>
         private DateTime DtCurrent { get; set; }
-
         /// <summary>フォーム</summary>
         private AbFormMain MainForm { get; set; }
 
@@ -46,17 +45,12 @@
             this.Text = Type;
             try
             {
-                var expenses = AbDBManager.Load(MainForm.DB);
+                var expenses = AbDBManager.Load(MainForm.CSV_FILE);
                 SetDgvExpense(FilterByDateType(expenses));
             }
             catch (AbException ex)
             {
-                MessageBox.Show(
-                    ex.Message,
-                    "エラー",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error
-                );
+                MSG.Error(ex.Message);
                 this.Close();
             }
         }
@@ -68,7 +62,7 @@
         /// <returns>対象の支出情報リスト</returns>
         private List<AbExpense> FilterByDateType(List<AbExpense> expenses)
         {
-            if (expenses == null) { AbException.Throw(EX.EXPENSES_NULL); }
+            CHK.ExpNull(expenses);
             return expenses.Where(exp =>
                    exp.Date.Year  == DtCurrent.Year
                 && exp.Date.Month == DtCurrent.Month

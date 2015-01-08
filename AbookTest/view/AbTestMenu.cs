@@ -2,10 +2,12 @@
 {
     using Abook;
     using System;
+    using System.IO;
     using System.Windows.Forms;
     using NUnit.Framework;
     using NUnit.Extensions.Forms;
-    using EX = Abook.AbException.EX;
+    using TT  = AbTestTool;
+    using EX  = Abook.AbException.EX;
     using CSV = Abook.AbConstants.CSV;
 
     /// <summary>
@@ -14,8 +16,8 @@
     [TestFixture]
     public class AbTestMenu : AbTestFormBase
     {
-        /// <summary>DB ファイル</summary>
-        private const string DB = "AbTestMenu.db";
+        /// <summary>CSVファイル</summary>
+        private const string CSV_FILE = "AbTestMenu.db";
 
         /// <summary>
         /// TestFixtureSetUp
@@ -24,10 +26,10 @@
         public void TestFixtureSetUp()
         {
             AbWebServer.Start();
-            using (var sw = new System.IO.StreamWriter(DB, false, CSV.ENCODING))
+            using (var sw = new StreamWriter(CSV_FILE, false, CSV.ENCODING))
             {
                 sw.NewLine = CSV.LF;
-                sw.WriteLine("\"2014-11-01\",\"おにぎり\",\"食費\",\"108\"");
+                sw.WriteLine(TT.ToCSV("2014-11-01", "おにぎり", "食費", "108"));
                 sw.Close();
             }
         }
@@ -39,7 +41,7 @@
         public void TestFixtureTearDown()
         {
             AbWebServer.Finish();
-            if (System.IO.File.Exists(DB)) System.IO.File.Delete(DB);
+            if (File.Exists(CSV_FILE)) File.Delete(CSV_FILE);
         }
 
         /// <summary>
@@ -48,11 +50,11 @@
         [Test]
         public void MenuExitClick()
         {
-            ShowFormMain(DB);
+            ShowFormMain(CSV_FILE);
 
             TsMenuExit().Click();
 
-            Assert.IsTrue(this.form.IsDisposed);
+            Assert.IsTrue(form.IsDisposed);
         }
 
         /// <summary>
@@ -70,11 +72,11 @@
                 //テスト環境でアセンブリ情報の取得は不可
                 Assert.IsNull(System.Reflection.Assembly.GetEntryAssembly());
 
-                // OK ボタンクリック
+                //OKボタンクリック
                 (new ButtonTester("BtnOK", form)).Click();
             };
 
-            ShowFormMain(DB);
+            ShowFormMain(CSV_FILE);
 
             TsMenuVersion().Click();
         }
@@ -99,7 +101,7 @@
                 var text = "アップロードします。";
                 Assert.AreEqual(text, tsMessageBox.Text);
 
-                // OK ボタンクリック
+                //OKボタンクリック
                 tsMessageBox.ClickOk();
 
                 //アップロードサブフォームの表示テスト
@@ -123,13 +125,13 @@
                         var text3 = "アップロードに成功しました。";
                         Assert.AreEqual(text3, tsMessageBox3.Text);
 
-                        // OK ボタンクリック
+                        //OKボタンクリック
                         tsMessageBox3.ClickOk();
                     };
                 };
             };
 
-            ShowFormMain(DB, "MenuUploadClick.sql", AbWebServer.URL_SUCCESS);
+            ShowFormMain(CSV_FILE, "MenuUploadClick.sql", AbWebServer.URL_SUCCESS);
 
             TsMenuUpload().Click();
         }
@@ -154,11 +156,11 @@
                 var text = "アップロードします。";
                 Assert.AreEqual(text, tsMessageBox.Text);
 
-                // OK ボタンクリック
+                //OKボタンクリック
                 tsMessageBox.ClickCancel();
             };
 
-            ShowFormMain(DB);
+            ShowFormMain(CSV_FILE);
 
             TsMenuUpload().Click();
         }
@@ -183,7 +185,7 @@
                 var text = "アップロードします。";
                 Assert.AreEqual(text, tsMessageBox.Text);
 
-                // OK ボタンクリック
+                //OKボタンクリック
                 tsMessageBox.ClickOk();
 
                 //アップロードサブフォームの表示テスト
@@ -220,17 +222,17 @@
                             var text4 = "アップロードに失敗しました。";
                             Assert.AreEqual(text4, tsMessageBox4.Text);
 
-                            // OK ボタンクリック
+                            //OKボタンクリック
                             tsMessageBox4.ClickOk();
                         };
 
-                        // OK ボタンクリック
+                        //OKボタンクリック
                         tsMessageBox3.ClickOk();
                     };
                 };
             };
 
-            ShowFormMain(DB, "MenuUploadClick.sql", AbWebServer.URL_FAILURE);
+            ShowFormMain(CSV_FILE, "MenuUploadClick.sql", AbWebServer.URL_FAILURE);
 
             TsMenuUpload().Click();
         }

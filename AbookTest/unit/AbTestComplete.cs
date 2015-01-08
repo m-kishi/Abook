@@ -18,6 +18,9 @@
         /// <summary>対象:自動補完</summary>
         private AbComplete abComplete;
 
+        /// <summary>
+        /// SetUp
+        /// </summary>
         [SetUp]
         public void SetUp()
         {
@@ -50,21 +53,21 @@
 
         /// <summary>
         /// コンストラクタ
-        /// 引数:支出情報リストが NULL
+        /// 引数:支出情報リストがNULL
         /// </summary>
         [Test]
         public void AbCompleteWithNullExpenses()
         {
             argExpenses = null;
             var ex = Assert.Throws<AbException>(() =>
-                { new AbComplete(argExpenses); }
+                new AbComplete(argExpenses)
             );
             Assert.AreEqual(EX.EXPENSES_NULL, ex.Message);
         }
 
         /// <summary>
         /// 種別取得
-        /// 引数:名称が NULL
+        /// 引数:名称がNULL
         /// </summary>
         [Test]
         public void GetTypeWithNullName()

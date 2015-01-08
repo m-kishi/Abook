@@ -2,6 +2,7 @@
 {
     using System;
     using EX   = Abook.AbException.EX;
+    using CHK  = Abook.AbUtilities.CHK;
     using FMT  = Abook.AbConstants.FMT;
     using TYPE = Abook.AbConstants.TYPE;
 
@@ -12,13 +13,10 @@
     {
         /// <summary>年月</summary>
         public string  Date { get; private set; }
-
         /// <summary>名称</summary>
         public string  Name { get; private set; }
-
         /// <summary>金額</summary>
         public decimal Cost { get; private set; }
-
         /// <summary>収支</summary>
         public decimal Blnc { get; private set; }
 
@@ -29,7 +27,7 @@
         /// <param name="balance">収支    </param>
         public AbPrivate(AbExpense expense, decimal balance)
         {
-            if (expense == null) { AbException.Throw(EX.EXPENSE_NULL); }
+            CHK.ExpNull(expense);
 
             Date = ParseDate(expense);
             Name = ParseName(expense);

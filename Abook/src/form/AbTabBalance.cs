@@ -37,7 +37,7 @@
                 DgvBalance.Rows.Add(balances.Count());
                 foreach (var bln in balances)
                 {
-                    DataGridViewRow row = DgvBalance.Rows[i++];
+                    var row = DgvBalance.Rows[i++];
                     row.Cells[COL.YEAR].Value = bln.Year;
                     row.Cells[COL.EARN].Value = bln.Earn;
                     row.Cells[COL.EXPENSE].Value = bln.Expense;

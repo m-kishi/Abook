@@ -6,6 +6,7 @@
     using System.Windows.Forms;
     using NUnit.Framework;
     using NUnit.Extensions.Forms;
+    using TT   = AbTestTool;
     using EX   = Abook.AbException.EX;
     using COL  = Abook.AbConstants.COL;
     using CSV  = Abook.AbConstants.CSV;
@@ -19,12 +20,12 @@
     /// </summary>
     public abstract class AbTestTabExpenseBase : AbTestFormBase
     {
-        /// <summary>DB ファイル</summary>
-        protected const string DB_EXIST = "AbTestTabExpenseExist.db";
-        /// <summary>DB ファイル</summary>
-        protected const string DB_EMPTY = "AbTestTabExpenseEmpty.db";
-        /// <summary>DB ファイル</summary>
-        protected const string DB_ENTRY = "AbTestTabExpenseEntry.db";
+        /// <summary>CSVファイル</summary>
+        protected const string CSV_EXIST = "AbTestTabExpenseExist.db";
+        /// <summary>CSVファイル</summary>
+        protected const string CSV_EMPTY = "AbTestTabExpenseEmpty.db";
+        /// <summary>CSVファイル</summary>
+        protected const string CSV_ENTRY = "AbTestTabExpenseEntry.db";
         /// <summary>タブインデックス</summary>
         protected const int TAB_IDX = 0;
 
@@ -34,7 +35,7 @@
         [TestFixtureSetUp]
         protected void TestFixtureSetUp()
         {
-            using (StreamWriter sw = new StreamWriter(DB_EXIST, false, CSV.ENCODING))
+            using (StreamWriter sw = new StreamWriter(CSV_EXIST, false, CSV.ENCODING))
             {
                 sw.NewLine = CSV.LF;
                 for (var i = 1; i <= 15; i++)
@@ -43,14 +44,15 @@
                     var name = "name" + i.ToString("D2");
                     var type = TYPE.FOOD;
                     var cost = (i * 100M).ToString();
-                    sw.WriteLine(ToCSV(date, name, type, cost));
+                    sw.WriteLine(TT.ToCSV(date, name, type, cost));
                 }
+                sw.Close();
             }
-            if (System.IO.File.Exists(DB_ENTRY))
+            if (File.Exists(CSV_ENTRY))
             {
-                System.IO.File.Delete(DB_ENTRY);
+                File.Delete(CSV_ENTRY);
             }
-            System.IO.File.Copy(DB_EXIST, DB_ENTRY);
+            File.Copy(CSV_EXIST, CSV_ENTRY);
         }
 
         /// <summary>
@@ -59,9 +61,9 @@
         [TestFixtureTearDown]
         protected void TestFixtureTearDown()
         {
-            if (System.IO.File.Exists(DB_EXIST)) System.IO.File.Delete(DB_EXIST);
-            if (System.IO.File.Exists(DB_EMPTY)) System.IO.File.Delete(DB_EMPTY);
-            if (System.IO.File.Exists(DB_ENTRY)) System.IO.File.Delete(DB_ENTRY);
+            if (File.Exists(CSV_EXIST)) File.Delete(CSV_EXIST);
+            if (File.Exists(CSV_EMPTY)) File.Delete(CSV_EMPTY);
+            if (File.Exists(CSV_ENTRY)) File.Delete(CSV_ENTRY);
         }
     }
 
@@ -83,8 +85,7 @@
             [Test]
             public void CountWithEmptyData()
             {
-                ShowFormMain(DB_EMPTY, TAB_IDX);
-
+                ShowFormMain(CSV_EMPTY, TAB_IDX);
                 Assert.AreEqual(0, CtDgvExpense().Rows.Count);
             }
 
@@ -95,8 +96,7 @@
             [Test]
             public void CountWithExistData()
             {
-                ShowFormMain(DB_EXIST, TAB_IDX);
-
+                ShowFormMain(CSV_EXIST, TAB_IDX);
                 Assert.AreEqual(15, CtDgvExpense().Rows.Count);
             }
 
@@ -107,7 +107,7 @@
             [Test]
             public void DgvWithExistData()
             {
-                ShowFormMain(DB_EXIST, TAB_IDX);
+                ShowFormMain(CSV_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 for (var i = 1; i <= 15; i++)
@@ -133,7 +133,7 @@
             [Test]
             public void DgvWithSelectedCell()
             {
-                ShowFormMain(DB_EXIST, TAB_IDX);
+                ShowFormMain(CSV_EXIST, TAB_IDX);
 
                 var cell = CtDgvExpense().SelectedCells[0];
                 Assert.True(cell.Selected);
@@ -149,7 +149,7 @@
             [Test]
             public void DgvWithScrollBar()
             {
-                ShowFormMain(DB_EXIST, TAB_IDX);
+                ShowFormMain(CSV_EXIST, TAB_IDX);
 
                 var cell = CtDgvExpense().SelectedCells[0];
                 Assert.AreEqual(CtDgvExpense().FirstDisplayedCell.RowIndex, cell.RowIndex - 9); //最終行から 9 行上の行がFirstDisplayedCell
@@ -158,19 +158,19 @@
         }
 
         /// <summary>
-        /// DataGridView 操作テスト
+        /// DataGridView操作テスト
         /// </summary>
         [TestFixture]
         public class DataGridViewControl : AbTestTabExpenseBase
         {
             /// <summary>
             /// 入力行の追加
-            /// クリック: 1 回
+            /// クリック: 1回
             /// </summary>
             [Test]
             public void BtnAddRowClickWithOnce()
             {
-                ShowFormMain(DB_EXIST, TAB_IDX);
+                ShowFormMain(CSV_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var initRowCount = dgvExpense.Rows.Count;
@@ -183,12 +183,12 @@
 
             /// <summary>
             /// 入力行の追加
-            /// クリック: 2 回
+            /// クリック: 2回
             /// </summary>
             [Test]
             public void BtnAddRowClickWithTwice()
             {
-                ShowFormMain(DB_EXIST, TAB_IDX);
+                ShowFormMain(CSV_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var initRowCount = dgvExpense.Rows.Count;
@@ -207,7 +207,7 @@
             [Test]
             public void BtnAddRowClickWithInitialDate()
             {
-                ShowFormMain(DB_EXIST, TAB_IDX);
+                ShowFormMain(CSV_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var initRowCount = dgvExpense.Rows.Count;
@@ -223,15 +223,15 @@
             }
 
             /// <summary>
-            /// KeyDown テスト
+            /// KeyDownテスト
             /// キー: Ctrl + v
             /// 自動補完:補完候補あり
             /// </summary>
-            /// <remarks>Clipboard を使用するため、RequiresSTA の指定が必要</remarks>
+            /// <remarks>Clipboardを使用するため、RequiresSTAの指定が必要</remarks>
             [Test, RequiresSTA]
             public void KeyDownWithComplemented()
             {
-                ShowFormMain(DB_EXIST, TAB_IDX);
+                ShowFormMain(CSV_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -246,15 +246,15 @@
             }
 
             /// <summary>
-            /// KeyDown テスト
+            /// KeyDownテスト
             /// キー: Ctrl + v
             /// 自動補完:補完候補なし
             /// </summary>
-            /// <remarks>Clipboard を使用するため、RequiresSTA の指定が必要</remarks>
+            /// <remarks>Clipboardを使用するため、RequiresSTAの指定が必要</remarks>
             [Test, RequiresSTA]
             public void KeyDownWithNotComplemented()
             {
-                ShowFormMain(DB_EXIST, TAB_IDX);
+                ShowFormMain(CSV_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -269,14 +269,14 @@
             }
 
             /// <summary>
-            /// KeyDown テスト
+            /// KeyDownテスト
             /// キー: Ctrl + v 以外 => Ctrl + c
             /// </summary>
-            /// <remarks>Clipboard を使用するため、RequiresSTA の指定が必要</remarks>
+            /// <remarks>Clipboardを使用するため、RequiresSTAの指定が必要</remarks>
             [Test, RequiresSTA]
             public void KeyDownWithNotCtrlV()
             {
-                ShowFormMain(DB_EXIST, TAB_IDX);
+                ShowFormMain(CSV_EXIST, TAB_IDX);
 
                 TsBtnAddRow().Click();
 
@@ -290,14 +290,14 @@
             }
 
             /// <summary>
-            /// CellEndEdit テスト
+            /// CellEndEditテスト
             /// セル:名称セル
             /// 自動補完:補完候補あり
             /// </summary>
             [Test]
             public void DgvExpenseCellEndEditWithComplemented()
             {
-                ShowFormMain(DB_EXIST, TAB_IDX);
+                ShowFormMain(CSV_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -310,14 +310,14 @@
             }
 
             /// <summary>
-            /// CellEndEdit テスト
+            /// CellEndEditテスト
             /// セル:名称セル
             /// 自動補完:補完候補なし
             /// </summary>
             [Test]
             public void DgvExpenseCellEndEditWithNotComplemented()
             {
-                ShowFormMain(DB_EXIST, TAB_IDX);
+                ShowFormMain(CSV_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -330,13 +330,13 @@
             }
 
             /// <summary>
-            /// CellEndEdit テスト
+            /// CellEndEditテスト
             /// セル:名称セル以外
             /// </summary>
             [Test]
             public void DgvExpenseCellEndEditWithNotNameCell()
             {
-                ShowFormMain(DB_EXIST, TAB_IDX);
+                ShowFormMain(CSV_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -374,20 +374,20 @@
                     var text = "正常に登録しました。";
                     Assert.AreEqual(text, tsMessageBox.Text);
 
-                    // OK ボタンクリック
+                    //OKボタンクリック
                     tsMessageBox.ClickOk();
                 };
 
-                ShowFormMain(DB_EXIST, TAB_IDX);
+                ShowFormMain(CSV_EXIST, TAB_IDX);
 
                 TsBtnEntry().Click();
 
-                NUnit.Framework.FileAssert.AreEqual(DB_ENTRY, DB_EXIST);
+                NUnit.Framework.FileAssert.AreEqual(CSV_ENTRY, CSV_EXIST);
             }
 
             /// <summary>
             /// 登録ボタンクリック
-            /// 入力行 0 件のエラー
+            /// 入力行0件のエラー
             /// </summary>
             [Test]
             public void ErrorWithRowCountZero()
@@ -398,18 +398,18 @@
                     var tsMessageBox = new MessageBoxTester(hWnd);
 
                     //タイトル
-                    var title = "エラー";
+                    var title = "警告";
                     Assert.AreEqual(title, tsMessageBox.Title);
 
                     //テキスト
                     var text = "レコードが1件もありません。";
                     Assert.AreEqual(text, tsMessageBox.Text);
 
-                    // OK ボタンクリック
+                    //OKボタンクリック
                     tsMessageBox.ClickOk();
                 };
 
-                ShowFormMain(DB_EXIST, TAB_IDX);
+                ShowFormMain(CSV_EXIST, TAB_IDX);
 
                 CtDgvExpense().Rows.Clear();
 
@@ -436,11 +436,11 @@
                     var text = "正常に登録しました。";
                     Assert.AreEqual(text, tsMessageBox.Text);
 
-                    // OK ボタンクリック
+                    //OKボタンクリック
                     tsMessageBox.ClickOk();
                 };
 
-                ShowFormMain(DB_EXIST, TAB_IDX);
+                ShowFormMain(CSV_EXIST, TAB_IDX);
 
                 TsBtnAddRow().Click();
 
@@ -454,7 +454,7 @@
 
                 TsBtnEntry().Click();
 
-                NUnit.Framework.FileAssert.AreEqual(DB_ENTRY, DB_EXIST);
+                NUnit.Framework.FileAssert.AreEqual(CSV_ENTRY, CSV_EXIST);
             }
 
             /// <summary>
@@ -474,17 +474,17 @@
                     Assert.AreEqual(title, tsMessageBox.Title);
 
                     //テキスト
-                    var text = string.Format(EX.DB_STORE, 2, EX.DATE_FORMAT);
+                    var text = string.Format(EX.CSV_STORE, 2, EX.DATE_FORMAT);
                     Assert.AreEqual(text, tsMessageBox.Text);
 
-                    // OK ボタンクリック
+                    //OKボタンクリック
                     tsMessageBox.ClickOk();
 
                     //エラー行が選択される
                     Assert.AreEqual(1, CtDgvExpense().SelectedRows[0].Index);
                 };
 
-                ShowFormMain(DB_EXIST, TAB_IDX);
+                ShowFormMain(CSV_EXIST, TAB_IDX);
 
                 CtDgvExpense().Rows[1].Cells[COL.DATE].Value = "2013-02-31";
 
@@ -508,17 +508,17 @@
                     Assert.AreEqual(title, tsMessageBox.Title);
 
                     //テキスト
-                    var text = string.Format(EX.DB_STORE, 5, EX.COST_FORMAT);
+                    var text = string.Format(EX.CSV_STORE, 5, EX.COST_FORMAT);
                     Assert.AreEqual(text, tsMessageBox.Text);
 
-                    // OK ボタンクリック
+                    //OKボタンクリック
                     tsMessageBox.ClickOk();
 
                     //エラー行が選択される
                     Assert.AreEqual(4, CtDgvExpense().SelectedRows[0].Index);
                 };
 
-                ShowFormMain(DB_EXIST, TAB_IDX);
+                ShowFormMain(CSV_EXIST, TAB_IDX);
 
                 CtDgvExpense().Rows[4].Cells[COL.COST].Value = "XXXXXXXX";
 

@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using EX   = Abook.AbException.EX;
+    using CHK  = Abook.AbUtilities.CHK;
     using FMT  = Abook.AbConstants.FMT;
     using NAME = Abook.AbConstants.NAME;
     using TYPE = Abook.AbConstants.TYPE;
@@ -14,14 +14,11 @@
     public partial class AbSummary
     {
         /// <summary>集計年</summary>
-        public int Year { get; private set; }
-
+        public int Year  { get; private set; }
         /// <summary>集計月</summary>
         public int Month { get; private set; }
-
         /// <summary>種別ごとの集計値</summary>
         private Dictionary<string, decimal> dicSumByType;
-
         /// <summary>名前ごとの集計値</summary>
         private Dictionary<string, decimal> dicSumByName;
 
@@ -45,20 +42,20 @@
         /// <returns>種別ごとの集計</returns>
         private Dictionary<string, decimal> SummaryByType(List<AbExpense> expenses)
         {
+            CHK.ExpNull(expenses);
+
             var dic = new Dictionary<string, decimal>();
-            if (expenses == null)
-            {
-                AbException.Throw(EX.EXPENSES_NULL);
-            }
             foreach (var gObj in expenses.GroupBy(exp => exp.Type))
             {
                 dic.Add(gObj.Key, gObj.Sum(exp => exp.Cost));
             }
 
+            //合計
             var excepts = TYPE.SUMMARY.EXPE;
             var total = expenses.Where(exp => excepts.Contains(exp.Type)).Sum(exp => exp.Cost);
             dic.Add(TYPE.TTAL, total);
 
+            //収入
             var earn = dic.ContainsKey(TYPE.EARN) ? dic[TYPE.EARN] : decimal.Zero;
             var balance = earn - total;
             dic.Add(TYPE.BLNC, balance);
@@ -73,11 +70,9 @@
         /// <returns>名前ごとの集計</returns>
         private Dictionary<string, decimal> SummaryByName(List<AbExpense> expenses)
         {
+            CHK.ExpNull(expenses);
+
             var dic = new Dictionary<string, decimal>();
-            if (expenses == null)
-            {
-                AbException.Throw(EX.EXPENSES_NULL);
-            }
             var names = new string[] { NAME.EL, NAME.GS, NAME.WT };
             var filter = expenses.Where(exp => names.Contains(exp.Name));
             foreach (var gObj in filter.GroupBy(exp => exp.Name))
@@ -94,7 +89,7 @@
         /// <returns>集計値</returns>
         public decimal GetCostByType(string type)
         {
-            if (string.IsNullOrEmpty(type)) { return decimal.Zero; }
+            if (string.IsNullOrEmpty(type)) return decimal.Zero;
             return dicSumByType.ContainsKey(type) ? dicSumByType[type] : decimal.Zero;
         }
 
@@ -105,14 +100,14 @@
         /// <returns>集計値</returns>
         public decimal GetCostByName(string name)
         {
-            if (string.IsNullOrEmpty(name)) { return decimal.Zero; }
+            if (string.IsNullOrEmpty(name)) return decimal.Zero;
             return dicSumByName.ContainsKey(name) ? dicSumByName[name] : decimal.Zero;
         }
     }
 
     /// <summary>
     /// 集計値クラス
-    /// static メソッド定義
+    /// staticメソッド定義
     /// </summary>
     public partial class AbSummary
     {
@@ -123,11 +118,9 @@
         /// <returns>集計値リスト</returns>
         public static List<AbSummary> GetSummaries(List<AbExpense> expenses)
         {
+            CHK.ExpNull(expenses);
+
             var summaries = new List<AbSummary>();
-            if (expenses == null)
-            {
-                AbException.Throw(EX.EXPENSES_NULL);
-            }
             var expGroups = expenses.GroupBy(exp =>
                 exp.Date.ToString(FMT.MONTHLY_GROUP)
             );

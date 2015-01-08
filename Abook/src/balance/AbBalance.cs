@@ -1,7 +1,7 @@
 ﻿namespace Abook
 {
     using System;
-    using EX = Abook.AbException.EX;
+    using CHK = Abook.AbUtilities.CHK;
 
     /// <summary>
     /// 収支情報クラス
@@ -10,16 +10,12 @@
     {
         /// <summary>年度</summary>
         public int     Year    { get; private set; }
-
         /// <summary>収入</summary>
         public decimal Earn    { get; private set; }
-
         /// <summary>支出</summary>
         public decimal Expense { get; private set; }
-
         /// <summary>特出</summary>
         public decimal Special { get; private set; }
-
         /// <summary>収支</summary>
         public decimal Balance { get; private set; }
 
@@ -47,10 +43,7 @@
         /// <returns>年度</returns>
         private int ParseYear(int year)
         {
-            if (year < 0)
-            {
-                AbException.Throw(EX.YEAR_MINUS);
-            }
+            CHK.YearMinus(year);
             return year;
         }
 
@@ -61,10 +54,7 @@
         /// <returns>収入</returns>
         private decimal ParseEarn(decimal earn)
         {
-            if (earn < 0)
-            {
-                AbException.Throw(EX.EARN_MINUS);
-            }
+            CHK.EarnMinus(earn);
             return earn;
         }
 
@@ -75,10 +65,7 @@
         /// <returns>支出</returns>
         private decimal ParseExpense(decimal expense)
         {
-            if (expense < 0)
-            {
-                AbException.Throw(EX.EXPENSE_MINUS);
-            }
+            CHK.ExpenseMinus(expense);
             return expense;
         }
 
@@ -89,10 +76,7 @@
         /// <returns>特出</returns>
         private decimal ParseSpecial(decimal special)
         {
-            if (special < 0)
-            {
-                AbException.Throw(EX.SPECIAL_MINUS);
-            }
+            CHK.SpecialMinus(special);
             return special;
         }
 
@@ -106,11 +90,7 @@
         /// <returns>収支</returns>
         private decimal ParseBalance(decimal earn, decimal expense, decimal special, decimal balance)
         {
-            var expected = earn - (expense + special);
-            if (expected != balance)
-            {
-                AbException.Throw(EX.BALANCE_INCORRECT);
-            }
+            CHK.BalanceIncorrect(earn, expense, special, balance);
             return balance;
         }
     }
