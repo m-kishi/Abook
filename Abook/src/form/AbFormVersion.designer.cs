@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(AbFormVersion));
             this.PboxIcon       = new System.Windows.Forms.PictureBox();
             this.LblProduct     = new System.Windows.Forms.Label();
             this.LblVersion     = new System.Windows.Forms.Label();
@@ -39,6 +40,7 @@
             // 
             // PboxIcon
             // 
+            this.PboxIcon.Image = ((System.Drawing.Image)(resources.GetObject("PboxIcon.Image")));
             this.PboxIcon.Location = new System.Drawing.Point(12, 12);
             this.PboxIcon.Name = "PboxIcon";
             this.PboxIcon.Size = new System.Drawing.Size(32, 32);
