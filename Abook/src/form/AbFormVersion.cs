@@ -30,9 +30,6 @@
             //タイトル
             this.Text = Application.ProductName + " のバージョン情報";
 
-            //システムアイコン
-            PboxIcon.Image = SystemIcons.Application.ToBitmap();
-
             //製品名
             LblProduct.Text = Application.ProductName;
 

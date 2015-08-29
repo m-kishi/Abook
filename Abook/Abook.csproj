@@ -7,12 +7,12 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{E64E9C32-8F1A-45B3-B87A-1521FA382817}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Abook</RootNamespace>
     <AssemblyName>Abook</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <StartupObject>Abook.AbFormMain</StartupObject>
+    <ApplicationIcon>img\abook.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -124,14 +124,18 @@
     <Compile Include="src\private\AbPrivateManager.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="img\abook.ico" />
     <Content Include="img\progress_bar.gif" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="src\form\AbFormMain.resx">
+      <DependentUpon>AbFormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\form\AbFormVersion.resx">
+      <DependentUpon>AbFormVersion.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="src\form\AbSubUpload.resx">
       <DependentUpon>AbSubUpload.cs</DependentUpon>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties\" />
   </ItemGroup>
 </Project>

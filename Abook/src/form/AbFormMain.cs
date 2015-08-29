@@ -50,7 +50,6 @@
         /// </summary>
         private void AbFormMain_Load(object sender, EventArgs e)
         {
-            Icon = SystemIcons.Application;
             try
             {
                 InitFormMain(AbDBManager.Load(CSV_FILE));
