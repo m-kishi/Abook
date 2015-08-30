@@ -190,30 +190,48 @@
             }
 
             /// <summary>
-            /// NULLチェック(リクエストURL)
+            /// NULLチェック(ログインURL)
             /// </summary>
-            /// <param name="url">リクエストURL</param>
-            public static void UrlNull(string url)
+            /// <param name="login">ログインURL</param>
+            public static void LoginNull(string login)
             {
-                if (string.IsNullOrEmpty(url)) AbException.Throw(EX.URL_NULL);
+                if (string.IsNullOrEmpty(login)) AbException.Throw(EX.LOGIN_NULL);
             }
 
             /// <summary>
-            /// NULLチェック(UPDファイル名)
+            /// NULLチェック(アップロードURL)
             /// </summary>
-            /// <param name="upd">UPDファイル名</param>
-            public static void UpdNull(string upd)
+            /// <param name="upload">アップロードURL</param>
+            public static void UploadNull(string upload)
             {
-                if (string.IsNullOrEmpty(upd)) AbException.Throw(EX.UPD_NULL);
+                if (string.IsNullOrEmpty(upload)) AbException.Throw(EX.UPLOAD_NULL);
             }
 
             /// <summary>
-            /// 存在チェック(UPDファイル名)
+            /// NULLチェック(メール)
             /// </summary>
-            /// <param name="upd">UPDファイル名</param>
-            public static void UpdExist(string upd)
+            /// <param name="mail">メール</param>
+            public static void MailNull(string mail)
             {
-                if (!File.Exists(upd)) AbException.Throw(EX.UPD_DOES_NOT_EXIST);
+                if (string.IsNullOrEmpty(mail)) AbException.Throw(EX.MAIL_NULL);
+            }
+
+            /// <summary>
+            /// NULLチェック(パスワード)
+            /// </summary>
+            /// <param name="pass">パスワード</param>
+            public static void PassNull(string pass)
+            {
+                if (string.IsNullOrEmpty(pass)) AbException.Throw(EX.PASS_NULL);
+            }
+
+            /// <summary>
+            /// 存在チェック(Abook.db)
+            /// </summary>
+            /// <param name="upd">DBファイル名</param>
+            public static void DbExist(string db)
+            {
+                if (!File.Exists(db)) AbException.Throw(EX.DB_DOES_NOT_EXIST);
             }
 
             /// <summary>
@@ -263,22 +281,6 @@
             }
 
             /// <summary>
-            /// エラーダイアログ
-            /// </summary>
-            /// <param name="title">タイトル</param>
-            /// <param name="message">メッセージ</param>
-            /// <returns>ダイアログリザルト</returns>
-            public static DialogResult Error(string title, string message)
-            {
-                return MessageBox.Show(
-                    message,
-                    title,
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error
-                );
-            }
-
-            /// <summary>
             /// 警告ダイアログ
             /// </summary>
             /// <param name="title">タイトル</param>
@@ -291,22 +293,6 @@
                     title,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning
-                );
-            }
-
-            /// <summary>
-            /// 確認ダイアログ
-            /// </summary>
-            /// <param name="title">タイトル</param>
-            /// <param name="message">メッセージ</param>
-            /// <returns>ダイアログリザルト</returns>
-            public static DialogResult Confirm(string title, string message)
-            {
-                return MessageBox.Show(
-                    message,
-                    title,
-                    MessageBoxButtons.OKCancel,
-                    MessageBoxIcon.Question
                 );
             }
         }

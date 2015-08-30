@@ -3,6 +3,7 @@
     using System;
     using System.ComponentModel;
     using System.Windows.Forms;
+    using CHK = Abook.AbUtilities.CHK;
     using MSG = Abook.AbUtilities.MSG;
 
     /// <summary>
@@ -12,26 +13,23 @@
     {
         /// <summary>CSVファイル</summary>
         private string CSV { get; set; }
-        /// <summary>UPDファイル</summary>
-        private string UPD { get; set; }
-        /// <summary>リクエストURL</summary>
-        private string URL { get; set; }
-        /// <summary>処理中フラグ</summary>
-        public bool IsRunning { get; private set; }
-        /// <summary>サーバからの応答</summary>
-        public string Response { get; private set; }
+        /// <summary>ログインURL</summary>
+        private string URL_LOGIN  { get; set; }
+        /// <summary>アップロードURL</summary>
+        private string URL_UPLOAD { get; set; }
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        /// <param name="CSV">CSVファイル</param>
-        /// <param name="UPD">UPDファイル</param>
-        /// <param name="URL">リクエストURL</param>
-        public AbSubUpload(string CSV, string UPD, string URL)
+        /// <param name="csv">CSVファイル</param>
+        /// <param name="login ">ログインURL</param>
+        /// <param name="upload">アップロードURL</param>
+        public AbSubUpload(string csv, string login, string upload)
         {
-            this.CSV = CSV;
-            this.UPD = UPD;
-            this.URL = URL;
+            this.CSV = csv;
+            this.URL_LOGIN = login;
+            this.URL_UPLOAD = upload;
+
             InitializeComponent();
         }
 
@@ -40,8 +38,7 @@
         /// </summary>
         private void AbSubUpload_Shown(object sender, EventArgs e)
         {
-            IsRunning = true;
-            BackgroundWorker.RunWorkerAsync();
+            ToggleView(true);
         }
 
         /// <summary>
@@ -53,12 +50,37 @@
         }
 
         /// <summary>
+        /// アップロード
+        /// </summary>
+        private void BtnSubmit_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                CHK.MailNull(TxtMail.Text);
+                CHK.PassNull(TxtPass.Text);
+                ToggleView(false);
+                var param = new string[] { TxtMail.Text, TxtPass.Text };
+                BackgroundWorker.RunWorkerAsync(param);
+            }
+            catch (AbException ex)
+            {
+                MSG.Error(ex.Message);
+            }
+        }
+
+        /// <summary>
         /// バックグラウンド処理開始
         /// </summary>
         private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            AbUploaders.Prepare(UPD, AbDBManager.Load(CSV));
-            e.Result = AbUploaders.SendUploadRequest(URL, UPD);
+            var param = (string[])e.Argument;
+            e.Result = AbUploaders.SendUploadRequest(
+                CSV,
+                param[0],
+                param[1],
+                URL_LOGIN,
+                URL_UPLOAD
+            );
         }
 
         /// <summary>
@@ -66,23 +88,35 @@
         /// </summary>
         private void BackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            IsRunning = false;
             if (e.Error != null)
             {
+                ToggleView(true);
                 MSG.Error(e.Error.Message);
-                DialogResult = DialogResult.Abort;
             }
             else if (e.Cancelled)
             {
-                DialogResult = DialogResult.Cancel;
             }
             else
             {
-                Response = e.Result.ToString();
-                DialogResult = DialogResult.OK;
+                MSG.OK("アップロード", "成功しました。");
+                BackgroundWorker.Dispose();
+                this.Close();
             }
-            BackgroundWorker.Dispose();
-            this.Close();
+        }
+
+        /// <summary>
+        /// 表示切替
+        /// </summary>
+        /// <param name="enabled">true:認証情報入力表示 false:プログレスバー表示</param>
+        private void ToggleView(bool enabled)
+        {
+            LblMail.Visible = enabled;
+            TxtMail.Visible = enabled;
+            LblPass.Visible = enabled;
+            TxtPass.Visible = enabled;
+            BtnSubmit.Enabled = enabled;
+            BtnCancel.Enabled = enabled;
+            PboxProgress.Visible = !enabled;
         }
 
         /// <summary>
@@ -90,8 +124,7 @@
         /// </summary>
         private void BtnCancel_Click(object sender, EventArgs e)
         {
-            BtnCancel.Enabled = false;
-            BackgroundWorker.CancelAsync();
+            this.Close();
         }
     }
 }
