@@ -36,7 +36,7 @@
         /// <summary>
         /// フォーム表示
         /// </summary>
-        private void AbSubUpload_Shown(object sender, EventArgs e)
+        private void AbSubUpload_Load(object sender, EventArgs e)
         {
             ToggleView(true);
         }
@@ -47,12 +47,16 @@
         private void AbSubUpload_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (BackgroundWorker.IsBusy) e.Cancel = true;
+            if (!e.Cancel)
+            {
+                BackgroundWorker.Dispose();
+            }
         }
 
         /// <summary>
         /// アップロード
         /// </summary>
-        private void BtnSubmit_Click(object sender, EventArgs e)
+        private void BtnUpload_Click(object sender, EventArgs e)
         {
             try
             {
@@ -99,7 +103,6 @@
             else
             {
                 MSG.OK("アップロード", "成功しました。");
-                BackgroundWorker.Dispose();
                 this.Close();
             }
         }
@@ -114,7 +117,7 @@
             TxtMail.Visible = enabled;
             LblPass.Visible = enabled;
             TxtPass.Visible = enabled;
-            BtnSubmit.Enabled = enabled;
+            BtnUpload.Enabled = enabled;
             BtnCancel.Enabled = enabled;
             PboxProgress.Visible = !enabled;
         }

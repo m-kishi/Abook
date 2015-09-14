@@ -68,12 +68,12 @@
         /// アップロードテスト用の表示
         /// </summary>
         /// <param name="csv">CSVファイル</param>
-        /// <param name="upd">UPDファイル</param>
-        /// <param name="url">リクエストURL</param>
-        protected void ShowFormMain(string csv, string upd, string url)
+        /// <param name="login">ログインURL</param>
+        /// <param name="upload">アップロードURL</param>
+        protected void ShowFormMain(string csv, string login, string upload)
         {
             form = new AbFormMain(csv);
-            form.SetUploadParameters(upd, url);
+            form.SetUploadParameters(login, upload);
             form.Show();
         }
 

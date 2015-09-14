@@ -33,7 +33,7 @@
             this.LblPass = new System.Windows.Forms.Label();
             this.TxtMail = new System.Windows.Forms.TextBox();
             this.TxtPass = new System.Windows.Forms.TextBox();
-            this.BtnSubmit = new System.Windows.Forms.Button();
+            this.BtnUpload = new System.Windows.Forms.Button();
             this.BtnCancel = new System.Windows.Forms.Button();
             this.PboxProgress = new System.Windows.Forms.PictureBox();
             this.BackgroundWorker = new System.ComponentModel.BackgroundWorker();
@@ -72,15 +72,15 @@
             this.TxtPass.Size = new System.Drawing.Size(180, 19);
             this.TxtPass.TabIndex = 3;
             // 
-            // BtnSubmit
+            // BtnUpload
             // 
-            this.BtnSubmit.Click += new System.EventHandler(BtnSubmit_Click);
-            this.BtnSubmit.Location = new System.Drawing.Point(81, 62);
-            this.BtnSubmit.Name = "BtnSubmit";
-            this.BtnSubmit.Size = new System.Drawing.Size(75, 23);
-            this.BtnSubmit.TabIndex = 4;
-            this.BtnSubmit.Text = "アップロード";
-            this.BtnSubmit.UseVisualStyleBackColor = true;
+            this.BtnUpload.Click += new System.EventHandler(BtnUpload_Click);
+            this.BtnUpload.Location = new System.Drawing.Point(81, 62);
+            this.BtnUpload.Name = "BtnUpload";
+            this.BtnUpload.Size = new System.Drawing.Size(75, 23);
+            this.BtnUpload.TabIndex = 4;
+            this.BtnUpload.Text = "アップロード";
+            this.BtnUpload.UseVisualStyleBackColor = true;
             // 
             // BtnCancel
             // 
@@ -116,7 +116,7 @@
             this.Controls.Add(this.LblPass);
             this.Controls.Add(this.TxtMail);
             this.Controls.Add(this.TxtPass);
-            this.Controls.Add(this.BtnSubmit);
+            this.Controls.Add(this.BtnUpload);
             this.Controls.Add(this.BtnCancel);
             this.Controls.Add(this.PboxProgress);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
@@ -127,7 +127,7 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "アップロード";
-            this.Shown += new System.EventHandler(this.AbSubUpload_Shown);
+            this.Load += new System.EventHandler(this.AbSubUpload_Load);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AbSubUpload_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.PboxProgress)).EndInit();
             this.ResumeLayout(false);
@@ -138,7 +138,7 @@
         private System.Windows.Forms.Label LblPass;
         private System.Windows.Forms.TextBox TxtMail;
         private System.Windows.Forms.TextBox TxtPass;
-        private System.Windows.Forms.Button BtnSubmit;
+        private System.Windows.Forms.Button BtnUpload;
         private System.Windows.Forms.Button BtnCancel;
         private System.Windows.Forms.PictureBox PboxProgress;
         private System.ComponentModel.BackgroundWorker BackgroundWorker;

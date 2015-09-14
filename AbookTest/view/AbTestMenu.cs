@@ -83,81 +83,18 @@
 
         /// <summary>
         /// アップロードメニュークリック
-        /// 確認ダイアログでOKを選択する
         /// </summary>
         [Test]
-        public void MenuUploadClickWithSuccess()
+        public void MenuUploadClickWithShowSubUpload()
         {
-            //確認ダイアログの表示テスト
-            DialogBoxHandler = (name, hWnd) =>
+            //アップロードサブフォームが表示される
+            ModalFormHandler = (name, hWnd, form) =>
             {
-                var tsMessageBox = new MessageBoxTester(hWnd);
+                //フォーム名テスト
+                Assert.AreEqual("AbSubUpload", name);
 
-                //タイトル
-                var title = "確認";
-                Assert.AreEqual(title, tsMessageBox.Title);
-
-                //テキスト
-                var text = "アップロードします。";
-                Assert.AreEqual(text, tsMessageBox.Text);
-
-                //OKボタンクリック
-                tsMessageBox.ClickOk();
-
-                //アップロードサブフォームの表示テスト
-                ModalFormHandler = (name2, hWnd2, form2) =>
-                {
-                    //フォーム名テスト
-                    Assert.AreEqual(name2, "AbSubUpload");
-
-                    Application.DoEvents();
-
-                    //成功ダイアログの表示テスト
-                    DialogBoxHandler = (name3, hWnd3) =>
-                    {
-                        var tsMessageBox3 = new MessageBoxTester(hWnd3);
-
-                        //タイトル
-                        var title3 = "アップロード完了";
-                        Assert.AreEqual(title3, tsMessageBox3.Title);
-
-                        //テキスト
-                        var text3 = "アップロードに成功しました。";
-                        Assert.AreEqual(text3, tsMessageBox3.Text);
-
-                        //OKボタンクリック
-                        tsMessageBox3.ClickOk();
-                    };
-                };
-            };
-
-            ShowFormMain(CSV_FILE, "MenuUploadClick.sql", AbWebServer.URL_SUCCESS);
-
-            TsMenuUpload().Click();
-        }
-
-        /// <summary>
-        /// アップロードメニュークリック
-        /// 確認ダイアログでキャンセルを選択する
-        /// </summary>
-        [Test]
-        public void MenuUploadClickWithCancel()
-        {
-            //確認ダイアログの表示テスト
-            DialogBoxHandler = (name, hWnd) =>
-            {
-                var tsMessageBox = new MessageBoxTester(hWnd);
-
-                //タイトル
-                var title = "確認";
-                Assert.AreEqual(title, tsMessageBox.Title);
-
-                //テキスト
-                var text = "アップロードします。";
-                Assert.AreEqual(text, tsMessageBox.Text);
-
-                //OKボタンクリック
-                tsMessageBox.ClickCancel();
+                //キャンセルボタンクリック
+                (new ButtonTester("BtnCancel", form)).Click();
             };
 
             ShowFormMain(CSV_FILE);
@@ -167,72 +104,98 @@
 
         /// <summary>
         /// アップロードメニュークリック
-        /// アップロードに失敗する
+        /// アップロード成功
         /// </summary>
         [Test]
-        public void MenuUploadClickWithFailure()
+        public void MenuUploadClickWithUploadSuccess()
         {
-            //確認ダイアログの表示テスト
-            DialogBoxHandler = (name, hWnd) =>
+            //アップロードサブフォームが表示される
+            ModalFormHandler = (name, hWnd, form) =>
             {
-                var tsMessageBox = new MessageBoxTester(hWnd);
-
-                //タイトル
-                var title = "確認";
-                Assert.AreEqual(title, tsMessageBox.Title);
-
-                //テキスト
-                var text = "アップロードします。";
-                Assert.AreEqual(text, tsMessageBox.Text);
-
-                //OKボタンクリック
-                tsMessageBox.ClickOk();
-
-                //アップロードサブフォームの表示テスト
-                ModalFormHandler = (name2, hWnd2, form2) =>
+                //アップロード成功ダイアログ
+                DialogBoxHandler = (name2, hWnd2) =>
                 {
-                    //フォーム名テスト
-                    Assert.AreEqual(name2, "AbSubUpload");
+                    var tsMessageBox = new MessageBoxTester(hWnd2);
 
-                    Application.DoEvents();
+                    //タイトル
+                    var title = "アップロード";
+                    Assert.AreEqual(title, tsMessageBox.Title);
 
-                    //エラーダイアログの表示テスト
-                    DialogBoxHandler = (name3, hWnd3) =>
-                    {
-                        var tsMessageBox3 = new MessageBoxTester(hWnd3);
+                    //テキスト
+                    var text = "成功しました。";
+                    Assert.AreEqual(text, tsMessageBox.Text);
 
-                        //タイトル
-                        var title3 = "エラー";
-                        Assert.AreEqual(title3, tsMessageBox3.Title);
-
-                        //テキスト
-                        var text3 = EX.UPD_REQ_FAILED;
-                        StringAssert.Contains(text3, tsMessageBox3.Text);
-
-                        //失敗ダイアログの表示テスト
-                        DialogBoxHandler = (name4, hWnd4) =>
-                        {
-                            var tsMessageBox4 = new MessageBoxTester(hWnd4);
-
-                            //タイトル
-                            var title4 = "アップロード失敗";
-                            Assert.AreEqual(title4, tsMessageBox4.Title);
-
-                            //テキスト
-                            var text4 = "アップロードに失敗しました。";
-                            Assert.AreEqual(text4, tsMessageBox4.Text);
-
-                            //OKボタンクリック
-                            tsMessageBox4.ClickOk();
-                        };
-
-                        //OKボタンクリック
-                        tsMessageBox3.ClickOk();
-                    };
+                    //OKボタンクリック
+                    tsMessageBox.ClickOk();
                 };
+
+                Application.DoEvents();
+
+                //フォーム名テスト
+                Assert.AreEqual("AbSubUpload", name);
+
+                // メールを入力
+                (new TextBoxTester("TxtMail", form)).Enter(AbWebServer.MAIL);
+
+                // パスワードを入力
+                (new TextBoxTester("TxtPass", form)).Enter(AbWebServer.PASS);
+
+                //アップロードボタンクリック
+                (new ButtonTester("BtnUpload", form)).Click();
+
             };
 
-            ShowFormMain(CSV_FILE, "MenuUploadClick.sql", AbWebServer.URL_FAILURE);
+            ShowFormMain(CSV_FILE, AbWebServer.URL_LOGIN, AbWebServer.URL_UPLOAD);
+
+            TsMenuUpload().Click();
+        }
+
+        /// <summary>
+        /// アップロードメニュークリック
+        /// アップロード失敗
+        /// </summary>
+        [Test]
+        public void MenuUploadClickWithUploadFailure()
+        {
+            //アップロードサブフォームが表示される
+            ModalFormHandler = (name, hWnd, form) =>
+            {
+                //アップロード失敗ダイアログ
+                DialogBoxHandler = (name2, hWnd2) =>
+                {
+                    var tsMessageBox = new MessageBoxTester(hWnd2);
+
+                    //タイトル
+                    var title = "エラー";
+                    Assert.AreEqual(title, tsMessageBox.Title);
+
+                    //テキスト
+                    Assert.IsTrue(tsMessageBox.Text.Contains(EX.UPD_REQ_FAILED));
+
+                    //OKボタンクリック
+                    tsMessageBox.ClickOk();
+
+                    //アップロードサブフォームのキャンセルボタンをクリック
+                    (new ButtonTester("BtnCancel", form)).Click();
+                };
+
+                Application.DoEvents();
+
+                //フォーム名テスト
+                Assert.AreEqual("AbSubUpload", name);
+
+                // メールを入力
+                (new TextBoxTester("TxtMail", form)).Enter(AbWebServer.MAIL);
+
+                // パスワードを入力
+                (new TextBoxTester("TxtPass", form)).Enter(AbWebServer.PASS);
+
+                //アップロードボタンクリック
+                (new ButtonTester("BtnUpload", form)).Click();
+
+            };
+
+            ShowFormMain(CSV_FILE, AbWebServer.URL_LOGIN_INVALID_ACCESS_TOKEN, AbWebServer.URL_UPLOAD);
 
             TsMenuUpload().Click();
         }
