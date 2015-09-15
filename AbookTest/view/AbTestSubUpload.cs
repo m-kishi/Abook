@@ -8,6 +8,7 @@
     using NUnit.Framework;
     using NUnit.Extensions.Forms;
     using TT  = AbTestTool;
+    using EX  = Abook.AbException.EX;
     using CSV = Abook.AbConstants.CSV;
 
     /// <summary>
@@ -18,12 +19,15 @@
     {
         /// <summary>CSVファイル</summary>
         private const string CSV_FILE = "AbTestSubUpload.db";
-        /// <summary>UPDファイル</summary>
-        private const string UPD_FILE = "AbTestSubUpload.sql";
-        /// <summary>リクエストURL</summary>
-        private const string VALID_URL   = "http://localhost:9999/";
-        /// <summary>リクエストURL</summary>
-        private const string INVALID_URL = "http://localhost:9000/";
+        /// <summary>メール</summary>
+        private const string MAIL = AbWebServer.MAIL;
+        /// <summary>パスワード</summary>
+        private const string PASS = AbWebServer.PASS;
+        /// <summary>ログインURL</summary>
+        private const string URL_LOGIN = AbWebServer.URL_LOGIN;
+        /// <summary>アップロードURL</summary>
+        private const string URL_UPLOAD = AbWebServer.URL_UPLOAD;
+
         /// <summary>対象:種別明細サブ</summary>
         protected AbSubUpload form;
 
@@ -76,59 +80,174 @@
         {
             AbWebServer.Finish();
             if (File.Exists(CSV_FILE)) File.Delete(CSV_FILE);
-            if (File.Exists(UPD_FILE)) File.Delete(UPD_FILE);
         }
 
         /// <summary>
         /// フォーム表示
         /// </summary>
         /// <param name="csv">CSVファイル</param>
-        /// <param name="url">リクエストURL</param>
-        protected void ShowSubUpload(string csv, string url)
+        /// <param name="login">ログインURL</param>
+        /// <param name="upload">アップロードURL</param>
+        private void ShowSubUpload(string csv, string login, string upload)
         {
-            form = new AbSubUpload(csv, UPD_FILE, url);
+            form = new AbSubUpload(csv, login, upload);
             Assert.AreEqual("アップロード", form.Text);
 
-            //フォームのShownイベント起動のために必要
             form.Show();
-            Application.DoEvents();
         }
+
+        #region "Tester取得メソッド"
 
         /// <summary>
         /// アップロードサブフォーム取得
         /// </summary>
         /// <returns>アップロードサブフォーム</returns>
-        protected AbSubUpload CtAbSubUpload()
+        private AbSubUpload CtAbSubUpload()
         {
             var finder = new FormFinder();
             return (AbSubUpload)finder.Find(typeof(AbSubUpload).Name);
         }
 
         /// <summary>
-        /// アップロード成功のテスト
+        /// メール入力欄取得
         /// </summary>
-        [Test]
-        public void UploadWithSuccess()
+        /// <returns>メール入力欄</returns>
+        private TextBoxTester TsTxtMail()
         {
-            ShowSubUpload(CSV_FILE, VALID_URL);
-
-            //処理完了まで待機
-            while (form.IsRunning)
-            {
-                Thread.Sleep(1 * 1000);
-                Application.DoEvents();
-            }
-            Assert.IsTrue(form.IsDisposed);
-            Assert.AreEqual(DialogResult.OK, form.DialogResult);
+            return (new TextBoxTester("TxtMail", form));
         }
 
         /// <summary>
-        /// アップロード失敗のテスト
+        /// パスワード入力欄取得
+        /// </summary>
+        /// <returns>パスワード入力欄</returns>
+        private TextBoxTester TsTxtPass()
+        {
+            return (new TextBoxTester("TxtPass", form));
+        }
+
+        /// <summary>
+        /// アップロードボタン取得
+        /// </summary>
+        /// <returns>アップロードボタン</returns>
+        private ButtonTester TsBtnUpload()
+        {
+            return (new ButtonTester("BtnUpload", form));
+        }
+
+        /// <summary>
+        /// キャンセルボタン取得
+        /// </summary>
+        /// <returns>キャンセルボタン取得</returns>
+        private ButtonTester TsBtnCancel()
+        {
+            return (new ButtonTester("BtnCancel", form));
+        }
+
+        #endregion
+
+        #region "Control取得メソッド"
+
+        /// <summary>
+        /// コントロール取得
+        /// </summary>
+        /// <typeparam name="T">型パラメタ</typeparam>
+        /// <param name="name">コントロール名</param>
+        /// <returns>コントロール</returns>
+        private T CtControl<T>(string name)
+        {
+            return (new Finder<T>(name, form).Find());
+        }
+
+        /// <summary>
+        /// メールラベル取得
+        /// </summary>
+        /// <returns>メールラベル</returns>
+        private Label CtLblMail()
+        {
+            return CtControl<Label>("LblMail");
+        }
+
+        /// <summary>
+        /// パスワードラベル取得
+        /// </summary>
+        /// <returns>パスワードラベル</returns>
+        private Label CtLblPass()
+        {
+            return CtControl<Label>("LblPass");
+        }
+
+        /// <summary>
+        /// メール入力欄取得
+        /// </summary>
+        /// <returns>メール入力欄</returns>
+        private TextBox CtTxtMail()
+        {
+            return CtControl<TextBox>("TxtMail");
+        }
+
+        /// <summary>
+        /// パスワード入力欄取得
+        /// </summary>
+        /// <returns>パスワード入力欄</returns>
+        private TextBox CtTxtPass()
+        {
+            return CtControl<TextBox>("TxtPass");
+        }
+
+        /// <summary>
+        /// アップロードボタン取得
+        /// </summary>
+        /// <returns>アップロードボタン</returns>
+        private Button CtBtnUpload()
+        {
+            return CtControl<Button>("BtnUpload");
+        }
+
+        /// <summary>
+        /// キャンセルボタン取得
+        /// </summary>
+        /// <returns>キャンセルボタン</returns>
+        private Button CtBtnCancel()
+        {
+            return CtControl<Button>("BtnCancel");
+        }
+
+        /// <summary>
+        /// プログレスバー取得
+        /// </summary>
+        /// <returns>プログレスバー</returns>
+        private PictureBox CtPboxProgress()
+        {
+            return CtControl<PictureBox>("PboxProgress");
+        }
+
+        #endregion
+
+        /// <summary>
+        /// コントロールの表示・非表示、有効・無効のテスト
+        /// </summary>
+        /// <param name="enabled">true:認証情報入力表示 false:プログレスバー表示</param>
+        private void CtrlEnabled(bool enabled)
+        {
+            Assert.AreEqual(enabled, CtLblMail().Visible);
+            Assert.AreEqual(enabled, CtTxtMail().Visible);
+            Assert.AreEqual(enabled, CtLblPass().Visible);
+            Assert.AreEqual(enabled, CtTxtPass().Visible);
+            Assert.AreEqual(enabled, CtBtnUpload().Enabled);
+            Assert.AreEqual(enabled, CtBtnCancel().Enabled);
+            Assert.AreEqual(!enabled, CtPboxProgress().Visible);
+        }
+
+        /// <summary>
+        /// アップロード
+        /// メール未入力のエラー
         /// </summary>
         [Test]
-        public void UploadWithFailure()
+        public void UploadWithEmptyMail()
         {
-            //ダイアログの表示テスト
+            ShowSubUpload(CSV_FILE, URL_LOGIN, URL_UPLOAD);
+
             DialogBoxHandler = (name, hWnd) =>
             {
                 var tsMessageBox = new MessageBoxTester(hWnd);
@@ -138,54 +257,307 @@
                 Assert.AreEqual(title, tsMessageBox.Title);
 
                 //テキスト
-                var text = "サーバへのアップロードに失敗しました。:\r\nリモート サーバーに接続できません。";
-                Assert.AreEqual(text, tsMessageBox.Text);
+                Assert.IsTrue(tsMessageBox.Text.Contains(EX.MAIL_NULL));
 
                 //OKボタンクリック
                 tsMessageBox.ClickOk();
             };
 
-            ShowSubUpload(CSV_FILE, INVALID_URL);
+            CtrlEnabled(true);
 
-            //処理完了まで待機
-            while (form.IsRunning)
-            {
-                Thread.Sleep(1 * 1000);
-                Application.DoEvents();
-            }
-            Assert.IsTrue(form.IsDisposed);
-            Assert.AreEqual(DialogResult.Abort, form.DialogResult);
+            TsTxtMail().Enter("");
+            TsTxtPass().Enter(PASS);
+            TsBtnUpload().Click();
         }
 
         /// <summary>
-        /// キャンセルのテスト
+        /// アップロード
+        /// パスワード未入力のエラー
         /// </summary>
         [Test]
-        public void Cancel()
+        public void UploadWithEmptyPass()
         {
-            ShowSubUpload(CSV_FILE, VALID_URL);
+            ShowSubUpload(CSV_FILE, URL_LOGIN, URL_UPLOAD);
 
-            //処理が一瞬で終わる場合はキャンセルが間に合わない
-            if (!form.IsDisposed)
+            DialogBoxHandler = (name, hWnd) =>
             {
-                var ctBtnCancel = (new Finder<Button>("BtnCancel", form).Find());
-                Assert.IsTrue(ctBtnCancel.Enabled);
+                var tsMessageBox = new MessageBoxTester(hWnd);
 
-                var tsBtnCancel = new ButtonTester("BtnCancel", form);
-                tsBtnCancel.Click();
-                Assert.IsFalse(ctBtnCancel.Enabled);
-            }
+                //タイトル
+                var title = "エラー";
+                Assert.AreEqual(title, tsMessageBox.Title);
 
-            //処理完了まで待機
-            while (form.IsRunning)
+                //テキスト
+                Assert.IsTrue(tsMessageBox.Text.Contains(EX.PASS_NULL));
+
+                //OKボタンクリック
+                tsMessageBox.ClickOk();
+            };
+
+            CtrlEnabled(true);
+
+            TsTxtMail().Enter(MAIL);
+            TsTxtPass().Enter("");
+            TsBtnUpload().Click();
+        }
+
+        /// <summary>
+        /// アップロード
+        /// ログインURL不正のエラー
+        /// </summary>
+        [Test]
+        public void UploadWithLoginUrlNotAvailable()
+        {
+            var login = "http://localhost:9990/";
+            ShowSubUpload(CSV_FILE, login, URL_UPLOAD);
+
+            DialogBoxHandler = (name, hWnd) =>
             {
-                Thread.Sleep(1 * 1000);
-                Application.DoEvents();
-            }
+                var tsMessageBox = new MessageBoxTester(hWnd);
 
-            //キャンセルは間に合わずOKが返る
+                //タイトル
+                var title = "エラー";
+                Assert.AreEqual(title, tsMessageBox.Title);
+
+                //テキスト
+                Assert.IsTrue(tsMessageBox.Text.Contains("リモート サーバーに接続できません。"));
+
+                //OKボタンクリック
+                tsMessageBox.ClickOk();
+
+                CtrlEnabled(true);
+            };
+
+            CtrlEnabled(true);
+
+            TsTxtMail().Enter(MAIL);
+            TsTxtPass().Enter(PASS);
+            TsBtnUpload().Click();
+
+            Application.DoEvents();
+            CtrlEnabled(false);
+
+            //処理完了まで待機(2秒程)
+            Thread.Sleep(2 * 1000);
+            Application.DoEvents();
+        }
+
+        /// <summary>
+        /// アップロード
+        /// ログイン失敗のエラー
+        /// </summary>
+        [Test]
+        public void UploadWithLoginFailure()
+        {
+            var login = AbWebServer.URL_LOGIN_FAILED;
+            ShowSubUpload(CSV_FILE, login, URL_UPLOAD);
+
+            DialogBoxHandler = (name, hWnd) =>
+            {
+                var tsMessageBox = new MessageBoxTester(hWnd);
+
+                //タイトル
+                var title = "エラー";
+                Assert.AreEqual(title, tsMessageBox.Title);
+
+                //テキスト
+                Assert.IsTrue(tsMessageBox.Text.Contains("404"));
+
+                //OKボタンクリック
+                tsMessageBox.ClickOk();
+
+                CtrlEnabled(true);
+            };
+
+            CtrlEnabled(true);
+
+            TsTxtMail().Enter(MAIL);
+            TsTxtPass().Enter(PASS);
+            TsBtnUpload().Click();
+
+            Application.DoEvents();
+            CtrlEnabled(false);
+
+            //処理完了まで待機(2秒程)
+            Thread.Sleep(2 * 1000);
+            Application.DoEvents();
+        }
+
+        /// <summary>
+        /// アップロード
+        /// アップロードURL不正のエラー
+        /// </summary>
+        [Test]
+        public void UploadWithUploadUrlNotAvailable()
+        {
+            var upload = "http://localhost:9990/";
+            ShowSubUpload(CSV_FILE, URL_LOGIN, upload);
+
+            DialogBoxHandler = (name, hWnd) =>
+            {
+                var tsMessageBox = new MessageBoxTester(hWnd);
+
+                //タイトル
+                var title = "エラー";
+                Assert.AreEqual(title, tsMessageBox.Title);
+
+                //テキスト
+                Assert.IsTrue(tsMessageBox.Text.Contains("リモート サーバーに接続できません。"));
+
+                //OKボタンクリック
+                tsMessageBox.ClickOk();
+
+                CtrlEnabled(true);
+            };
+
+            CtrlEnabled(true);
+
+            TsTxtMail().Enter(MAIL);
+            TsTxtPass().Enter(PASS);
+            TsBtnUpload().Click();
+
+            Application.DoEvents();
+            CtrlEnabled(false);
+
+            //処理完了まで待機(2秒程)
+            Thread.Sleep(2 * 1000);
+            Application.DoEvents();
+        }
+
+        /// <summary>
+        /// アップロード
+        /// アクセストークン無効のエラー
+        /// </summary>
+        [Test]
+        public void UploadWithInvalidAccessToken()
+        {
+            var login = AbWebServer.URL_LOGIN_INVALID_ACCESS_TOKEN;
+            ShowSubUpload(CSV_FILE, login, URL_UPLOAD);
+
+            DialogBoxHandler = (name, hWnd) =>
+            {
+                var tsMessageBox = new MessageBoxTester(hWnd);
+
+                //タイトル
+                var title = "エラー";
+                Assert.AreEqual(title, tsMessageBox.Title);
+
+                //テキスト
+                Assert.IsTrue(tsMessageBox.Text.Contains("500"));
+
+                //OKボタンクリック
+                tsMessageBox.ClickOk();
+
+                CtrlEnabled(true);
+            };
+
+            CtrlEnabled(true);
+
+            TsTxtMail().Enter(MAIL);
+            TsTxtPass().Enter(PASS);
+            TsBtnUpload().Click();
+
+            Application.DoEvents();
+            CtrlEnabled(false);
+
+            //処理完了まで待機(2秒程)
+            Thread.Sleep(2 * 1000);
+            Application.DoEvents();
+        }
+
+        /// <summary>
+        /// アップロード
+        /// アップロード成功
+        /// </summary>
+        [Test]
+        public void UploadWithUploadSuccess()
+        {
+            ShowSubUpload(CSV_FILE, URL_LOGIN, URL_UPLOAD);
+
+            DialogBoxHandler = (name, hWnd) =>
+            {
+                var tsMessageBox = new MessageBoxTester(hWnd);
+
+                //タイトル
+                var title = "アップロード";
+                Assert.AreEqual(title, tsMessageBox.Title);
+
+                //テキスト
+                Assert.AreEqual("成功しました。", tsMessageBox.Text);
+
+                //OKボタンクリック
+                tsMessageBox.ClickOk();
+            };
+
+            CtrlEnabled(true);
+
+            TsTxtMail().Enter(MAIL);
+            TsTxtPass().Enter(PASS);
+            TsBtnUpload().Click();
+
+            Application.DoEvents();
+            CtrlEnabled(false);
+
+            //処理完了まで待機(2秒程)
+            Thread.Sleep(2 * 1000);
+            Application.DoEvents();
+        }
+
+        /// <summary>
+        /// アップロード
+        /// アップロード失敗
+        /// </summary>
+        [Test]
+        public void UploadWithUploadFailure()
+        {
+            var upload = AbWebServer.URL_UPLOAD_FAILED;
+            ShowSubUpload(CSV_FILE, URL_LOGIN, upload);
+
+            DialogBoxHandler = (name, hWnd) =>
+            {
+                var tsMessageBox = new MessageBoxTester(hWnd);
+
+                //タイトル
+                var title = "エラー";
+                Assert.AreEqual(title, tsMessageBox.Title);
+
+                //テキスト
+                Assert.IsTrue(tsMessageBox.Text.Contains("500"));
+
+                //OKボタンクリック
+                tsMessageBox.ClickOk();
+
+                CtrlEnabled(true);
+            };
+
+            CtrlEnabled(true);
+
+            TsTxtMail().Enter(MAIL);
+            TsTxtPass().Enter(PASS);
+            TsBtnUpload().Click();
+
+            Application.DoEvents();
+            CtrlEnabled(false);
+
+            //処理完了まで待機(2秒程)
+            Thread.Sleep(2 * 1000);
+            Application.DoEvents();
+        }
+
+        /// <summary>
+        /// アップロード
+        /// キャンセル
+        /// </summary>
+        [Test]
+        public void UploadWithCancel()
+        {
+            ShowSubUpload(CSV_FILE, URL_LOGIN, URL_UPLOAD);
+
+            CtrlEnabled(true);
+
+            TsBtnCancel().Click();
+
             Assert.IsTrue(form.IsDisposed);
-            Assert.AreEqual(DialogResult.OK, form.DialogResult);
         }
     }
 }

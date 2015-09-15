@@ -66,8 +66,8 @@
         [TestFixture]
         public class ChkTest
         {
-            /// <summary>UPDファイル名</summary>
-            private const string UPD_FILE = "ChkTestUpd.sql";
+            /// <summary>DBファイル名</summary>
+            private const string DB_FILE = "AbookTest.db";
 
             /// <summary>
             /// TestFixtureSetUp
@@ -75,7 +75,7 @@
             [TestFixtureSetUp]
             public void TestFixtureSetUp()
             {
-                if (!File.Exists(UPD_FILE)) File.Create(UPD_FILE).Close();
+                if (!File.Exists(DB_FILE)) File.Create(DB_FILE).Close();
             }
 
             /// <summary>
@@ -84,7 +84,7 @@
             [TestFixtureTearDown]
             public void TestFixtureTearDown()
             {
-                if (File.Exists(UPD_FILE)) File.Delete(UPD_FILE);
+                if (File.Exists(DB_FILE)) File.Delete(DB_FILE);
             }
 
             /// <summary>
@@ -602,103 +602,180 @@
             }
 
             /// <summary>
-            /// NULLチェック(リクエストURL)
+            /// NULLチェック(ログインURL)
             /// </summary>
             [Test]
-            public void UrlNull()
+            public void LoginNull()
             {
-                var argUrl = "http://localhost:9999";
-                Assert.DoesNotThrow(() => CHK.UrlNull(argUrl));
+                var argLogin = "http://localhost:9999/api/v1/login";
+                Assert.DoesNotThrow(() => CHK.LoginNull(argLogin));
             }
 
             /// <summary>
-            /// NULLチェック(リクエストURL)
-            /// 引数:リクエストURLがNULL
+            /// NULLチェック(ログインURL)
+            /// 引数:ログインURLがNULL
             /// </summary>
             [Test]
-            public void UrlNullWithNullUrl()
+            public void LoginNullWithNullLogin()
             {
-                string argUrl = null;
+                string argLogin = null;
                 var ex = Assert.Throws<AbException>(() =>
-                    CHK.UrlNull(argUrl)
+                    CHK.LoginNull(argLogin)
                 );
-                Assert.AreEqual(EX.URL_NULL, ex.Message);
+                Assert.AreEqual(EX.LOGIN_NULL, ex.Message);
             }
 
             /// <summary>
-            /// NULLチェック(リクエストURL)
-            /// 引数:リクエストURLが空文字列
+            /// NULLチェック(ログインURL)
+            /// 引数:ログインURLが空文字列
             /// </summary>
             [Test]
-            public void UrlNullWithEmptyUrl()
+            public void LoginNullWithEmptyLogin()
             {
-                var argUrl = string.Empty;
+                var argLogin = string.Empty;
                 var ex = Assert.Throws<AbException>(() =>
-                    CHK.UrlNull(argUrl)
+                    CHK.LoginNull(argLogin)
                 );
-                Assert.AreEqual(EX.URL_NULL, ex.Message);
+                Assert.AreEqual(EX.LOGIN_NULL, ex.Message);
             }
 
             /// <summary>
-            /// NULLチェック(UPDファイル名)
+            /// NULLチェック(アップロードURL)
             /// </summary>
             [Test]
-            public void UpdNull()
+            public void UploadNull()
             {
-                var argUpd = UPD_FILE;
-                Assert.DoesNotThrow(() => CHK.UpdNull(argUpd));
+                var argUpload = "http://localhost:9999/api/v1/upload";
+                Assert.DoesNotThrow(() => CHK.UploadNull(argUpload));
             }
 
             /// <summary>
-            /// NULLチェック(UPDファイル名)
-            /// 引数:UPDファイル名がNULL
+            /// NULLチェック(アップロードURL)
+            /// 引数:アップロードURLがNULL
             /// </summary>
             [Test]
-            public void UpdNullWithNullUpd()
+            public void UploadNullWithNullUpload()
             {
-                string argUpd = null;
+                string argUpload = null;
                 var ex = Assert.Throws<AbException>(() =>
-                    CHK.UpdNull(argUpd)
+                    CHK.UploadNull(argUpload)
                 );
-                Assert.AreEqual(EX.UPD_NULL, ex.Message);
+                Assert.AreEqual(EX.UPLOAD_NULL, ex.Message);
             }
 
             /// <summary>
-            /// NULLチェック(UPDファイル名)
-            /// 引数:UPDファイル名が空文字列
+            /// NULLチェック(アップロードURL)
+            /// 引数:アップロードURLが空文字列
             /// </summary>
             [Test]
-            public void UpdNullWithEmptyUpd()
+            public void UploadNullWithEmptyUpload()
             {
-                var argUpd = string.Empty;
+                var argUpload = string.Empty;
                 var ex = Assert.Throws<AbException>(() =>
-                    CHK.UpdNull(argUpd)
+                    CHK.UploadNull(argUpload)
                 );
-                Assert.AreEqual(EX.UPD_NULL, ex.Message);
+                Assert.AreEqual(EX.UPLOAD_NULL, ex.Message);
             }
 
             /// <summary>
-            /// 存在チェック(UPDファイル名)
+            /// NULLチェック(メール)
             /// </summary>
             [Test]
-            public void UpdExist()
+            public void MailNull()
             {
-                var argUpd = UPD_FILE;
-                Assert.DoesNotThrow(() => CHK.UpdExist(argUpd));
+                var argMail = "text@example.com";
+                Assert.DoesNotThrow(() => CHK.MailNull(argMail));
             }
 
             /// <summary>
-            /// 存在チェック(UPDファイル名)
-            /// 引数:UPDファイル名が存在しない
+            /// NULLチェック(メール)
+            /// 引数:メールがNULL
             /// </summary>
             [Test]
-            public void UpdExistWithDoesNotExist()
+            public void MailNullWithNullMail()
             {
-                var argUpd = "does not exist";
+                string argMail = null;
                 var ex = Assert.Throws<AbException>(() =>
-                    CHK.UpdExist(argUpd)
+                    CHK.MailNull(argMail)
                 );
-                Assert.AreEqual(EX.UPD_DOES_NOT_EXIST, ex.Message);
+                Assert.AreEqual(EX.MAIL_NULL, ex.Message);
+            }
+
+            /// <summary>
+            /// NULLチェック(メール)
+            /// 引数:メールが空文字列
+            /// </summary>
+            [Test]
+            public void MailNullWithEmptyMail()
+            {
+                var argMail = string.Empty;
+                var ex = Assert.Throws<AbException>(() =>
+                    CHK.MailNull(argMail)
+                );
+                Assert.AreEqual(EX.MAIL_NULL, ex.Message);
+            }
+
+            /// <summary>
+            /// NULLチェック(パスワード)
+            /// </summary>
+            [Test]
+            public void PassNull()
+            {
+                var argPass = "secret_password";
+                Assert.DoesNotThrow(() => CHK.PassNull(argPass));
+            }
+
+            /// <summary>
+            /// NULLチェック(パスワード)
+            /// 引数:パスワードがNULL
+            /// </summary>
+            [Test]
+            public void PassNullWithNullPass()
+            {
+                string argPass = null;
+                var ex = Assert.Throws<AbException>(() =>
+                    CHK.PassNull(argPass)
+                );
+                Assert.AreEqual(EX.PASS_NULL, ex.Message);
+            }
+
+            /// <summary>
+            /// NULLチェック(パスワード)
+            /// 引数:パスワードが空文字列
+            /// </summary>
+            [Test]
+            public void PassNullWithEmptyPass()
+            {
+                var argPass = string.Empty;
+                var ex = Assert.Throws<AbException>(() =>
+                    CHK.PassNull(argPass)
+                );
+                Assert.AreEqual(EX.PASS_NULL, ex.Message);
+            }
+
+            /// <summary>
+            /// 存在チェック(Abook.db)
+            /// 引数:DBファイルが存在する
+            /// </summary>
+            [Test]
+            public void DbExistWithExist()
+            {
+                var argDb = DB_FILE;
+                Assert.DoesNotThrow(() => CHK.DbExist(argDb));
+            }
+
+            /// <summary>
+            /// 存在チェック(Abook.db)
+            /// 引数:DBファイルが存在しない
+            /// </summary>
+            [Test]
+            public void DbExistWithNotExist()
+            {
+                var argDb = "NOT_EXIST.db";
+                var ex = Assert.Throws<AbException>(() =>
+                    CHK.DbExist(argDb)
+                );
+                Assert.AreEqual(EX.DB_DOES_NOT_EXIST, ex.Message);
             }
 
             /// <summary>

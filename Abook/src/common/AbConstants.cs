@@ -63,16 +63,30 @@
         /// <summary>UPD</summary>
         public static class UPD
         {
-            /// <summary>UPDファイル</summary>
-            public const string FILE = "Abook.sql";
-            /// <summary>リクエストURL</summary>
-            public const string URL = "http://10.0.2.2:9999/linkage/abookdb";
-            /// <summary>改行文字(LF)</summary>
-            public const string LF = "\n";
-            /// <summary>ステータスコード(200)</summary>
-            public const string SUCCESS = "200";
-            /// <summary>文字コード(UTF-8 BOM無し)</summary>
-            public static readonly Encoding ENCODING = new UTF8Encoding(false);
+            /// <summary>ログインURL</summary>
+            public const string URL_LOGIN = "http://10.0.2.2:9999/api/v1/login";
+            /// <summary>アップロードURL</summary>
+            public const string URL_UPLOAD = "http://10.0.2.2:9999/api/v1/upload";
+        }
+
+        /// <summary>HTTP</summary>
+        public static class HTTP
+        {
+            /// <summary>HEADER</summary>
+            public static class HEADER
+            {
+                /// <summary>ACCESS_TOKEN</summary>
+                public const string TOKEN = "ACCESS_TOKEN";
+            }
+
+            /// <summary>PARAMETER</summary>
+            public static class PARAMETER
+            {
+                /// <summary>MAIL</summary>
+                public const string MAIL = "mail";
+                /// <summary>PASS</summary>
+                public const string PASS = "pass";
+            }
         }
 
         /// <summary>DataGridView</summary>

@@ -101,20 +101,18 @@
             /// <summary>種別が正しくありません。</summary>
             public const string TYPE_PRIVATE_ERR = "種別が正しくありません。";
 
-            /// <summary>URLがありません。</summary>
-            public const string URL_NULL = "URLがありません。";
-            /// <summary>UPDファイルがありません。</summary>
-            public const string UPD_NULL = "UPDファイルがありません。";
-            /// <summary>{0} 行目: {1}</summary>
-            public const string UPD_PREPARE = "{0} 行目: {1}";
-            /// <summary>UPDファイルの作成に失敗しました。\r\n: {0}</summary>
-            public const string UPD_CREATE = "UPDファイルの作成に失敗しました。\r\n: {0}";
-            /// <summary>UPDファイルが見つかりませんでした。</summary>
-            public const string UPD_DOES_NOT_EXIST = "UPDファイルが見つかりませんでした。";
+            /// <summary>MAILを入力してください。</summary>
+            public const string MAIL_NULL = "MAILを入力してください。";
+            /// <summary>PASSを入力してください。</summary>
+            public const string PASS_NULL = "PASSを入力してください。";
+            /// <summary>ログインURLがありません。</summary>
+            public const string LOGIN_NULL = "ログインURLがありません。";
+            /// <summary>アップロードURLがありません。</summary>
+            public const string UPLOAD_NULL = "アップロードURLがありません。";
+            /// <summary>DBファイルが見つかりませんでした。</summary>
+            public const string DB_DOES_NOT_EXIST = "DBファイルが見つかりませんでした。";
             /// <summary>サーバへのアップロードに失敗しました。</summary>
             public const string UPD_REQ_FAILED = "サーバへのアップロードに失敗しました。";
-            /// <summary>サーバからの応答の取得に失敗しました。</summary>
-            public const string UPD_RES_FAILED = "サーバからの応答の取得に失敗しました。";
             /// <summary>アップロードするデータがありません。</summary>
             public const string UPD_RECORD_NOTHING = "アップロードするデータがありません。";
         }

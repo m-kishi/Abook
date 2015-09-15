@@ -1,22 +1,17 @@
 ﻿namespace Abook
 {
     using System;
-    using System.Collections.Generic;
-    using System.Drawing;
-    using System.Threading;
     using System.Windows.Forms;
-    using MSG = Abook.AbUtilities.MSG;
-    using UPD = Abook.AbConstants.UPD;
 
     /// <summary>
     /// メイン画面メニュー
     /// </summary>
     public partial class AbFormMain : Form
     {
-        /// <summary>UPDファイル</summary>
-        public string UPD_FILE { get; set; }
-        /// <summary>リクエストURL</summary>
-        public string REQU_URL { get; set; }
+        /// <summary>ログインURL</summary>
+        public string URL_LOGIN  { get; set; }
+        /// <summary>アップロードURL</summary>
+        public string URL_UPLOAD { get; set; }
 
         /// <summary>
         /// アプリケーション終了
@@ -38,12 +33,12 @@
         /// <summary>
         /// アップロードのパラメタ設定
         /// </summary>
-        /// <param name="UPD">UPDファイル</param>
-        /// <param name="URL">リクエストURL</param>
-        public void SetUploadParameters(string UPD, string URL)
+        /// <param name="login">ログインURL</param>
+        /// <param name="upload">アップロードURL</param>
+        public void SetUploadParameters(string login, string upload)
         {
-            this.UPD_FILE = UPD;
-            this.REQU_URL = URL;
+            this.URL_LOGIN = login;
+            this.URL_UPLOAD = upload;
         }
 
         /// <summary>
@@ -51,21 +46,8 @@
         /// </summary>
         private void MenuUpload_Click(object sender, EventArgs e)
         {
-            var dialogResult = MSG.Confirm("確認", "アップロードします。");
-            if (dialogResult == DialogResult.OK)
-            {
-                var formUpload = new AbSubUpload(CSV_FILE, UPD_FILE, REQU_URL);
-                var result = formUpload.ShowDialog(this);
-                if (result == DialogResult.OK)
-                {
-                    MSG.OK("アップロード完了", "アップロードに成功しました。");
-                }
-                else if (result != DialogResult.Cancel)
-                {
-                    MSG.Error("アップロード失敗", "アップロードに失敗しました。");
-                }
-                formUpload.Dispose();
-            }
+            var formUpload = new AbSubUpload(CSV_FILE, URL_LOGIN, URL_UPLOAD);
+            formUpload.ShowDialog();
         }
     }
 }

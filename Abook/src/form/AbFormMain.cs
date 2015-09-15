@@ -31,7 +31,7 @@
 
             AbFormMain form = null;
             form = new AbFormMain(CSV.FILE);
-            form.SetUploadParameters(UPD.FILE, UPD.URL);
+            form.SetUploadParameters(UPD.URL_LOGIN, UPD.URL_UPLOAD);
             Application.Run(form);
         }
 
