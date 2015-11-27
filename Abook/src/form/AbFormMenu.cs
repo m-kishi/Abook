@@ -2,6 +2,7 @@
 {
     using System;
     using System.Windows.Forms;
+    using MSG = Abook.AbUtilities.MSG;
 
     /// <summary>
     /// メイン画面メニュー
@@ -28,6 +29,22 @@
         {
             var formVersion = new AbFormVersion();
             formVersion.ShowDialog();
+        }
+
+        /// <summary>
+        /// 光熱費情報表示
+        /// </summary>
+        private void MenuEnergy_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var formEnergy = new AbSubEnergy(AbDBManager.Load(CSV_FILE));
+                formEnergy.ShowDialog();
+            }
+            catch (AbException ex)
+            {
+                MSG.Error(ex.Message);
+            }
         }
 
         /// <summary>

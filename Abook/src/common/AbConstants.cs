@@ -149,6 +149,9 @@
             public const string GS = "ガス代";
             /// <summary>水道代</summary>
             public const string WT = "水道代";
+
+            /// <summary>光熱費に属する名称</summary>
+            public static readonly string[] ENERGY = { EL, GS, WT };
         }
 
         /// <summary>種別</summary>
