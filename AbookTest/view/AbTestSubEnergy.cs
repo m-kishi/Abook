@@ -1,0 +1,1450 @@
+﻿namespace AbookTest
+{
+    using Abook;
+    using System;
+    using System.Drawing;
+    using System.IO;
+    using System.Windows.Forms;
+    using NUnit.Framework;
+    using NUnit.Extensions.Forms;
+    using TT   = AbTestTool;
+    using EX   = Abook.AbException.EX;
+    using COL  = Abook.AbConstants.COL;
+    using CSV  = Abook.AbConstants.CSV;
+    using NAME = Abook.AbConstants.NAME;
+    using TYPE = Abook.AbConstants.TYPE;
+
+    /// <summary>
+    /// 光熱費サブフォームテスト
+    /// </summary>
+    [TestFixture]
+    public class AbTestSubEnergy : NUnitFormTest
+    {
+        /// <summary>CSVファイル</summary>
+        private const string CSV_EMPTY   = "AbTestSubEnergyEmpty.db";
+        /// <summary>CSVファイル</summary>
+        private const string CSV_ONLY_EL = "AbTestSubEnergyOnlyEl.db";
+        /// <summary>CSVファイル</summary>
+        private const string CSV_ONLY_GS = "AbTestSubEnergyOnlyGs.db";
+        /// <summary>CSVファイル</summary>
+        private const string CSV_ONLY_WT = "AbTestSubEnergyOnlyWt.db";
+        /// <summary>CSVファイル</summary>
+        private const string CSV_ENERGIES = "AbTestSubEnergies.db";
+        /// <summary>対象:種別明細サブ</summary>
+        protected AbSubEnergy form;
+
+        /// <summary>
+        /// Setup
+        /// </summary>
+        public override void Setup()
+        {
+            base.Setup();
+        }
+
+        /// <summary>
+        /// TearDown
+        /// </summary>
+        public override void TearDown()
+        {
+            try
+            {
+                CtAbSubEnergy().Close();
+            }
+            catch (NoSuchControlException)
+            {
+                //すでに閉じられている
+            }
+            base.TearDown();
+        }
+
+        /// <summary>
+        /// TestFixtureSetUp
+        /// </summary>
+        [TestFixtureSetUp]
+        public void TestFixtureSetUp()
+        {
+            using (StreamWriter sw = new StreamWriter(CSV_ONLY_EL, false, CSV.ENCODING))
+            {
+                sw.NewLine = CSV.LF;
+                sw.WriteLine(TT.ToCSV("2015-04-07", NAME.EL, TYPE.ENGY, "1600"));
+                sw.WriteLine(TT.ToCSV("2015-04-08", NAME.EL, TYPE.ENGY, "1700"));
+                sw.WriteLine(TT.ToCSV("2015-05-09", NAME.EL, TYPE.ENGY, "1800"));
+                sw.WriteLine(TT.ToCSV("2015-05-10", NAME.EL, TYPE.ENGY, "1900"));
+                sw.WriteLine(TT.ToCSV("2015-07-11", NAME.EL, TYPE.ENGY, "2000"));
+                sw.WriteLine(TT.ToCSV("2015-07-12", NAME.EL, TYPE.ENGY, "2100"));
+                sw.WriteLine(TT.ToCSV("2015-07-13", NAME.EL, TYPE.ENGY, "2200"));
+                sw.WriteLine(TT.ToCSV("2015-08-14", NAME.EL, TYPE.ENGY, "2300"));
+                sw.WriteLine(TT.ToCSV("2015-08-15", NAME.EL, TYPE.ENGY, "2400"));
+                sw.WriteLine(TT.ToCSV("2015-08-16", NAME.EL, TYPE.ENGY, "2500"));
+                sw.WriteLine(TT.ToCSV("2015-08-17", NAME.EL, TYPE.ENGY, "2600"));
+                sw.WriteLine(TT.ToCSV("2015-08-18", NAME.EL, TYPE.ENGY, "2700"));
+                sw.WriteLine(TT.ToCSV("2015-09-19", NAME.EL, TYPE.ENGY, "2800"));
+                sw.WriteLine(TT.ToCSV("2015-10-20", NAME.EL, TYPE.ENGY, "2900"));
+                sw.WriteLine(TT.ToCSV("2015-11-21", NAME.EL, TYPE.ENGY, "3000"));
+                sw.WriteLine(TT.ToCSV("2016-01-01", NAME.EL, TYPE.ENGY, "1000"));
+                sw.WriteLine(TT.ToCSV("2016-01-02", NAME.EL, TYPE.ENGY, "1100"));
+                sw.WriteLine(TT.ToCSV("2016-02-03", NAME.EL, TYPE.ENGY, "1200"));
+                sw.WriteLine(TT.ToCSV("2016-02-04", NAME.EL, TYPE.ENGY, "1300"));
+                sw.WriteLine(TT.ToCSV("2016-03-05", NAME.EL, TYPE.ENGY, "1400"));
+                sw.WriteLine(TT.ToCSV("2016-03-06", NAME.EL, TYPE.ENGY, "1500"));
+                sw.Close();
+            }
+
+            using (StreamWriter sw = new StreamWriter(CSV_ONLY_GS, false, CSV.ENCODING))
+            {
+                sw.NewLine = CSV.LF;
+                sw.WriteLine(TT.ToCSV("2015-04-04", NAME.GS, TYPE.ENGY, "2600"));
+                sw.WriteLine(TT.ToCSV("2015-05-05", NAME.GS, TYPE.ENGY, "2800"));
+                sw.WriteLine(TT.ToCSV("2015-06-06", NAME.GS, TYPE.ENGY, "3000"));
+                sw.WriteLine(TT.ToCSV("2015-07-07", NAME.GS, TYPE.ENGY, "3200"));
+                sw.WriteLine(TT.ToCSV("2015-08-08", NAME.GS, TYPE.ENGY, "3400"));
+                sw.WriteLine(TT.ToCSV("2015-09-09", NAME.GS, TYPE.ENGY, "3600"));
+                sw.WriteLine(TT.ToCSV("2015-10-10", NAME.GS, TYPE.ENGY, "3800"));
+                sw.WriteLine(TT.ToCSV("2015-11-11", NAME.GS, TYPE.ENGY, "4000"));
+                sw.WriteLine(TT.ToCSV("2015-12-12", NAME.GS, TYPE.ENGY, "4200"));
+                sw.WriteLine(TT.ToCSV("2016-01-13", NAME.GS, TYPE.ENGY, "4400"));
+                sw.WriteLine(TT.ToCSV("2016-02-14", NAME.GS, TYPE.ENGY, "4600"));
+                sw.WriteLine(TT.ToCSV("2016-03-15", NAME.GS, TYPE.ENGY, "4800"));
+                sw.WriteLine(TT.ToCSV("2016-04-16", NAME.GS, TYPE.ENGY, "5000"));
+                sw.WriteLine(TT.ToCSV("2016-05-17", NAME.GS, TYPE.ENGY, "5200"));
+                sw.WriteLine(TT.ToCSV("2016-06-18", NAME.GS, TYPE.ENGY, "5400"));
+                sw.WriteLine(TT.ToCSV("2016-07-19", NAME.GS, TYPE.ENGY, "5600"));
+                sw.WriteLine(TT.ToCSV("2016-08-20", NAME.GS, TYPE.ENGY, "5800"));
+                sw.WriteLine(TT.ToCSV("2016-09-21", NAME.GS, TYPE.ENGY, "6000"));
+                sw.WriteLine(TT.ToCSV("2016-10-22", NAME.GS, TYPE.ENGY, "6200"));
+                sw.WriteLine(TT.ToCSV("2016-11-23", NAME.GS, TYPE.ENGY, "6400"));
+                sw.WriteLine(TT.ToCSV("2016-12-24", NAME.GS, TYPE.ENGY, "6600"));
+                sw.WriteLine(TT.ToCSV("2017-01-01", NAME.GS, TYPE.ENGY, "2000"));
+                sw.WriteLine(TT.ToCSV("2017-02-02", NAME.GS, TYPE.ENGY, "2200"));
+                sw.WriteLine(TT.ToCSV("2017-03-03", NAME.GS, TYPE.ENGY, "2400"));
+                sw.Close();
+            }
+
+            using (StreamWriter sw = new StreamWriter(CSV_ONLY_WT, false, CSV.ENCODING))
+            {
+                sw.NewLine = CSV.LF;
+                sw.WriteLine(TT.ToCSV("2015-04-04", NAME.WT, TYPE.ENGY, "1300"));
+                sw.WriteLine(TT.ToCSV("2015-05-05", NAME.WT, TYPE.ENGY, "1400"));
+                sw.WriteLine(TT.ToCSV("2015-06-06", NAME.WT, TYPE.ENGY, "1500"));
+                sw.WriteLine(TT.ToCSV("2015-07-07", NAME.WT, TYPE.ENGY, "1600"));
+                sw.WriteLine(TT.ToCSV("2015-08-08", NAME.WT, TYPE.ENGY, "1700"));
+                sw.WriteLine(TT.ToCSV("2015-09-09", NAME.WT, TYPE.ENGY, "1800"));
+                sw.WriteLine(TT.ToCSV("2015-10-10", NAME.WT, TYPE.ENGY, "1900"));
+                sw.WriteLine(TT.ToCSV("2015-11-11", NAME.WT, TYPE.ENGY, "2000"));
+                sw.WriteLine(TT.ToCSV("2015-12-12", NAME.WT, TYPE.ENGY, "2100"));
+                sw.WriteLine(TT.ToCSV("2016-01-01", NAME.WT, TYPE.ENGY, "1000"));
+                sw.WriteLine(TT.ToCSV("2016-02-02", NAME.WT, TYPE.ENGY, "1100"));
+                sw.WriteLine(TT.ToCSV("2016-03-03", NAME.WT, TYPE.ENGY, "1200"));
+                sw.WriteLine(TT.ToCSV("2017-04-16", NAME.WT, TYPE.ENGY, "2500"));
+                sw.WriteLine(TT.ToCSV("2017-05-17", NAME.WT, TYPE.ENGY, "2600"));
+                sw.WriteLine(TT.ToCSV("2017-06-18", NAME.WT, TYPE.ENGY, "2700"));
+                sw.WriteLine(TT.ToCSV("2017-07-19", NAME.WT, TYPE.ENGY, "2800"));
+                sw.WriteLine(TT.ToCSV("2017-08-20", NAME.WT, TYPE.ENGY, "2900"));
+                sw.WriteLine(TT.ToCSV("2017-09-21", NAME.WT, TYPE.ENGY, "3000"));
+                sw.WriteLine(TT.ToCSV("2017-10-22", NAME.WT, TYPE.ENGY, "3100"));
+                sw.WriteLine(TT.ToCSV("2017-11-23", NAME.WT, TYPE.ENGY, "3200"));
+                sw.WriteLine(TT.ToCSV("2017-12-24", NAME.WT, TYPE.ENGY, "3300"));
+                sw.WriteLine(TT.ToCSV("2018-01-13", NAME.WT, TYPE.ENGY, "2200"));
+                sw.WriteLine(TT.ToCSV("2018-02-14", NAME.WT, TYPE.ENGY, "2300"));
+                sw.WriteLine(TT.ToCSV("2018-03-15", NAME.WT, TYPE.ENGY, "2400"));
+                sw.Close();
+            }
+
+            using (StreamWriter sw = new StreamWriter(CSV_ENERGIES, false, CSV.ENCODING))
+            {
+                sw.NewLine = CSV.LF;
+                sw.WriteLine(TT.ToCSV("2009-04-30", NAME.EL, TYPE.ENGY, "1804")); sw.WriteLine(TT.ToCSV("2009-04-30", NAME.GS, TYPE.ENGY, "5422")); sw.WriteLine(TT.ToCSV("2009-04-30", NAME.WT, TYPE.ENGY, "1848"));
+                sw.WriteLine(TT.ToCSV("2009-05-31", NAME.EL, TYPE.ENGY, "1359")); sw.WriteLine(TT.ToCSV("2009-05-31", NAME.GS, TYPE.ENGY, "4462")); sw.WriteLine(TT.ToCSV("2009-05-31", NAME.WT, TYPE.ENGY, "1848"));
+                sw.WriteLine(TT.ToCSV("2009-06-30", NAME.EL, TYPE.ENGY, "1550")); sw.WriteLine(TT.ToCSV("2009-06-30", NAME.GS, TYPE.ENGY, "4659")); sw.WriteLine(TT.ToCSV("2009-06-30", NAME.WT, TYPE.ENGY, "1896"));
+                sw.WriteLine(TT.ToCSV("2009-07-31", NAME.EL, TYPE.ENGY, "3780")); sw.WriteLine(TT.ToCSV("2009-07-31", NAME.GS, TYPE.ENGY, "4363")); sw.WriteLine(TT.ToCSV("2009-07-31", NAME.WT, TYPE.ENGY, "1896"));
+                sw.WriteLine(TT.ToCSV("2009-08-31", NAME.EL, TYPE.ENGY, "3853")); sw.WriteLine(TT.ToCSV("2009-08-31", NAME.GS, TYPE.ENGY, "3969")); sw.WriteLine(TT.ToCSV("2009-08-31", NAME.WT, TYPE.ENGY, "1896"));
+                sw.WriteLine(TT.ToCSV("2009-09-30", NAME.EL, TYPE.ENGY, "3143")); sw.WriteLine(TT.ToCSV("2009-09-30", NAME.GS, TYPE.ENGY, "3771")); sw.WriteLine(TT.ToCSV("2009-09-30", NAME.WT, TYPE.ENGY, "1896"));
+                sw.WriteLine(TT.ToCSV("2009-10-31", NAME.EL, TYPE.ENGY, "1416")); sw.WriteLine(TT.ToCSV("2009-10-31", NAME.GS, TYPE.ENGY, "3820")); sw.WriteLine(TT.ToCSV("2009-10-31", NAME.WT, TYPE.ENGY, "1848"));
+                sw.WriteLine(TT.ToCSV("2009-11-30", NAME.EL, TYPE.ENGY, "1250")); sw.WriteLine(TT.ToCSV("2009-11-30", NAME.GS, TYPE.ENGY, "4857")); sw.WriteLine(TT.ToCSV("2009-11-30", NAME.WT, TYPE.ENGY, "1848"));
+                sw.WriteLine(TT.ToCSV("2009-12-31", NAME.EL, TYPE.ENGY,  "501")); sw.WriteLine(TT.ToCSV("2009-12-31", NAME.GS, TYPE.ENGY, "1995")); sw.WriteLine(TT.ToCSV("2009-12-31", NAME.WT, TYPE.ENGY, "1462"));
+                sw.WriteLine(TT.ToCSV("2010-01-31", NAME.EL, TYPE.ENGY,  "708")); sw.WriteLine(TT.ToCSV("2010-01-31", NAME.GS, TYPE.ENGY, "3031")); sw.WriteLine(TT.ToCSV("2010-01-31", NAME.WT, TYPE.ENGY, "1462"));
+                sw.WriteLine(TT.ToCSV("2010-02-28", NAME.EL, TYPE.ENGY,  "690")); sw.WriteLine(TT.ToCSV("2010-02-28", NAME.GS, TYPE.ENGY, "3574")); sw.WriteLine(TT.ToCSV("2010-02-28", NAME.WT, TYPE.ENGY, "1558"));
+                sw.WriteLine(TT.ToCSV("2010-03-31", NAME.EL, TYPE.ENGY, "1673")); sw.WriteLine(TT.ToCSV("2010-03-31", NAME.GS, TYPE.ENGY, "6574")); sw.WriteLine(TT.ToCSV("2010-03-31", NAME.WT, TYPE.ENGY, "1558"));
+                sw.WriteLine(TT.ToCSV("2010-04-30", NAME.EL, TYPE.ENGY, "1926")); sw.WriteLine(TT.ToCSV("2010-04-30", NAME.GS, TYPE.ENGY, "6213")); sw.WriteLine(TT.ToCSV("2010-04-30", NAME.WT, TYPE.ENGY, "1848"));
+                sw.WriteLine(TT.ToCSV("2010-05-31", NAME.EL, TYPE.ENGY, "1321")); sw.WriteLine(TT.ToCSV("2010-05-31", NAME.GS, TYPE.ENGY, "4413")); sw.WriteLine(TT.ToCSV("2010-05-31", NAME.WT, TYPE.ENGY, "1848"));
+                sw.WriteLine(TT.ToCSV("2010-06-30", NAME.EL, TYPE.ENGY, "1475")); sw.WriteLine(TT.ToCSV("2010-06-30", NAME.GS, TYPE.ENGY, "4464")); sw.WriteLine(TT.ToCSV("2010-06-30", NAME.WT, TYPE.ENGY, "1848"));
+                sw.WriteLine(TT.ToCSV("2010-07-31", NAME.EL, TYPE.ENGY, "2045")); sw.WriteLine(TT.ToCSV("2010-07-31", NAME.GS, TYPE.ENGY, "4310")); sw.WriteLine(TT.ToCSV("2010-07-31", NAME.WT, TYPE.ENGY, "1848"));
+                sw.WriteLine(TT.ToCSV("2010-08-31", NAME.EL, TYPE.ENGY, "3147")); sw.WriteLine(TT.ToCSV("2010-08-31", NAME.GS, TYPE.ENGY, "3847")); sw.WriteLine(TT.ToCSV("2010-08-31", NAME.WT, TYPE.ENGY, "1896"));
+                sw.WriteLine(TT.ToCSV("2010-09-30", NAME.EL, TYPE.ENGY, "2918")); sw.WriteLine(TT.ToCSV("2010-09-30", NAME.GS, TYPE.ENGY, "3538")); sw.WriteLine(TT.ToCSV("2010-09-30", NAME.WT, TYPE.ENGY, "1896"));
+                sw.WriteLine(TT.ToCSV("2010-10-31", NAME.EL, TYPE.ENGY, "1306")); sw.WriteLine(TT.ToCSV("2010-10-31", NAME.GS, TYPE.ENGY, "3898")); sw.WriteLine(TT.ToCSV("2010-10-31", NAME.WT, TYPE.ENGY, "1799"));
+                sw.WriteLine(TT.ToCSV("2010-11-30", NAME.EL, TYPE.ENGY, "1791")); sw.WriteLine(TT.ToCSV("2010-11-30", NAME.GS, TYPE.ENGY, "5390")); sw.WriteLine(TT.ToCSV("2010-11-30", NAME.WT, TYPE.ENGY, "1799"));
+                sw.WriteLine(TT.ToCSV("2010-12-31", NAME.EL, TYPE.ENGY, "1573")); sw.WriteLine(TT.ToCSV("2010-12-31", NAME.GS, TYPE.ENGY, "5647")); sw.WriteLine(TT.ToCSV("2010-12-31", NAME.WT, TYPE.ENGY, "1799"));
+                sw.WriteLine(TT.ToCSV("2011-01-31", NAME.EL, TYPE.ENGY, "1675")); sw.WriteLine(TT.ToCSV("2011-01-31", NAME.GS, TYPE.ENGY, "5596")); sw.WriteLine(TT.ToCSV("2011-01-31", NAME.WT, TYPE.ENGY, "1799"));
+                sw.WriteLine(TT.ToCSV("2011-02-28", NAME.EL, TYPE.ENGY, "1783")); sw.WriteLine(TT.ToCSV("2011-02-28", NAME.GS, TYPE.ENGY, "5596")); sw.WriteLine(TT.ToCSV("2011-02-28", NAME.WT, TYPE.ENGY, "1751"));
+                sw.WriteLine(TT.ToCSV("2011-03-31", NAME.EL, TYPE.ENGY, "1357")); sw.WriteLine(TT.ToCSV("2011-03-31", NAME.GS, TYPE.ENGY, "5339")); sw.WriteLine(TT.ToCSV("2011-03-31", NAME.WT, TYPE.ENGY, "1751"));
+                sw.WriteLine(TT.ToCSV("2011-04-30", NAME.EL, TYPE.ENGY, "1426")); sw.WriteLine(TT.ToCSV("2011-04-30", NAME.GS, TYPE.ENGY, "5339")); sw.WriteLine(TT.ToCSV("2011-04-30", NAME.WT, TYPE.ENGY, "1703"));
+                sw.WriteLine(TT.ToCSV("2011-05-31", NAME.EL, TYPE.ENGY, "1174")); sw.WriteLine(TT.ToCSV("2011-05-31", NAME.GS, TYPE.ENGY, "4207")); sw.WriteLine(TT.ToCSV("2011-05-31", NAME.WT, TYPE.ENGY, "1703"));
+                sw.WriteLine(TT.ToCSV("2011-06-30", NAME.EL, TYPE.ENGY, "1266")); sw.WriteLine(TT.ToCSV("2011-06-30", NAME.GS, TYPE.ENGY, "4824")); sw.WriteLine(TT.ToCSV("2011-06-30", NAME.WT, TYPE.ENGY, "1848"));
+                sw.WriteLine(TT.ToCSV("2011-07-31", NAME.EL, TYPE.ENGY, "2010")); sw.WriteLine(TT.ToCSV("2011-07-31", NAME.GS, TYPE.ENGY, "4001")); sw.WriteLine(TT.ToCSV("2011-07-31", NAME.WT, TYPE.ENGY, "1848"));
+                sw.WriteLine(TT.ToCSV("2011-08-31", NAME.EL, TYPE.ENGY, "2257")); sw.WriteLine(TT.ToCSV("2011-08-31", NAME.GS, TYPE.ENGY, "3538")); sw.WriteLine(TT.ToCSV("2011-08-31", NAME.WT, TYPE.ENGY, "1848"));
+                sw.WriteLine(TT.ToCSV("2011-09-30", NAME.EL, TYPE.ENGY, "1998")); sw.WriteLine(TT.ToCSV("2011-09-30", NAME.GS, TYPE.ENGY, "3692")); sw.WriteLine(TT.ToCSV("2011-09-30", NAME.WT, TYPE.ENGY, "1848"));
+                sw.WriteLine(TT.ToCSV("2011-10-31", NAME.EL, TYPE.ENGY, "1164")); sw.WriteLine(TT.ToCSV("2011-10-31", NAME.GS, TYPE.ENGY, "4053")); sw.WriteLine(TT.ToCSV("2011-10-31", NAME.WT, TYPE.ENGY, "1751"));
+                sw.WriteLine(TT.ToCSV("2011-11-30", NAME.EL, TYPE.ENGY, "1369")); sw.WriteLine(TT.ToCSV("2011-11-30", NAME.GS, TYPE.ENGY, "4876")); sw.WriteLine(TT.ToCSV("2011-11-30", NAME.WT, TYPE.ENGY, "1751"));
+                sw.WriteLine(TT.ToCSV("2011-12-31", NAME.EL, TYPE.ENGY, "1632")); sw.WriteLine(TT.ToCSV("2011-12-31", NAME.GS, TYPE.ENGY, "4979")); sw.WriteLine(TT.ToCSV("2011-12-31", NAME.WT, TYPE.ENGY, "1751"));
+                sw.WriteLine(TT.ToCSV("2012-01-31", NAME.EL, TYPE.ENGY, "1805")); sw.WriteLine(TT.ToCSV("2012-01-31", NAME.GS, TYPE.ENGY, "5133")); sw.WriteLine(TT.ToCSV("2012-01-31", NAME.WT, TYPE.ENGY, "1751"));
+                sw.WriteLine(TT.ToCSV("2012-02-29", NAME.EL, TYPE.ENGY, "1745")); sw.WriteLine(TT.ToCSV("2012-02-29", NAME.GS, TYPE.ENGY, "5339")); sw.WriteLine(TT.ToCSV("2012-02-29", NAME.WT, TYPE.ENGY, "1703"));
+                sw.WriteLine(TT.ToCSV("2012-03-31", NAME.EL, TYPE.ENGY, "1567")); sw.WriteLine(TT.ToCSV("2012-03-31", NAME.GS, TYPE.ENGY, "5184")); sw.WriteLine(TT.ToCSV("2012-03-31", NAME.WT, TYPE.ENGY, "1703"));
+                sw.WriteLine(TT.ToCSV("2012-04-30", NAME.EL, TYPE.ENGY, "1577")); sw.WriteLine(TT.ToCSV("2012-04-30", NAME.GS, TYPE.ENGY, "5544")); sw.WriteLine(TT.ToCSV("2012-04-30", NAME.WT, TYPE.ENGY, "1751"));
+                sw.WriteLine(TT.ToCSV("2012-05-31", NAME.EL, TYPE.ENGY, "1231")); sw.WriteLine(TT.ToCSV("2012-05-31", NAME.GS, TYPE.ENGY, "4506")); sw.WriteLine(TT.ToCSV("2012-05-31", NAME.WT, TYPE.ENGY, "1751"));
+                sw.WriteLine(TT.ToCSV("2012-06-30", NAME.EL, TYPE.ENGY, "1342")); sw.WriteLine(TT.ToCSV("2012-06-30", NAME.GS, TYPE.ENGY, "4342")); sw.WriteLine(TT.ToCSV("2012-06-30", NAME.WT, TYPE.ENGY, "1751"));
+                sw.WriteLine(TT.ToCSV("2012-07-31", NAME.EL, TYPE.ENGY, "2267")); sw.WriteLine(TT.ToCSV("2012-07-31", NAME.GS, TYPE.ENGY, "3937")); sw.WriteLine(TT.ToCSV("2012-07-31", NAME.WT, TYPE.ENGY, "1751"));
+                sw.WriteLine(TT.ToCSV("2012-08-31", NAME.EL, TYPE.ENGY, "2659")); sw.WriteLine(TT.ToCSV("2012-08-31", NAME.GS, TYPE.ENGY, "3435")); sw.WriteLine(TT.ToCSV("2012-08-31", NAME.WT, TYPE.ENGY, "1751"));
+                sw.WriteLine(TT.ToCSV("2012-09-30", NAME.EL, TYPE.ENGY, "2533")); sw.WriteLine(TT.ToCSV("2012-09-30", NAME.GS, TYPE.ENGY, "3538")); sw.WriteLine(TT.ToCSV("2012-09-30", NAME.WT, TYPE.ENGY, "1751"));
+                sw.WriteLine(TT.ToCSV("2012-10-31", NAME.EL, TYPE.ENGY, "1374")); sw.WriteLine(TT.ToCSV("2012-10-31", NAME.GS, TYPE.ENGY, "4104")); sw.WriteLine(TT.ToCSV("2012-10-31", NAME.WT, TYPE.ENGY, "1799"));
+                sw.WriteLine(TT.ToCSV("2012-11-30", NAME.EL, TYPE.ENGY, "1298")); sw.WriteLine(TT.ToCSV("2012-11-30", NAME.GS, TYPE.ENGY, "5184")); sw.WriteLine(TT.ToCSV("2012-11-30", NAME.WT, TYPE.ENGY, "1799"));
+                sw.WriteLine(TT.ToCSV("2012-12-31", NAME.EL, TYPE.ENGY, "1636")); sw.WriteLine(TT.ToCSV("2012-12-31", NAME.GS, TYPE.ENGY, "5380")); sw.WriteLine(TT.ToCSV("2012-12-31", NAME.WT, TYPE.ENGY, "1751"));
+                sw.WriteLine(TT.ToCSV("2013-01-31", NAME.EL, TYPE.ENGY, "2296")); sw.WriteLine(TT.ToCSV("2013-01-31", NAME.GS, TYPE.ENGY, "5380")); sw.WriteLine(TT.ToCSV("2013-01-31", NAME.WT, TYPE.ENGY, "1751"));
+                sw.WriteLine(TT.ToCSV("2013-02-28", NAME.EL, TYPE.ENGY, "2071")); sw.WriteLine(TT.ToCSV("2013-02-28", NAME.GS, TYPE.ENGY, "5871")); sw.WriteLine(TT.ToCSV("2013-02-28", NAME.WT, TYPE.ENGY, "1751"));
+                sw.WriteLine(TT.ToCSV("2013-03-31", NAME.EL, TYPE.ENGY, "1588")); sw.WriteLine(TT.ToCSV("2013-03-31", NAME.GS, TYPE.ENGY, "5544")); sw.WriteLine(TT.ToCSV("2013-03-31", NAME.WT, TYPE.ENGY, "1751"));
+                sw.WriteLine(TT.ToCSV("2013-04-30", NAME.EL, TYPE.ENGY, "1443")); sw.WriteLine(TT.ToCSV("2013-04-30", NAME.GS, TYPE.ENGY, "5325")); sw.WriteLine(TT.ToCSV("2013-04-30", NAME.WT, TYPE.ENGY, "1799"));
+                sw.WriteLine(TT.ToCSV("2013-05-31", NAME.EL, TYPE.ENGY, "1603")); sw.WriteLine(TT.ToCSV("2013-05-31", NAME.GS, TYPE.ENGY, "4725")); sw.WriteLine(TT.ToCSV("2013-05-31", NAME.WT, TYPE.ENGY, "1799"));
+                sw.WriteLine(TT.ToCSV("2013-06-30", NAME.EL, TYPE.ENGY, "1651")); sw.WriteLine(TT.ToCSV("2013-06-30", NAME.GS, TYPE.ENGY, "3633")); sw.WriteLine(TT.ToCSV("2013-06-30", NAME.WT, TYPE.ENGY, "1703"));
+                sw.WriteLine(TT.ToCSV("2013-07-31", NAME.EL, TYPE.ENGY, "2485")); sw.WriteLine(TT.ToCSV("2013-07-31", NAME.GS, TYPE.ENGY, "3687")); sw.WriteLine(TT.ToCSV("2013-07-31", NAME.WT, TYPE.ENGY, "1703"));
+                sw.WriteLine(TT.ToCSV("2013-08-31", NAME.EL, TYPE.ENGY, "3455")); sw.WriteLine(TT.ToCSV("2013-08-31", NAME.GS, TYPE.ENGY, "3523")); sw.WriteLine(TT.ToCSV("2013-08-31", NAME.WT, TYPE.ENGY, "1799"));
+                sw.WriteLine(TT.ToCSV("2013-09-30", NAME.EL, TYPE.ENGY, "1892")); sw.WriteLine(TT.ToCSV("2013-09-30", NAME.GS, TYPE.ENGY, "3523")); sw.WriteLine(TT.ToCSV("2013-09-30", NAME.WT, TYPE.ENGY, "1799"));
+                sw.WriteLine(TT.ToCSV("2013-10-31", NAME.EL, TYPE.ENGY, "2016")); sw.WriteLine(TT.ToCSV("2013-10-31", NAME.GS, TYPE.ENGY, "3906")); sw.WriteLine(TT.ToCSV("2013-10-31", NAME.WT, TYPE.ENGY, "1703"));
+                sw.WriteLine(TT.ToCSV("2013-11-30", NAME.EL, TYPE.ENGY, "1449")); sw.WriteLine(TT.ToCSV("2013-11-30", NAME.GS, TYPE.ENGY, "4452")); sw.WriteLine(TT.ToCSV("2013-11-30", NAME.WT, TYPE.ENGY, "1703"));
+                sw.WriteLine(TT.ToCSV("2013-12-31", NAME.EL, TYPE.ENGY, "1701")); sw.WriteLine(TT.ToCSV("2013-12-31", NAME.GS, TYPE.ENGY, "4943")); sw.WriteLine(TT.ToCSV("2013-12-31", NAME.WT, TYPE.ENGY, "1655"));
+                sw.WriteLine(TT.ToCSV("2014-01-31", NAME.EL, TYPE.ENGY, "1760")); sw.WriteLine(TT.ToCSV("2014-01-31", NAME.GS, TYPE.ENGY, "5287")); sw.WriteLine(TT.ToCSV("2014-01-31", NAME.WT, TYPE.ENGY, "1655"));
+                sw.WriteLine(TT.ToCSV("2014-02-28", NAME.EL, TYPE.ENGY, "1743")); sw.WriteLine(TT.ToCSV("2014-02-28", NAME.GS, TYPE.ENGY, "5758")); sw.WriteLine(TT.ToCSV("2014-02-28", NAME.WT, TYPE.ENGY, "1703"));
+                sw.WriteLine(TT.ToCSV("2014-03-31", NAME.EL, TYPE.ENGY, "1624")); sw.WriteLine(TT.ToCSV("2014-03-31", NAME.GS, TYPE.ENGY, "5287")); sw.WriteLine(TT.ToCSV("2014-03-31", NAME.WT, TYPE.ENGY, "1703"));
+                sw.WriteLine(TT.ToCSV("2014-04-30", NAME.EL, TYPE.ENGY, "1729")); sw.WriteLine(TT.ToCSV("2014-04-30", NAME.GS, TYPE.ENGY, "5405")); sw.WriteLine(TT.ToCSV("2014-04-30", NAME.WT, TYPE.ENGY, "1703"));
+                sw.WriteLine(TT.ToCSV("2014-05-31", NAME.EL, TYPE.ENGY, "1412")); sw.WriteLine(TT.ToCSV("2014-05-31", NAME.GS, TYPE.ENGY, "4713")); sw.WriteLine(TT.ToCSV("2014-05-31", NAME.WT, TYPE.ENGY, "1703"));
+                sw.WriteLine(TT.ToCSV("2014-06-30", NAME.EL, TYPE.ENGY, "1517")); sw.WriteLine(TT.ToCSV("2014-06-30", NAME.GS, TYPE.ENGY, "4501")); sw.WriteLine(TT.ToCSV("2014-06-30", NAME.WT, TYPE.ENGY, "1801"));
+                sw.WriteLine(TT.ToCSV("2014-07-31", NAME.EL, TYPE.ENGY, "2350")); sw.WriteLine(TT.ToCSV("2014-07-31", NAME.GS, TYPE.ENGY, "4209")); sw.WriteLine(TT.ToCSV("2014-07-31", NAME.WT, TYPE.ENGY, "1801"));
+                sw.WriteLine(TT.ToCSV("2014-08-31", NAME.EL, TYPE.ENGY, "2294")); sw.WriteLine(TT.ToCSV("2014-08-31", NAME.GS, TYPE.ENGY, "3801")); sw.WriteLine(TT.ToCSV("2014-08-31", NAME.WT, TYPE.ENGY, "1851"));
+                sw.WriteLine(TT.ToCSV("2014-09-30", NAME.EL, TYPE.ENGY, "2304")); sw.WriteLine(TT.ToCSV("2014-09-30", NAME.GS, TYPE.ENGY, "4326")); sw.WriteLine(TT.ToCSV("2014-09-30", NAME.WT, TYPE.ENGY, "1851"));
+                sw.WriteLine(TT.ToCSV("2014-10-31", NAME.EL, TYPE.ENGY, "1433")); sw.WriteLine(TT.ToCSV("2014-10-31", NAME.GS, TYPE.ENGY, "4501")); sw.WriteLine(TT.ToCSV("2014-10-31", NAME.WT, TYPE.ENGY, "1801"));
+                sw.WriteLine(TT.ToCSV("2014-11-30", NAME.EL, TYPE.ENGY, "1477")); sw.WriteLine(TT.ToCSV("2014-11-30", NAME.GS, TYPE.ENGY, "5026")); sw.WriteLine(TT.ToCSV("2014-11-30", NAME.WT, TYPE.ENGY, "1801"));
+                sw.WriteLine(TT.ToCSV("2014-12-31", NAME.EL, TYPE.ENGY, "1498")); sw.WriteLine(TT.ToCSV("2014-12-31", NAME.GS, TYPE.ENGY, "5492")); sw.WriteLine(TT.ToCSV("2014-12-31", NAME.WT, TYPE.ENGY, "1801"));
+                sw.WriteLine(TT.ToCSV("2015-01-31", NAME.EL, TYPE.ENGY, "1860")); sw.WriteLine(TT.ToCSV("2015-01-31", NAME.GS, TYPE.ENGY, "5551")); sw.WriteLine(TT.ToCSV("2015-01-31", NAME.WT, TYPE.ENGY, "1801"));
+                sw.WriteLine(TT.ToCSV("2015-02-28", NAME.EL, TYPE.ENGY, "1413")); sw.WriteLine(TT.ToCSV("2015-02-28", NAME.GS, TYPE.ENGY, "6116")); sw.WriteLine(TT.ToCSV("2015-02-28", NAME.WT, TYPE.ENGY, "1751"));
+                sw.WriteLine(TT.ToCSV("2015-03-31", NAME.EL, TYPE.ENGY, "1506")); sw.WriteLine(TT.ToCSV("2015-03-31", NAME.GS, TYPE.ENGY, "5772")); sw.WriteLine(TT.ToCSV("2015-03-31", NAME.WT, TYPE.ENGY, "1751"));
+                sw.Close();
+            }
+        }
+
+        /// <summary>
+        /// TestFixtureTearDown
+        /// </summary>
+        [TestFixtureTearDown]
+        public void TestFixtureTearDown()
+        {
+            if (File.Exists(CSV_EMPTY   )) File.Delete(CSV_EMPTY);
+            if (File.Exists(CSV_ONLY_EL )) File.Delete(CSV_ONLY_EL);
+            if (File.Exists(CSV_ONLY_GS )) File.Delete(CSV_ONLY_GS);
+            if (File.Exists(CSV_ONLY_WT )) File.Delete(CSV_ONLY_WT);
+            if (File.Exists(CSV_ENERGIES)) File.Delete(CSV_ENERGIES);
+        }
+
+        /// <summary>
+        /// フォーム表示
+        /// </summary>
+        /// <param name="csv">CSVファイル</param>
+        protected void ShowSubEnergy(string csv)
+        {
+            form = new AbSubEnergy(AbDBManager.Load(csv));
+            form.Show();
+        }
+
+        /// <summary>
+        /// 光熱費サブフォーム取得
+        /// </summary>
+        /// <returns>光熱費サブフォーム</returns>
+        protected Form CtAbSubEnergy()
+        {
+            var finder = new FormFinder();
+            return finder.Find(typeof(AbSubEnergy).Name);
+        }
+
+        /// <summary>
+        /// 電気代ビュー取得
+        /// </summary>
+        /// <returns>電気代ビュー</returns>
+        protected DataGridView CtDgvEl()
+        {
+            return (new Finder<DataGridView>("DgvEl", form).Find());
+        }
+
+        /// <summary>
+        /// ガス代ビュー取得
+        /// </summary>
+        /// <returns>ガス代ビュー</returns>
+        protected DataGridView CtDgvGs()
+        {
+            return (new Finder<DataGridView>("DgvGs", form).Find());
+        }
+
+        /// <summary>
+        /// 水道代ビュー取得
+        /// </summary>
+        /// <returns>水道代ビュー</returns>
+        protected DataGridView CtDgvWt()
+        {
+            return (new Finder<DataGridView>("DgvWt", form).Find());
+        }
+
+        /// <summary>
+        /// コンストラクタ
+        /// 引数:支出情報リストがNULL
+        /// </summary>
+        [Test]
+        public void AbSubEnergyWithNullExpenses()
+        {
+            var ex = Assert.Throws<AbException>(() =>
+                new AbSubEnergy(null)
+            );
+            Assert.AreEqual(EX.EXPENSES_NULL, ex.Message);
+        }
+
+        /// <summary>
+        /// タイトルテスト
+        /// </summary>
+        [Test]
+        public void LoadWithTitle()
+        {
+            ShowSubEnergy(CSV_EMPTY);
+            Assert.AreEqual("光熱費", form.Text);
+        }
+
+        /// <summary>
+        /// レコード数のテスト
+        /// 電気代:データなし
+        /// </summary>
+        [Test]
+        public void DgvElWithCountWithEmptyData()
+        {
+            ShowSubEnergy(CSV_EMPTY);
+            Assert.AreEqual(0, CtDgvEl().Rows.Count);
+        }
+
+        /// <summary>
+        /// レコード数のテスト
+        /// ガス代:データなし
+        /// </summary>
+        [Test]
+        public void DgvGsWithCountWithEmptyData()
+        {
+            ShowSubEnergy(CSV_EMPTY);
+            Assert.AreEqual(0, CtDgvGs().Rows.Count);
+        }
+
+        /// <summary>
+        /// レコード数のテスト
+        /// 水道代:データなし
+        /// </summary>
+        [Test]
+        public void DgvWtWithCountWithEmptyData()
+        {
+            ShowSubEnergy(CSV_EMPTY);
+            Assert.AreEqual(0, CtDgvWt().Rows.Count);
+        }
+
+        /// <summary>
+        /// レコード数のテスト
+        /// 電気代のみ
+        /// </summary>
+        [Test]
+        public void DgvCountWithOnlyEl()
+        {
+            ShowSubEnergy(CSV_ONLY_EL);
+            Assert.AreEqual(2, CtDgvEl().Rows.Count);
+            Assert.AreEqual(2, CtDgvGs().Rows.Count);
+            Assert.AreEqual(2, CtDgvWt().Rows.Count);
+        }
+
+        /// <summary>
+        /// レコード数のテスト
+        /// ガス代のみ
+        /// </summary>
+        [Test]
+        public void DgvCountWithOnlyGs()
+        {
+            ShowSubEnergy(CSV_ONLY_GS);
+            Assert.AreEqual(3, CtDgvEl().Rows.Count);
+            Assert.AreEqual(3, CtDgvGs().Rows.Count);
+            Assert.AreEqual(3, CtDgvWt().Rows.Count);
+        }
+
+        /// <summary>
+        /// レコード数のテスト
+        /// 水道代のみ
+        /// </summary>
+        [Test]
+        public void DgvCountWithOnlyWt()
+        {
+            ShowSubEnergy(CSV_ONLY_WT);
+            Assert.AreEqual(4, CtDgvEl().Rows.Count);
+            Assert.AreEqual(4, CtDgvGs().Rows.Count);
+            Assert.AreEqual(4, CtDgvWt().Rows.Count);
+        }
+
+        /// <summary>
+        /// レコード数のテスト
+        /// </summary>
+        [Test]
+        public void DgvCountWithEnergies()
+        {
+            ShowSubEnergy(CSV_ENERGIES);
+            Assert.AreEqual(7, CtDgvEl().Rows.Count);
+            Assert.AreEqual(7, CtDgvGs().Rows.Count);
+            Assert.AreEqual(7, CtDgvWt().Rows.Count);
+        }
+
+        /// <summary>
+        /// 光熱費のテスト
+        /// 電気代のみ
+        /// </summary>
+        [Test]
+        public void DgvValueWithOnlyEl()
+        {
+            ShowSubEnergy(CSV_ONLY_EL);
+
+            var dgv = CtDgvEl();
+            var row = dgv.Rows[0];
+            Assert.AreEqual( 2015, row.Cells[ 0].Value);
+            Assert.AreEqual( 3300, row.Cells[ 1].Value, "4月");
+            Assert.AreEqual( 3700, row.Cells[ 2].Value, "5月");
+            Assert.AreEqual( null, row.Cells[ 3].Value, "6月");
+            Assert.AreEqual( 6300, row.Cells[ 4].Value, "7月");
+            Assert.AreEqual(12500, row.Cells[ 5].Value, "8月");
+            Assert.AreEqual( 2800, row.Cells[ 6].Value, "9月");
+            Assert.AreEqual( 2900, row.Cells[ 7].Value, "10月");
+            Assert.AreEqual( 3000, row.Cells[ 8].Value, "11月");
+            Assert.AreEqual( null, row.Cells[ 9].Value, "12月");
+            Assert.AreEqual( 2100, row.Cells[10].Value, "1月");
+            Assert.AreEqual( 2500, row.Cells[11].Value, "2月");
+            Assert.AreEqual( 2900, row.Cells[12].Value, "3月");
+        }
+
+        /// <summary>
+        /// 光熱費のテスト
+        /// ガス代のみ
+        /// </summary>
+        [Test]
+        public void DgvValueWithOnlyGs()
+        {
+            ShowSubEnergy(CSV_ONLY_GS);
+
+            var dgv = CtDgvGs();
+            var row1 = dgv.Rows[0];
+            Assert.AreEqual(2015, row1.Cells[ 0].Value);
+            Assert.AreEqual(2600, row1.Cells[ 1].Value, "4月");
+            Assert.AreEqual(2800, row1.Cells[ 2].Value, "5月");
+            Assert.AreEqual(3000, row1.Cells[ 3].Value, "6月");
+            Assert.AreEqual(3200, row1.Cells[ 4].Value, "7月");
+            Assert.AreEqual(3400, row1.Cells[ 5].Value, "8月");
+            Assert.AreEqual(3600, row1.Cells[ 6].Value, "9月");
+            Assert.AreEqual(3800, row1.Cells[ 7].Value, "10月");
+            Assert.AreEqual(4000, row1.Cells[ 8].Value, "11月");
+            Assert.AreEqual(4200, row1.Cells[ 9].Value, "12月");
+            Assert.AreEqual(4400, row1.Cells[10].Value, "1月");
+            Assert.AreEqual(4600, row1.Cells[11].Value, "2月");
+            Assert.AreEqual(4800, row1.Cells[12].Value, "3月");
+
+            var row2 = dgv.Rows[1];
+            Assert.AreEqual(2016, row2.Cells[ 0].Value);
+            Assert.AreEqual(5000, row2.Cells[ 1].Value, "4月");
+            Assert.AreEqual(5200, row2.Cells[ 2].Value, "5月");
+            Assert.AreEqual(5400, row2.Cells[ 3].Value, "6月");
+            Assert.AreEqual(5600, row2.Cells[ 4].Value, "7月");
+            Assert.AreEqual(5800, row2.Cells[ 5].Value, "8月");
+            Assert.AreEqual(6000, row2.Cells[ 6].Value, "9月");
+            Assert.AreEqual(6200, row2.Cells[ 7].Value, "10月");
+            Assert.AreEqual(6400, row2.Cells[ 8].Value, "11月");
+            Assert.AreEqual(6600, row2.Cells[ 9].Value, "12月");
+            Assert.AreEqual(2000, row2.Cells[10].Value, "1月");
+            Assert.AreEqual(2200, row2.Cells[11].Value, "2月");
+            Assert.AreEqual(2400, row2.Cells[12].Value, "3月");
+        }
+
+        /// <summary>
+        /// 光熱費のテスト
+        /// 水道代のみ
+        /// </summary>
+        [Test]
+        public void DgvValueWithOnlyWt()
+        {
+            ShowSubEnergy(CSV_ONLY_WT);
+
+            var dgv = CtDgvWt();
+            var row1 = dgv.Rows[0];
+            Assert.AreEqual(2015, row1.Cells[ 0].Value);
+            Assert.AreEqual(1300, row1.Cells[ 1].Value, "4月");
+            Assert.AreEqual(1400, row1.Cells[ 2].Value, "5月");
+            Assert.AreEqual(1500, row1.Cells[ 3].Value, "6月");
+            Assert.AreEqual(1600, row1.Cells[ 4].Value, "7月");
+            Assert.AreEqual(1700, row1.Cells[ 5].Value, "8月");
+            Assert.AreEqual(1800, row1.Cells[ 6].Value, "9月");
+            Assert.AreEqual(1900, row1.Cells[ 7].Value, "10月");
+            Assert.AreEqual(2000, row1.Cells[ 8].Value, "11月");
+            Assert.AreEqual(2100, row1.Cells[ 9].Value, "12月");
+            Assert.AreEqual(1000, row1.Cells[10].Value, "1月");
+            Assert.AreEqual(1100, row1.Cells[11].Value, "2月");
+            Assert.AreEqual(1200, row1.Cells[12].Value, "3月");
+
+            var row2 = dgv.Rows[1];
+            Assert.AreEqual(2016, row2.Cells[ 0].Value);
+            Assert.AreEqual(null, row2.Cells[ 1].Value, "4月");
+            Assert.AreEqual(null, row2.Cells[ 2].Value, "5月");
+            Assert.AreEqual(null, row2.Cells[ 3].Value, "6月");
+            Assert.AreEqual(null, row2.Cells[ 4].Value, "7月");
+            Assert.AreEqual(null, row2.Cells[ 5].Value, "8月");
+            Assert.AreEqual(null, row2.Cells[ 6].Value, "9月");
+            Assert.AreEqual(null, row2.Cells[ 7].Value, "10月");
+            Assert.AreEqual(null, row2.Cells[ 8].Value, "11月");
+            Assert.AreEqual(null, row2.Cells[ 9].Value, "12月");
+            Assert.AreEqual(null, row2.Cells[10].Value, "1月");
+            Assert.AreEqual(null, row2.Cells[11].Value, "2月");
+            Assert.AreEqual(null, row2.Cells[12].Value, "3月");
+
+            var row3 = dgv.Rows[2];
+            Assert.AreEqual(2017, row3.Cells[ 0].Value);
+            Assert.AreEqual(2500, row3.Cells[ 1].Value, "4月");
+            Assert.AreEqual(2600, row3.Cells[ 2].Value, "5月");
+            Assert.AreEqual(2700, row3.Cells[ 3].Value, "6月");
+            Assert.AreEqual(2800, row3.Cells[ 4].Value, "7月");
+            Assert.AreEqual(2900, row3.Cells[ 5].Value, "8月");
+            Assert.AreEqual(3000, row3.Cells[ 6].Value, "9月");
+            Assert.AreEqual(3100, row3.Cells[ 7].Value, "10月");
+            Assert.AreEqual(3200, row3.Cells[ 8].Value, "11月");
+            Assert.AreEqual(3300, row3.Cells[ 9].Value, "12月");
+            Assert.AreEqual(2200, row3.Cells[10].Value, "1月");
+            Assert.AreEqual(2300, row3.Cells[11].Value, "2月");
+            Assert.AreEqual(2400, row3.Cells[12].Value, "3月");
+        }
+
+        /// <summary>
+        /// 光熱費平均のテスト
+        /// 電気代のみ
+        /// </summary>
+        [Test]
+        public void DgvAverageWithOnlyEl()
+        {
+            ShowSubEnergy(CSV_ONLY_EL);
+
+            var dgv = CtDgvEl();
+            var row = dgv.Rows[dgv.Rows.Count - 1];
+            Assert.AreEqual("ave", row.Cells[ 0].Value);
+            Assert.AreEqual( 3300, row.Cells[ 1].Value, "4月");
+            Assert.AreEqual( 3700, row.Cells[ 2].Value, "5月");
+            Assert.AreEqual( null, row.Cells[ 3].Value, "6月");
+            Assert.AreEqual( 6300, row.Cells[ 4].Value, "7月");
+            Assert.AreEqual(12500, row.Cells[ 5].Value, "8月");
+            Assert.AreEqual( 2800, row.Cells[ 6].Value, "9月");
+            Assert.AreEqual( 2900, row.Cells[ 7].Value, "10月");
+            Assert.AreEqual( 3000, row.Cells[ 8].Value, "11月");
+            Assert.AreEqual( null, row.Cells[ 9].Value, "12月");
+            Assert.AreEqual( 2100, row.Cells[10].Value, "1月");
+            Assert.AreEqual( 2500, row.Cells[11].Value, "2月");
+            Assert.AreEqual( 2900, row.Cells[12].Value, "3月");
+        }
+
+        /// <summary>
+        /// 光熱費平均のテスト
+        /// ガス代のみ
+        /// </summary>
+        [Test]
+        public void DgvAverageWithOnlyGs()
+        {
+            ShowSubEnergy(CSV_ONLY_GS);
+
+            var dgv = CtDgvGs();
+            var row = dgv.Rows[dgv.Rows.Count - 1];
+            Assert.AreEqual("ave", row.Cells[ 0].Value);
+            Assert.AreEqual( 3800, row.Cells[ 1].Value, "4月");
+            Assert.AreEqual( 4000, row.Cells[ 2].Value, "5月");
+            Assert.AreEqual( 4200, row.Cells[ 3].Value, "6月");
+            Assert.AreEqual( 4400, row.Cells[ 4].Value, "7月");
+            Assert.AreEqual( 4600, row.Cells[ 5].Value, "8月");
+            Assert.AreEqual( 4800, row.Cells[ 6].Value, "9月");
+            Assert.AreEqual( 5000, row.Cells[ 7].Value, "10月");
+            Assert.AreEqual( 5200, row.Cells[ 8].Value, "11月");
+            Assert.AreEqual( 5400, row.Cells[ 9].Value, "12月");
+            Assert.AreEqual( 3200, row.Cells[10].Value, "1月");
+            Assert.AreEqual( 3400, row.Cells[11].Value, "2月");
+            Assert.AreEqual( 3600, row.Cells[12].Value, "3月");
+        }
+
+        /// <summary>
+        /// 光熱費平均のテスト
+        /// 水道代のみ
+        /// </summary>
+        [Test]
+        public void DgvAverageWithOnlyWt()
+        {
+            ShowSubEnergy(CSV_ONLY_WT);
+
+            var dgv = CtDgvWt();
+            var row = dgv.Rows[dgv.Rows.Count - 1];
+            Assert.AreEqual("ave", row.Cells[ 0].Value);
+            Assert.AreEqual( 1900, row.Cells[ 1].Value, "4月");
+            Assert.AreEqual( 2000, row.Cells[ 2].Value, "5月");
+            Assert.AreEqual( 2100, row.Cells[ 3].Value, "6月");
+            Assert.AreEqual( 2200, row.Cells[ 4].Value, "7月");
+            Assert.AreEqual( 2300, row.Cells[ 5].Value, "8月");
+            Assert.AreEqual( 2400, row.Cells[ 6].Value, "9月");
+            Assert.AreEqual( 2500, row.Cells[ 7].Value, "10月");
+            Assert.AreEqual( 2600, row.Cells[ 8].Value, "11月");
+            Assert.AreEqual( 2700, row.Cells[ 9].Value, "12月");
+            Assert.AreEqual( 1600, row.Cells[10].Value, "1月");
+            Assert.AreEqual( 1700, row.Cells[11].Value, "2月");
+            Assert.AreEqual( 1800, row.Cells[12].Value, "3月");
+        }
+
+        /// <summary>
+        /// 光熱費のテスト
+        /// 2009年電気代
+        /// </summary>
+        [Test]
+        public void DgvValueWithEl2009()
+        {
+            ShowSubEnergy(CSV_ENERGIES);
+
+            var dgv = CtDgvEl();
+            var row = dgv.Rows[0];
+            Assert.AreEqual(2009, row.Cells[ 0].Value);
+            Assert.AreEqual(1804, row.Cells[ 1].Value, "4月");
+            Assert.AreEqual(1359, row.Cells[ 2].Value, "5月");
+            Assert.AreEqual(1550, row.Cells[ 3].Value, "6月");
+            Assert.AreEqual(3780, row.Cells[ 4].Value, "7月");
+            Assert.AreEqual(3853, row.Cells[ 5].Value, "8月");
+            Assert.AreEqual(3143, row.Cells[ 6].Value, "9月");
+            Assert.AreEqual(1416, row.Cells[ 7].Value, "10月");
+            Assert.AreEqual(1250, row.Cells[ 8].Value, "11月");
+            Assert.AreEqual( 501, row.Cells[ 9].Value, "12月");
+            Assert.AreEqual( 708, row.Cells[10].Value, "1月");
+            Assert.AreEqual( 690, row.Cells[11].Value, "2月");
+            Assert.AreEqual(1673, row.Cells[12].Value, "3月");
+        }
+
+        /// <summary>
+        /// 光熱費のテスト
+        /// 2010年電気代
+        /// </summary>
+        [Test]
+        public void DgvValueWithEl2010()
+        {
+            ShowSubEnergy(CSV_ENERGIES);
+
+            var dgv = CtDgvEl();
+            var row = dgv.Rows[1];
+            Assert.AreEqual(2010, row.Cells[ 0].Value);
+            Assert.AreEqual(1926, row.Cells[ 1].Value, "4月");
+            Assert.AreEqual(1321, row.Cells[ 2].Value, "5月");
+            Assert.AreEqual(1475, row.Cells[ 3].Value, "6月");
+            Assert.AreEqual(2045, row.Cells[ 4].Value, "7月");
+            Assert.AreEqual(3147, row.Cells[ 5].Value, "8月");
+            Assert.AreEqual(2918, row.Cells[ 6].Value, "9月");
+            Assert.AreEqual(1306, row.Cells[ 7].Value, "10月");
+            Assert.AreEqual(1791, row.Cells[ 8].Value, "11月");
+            Assert.AreEqual(1573, row.Cells[ 9].Value, "12月");
+            Assert.AreEqual(1675, row.Cells[10].Value, "1月");
+            Assert.AreEqual(1783, row.Cells[11].Value, "2月");
+            Assert.AreEqual(1357, row.Cells[12].Value, "3月");
+        }
+
+        /// <summary>
+        /// 光熱費のテスト
+        /// 2011年電気代
+        /// </summary>
+        [Test]
+        public void DgvValueWithEl2011()
+        {
+            ShowSubEnergy(CSV_ENERGIES);
+
+            var dgv = CtDgvEl();
+            var row = dgv.Rows[2];
+            Assert.AreEqual(2011, row.Cells[ 0].Value);
+            Assert.AreEqual(1426, row.Cells[ 1].Value, "4月");
+            Assert.AreEqual(1174, row.Cells[ 2].Value, "5月");
+            Assert.AreEqual(1266, row.Cells[ 3].Value, "6月");
+            Assert.AreEqual(2010, row.Cells[ 4].Value, "7月");
+            Assert.AreEqual(2257, row.Cells[ 5].Value, "8月");
+            Assert.AreEqual(1998, row.Cells[ 6].Value, "9月");
+            Assert.AreEqual(1164, row.Cells[ 7].Value, "10月");
+            Assert.AreEqual(1369, row.Cells[ 8].Value, "11月");
+            Assert.AreEqual(1632, row.Cells[ 9].Value, "12月");
+            Assert.AreEqual(1805, row.Cells[10].Value, "1月");
+            Assert.AreEqual(1745, row.Cells[11].Value, "2月");
+            Assert.AreEqual(1567, row.Cells[12].Value, "3月");
+        }
+
+        /// <summary>
+        /// 光熱費のテスト
+        /// 2012年電気代
+        /// </summary>
+        [Test]
+        public void DgvValueWithEl2012()
+        {
+            ShowSubEnergy(CSV_ENERGIES);
+
+            var dgv = CtDgvEl();
+            var row = dgv.Rows[3];
+            Assert.AreEqual(2012, row.Cells[ 0].Value);
+            Assert.AreEqual(1577, row.Cells[ 1].Value, "4月");
+            Assert.AreEqual(1231, row.Cells[ 2].Value, "5月");
+            Assert.AreEqual(1342, row.Cells[ 3].Value, "6月");
+            Assert.AreEqual(2267, row.Cells[ 4].Value, "7月");
+            Assert.AreEqual(2659, row.Cells[ 5].Value, "8月");
+            Assert.AreEqual(2533, row.Cells[ 6].Value, "9月");
+            Assert.AreEqual(1374, row.Cells[ 7].Value, "10月");
+            Assert.AreEqual(1298, row.Cells[ 8].Value, "11月");
+            Assert.AreEqual(1636, row.Cells[ 9].Value, "12月");
+            Assert.AreEqual(2296, row.Cells[10].Value, "1月");
+            Assert.AreEqual(2071, row.Cells[11].Value, "2月");
+            Assert.AreEqual(1588, row.Cells[12].Value, "3月");
+        }
+
+        /// <summary>
+        /// 光熱費のテスト
+        /// 2013年電気代
+        /// </summary>
+        [Test]
+        public void DgvValueWithEl2013()
+        {
+            ShowSubEnergy(CSV_ENERGIES);
+
+            var dgv = CtDgvEl();
+            var row = dgv.Rows[4];
+            Assert.AreEqual(2013, row.Cells[ 0].Value);
+            Assert.AreEqual(1443, row.Cells[ 1].Value, "4月");
+            Assert.AreEqual(1603, row.Cells[ 2].Value, "5月");
+            Assert.AreEqual(1651, row.Cells[ 3].Value, "6月");
+            Assert.AreEqual(2485, row.Cells[ 4].Value, "7月");
+            Assert.AreEqual(3455, row.Cells[ 5].Value, "8月");
+            Assert.AreEqual(1892, row.Cells[ 6].Value, "9月");
+            Assert.AreEqual(2016, row.Cells[ 7].Value, "10月");
+            Assert.AreEqual(1449, row.Cells[ 8].Value, "11月");
+            Assert.AreEqual(1701, row.Cells[ 9].Value, "12月");
+            Assert.AreEqual(1760, row.Cells[10].Value, "1月");
+            Assert.AreEqual(1743, row.Cells[11].Value, "2月");
+            Assert.AreEqual(1624, row.Cells[12].Value, "3月");
+        }
+
+        /// <summary>
+        /// 光熱費のテスト
+        /// 2014年電気代
+        /// </summary>
+        [Test]
+        public void DgvValueWithEl2014()
+        {
+            ShowSubEnergy(CSV_ENERGIES);
+
+            var dgv = CtDgvEl();
+            var row = dgv.Rows[5];
+            Assert.AreEqual(2014, row.Cells[ 0].Value);
+            Assert.AreEqual(1729, row.Cells[ 1].Value, "4月");
+            Assert.AreEqual(1412, row.Cells[ 2].Value, "5月");
+            Assert.AreEqual(1517, row.Cells[ 3].Value, "6月");
+            Assert.AreEqual(2350, row.Cells[ 4].Value, "7月");
+            Assert.AreEqual(2294, row.Cells[ 5].Value, "8月");
+            Assert.AreEqual(2304, row.Cells[ 6].Value, "9月");
+            Assert.AreEqual(1433, row.Cells[ 7].Value, "10月");
+            Assert.AreEqual(1477, row.Cells[ 8].Value, "11月");
+            Assert.AreEqual(1498, row.Cells[ 9].Value, "12月");
+            Assert.AreEqual(1860, row.Cells[10].Value, "1月");
+            Assert.AreEqual(1413, row.Cells[11].Value, "2月");
+            Assert.AreEqual(1506, row.Cells[12].Value, "3月");
+        }
+
+        /// <summary>
+        /// 光熱費のテスト
+        /// 電気代の平均
+        /// </summary>
+        [Test]
+        public void DgvValueWithElAve()
+        {
+            ShowSubEnergy(CSV_ENERGIES);
+
+            var dgv = CtDgvEl();
+            var row = dgv.Rows[dgv.Rows.Count - 1];
+            Assert.AreEqual("ave", row.Cells[ 0].Value);
+            Assert.AreEqual( 1651, row.Cells[ 1].Value, "4月");
+            Assert.AreEqual( 1350, row.Cells[ 2].Value, "5月");
+            Assert.AreEqual( 1467, row.Cells[ 3].Value, "6月");
+            Assert.AreEqual( 2490, row.Cells[ 4].Value, "7月");
+            Assert.AreEqual( 2944, row.Cells[ 5].Value, "8月");
+            Assert.AreEqual( 2465, row.Cells[ 6].Value, "9月");
+            Assert.AreEqual( 1452, row.Cells[ 7].Value, "10月");
+            Assert.AreEqual( 1439, row.Cells[ 8].Value, "11月");
+            Assert.AreEqual( 1424, row.Cells[ 9].Value, "12月");
+            Assert.AreEqual( 1684, row.Cells[10].Value, "1月");
+            Assert.AreEqual( 1574, row.Cells[11].Value, "2月");
+            Assert.AreEqual( 1553, row.Cells[12].Value, "3月");
+        }
+
+        /// <summary>
+        /// 光熱費のテスト
+        /// 2009年ガス代
+        /// </summary>
+        [Test]
+        public void DgvValueWithGs2009()
+        {
+            ShowSubEnergy(CSV_ENERGIES);
+
+            var dgv = CtDgvGs();
+            var row = dgv.Rows[0];
+            Assert.AreEqual(2009, row.Cells[ 0].Value);
+            Assert.AreEqual(5422, row.Cells[ 1].Value, "4月");
+            Assert.AreEqual(4462, row.Cells[ 2].Value, "5月");
+            Assert.AreEqual(4659, row.Cells[ 3].Value, "6月");
+            Assert.AreEqual(4363, row.Cells[ 4].Value, "7月");
+            Assert.AreEqual(3969, row.Cells[ 5].Value, "8月");
+            Assert.AreEqual(3771, row.Cells[ 6].Value, "9月");
+            Assert.AreEqual(3820, row.Cells[ 7].Value, "10月");
+            Assert.AreEqual(4857, row.Cells[ 8].Value, "11月");
+            Assert.AreEqual(1995, row.Cells[ 9].Value, "12月");
+            Assert.AreEqual(3031, row.Cells[10].Value, "1月");
+            Assert.AreEqual(3574, row.Cells[11].Value, "2月");
+            Assert.AreEqual(6574, row.Cells[12].Value, "3月");
+        }
+
+        /// <summary>
+        /// 光熱費のテスト
+        /// 2010年ガス代
+        /// </summary>
+        [Test]
+        public void DgvValueWithGs2010()
+        {
+            ShowSubEnergy(CSV_ENERGIES);
+
+            var dgv = CtDgvGs();
+            var row = dgv.Rows[1];
+            Assert.AreEqual(2010, row.Cells[ 0].Value);
+            Assert.AreEqual(6213, row.Cells[ 1].Value, "4月");
+            Assert.AreEqual(4413, row.Cells[ 2].Value, "5月");
+            Assert.AreEqual(4464, row.Cells[ 3].Value, "6月");
+            Assert.AreEqual(4310, row.Cells[ 4].Value, "7月");
+            Assert.AreEqual(3847, row.Cells[ 5].Value, "8月");
+            Assert.AreEqual(3538, row.Cells[ 6].Value, "9月");
+            Assert.AreEqual(3898, row.Cells[ 7].Value, "10月");
+            Assert.AreEqual(5390, row.Cells[ 8].Value, "11月");
+            Assert.AreEqual(5647, row.Cells[ 9].Value, "12月");
+            Assert.AreEqual(5596, row.Cells[10].Value, "1月");
+            Assert.AreEqual(5596, row.Cells[11].Value, "2月");
+            Assert.AreEqual(5339, row.Cells[12].Value, "3月");
+        }
+
+        /// <summary>
+        /// 光熱費のテスト
+        /// 2011年ガス代
+        /// </summary>
+        [Test]
+        public void DgvValueWithGs2011()
+        {
+            ShowSubEnergy(CSV_ENERGIES);
+
+            var dgv = CtDgvGs();
+            var row = dgv.Rows[2];
+            Assert.AreEqual(2011, row.Cells[ 0].Value);
+            Assert.AreEqual(5339, row.Cells[ 1].Value, "4月");
+            Assert.AreEqual(4207, row.Cells[ 2].Value, "5月");
+            Assert.AreEqual(4824, row.Cells[ 3].Value, "6月");
+            Assert.AreEqual(4001, row.Cells[ 4].Value, "7月");
+            Assert.AreEqual(3538, row.Cells[ 5].Value, "8月");
+            Assert.AreEqual(3692, row.Cells[ 6].Value, "9月");
+            Assert.AreEqual(4053, row.Cells[ 7].Value, "10月");
+            Assert.AreEqual(4876, row.Cells[ 8].Value, "11月");
+            Assert.AreEqual(4979, row.Cells[ 9].Value, "12月");
+            Assert.AreEqual(5133, row.Cells[10].Value, "1月");
+            Assert.AreEqual(5339, row.Cells[11].Value, "2月");
+            Assert.AreEqual(5184, row.Cells[12].Value, "3月");
+        }
+
+        /// <summary>
+        /// 光熱費のテスト
+        /// 2012年ガス代
+        /// </summary>
+        [Test]
+        public void DgvValueWithGs2012()
+        {
+            ShowSubEnergy(CSV_ENERGIES);
+
+            var dgv = CtDgvGs();
+            var row = dgv.Rows[3];
+            Assert.AreEqual(2012, row.Cells[ 0].Value);
+            Assert.AreEqual(5544, row.Cells[ 1].Value, "4月");
+            Assert.AreEqual(4506, row.Cells[ 2].Value, "5月");
+            Assert.AreEqual(4342, row.Cells[ 3].Value, "6月");
+            Assert.AreEqual(3937, row.Cells[ 4].Value, "7月");
+            Assert.AreEqual(3435, row.Cells[ 5].Value, "8月");
+            Assert.AreEqual(3538, row.Cells[ 6].Value, "9月");
+            Assert.AreEqual(4104, row.Cells[ 7].Value, "10月");
+            Assert.AreEqual(5184, row.Cells[ 8].Value, "11月");
+            Assert.AreEqual(5380, row.Cells[ 9].Value, "12月");
+            Assert.AreEqual(5380, row.Cells[10].Value, "1月");
+            Assert.AreEqual(5871, row.Cells[11].Value, "2月");
+            Assert.AreEqual(5544, row.Cells[12].Value, "3月");
+        }
+
+        /// <summary>
+        /// 光熱費のテスト
+        /// 2013年ガス代
+        /// </summary>
+        [Test]
+        public void DgvValueWithGs2013()
+        {
+            ShowSubEnergy(CSV_ENERGIES);
+
+            var dgv = CtDgvGs();
+            var row = dgv.Rows[4];
+            Assert.AreEqual(2013, row.Cells[ 0].Value);
+            Assert.AreEqual(5325, row.Cells[ 1].Value, "4月");
+            Assert.AreEqual(4725, row.Cells[ 2].Value, "5月");
+            Assert.AreEqual(3633, row.Cells[ 3].Value, "6月");
+            Assert.AreEqual(3687, row.Cells[ 4].Value, "7月");
+            Assert.AreEqual(3523, row.Cells[ 5].Value, "8月");
+            Assert.AreEqual(3523, row.Cells[ 6].Value, "9月");
+            Assert.AreEqual(3906, row.Cells[ 7].Value, "10月");
+            Assert.AreEqual(4452, row.Cells[ 8].Value, "11月");
+            Assert.AreEqual(4943, row.Cells[ 9].Value, "12月");
+            Assert.AreEqual(5287, row.Cells[10].Value, "1月");
+            Assert.AreEqual(5758, row.Cells[11].Value, "2月");
+            Assert.AreEqual(5287, row.Cells[12].Value, "3月");
+        }
+
+        /// <summary>
+        /// 光熱費のテスト
+        /// 2014年ガス代
+        /// </summary>
+        [Test]
+        public void DgvValueWithGs2014()
+        {
+            ShowSubEnergy(CSV_ENERGIES);
+
+            var dgv = CtDgvGs();
+            var row = dgv.Rows[5];
+            Assert.AreEqual(2014, row.Cells[ 0].Value);
+            Assert.AreEqual(5405, row.Cells[ 1].Value, "4月");
+            Assert.AreEqual(4713, row.Cells[ 2].Value, "5月");
+            Assert.AreEqual(4501, row.Cells[ 3].Value, "6月");
+            Assert.AreEqual(4209, row.Cells[ 4].Value, "7月");
+            Assert.AreEqual(3801, row.Cells[ 5].Value, "8月");
+            Assert.AreEqual(4326, row.Cells[ 6].Value, "9月");
+            Assert.AreEqual(4501, row.Cells[ 7].Value, "10月");
+            Assert.AreEqual(5026, row.Cells[ 8].Value, "11月");
+            Assert.AreEqual(5492, row.Cells[ 9].Value, "12月");
+            Assert.AreEqual(5551, row.Cells[10].Value, "1月");
+            Assert.AreEqual(6116, row.Cells[11].Value, "2月");
+            Assert.AreEqual(5772, row.Cells[12].Value, "3月");
+        }
+
+        /// <summary>
+        /// 光熱費のテスト
+        /// ガス代の平均
+        /// </summary>
+        [Test]
+        public void DgvValueWithGsAve()
+        {
+            ShowSubEnergy(CSV_ENERGIES);
+
+            var dgv = CtDgvGs();
+            var row = dgv.Rows[dgv.Rows.Count - 1];
+            Assert.AreEqual("ave", row.Cells[ 0].Value);
+            Assert.AreEqual( 5541, row.Cells[ 1].Value, "4月");
+            Assert.AreEqual( 4504, row.Cells[ 2].Value, "5月");
+            Assert.AreEqual( 4404, row.Cells[ 3].Value, "6月");
+            Assert.AreEqual( 4085, row.Cells[ 4].Value, "7月");
+            Assert.AreEqual( 3686, row.Cells[ 5].Value, "8月");
+            Assert.AreEqual( 3731, row.Cells[ 6].Value, "9月");
+            Assert.AreEqual( 4047, row.Cells[ 7].Value, "10月");
+            Assert.AreEqual( 4964, row.Cells[ 8].Value, "11月");
+            Assert.AreEqual( 4739, row.Cells[ 9].Value, "12月");
+            Assert.AreEqual( 4996, row.Cells[10].Value, "1月");
+            Assert.AreEqual( 5376, row.Cells[11].Value, "2月");
+            Assert.AreEqual( 5617, row.Cells[12].Value, "3月");
+        }
+
+        /// <summary>
+        /// 光熱費のテスト
+        /// 2009年水道代
+        /// </summary>
+        [Test]
+        public void DgvValueWithWt2009()
+        {
+            ShowSubEnergy(CSV_ENERGIES);
+
+            var dgv = CtDgvWt();
+            var row = dgv.Rows[0];
+            Assert.AreEqual(2009, row.Cells[ 0].Value);
+            Assert.AreEqual(1848, row.Cells[ 1].Value, "4月");
+            Assert.AreEqual(1848, row.Cells[ 2].Value, "5月");
+            Assert.AreEqual(1896, row.Cells[ 3].Value, "6月");
+            Assert.AreEqual(1896, row.Cells[ 4].Value, "7月");
+            Assert.AreEqual(1896, row.Cells[ 5].Value, "8月");
+            Assert.AreEqual(1896, row.Cells[ 6].Value, "9月");
+            Assert.AreEqual(1848, row.Cells[ 7].Value, "10月");
+            Assert.AreEqual(1848, row.Cells[ 8].Value, "11月");
+            Assert.AreEqual(1462, row.Cells[ 9].Value, "12月");
+            Assert.AreEqual(1462, row.Cells[10].Value, "1月");
+            Assert.AreEqual(1558, row.Cells[11].Value, "2月");
+            Assert.AreEqual(1558, row.Cells[12].Value, "3月");
+        }
+
+        /// <summary>
+        /// 光熱費のテスト
+        /// 2010年水道代
+        /// </summary>
+        [Test]
+        public void DgvValueWithWt2010()
+        {
+            ShowSubEnergy(CSV_ENERGIES);
+
+            var dgv = CtDgvWt();
+            var row = dgv.Rows[1];
+            Assert.AreEqual(2010, row.Cells[ 0].Value);
+            Assert.AreEqual(1848, row.Cells[ 1].Value, "4月");
+            Assert.AreEqual(1848, row.Cells[ 2].Value, "5月");
+            Assert.AreEqual(1848, row.Cells[ 3].Value, "6月");
+            Assert.AreEqual(1848, row.Cells[ 4].Value, "7月");
+            Assert.AreEqual(1896, row.Cells[ 5].Value, "8月");
+            Assert.AreEqual(1896, row.Cells[ 6].Value, "9月");
+            Assert.AreEqual(1799, row.Cells[ 7].Value, "10月");
+            Assert.AreEqual(1799, row.Cells[ 8].Value, "11月");
+            Assert.AreEqual(1799, row.Cells[ 9].Value, "12月");
+            Assert.AreEqual(1799, row.Cells[10].Value, "1月");
+            Assert.AreEqual(1751, row.Cells[11].Value, "2月");
+            Assert.AreEqual(1751, row.Cells[12].Value, "3月");
+        }
+
+        /// <summary>
+        /// 光熱費のテスト
+        /// 2011年水道代
+        /// </summary>
+        [Test]
+        public void DgvValueWithWt2011()
+        {
+            ShowSubEnergy(CSV_ENERGIES);
+
+            var dgv = CtDgvWt();
+            var row = dgv.Rows[2];
+            Assert.AreEqual(2011, row.Cells[ 0].Value);
+            Assert.AreEqual(1703, row.Cells[ 1].Value, "4月");
+            Assert.AreEqual(1703, row.Cells[ 2].Value, "5月");
+            Assert.AreEqual(1848, row.Cells[ 3].Value, "6月");
+            Assert.AreEqual(1848, row.Cells[ 4].Value, "7月");
+            Assert.AreEqual(1848, row.Cells[ 5].Value, "8月");
+            Assert.AreEqual(1848, row.Cells[ 6].Value, "9月");
+            Assert.AreEqual(1751, row.Cells[ 7].Value, "10月");
+            Assert.AreEqual(1751, row.Cells[ 8].Value, "11月");
+            Assert.AreEqual(1751, row.Cells[ 9].Value, "12月");
+            Assert.AreEqual(1751, row.Cells[10].Value, "1月");
+            Assert.AreEqual(1703, row.Cells[11].Value, "2月");
+            Assert.AreEqual(1703, row.Cells[12].Value, "3月");
+        }
+
+        /// <summary>
+        /// 光熱費のテスト
+        /// 2012年水道代
+        /// </summary>
+        [Test]
+        public void DgvValueWithWt2012()
+        {
+            ShowSubEnergy(CSV_ENERGIES);
+
+            var dgv = CtDgvWt();
+            var row = dgv.Rows[3];
+            Assert.AreEqual(2012, row.Cells[ 0].Value);
+            Assert.AreEqual(1751, row.Cells[ 1].Value, "4月");
+            Assert.AreEqual(1751, row.Cells[ 2].Value, "5月");
+            Assert.AreEqual(1751, row.Cells[ 3].Value, "6月");
+            Assert.AreEqual(1751, row.Cells[ 4].Value, "7月");
+            Assert.AreEqual(1751, row.Cells[ 5].Value, "8月");
+            Assert.AreEqual(1751, row.Cells[ 6].Value, "9月");
+            Assert.AreEqual(1799, row.Cells[ 7].Value, "10月");
+            Assert.AreEqual(1799, row.Cells[ 8].Value, "11月");
+            Assert.AreEqual(1751, row.Cells[ 9].Value, "12月");
+            Assert.AreEqual(1751, row.Cells[10].Value, "1月");
+            Assert.AreEqual(1751, row.Cells[11].Value, "2月");
+            Assert.AreEqual(1751, row.Cells[12].Value, "3月");
+        }
+
+        /// <summary>
+        /// 光熱費のテスト
+        /// 2013年水道代
+        /// </summary>
+        [Test]
+        public void DgvValueWithWt2013()
+        {
+            ShowSubEnergy(CSV_ENERGIES);
+
+            var dgv = CtDgvWt();
+            var row = dgv.Rows[4];
+            Assert.AreEqual(2013, row.Cells[ 0].Value);
+            Assert.AreEqual(1799, row.Cells[ 1].Value, "4月");
+            Assert.AreEqual(1799, row.Cells[ 2].Value, "5月");
+            Assert.AreEqual(1703, row.Cells[ 3].Value, "6月");
+            Assert.AreEqual(1703, row.Cells[ 4].Value, "7月");
+            Assert.AreEqual(1799, row.Cells[ 5].Value, "8月");
+            Assert.AreEqual(1799, row.Cells[ 6].Value, "9月");
+            Assert.AreEqual(1703, row.Cells[ 7].Value, "10月");
+            Assert.AreEqual(1703, row.Cells[ 8].Value, "11月");
+            Assert.AreEqual(1655, row.Cells[ 9].Value, "12月");
+            Assert.AreEqual(1655, row.Cells[10].Value, "1月");
+            Assert.AreEqual(1703, row.Cells[11].Value, "2月");
+            Assert.AreEqual(1703, row.Cells[12].Value, "3月");
+        }
+
+        /// <summary>
+        /// 光熱費のテスト
+        /// 2014年水道代
+        /// </summary>
+        [Test]
+        public void DgvValueWithWt2014()
+        {
+            ShowSubEnergy(CSV_ENERGIES);
+
+            var dgv = CtDgvWt();
+            var row = dgv.Rows[5];
+            Assert.AreEqual(2014, row.Cells[ 0].Value);
+            Assert.AreEqual(1703, row.Cells[ 1].Value, "4月");
+            Assert.AreEqual(1703, row.Cells[ 2].Value, "5月");
+            Assert.AreEqual(1801, row.Cells[ 3].Value, "6月");
+            Assert.AreEqual(1801, row.Cells[ 4].Value, "7月");
+            Assert.AreEqual(1851, row.Cells[ 5].Value, "8月");
+            Assert.AreEqual(1851, row.Cells[ 6].Value, "9月");
+            Assert.AreEqual(1801, row.Cells[ 7].Value, "10月");
+            Assert.AreEqual(1801, row.Cells[ 8].Value, "11月");
+            Assert.AreEqual(1801, row.Cells[ 9].Value, "12月");
+            Assert.AreEqual(1801, row.Cells[10].Value, "1月");
+            Assert.AreEqual(1751, row.Cells[11].Value, "2月");
+            Assert.AreEqual(1751, row.Cells[12].Value, "3月");
+        }
+
+        /// <summary>
+        /// 光熱費のテスト
+        /// 水道代の平均
+        /// </summary>
+        [Test]
+        public void DgvValueWithWtAve()
+        {
+            ShowSubEnergy(CSV_ENERGIES);
+
+            var dgv = CtDgvWt();
+            var row = dgv.Rows[dgv.Rows.Count - 1];
+            Assert.AreEqual("ave", row.Cells[ 0].Value);
+            Assert.AreEqual( 1775, row.Cells[ 1].Value, "4月");
+            Assert.AreEqual( 1775, row.Cells[ 2].Value, "5月");
+            Assert.AreEqual( 1808, row.Cells[ 3].Value, "6月");
+            Assert.AreEqual( 1808, row.Cells[ 4].Value, "7月");
+            Assert.AreEqual( 1840, row.Cells[ 5].Value, "8月");
+            Assert.AreEqual( 1840, row.Cells[ 6].Value, "9月");
+            Assert.AreEqual( 1784, row.Cells[ 7].Value, "10月");
+            Assert.AreEqual( 1784, row.Cells[ 8].Value, "11月");
+            Assert.AreEqual( 1703, row.Cells[ 9].Value, "12月");
+            Assert.AreEqual( 1703, row.Cells[10].Value, "1月");
+            Assert.AreEqual( 1703, row.Cells[11].Value, "2月");
+            Assert.AreEqual( 1703, row.Cells[12].Value, "3月");
+        }
+
+        /// <summary>
+        /// 最大値のテスト
+        /// 電気代のみ
+        /// </summary>
+        [Test]
+        public void DgvMaxWithOnlyEl()
+        {
+            //1年分しかデータがないためすべて最大値になる
+        }
+
+        /// <summary>
+        /// 最大値のテスト
+        /// ガス代のみ
+        /// </summary>
+        [Test]
+        public void DgvMaxWithOnlyGs()
+        {
+            ShowSubEnergy(CSV_ONLY_GS);
+
+            var dgv = CtDgvGs();
+            var row1 = dgv.Rows[0];
+            var row2 = dgv.Rows[1];
+            Assert.AreEqual(Color.Red, row2.Cells[ 1].Style.ForeColor, "4月");
+            Assert.AreEqual(Color.Red, row2.Cells[ 2].Style.ForeColor, "5月");
+            Assert.AreEqual(Color.Red, row2.Cells[ 3].Style.ForeColor, "6月");
+            Assert.AreEqual(Color.Red, row2.Cells[ 4].Style.ForeColor, "7月");
+            Assert.AreEqual(Color.Red, row2.Cells[ 5].Style.ForeColor, "8月");
+            Assert.AreEqual(Color.Red, row2.Cells[ 6].Style.ForeColor, "9月");
+            Assert.AreEqual(Color.Red, row2.Cells[ 7].Style.ForeColor, "10月");
+            Assert.AreEqual(Color.Red, row2.Cells[ 8].Style.ForeColor, "11月");
+            Assert.AreEqual(Color.Red, row2.Cells[ 9].Style.ForeColor, "12月");
+            Assert.AreEqual(Color.Red, row1.Cells[10].Style.ForeColor, "1月");
+            Assert.AreEqual(Color.Red, row1.Cells[11].Style.ForeColor, "2月");
+            Assert.AreEqual(Color.Red, row1.Cells[12].Style.ForeColor, "3月");
+        }
+
+        /// <summary>
+        /// 最大値のテスト
+        /// 水道代のみ
+        /// </summary>
+        [Test]
+        public void DgvMaxWithOnlyWt()
+        {
+            ShowSubEnergy(CSV_ONLY_WT);
+
+            var dgv = CtDgvWt();
+            var row1 = dgv.Rows[0];
+            var row2 = dgv.Rows[2];
+            Assert.AreEqual(Color.Red, row2.Cells[ 1].Style.ForeColor, "4月");
+            Assert.AreEqual(Color.Red, row2.Cells[ 2].Style.ForeColor, "5月");
+            Assert.AreEqual(Color.Red, row2.Cells[ 3].Style.ForeColor, "6月");
+            Assert.AreEqual(Color.Red, row2.Cells[ 4].Style.ForeColor, "7月");
+            Assert.AreEqual(Color.Red, row2.Cells[ 5].Style.ForeColor, "8月");
+            Assert.AreEqual(Color.Red, row2.Cells[ 6].Style.ForeColor, "9月");
+            Assert.AreEqual(Color.Red, row2.Cells[ 7].Style.ForeColor, "10月");
+            Assert.AreEqual(Color.Red, row2.Cells[ 8].Style.ForeColor, "11月");
+            Assert.AreEqual(Color.Red, row2.Cells[ 9].Style.ForeColor, "12月");
+            Assert.AreEqual(Color.Red, row2.Cells[10].Style.ForeColor, "1月");
+            Assert.AreEqual(Color.Red, row2.Cells[11].Style.ForeColor, "2月");
+            Assert.AreEqual(Color.Red, row2.Cells[12].Style.ForeColor, "3月");
+        }
+
+        /// <summary>
+        /// 最小値のテスト
+        /// 電気代のみ
+        /// </summary>
+        [Test]
+        public void DgvMinWithOnlyEl()
+        {
+            //1年分しかデータがないためすべて最大値になる
+        }
+
+        /// <summary>
+        /// 最小値のテスト
+        /// ガス代のみ
+        /// </summary>
+        [Test]
+        public void DgvMinWithOnlyGs()
+        {
+            ShowSubEnergy(CSV_ONLY_GS);
+
+            var dgv = CtDgvGs();
+            var row1 = dgv.Rows[0];
+            var row2 = dgv.Rows[1];
+            Assert.AreEqual(Color.Blue, row1.Cells[ 1].Style.ForeColor, "4月");
+            Assert.AreEqual(Color.Blue, row1.Cells[ 2].Style.ForeColor, "5月");
+            Assert.AreEqual(Color.Blue, row1.Cells[ 3].Style.ForeColor, "6月");
+            Assert.AreEqual(Color.Blue, row1.Cells[ 4].Style.ForeColor, "7月");
+            Assert.AreEqual(Color.Blue, row1.Cells[ 5].Style.ForeColor, "8月");
+            Assert.AreEqual(Color.Blue, row1.Cells[ 6].Style.ForeColor, "9月");
+            Assert.AreEqual(Color.Blue, row1.Cells[ 7].Style.ForeColor, "10月");
+            Assert.AreEqual(Color.Blue, row1.Cells[ 8].Style.ForeColor, "11月");
+            Assert.AreEqual(Color.Blue, row1.Cells[ 9].Style.ForeColor, "12月");
+            Assert.AreEqual(Color.Blue, row2.Cells[10].Style.ForeColor, "1月");
+            Assert.AreEqual(Color.Blue, row2.Cells[11].Style.ForeColor, "2月");
+            Assert.AreEqual(Color.Blue, row2.Cells[12].Style.ForeColor, "3月");
+        }
+
+        /// <summary>
+        /// 最小値のテスト
+        /// 水道代のみ
+        /// </summary>
+        [Test]
+        public void DgvMinWithOnlyWt()
+        {
+            ShowSubEnergy(CSV_ONLY_WT);
+
+            var dgv = CtDgvWt();
+            var row1 = dgv.Rows[0];
+            var row2 = dgv.Rows[2];
+            Assert.AreEqual(Color.Blue, row1.Cells[ 1].Style.ForeColor, "4月");
+            Assert.AreEqual(Color.Blue, row1.Cells[ 2].Style.ForeColor, "5月");
+            Assert.AreEqual(Color.Blue, row1.Cells[ 3].Style.ForeColor, "6月");
+            Assert.AreEqual(Color.Blue, row1.Cells[ 4].Style.ForeColor, "7月");
+            Assert.AreEqual(Color.Blue, row1.Cells[ 5].Style.ForeColor, "8月");
+            Assert.AreEqual(Color.Blue, row1.Cells[ 6].Style.ForeColor, "9月");
+            Assert.AreEqual(Color.Blue, row1.Cells[ 7].Style.ForeColor, "10月");
+            Assert.AreEqual(Color.Blue, row1.Cells[ 8].Style.ForeColor, "11月");
+            Assert.AreEqual(Color.Blue, row1.Cells[ 9].Style.ForeColor, "12月");
+            Assert.AreEqual(Color.Blue, row1.Cells[10].Style.ForeColor, "1月");
+            Assert.AreEqual(Color.Blue, row1.Cells[11].Style.ForeColor, "2月");
+            Assert.AreEqual(Color.Blue, row1.Cells[12].Style.ForeColor, "3月");
+        }
+
+        /// <summary>
+        /// 最大値のテスト
+        /// 電気代
+        /// </summary>
+        [Test]
+        public void DgvMaxWithEl()
+        {
+            ShowSubEnergy(CSV_ENERGIES);
+
+            var dgv = CtDgvEl();
+            var row1 = dgv.Rows[0];
+            var row2 = dgv.Rows[1];
+            var row4 = dgv.Rows[3];
+            var row5 = dgv.Rows[4];
+            Assert.AreEqual(Color.Red, row2.Cells[ 1].Style.ForeColor, "4月");
+            Assert.AreEqual(Color.Red, row5.Cells[ 2].Style.ForeColor, "5月");
+            Assert.AreEqual(Color.Red, row5.Cells[ 3].Style.ForeColor, "6月");
+            Assert.AreEqual(Color.Red, row1.Cells[ 4].Style.ForeColor, "7月");
+            Assert.AreEqual(Color.Red, row1.Cells[ 5].Style.ForeColor, "8月");
+            Assert.AreEqual(Color.Red, row1.Cells[ 6].Style.ForeColor, "9月");
+            Assert.AreEqual(Color.Red, row5.Cells[ 7].Style.ForeColor, "10月");
+            Assert.AreEqual(Color.Red, row2.Cells[ 8].Style.ForeColor, "11月");
+            Assert.AreEqual(Color.Red, row5.Cells[ 9].Style.ForeColor, "12月");
+            Assert.AreEqual(Color.Red, row4.Cells[10].Style.ForeColor, "1月");
+            Assert.AreEqual(Color.Red, row4.Cells[11].Style.ForeColor, "2月");
+            Assert.AreEqual(Color.Red, row1.Cells[12].Style.ForeColor, "3月");
+        }
+
+        /// <summary>
+        /// 最大値のテスト
+        /// ガス代
+        /// </summary>
+        [Test]
+        public void DgvMaxWithGs()
+        {
+            ShowSubEnergy(CSV_ENERGIES);
+
+            var dgv = CtDgvGs();
+            var row1 = dgv.Rows[0];
+            var row2 = dgv.Rows[1];
+            var row3 = dgv.Rows[2];
+            var row5 = dgv.Rows[4];
+            var row6 = dgv.Rows[5];
+            Assert.AreEqual(Color.Red, row2.Cells[ 1].Style.ForeColor, "4月");
+            Assert.AreEqual(Color.Red, row5.Cells[ 2].Style.ForeColor, "5月");
+            Assert.AreEqual(Color.Red, row3.Cells[ 3].Style.ForeColor, "6月");
+            Assert.AreEqual(Color.Red, row1.Cells[ 4].Style.ForeColor, "7月");
+            Assert.AreEqual(Color.Red, row1.Cells[ 5].Style.ForeColor, "8月");
+            Assert.AreEqual(Color.Red, row6.Cells[ 6].Style.ForeColor, "9月");
+            Assert.AreEqual(Color.Red, row6.Cells[ 7].Style.ForeColor, "10月");
+            Assert.AreEqual(Color.Red, row2.Cells[ 8].Style.ForeColor, "11月");
+            Assert.AreEqual(Color.Red, row2.Cells[ 9].Style.ForeColor, "12月");
+            Assert.AreEqual(Color.Red, row2.Cells[10].Style.ForeColor, "1月");
+            Assert.AreEqual(Color.Red, row6.Cells[11].Style.ForeColor, "2月");
+            Assert.AreEqual(Color.Red, row1.Cells[12].Style.ForeColor, "3月");
+        }
+
+        /// <summary>
+        /// 最大値のテスト
+        /// 水道代
+        /// </summary>
+        [Test]
+        public void DgvMaxWithWt()
+        {
+            ShowSubEnergy(CSV_ENERGIES);
+
+            var dgv = CtDgvWt();
+            var row1 = dgv.Rows[0];
+            var row2 = dgv.Rows[1];
+            var row4 = dgv.Rows[3];
+            var row6 = dgv.Rows[5];
+            Assert.AreEqual(Color.Red, row1.Cells[ 1].Style.ForeColor, "4月");
+            Assert.AreEqual(Color.Red, row2.Cells[ 1].Style.ForeColor, "4月");
+            Assert.AreEqual(Color.Red, row1.Cells[ 2].Style.ForeColor, "5月");
+            Assert.AreEqual(Color.Red, row2.Cells[ 2].Style.ForeColor, "5月");
+            Assert.AreEqual(Color.Red, row1.Cells[ 3].Style.ForeColor, "6月");
+            Assert.AreEqual(Color.Red, row1.Cells[ 4].Style.ForeColor, "7月");
+            Assert.AreEqual(Color.Red, row1.Cells[ 5].Style.ForeColor, "8月");
+            Assert.AreEqual(Color.Red, row2.Cells[ 5].Style.ForeColor, "8月");
+            Assert.AreEqual(Color.Red, row1.Cells[ 6].Style.ForeColor, "9月");
+            Assert.AreEqual(Color.Red, row2.Cells[ 6].Style.ForeColor, "9月");
+            Assert.AreEqual(Color.Red, row1.Cells[ 7].Style.ForeColor, "10月");
+            Assert.AreEqual(Color.Red, row1.Cells[ 8].Style.ForeColor, "11月");
+            Assert.AreEqual(Color.Red, row6.Cells[ 9].Style.ForeColor, "12月");
+            Assert.AreEqual(Color.Red, row6.Cells[10].Style.ForeColor, "1月");
+            Assert.AreEqual(Color.Red, row2.Cells[11].Style.ForeColor, "2月");
+            Assert.AreEqual(Color.Red, row4.Cells[11].Style.ForeColor, "2月");
+            Assert.AreEqual(Color.Red, row6.Cells[11].Style.ForeColor, "2月");
+            Assert.AreEqual(Color.Red, row2.Cells[12].Style.ForeColor, "3月");
+            Assert.AreEqual(Color.Red, row4.Cells[12].Style.ForeColor, "3月");
+            Assert.AreEqual(Color.Red, row6.Cells[12].Style.ForeColor, "3月");
+        }
+
+        /// <summary>
+        /// 最小値のテスト
+        /// 電気代
+        /// </summary>
+        [Test]
+        public void DgvMinWithEl()
+        {
+            ShowSubEnergy(CSV_ENERGIES);
+
+            var dgv = CtDgvEl();
+            var row1 = dgv.Rows[0];
+            var row2 = dgv.Rows[1];
+            var row3 = dgv.Rows[2];
+            var row5 = dgv.Rows[4];
+            Assert.AreEqual(Color.Blue, row3.Cells[ 1].Style.ForeColor, "4月");
+            Assert.AreEqual(Color.Blue, row3.Cells[ 2].Style.ForeColor, "5月");
+            Assert.AreEqual(Color.Blue, row3.Cells[ 3].Style.ForeColor, "6月");
+            Assert.AreEqual(Color.Blue, row3.Cells[ 4].Style.ForeColor, "7月");
+            Assert.AreEqual(Color.Blue, row3.Cells[ 5].Style.ForeColor, "8月");
+            Assert.AreEqual(Color.Blue, row5.Cells[ 6].Style.ForeColor, "9月");
+            Assert.AreEqual(Color.Blue, row3.Cells[ 7].Style.ForeColor, "10月");
+            Assert.AreEqual(Color.Blue, row1.Cells[ 8].Style.ForeColor, "11月");
+            Assert.AreEqual(Color.Blue, row1.Cells[ 9].Style.ForeColor, "12月");
+            Assert.AreEqual(Color.Blue, row1.Cells[10].Style.ForeColor, "1月");
+            Assert.AreEqual(Color.Blue, row1.Cells[11].Style.ForeColor, "2月");
+            Assert.AreEqual(Color.Blue, row2.Cells[12].Style.ForeColor, "3月");
+        }
+
+        /// <summary>
+        /// 最小値のテスト
+        /// ガス代
+        /// </summary>
+        [Test]
+        public void DgvMinWithGs()
+        {
+            ShowSubEnergy(CSV_ENERGIES);
+
+            var dgv = CtDgvGs();
+            var row1 = dgv.Rows[0];
+            var row3 = dgv.Rows[2];
+            var row4 = dgv.Rows[3];
+            var row5 = dgv.Rows[4];
+            Assert.AreEqual(Color.Blue, row5.Cells[ 1].Style.ForeColor, "4月");
+            Assert.AreEqual(Color.Blue, row3.Cells[ 2].Style.ForeColor, "5月");
+            Assert.AreEqual(Color.Blue, row5.Cells[ 3].Style.ForeColor, "6月");
+            Assert.AreEqual(Color.Blue, row5.Cells[ 4].Style.ForeColor, "7月");
+            Assert.AreEqual(Color.Blue, row4.Cells[ 5].Style.ForeColor, "8月");
+            Assert.AreEqual(Color.Blue, row5.Cells[ 6].Style.ForeColor, "9月");
+            Assert.AreEqual(Color.Blue, row1.Cells[ 7].Style.ForeColor, "10月");
+            Assert.AreEqual(Color.Blue, row5.Cells[ 8].Style.ForeColor, "11月");
+            Assert.AreEqual(Color.Blue, row1.Cells[ 9].Style.ForeColor, "12月");
+            Assert.AreEqual(Color.Blue, row1.Cells[10].Style.ForeColor, "1月");
+            Assert.AreEqual(Color.Blue, row1.Cells[11].Style.ForeColor, "2月");
+            Assert.AreEqual(Color.Blue, row3.Cells[12].Style.ForeColor, "3月");
+        }
+
+        /// <summary>
+        /// 最小値のテスト
+        /// 水道代
+        /// </summary>
+        [Test]
+        public void DgvMinWithWt()
+        {
+            ShowSubEnergy(CSV_ENERGIES);
+
+            var dgv = CtDgvWt();
+            var row1 = dgv.Rows[0];
+            var row3 = dgv.Rows[2];
+            var row4 = dgv.Rows[3];
+            var row5 = dgv.Rows[4];
+            var row6 = dgv.Rows[5];
+            Assert.AreEqual(Color.Blue, row3.Cells[ 1].Style.ForeColor, "4月");
+            Assert.AreEqual(Color.Blue, row6.Cells[ 1].Style.ForeColor, "4月");
+            Assert.AreEqual(Color.Blue, row3.Cells[ 2].Style.ForeColor, "5月");
+            Assert.AreEqual(Color.Blue, row6.Cells[ 2].Style.ForeColor, "5月");
+            Assert.AreEqual(Color.Blue, row5.Cells[ 3].Style.ForeColor, "6月");
+            Assert.AreEqual(Color.Blue, row5.Cells[ 4].Style.ForeColor, "7月");
+            Assert.AreEqual(Color.Blue, row4.Cells[ 5].Style.ForeColor, "8月");
+            Assert.AreEqual(Color.Blue, row4.Cells[ 6].Style.ForeColor, "9月");
+            Assert.AreEqual(Color.Blue, row5.Cells[ 7].Style.ForeColor, "10月");
+            Assert.AreEqual(Color.Blue, row5.Cells[ 8].Style.ForeColor, "11月");
+            Assert.AreEqual(Color.Blue, row1.Cells[ 9].Style.ForeColor, "12月");
+            Assert.AreEqual(Color.Blue, row1.Cells[10].Style.ForeColor, "1月");
+            Assert.AreEqual(Color.Blue, row1.Cells[11].Style.ForeColor, "2月");
+            Assert.AreEqual(Color.Blue, row1.Cells[12].Style.ForeColor, "3月");
+        }
+    }
+}

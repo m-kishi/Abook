@@ -81,9 +81,9 @@
                     var filter = energies.Where(eng => eng.Date.Month == dtAve.Month);
                     if (filter != null && filter.Count() > 0)
                     {
-                        rowAveEl.Cells[cIdx].Value = filter.Average(eng => eng.El);
-                        rowAveGs.Cells[cIdx].Value = filter.Average(eng => eng.Gs);
-                        rowAveWt.Cells[cIdx].Value = filter.Average(eng => eng.Wt);
+                        rowAveEl.Cells[cIdx].Value = decimal.Round(filter.Average(eng => eng.El), MidpointRounding.AwayFromZero);
+                        rowAveGs.Cells[cIdx].Value = decimal.Round(filter.Average(eng => eng.Gs), MidpointRounding.AwayFromZero);
+                        rowAveWt.Cells[cIdx].Value = decimal.Round(filter.Average(eng => eng.Wt), MidpointRounding.AwayFromZero);
                         minEl[cIdx - 1] = filter.Min(eng => eng.El); maxEl[cIdx - 1] = filter.Max(eng => eng.El);
                         minGs[cIdx - 1] = filter.Min(eng => eng.Gs); maxGs[cIdx - 1] = filter.Max(eng => eng.Gs);
                         minWt[cIdx - 1] = filter.Min(eng => eng.Wt); maxWt[cIdx - 1] = filter.Max(eng => eng.Wt);
