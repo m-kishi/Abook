@@ -91,6 +91,15 @@
         }
 
         /// <summary>
+        /// 光熱費メニュー取得
+        /// </summary>
+        /// <returns>光熱費メニュー</returns>
+        protected ToolStripMenuItemTester TsMenuEnergy()
+        {
+            return (new ToolStripMenuItemTester("MenuEnergy", form));
+        }
+
+        /// <summary>
         /// アップロードメニュー取得
         /// </summary>
         /// <returns>アップロードメニュー</returns>

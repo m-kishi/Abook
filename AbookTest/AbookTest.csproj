@@ -77,6 +77,7 @@
     <Compile Include="view\AbTestFormBase.cs" />
     <Compile Include="view\AbTestFormMain.cs" />
     <Compile Include="view\AbTestMenu.cs" />
+    <Compile Include="view\AbTestSubEnergy.cs" />
     <Compile Include="view\AbTestSubType.cs" />
     <Compile Include="view\AbTestSubUpload.cs" />
     <Compile Include="view\AbTestTabBalance.cs" />

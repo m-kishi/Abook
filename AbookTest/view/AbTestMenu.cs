@@ -82,6 +82,27 @@
         }
 
         /// <summary>
+        /// 光熱費メニュークリック
+        /// </summary>
+        [Test]
+        public void MenuEnergyClick()
+        {
+            //光熱費サブフォームが表示される
+            ModalFormHandler = (name, hWnd, form) =>
+            {
+                //フォーム名テスト
+                Assert.AreEqual(name, "AbSubEnergy");
+
+                // 閉じる
+                form.Close();
+            };
+
+            ShowFormMain(CSV_FILE);
+
+            TsMenuEnergy().Click();
+        }
+
+        /// <summary>
         /// アップロードメニュークリック
         /// </summary>
         [Test]

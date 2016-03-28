@@ -46,6 +46,7 @@
             this.MenuFile      = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuExit      = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuData      = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuEnergy    = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuUpload    = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuHelp      = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuVersion   = new System.Windows.Forms.ToolStripMenuItem();
@@ -145,10 +146,17 @@
             // 
             // MenuData
             // 
-            this.MenuData.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.MenuUpload });
+            this.MenuData.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.MenuEnergy, this.MenuUpload });
             this.MenuData.Name = "MenuData";
             this.MenuData.Size = new System.Drawing.Size(61, 20);
             this.MenuData.Text = "データ(&D)";
+            // 
+            // MenuEnergy
+            // 
+            this.MenuEnergy.Name = "MenuEnergy";
+            this.MenuEnergy.Size = new System.Drawing.Size(152, 22);
+            this.MenuEnergy.Text = "光熱費(&E)";
+            this.MenuEnergy.Click += new System.EventHandler(this.MenuEnergy_Click);
             // 
             // MenuUpload
             // 
@@ -883,6 +891,7 @@
         private System.Windows.Forms.ToolStripMenuItem MenuFile;
         private System.Windows.Forms.ToolStripMenuItem MenuExit;
         private System.Windows.Forms.ToolStripMenuItem MenuData;
+        private System.Windows.Forms.ToolStripMenuItem MenuEnergy;
         private System.Windows.Forms.ToolStripMenuItem MenuUpload;
         private System.Windows.Forms.ToolStripMenuItem MenuHelp;
         private System.Windows.Forms.ToolStripMenuItem MenuVersion;
