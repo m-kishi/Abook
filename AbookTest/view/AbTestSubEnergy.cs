@@ -30,8 +30,39 @@
         private const string CSV_ONLY_WT = "AbTestSubEnergyOnlyWt.db";
         /// <summary>CSVファイル</summary>
         private const string CSV_ENERGIES = "AbTestSubEnergies.db";
+        /// <summary>CSVファイル</summary>
+        private const string CSV_ONLY_ZERO = "AbTestSubEnergyOnly0.db";
         /// <summary>対象:種別明細サブ</summary>
         protected AbSubEnergy form;
+
+        /// <summary>月表示用クラス</summary>
+        private class MSG
+        {
+            /// <summary>1月</summary>
+            public const string MONTH01 = "1月";
+            /// <summary>2月</summary>
+            public const string MONTH02 = "2月";
+            /// <summary>3月</summary>
+            public const string MONTH03 = "3月";
+            /// <summary>4月</summary>
+            public const string MONTH04 = "4月";
+            /// <summary>5月</summary>
+            public const string MONTH05 = "5月";
+            /// <summary>6月</summary>
+            public const string MONTH06 = "6月";
+            /// <summary>7月</summary>
+            public const string MONTH07 = "7月";
+            /// <summary>8月</summary>
+            public const string MONTH08 = "8月";
+            /// <summary>9月</summary>
+            public const string MONTH09 = "9月";
+            /// <summary>10月</summary>
+            public const string MONTH10 = "10月";
+            /// <summary>11月</summary>
+            public const string MONTH11 = "11月";
+            /// <summary>12月</summary>
+            public const string MONTH12 = "12月";
+        }
 
         /// <summary>
         /// Setup
@@ -227,6 +258,15 @@
                 sw.WriteLine(TT.ToCSV("2015-03-31", NAME.EL, TYPE.ENGY, "1506")); sw.WriteLine(TT.ToCSV("2015-03-31", NAME.GS, TYPE.ENGY, "5772")); sw.WriteLine(TT.ToCSV("2015-03-31", NAME.WT, TYPE.ENGY, "1751"));
                 sw.Close();
             }
+
+            using (StreamWriter sw = new StreamWriter(CSV_ONLY_ZERO, false, CSV.ENCODING))
+            {
+                sw.NewLine = CSV.LF;
+                sw.WriteLine(TT.ToCSV("2016-06-30", NAME.EL, TYPE.ENGY, "0"));
+                sw.WriteLine(TT.ToCSV("2016-06-30", NAME.GS, TYPE.ENGY, "0"));
+                sw.WriteLine(TT.ToCSV("2016-06-30", NAME.WT, TYPE.ENGY, "0"));
+                sw.Close();
+            }
         }
 
         /// <summary>
@@ -240,6 +280,7 @@
             if (File.Exists(CSV_ONLY_GS )) File.Delete(CSV_ONLY_GS);
             if (File.Exists(CSV_ONLY_WT )) File.Delete(CSV_ONLY_WT);
             if (File.Exists(CSV_ENERGIES)) File.Delete(CSV_ENERGIES);
+            if (File.Exists(CSV_ONLY_ZERO)) File.Delete(CSV_ONLY_ZERO);
         }
 
         /// <summary>
@@ -408,18 +449,18 @@
             var dgv = CtDgvEl();
             var row = dgv.Rows[0];
             Assert.AreEqual( 2015, row.Cells[ 0].Value);
-            Assert.AreEqual( 3300, row.Cells[ 1].Value, "4月");
-            Assert.AreEqual( 3700, row.Cells[ 2].Value, "5月");
-            Assert.AreEqual( null, row.Cells[ 3].Value, "6月");
-            Assert.AreEqual( 6300, row.Cells[ 4].Value, "7月");
-            Assert.AreEqual(12500, row.Cells[ 5].Value, "8月");
-            Assert.AreEqual( 2800, row.Cells[ 6].Value, "9月");
-            Assert.AreEqual( 2900, row.Cells[ 7].Value, "10月");
-            Assert.AreEqual( 3000, row.Cells[ 8].Value, "11月");
-            Assert.AreEqual( null, row.Cells[ 9].Value, "12月");
-            Assert.AreEqual( 2100, row.Cells[10].Value, "1月");
-            Assert.AreEqual( 2500, row.Cells[11].Value, "2月");
-            Assert.AreEqual( 2900, row.Cells[12].Value, "3月");
+            Assert.AreEqual( 3300, row.Cells[ 1].Value, MSG.MONTH04);
+            Assert.AreEqual( 3700, row.Cells[ 2].Value, MSG.MONTH05);
+            Assert.AreEqual( null, row.Cells[ 3].Value, MSG.MONTH06);
+            Assert.AreEqual( 6300, row.Cells[ 4].Value, MSG.MONTH07);
+            Assert.AreEqual(12500, row.Cells[ 5].Value, MSG.MONTH08);
+            Assert.AreEqual( 2800, row.Cells[ 6].Value, MSG.MONTH09);
+            Assert.AreEqual( 2900, row.Cells[ 7].Value, MSG.MONTH10);
+            Assert.AreEqual( 3000, row.Cells[ 8].Value, MSG.MONTH11);
+            Assert.AreEqual( null, row.Cells[ 9].Value, MSG.MONTH12);
+            Assert.AreEqual( 2100, row.Cells[10].Value, MSG.MONTH01);
+            Assert.AreEqual( 2500, row.Cells[11].Value, MSG.MONTH02);
+            Assert.AreEqual( 2900, row.Cells[12].Value, MSG.MONTH03);
         }
 
         /// <summary>
@@ -434,33 +475,33 @@
             var dgv = CtDgvGs();
             var row1 = dgv.Rows[0];
             Assert.AreEqual(2015, row1.Cells[ 0].Value);
-            Assert.AreEqual(2600, row1.Cells[ 1].Value, "4月");
-            Assert.AreEqual(2800, row1.Cells[ 2].Value, "5月");
-            Assert.AreEqual(3000, row1.Cells[ 3].Value, "6月");
-            Assert.AreEqual(3200, row1.Cells[ 4].Value, "7月");
-            Assert.AreEqual(3400, row1.Cells[ 5].Value, "8月");
-            Assert.AreEqual(3600, row1.Cells[ 6].Value, "9月");
-            Assert.AreEqual(3800, row1.Cells[ 7].Value, "10月");
-            Assert.AreEqual(4000, row1.Cells[ 8].Value, "11月");
-            Assert.AreEqual(4200, row1.Cells[ 9].Value, "12月");
-            Assert.AreEqual(4400, row1.Cells[10].Value, "1月");
-            Assert.AreEqual(4600, row1.Cells[11].Value, "2月");
-            Assert.AreEqual(4800, row1.Cells[12].Value, "3月");
+            Assert.AreEqual(2600, row1.Cells[ 1].Value, MSG.MONTH04);
+            Assert.AreEqual(2800, row1.Cells[ 2].Value, MSG.MONTH05);
+            Assert.AreEqual(3000, row1.Cells[ 3].Value, MSG.MONTH06);
+            Assert.AreEqual(3200, row1.Cells[ 4].Value, MSG.MONTH07);
+            Assert.AreEqual(3400, row1.Cells[ 5].Value, MSG.MONTH08);
+            Assert.AreEqual(3600, row1.Cells[ 6].Value, MSG.MONTH09);
+            Assert.AreEqual(3800, row1.Cells[ 7].Value, MSG.MONTH10);
+            Assert.AreEqual(4000, row1.Cells[ 8].Value, MSG.MONTH11);
+            Assert.AreEqual(4200, row1.Cells[ 9].Value, MSG.MONTH12);
+            Assert.AreEqual(4400, row1.Cells[10].Value, MSG.MONTH01);
+            Assert.AreEqual(4600, row1.Cells[11].Value, MSG.MONTH02);
+            Assert.AreEqual(4800, row1.Cells[12].Value, MSG.MONTH03);
 
             var row2 = dgv.Rows[1];
             Assert.AreEqual(2016, row2.Cells[ 0].Value);
-            Assert.AreEqual(5000, row2.Cells[ 1].Value, "4月");
-            Assert.AreEqual(5200, row2.Cells[ 2].Value, "5月");
-            Assert.AreEqual(5400, row2.Cells[ 3].Value, "6月");
-            Assert.AreEqual(5600, row2.Cells[ 4].Value, "7月");
-            Assert.AreEqual(5800, row2.Cells[ 5].Value, "8月");
-            Assert.AreEqual(6000, row2.Cells[ 6].Value, "9月");
-            Assert.AreEqual(6200, row2.Cells[ 7].Value, "10月");
-            Assert.AreEqual(6400, row2.Cells[ 8].Value, "11月");
-            Assert.AreEqual(6600, row2.Cells[ 9].Value, "12月");
-            Assert.AreEqual(2000, row2.Cells[10].Value, "1月");
-            Assert.AreEqual(2200, row2.Cells[11].Value, "2月");
-            Assert.AreEqual(2400, row2.Cells[12].Value, "3月");
+            Assert.AreEqual(5000, row2.Cells[ 1].Value, MSG.MONTH04);
+            Assert.AreEqual(5200, row2.Cells[ 2].Value, MSG.MONTH05);
+            Assert.AreEqual(5400, row2.Cells[ 3].Value, MSG.MONTH06);
+            Assert.AreEqual(5600, row2.Cells[ 4].Value, MSG.MONTH07);
+            Assert.AreEqual(5800, row2.Cells[ 5].Value, MSG.MONTH08);
+            Assert.AreEqual(6000, row2.Cells[ 6].Value, MSG.MONTH09);
+            Assert.AreEqual(6200, row2.Cells[ 7].Value, MSG.MONTH10);
+            Assert.AreEqual(6400, row2.Cells[ 8].Value, MSG.MONTH11);
+            Assert.AreEqual(6600, row2.Cells[ 9].Value, MSG.MONTH12);
+            Assert.AreEqual(2000, row2.Cells[10].Value, MSG.MONTH01);
+            Assert.AreEqual(2200, row2.Cells[11].Value, MSG.MONTH02);
+            Assert.AreEqual(2400, row2.Cells[12].Value, MSG.MONTH03);
         }
 
         /// <summary>
@@ -475,48 +516,48 @@
             var dgv = CtDgvWt();
             var row1 = dgv.Rows[0];
             Assert.AreEqual(2015, row1.Cells[ 0].Value);
-            Assert.AreEqual(1300, row1.Cells[ 1].Value, "4月");
-            Assert.AreEqual(1400, row1.Cells[ 2].Value, "5月");
-            Assert.AreEqual(1500, row1.Cells[ 3].Value, "6月");
-            Assert.AreEqual(1600, row1.Cells[ 4].Value, "7月");
-            Assert.AreEqual(1700, row1.Cells[ 5].Value, "8月");
-            Assert.AreEqual(1800, row1.Cells[ 6].Value, "9月");
-            Assert.AreEqual(1900, row1.Cells[ 7].Value, "10月");
-            Assert.AreEqual(2000, row1.Cells[ 8].Value, "11月");
-            Assert.AreEqual(2100, row1.Cells[ 9].Value, "12月");
-            Assert.AreEqual(1000, row1.Cells[10].Value, "1月");
-            Assert.AreEqual(1100, row1.Cells[11].Value, "2月");
-            Assert.AreEqual(1200, row1.Cells[12].Value, "3月");
+            Assert.AreEqual(1300, row1.Cells[ 1].Value, MSG.MONTH04);
+            Assert.AreEqual(1400, row1.Cells[ 2].Value, MSG.MONTH05);
+            Assert.AreEqual(1500, row1.Cells[ 3].Value, MSG.MONTH06);
+            Assert.AreEqual(1600, row1.Cells[ 4].Value, MSG.MONTH07);
+            Assert.AreEqual(1700, row1.Cells[ 5].Value, MSG.MONTH08);
+            Assert.AreEqual(1800, row1.Cells[ 6].Value, MSG.MONTH09);
+            Assert.AreEqual(1900, row1.Cells[ 7].Value, MSG.MONTH10);
+            Assert.AreEqual(2000, row1.Cells[ 8].Value, MSG.MONTH11);
+            Assert.AreEqual(2100, row1.Cells[ 9].Value, MSG.MONTH12);
+            Assert.AreEqual(1000, row1.Cells[10].Value, MSG.MONTH01);
+            Assert.AreEqual(1100, row1.Cells[11].Value, MSG.MONTH02);
+            Assert.AreEqual(1200, row1.Cells[12].Value, MSG.MONTH03);
 
             var row2 = dgv.Rows[1];
             Assert.AreEqual(2016, row2.Cells[ 0].Value);
-            Assert.AreEqual(null, row2.Cells[ 1].Value, "4月");
-            Assert.AreEqual(null, row2.Cells[ 2].Value, "5月");
-            Assert.AreEqual(null, row2.Cells[ 3].Value, "6月");
-            Assert.AreEqual(null, row2.Cells[ 4].Value, "7月");
-            Assert.AreEqual(null, row2.Cells[ 5].Value, "8月");
-            Assert.AreEqual(null, row2.Cells[ 6].Value, "9月");
-            Assert.AreEqual(null, row2.Cells[ 7].Value, "10月");
-            Assert.AreEqual(null, row2.Cells[ 8].Value, "11月");
-            Assert.AreEqual(null, row2.Cells[ 9].Value, "12月");
-            Assert.AreEqual(null, row2.Cells[10].Value, "1月");
-            Assert.AreEqual(null, row2.Cells[11].Value, "2月");
-            Assert.AreEqual(null, row2.Cells[12].Value, "3月");
+            Assert.AreEqual(null, row2.Cells[ 1].Value, MSG.MONTH04);
+            Assert.AreEqual(null, row2.Cells[ 2].Value, MSG.MONTH05);
+            Assert.AreEqual(null, row2.Cells[ 3].Value, MSG.MONTH06);
+            Assert.AreEqual(null, row2.Cells[ 4].Value, MSG.MONTH07);
+            Assert.AreEqual(null, row2.Cells[ 5].Value, MSG.MONTH08);
+            Assert.AreEqual(null, row2.Cells[ 6].Value, MSG.MONTH09);
+            Assert.AreEqual(null, row2.Cells[ 7].Value, MSG.MONTH10);
+            Assert.AreEqual(null, row2.Cells[ 8].Value, MSG.MONTH11);
+            Assert.AreEqual(null, row2.Cells[ 9].Value, MSG.MONTH12);
+            Assert.AreEqual(null, row2.Cells[10].Value, MSG.MONTH01);
+            Assert.AreEqual(null, row2.Cells[11].Value, MSG.MONTH02);
+            Assert.AreEqual(null, row2.Cells[12].Value, MSG.MONTH03);
 
             var row3 = dgv.Rows[2];
             Assert.AreEqual(2017, row3.Cells[ 0].Value);
-            Assert.AreEqual(2500, row3.Cells[ 1].Value, "4月");
-            Assert.AreEqual(2600, row3.Cells[ 2].Value, "5月");
-            Assert.AreEqual(2700, row3.Cells[ 3].Value, "6月");
-            Assert.AreEqual(2800, row3.Cells[ 4].Value, "7月");
-            Assert.AreEqual(2900, row3.Cells[ 5].Value, "8月");
-            Assert.AreEqual(3000, row3.Cells[ 6].Value, "9月");
-            Assert.AreEqual(3100, row3.Cells[ 7].Value, "10月");
-            Assert.AreEqual(3200, row3.Cells[ 8].Value, "11月");
-            Assert.AreEqual(3300, row3.Cells[ 9].Value, "12月");
-            Assert.AreEqual(2200, row3.Cells[10].Value, "1月");
-            Assert.AreEqual(2300, row3.Cells[11].Value, "2月");
-            Assert.AreEqual(2400, row3.Cells[12].Value, "3月");
+            Assert.AreEqual(2500, row3.Cells[ 1].Value, MSG.MONTH04);
+            Assert.AreEqual(2600, row3.Cells[ 2].Value, MSG.MONTH05);
+            Assert.AreEqual(2700, row3.Cells[ 3].Value, MSG.MONTH06);
+            Assert.AreEqual(2800, row3.Cells[ 4].Value, MSG.MONTH07);
+            Assert.AreEqual(2900, row3.Cells[ 5].Value, MSG.MONTH08);
+            Assert.AreEqual(3000, row3.Cells[ 6].Value, MSG.MONTH09);
+            Assert.AreEqual(3100, row3.Cells[ 7].Value, MSG.MONTH10);
+            Assert.AreEqual(3200, row3.Cells[ 8].Value, MSG.MONTH11);
+            Assert.AreEqual(3300, row3.Cells[ 9].Value, MSG.MONTH12);
+            Assert.AreEqual(2200, row3.Cells[10].Value, MSG.MONTH01);
+            Assert.AreEqual(2300, row3.Cells[11].Value, MSG.MONTH02);
+            Assert.AreEqual(2400, row3.Cells[12].Value, MSG.MONTH03);
         }
 
         /// <summary>
@@ -531,18 +572,18 @@
             var dgv = CtDgvEl();
             var row = dgv.Rows[dgv.Rows.Count - 1];
             Assert.AreEqual("ave", row.Cells[ 0].Value);
-            Assert.AreEqual( 3300, row.Cells[ 1].Value, "4月");
-            Assert.AreEqual( 3700, row.Cells[ 2].Value, "5月");
-            Assert.AreEqual( null, row.Cells[ 3].Value, "6月");
-            Assert.AreEqual( 6300, row.Cells[ 4].Value, "7月");
-            Assert.AreEqual(12500, row.Cells[ 5].Value, "8月");
-            Assert.AreEqual( 2800, row.Cells[ 6].Value, "9月");
-            Assert.AreEqual( 2900, row.Cells[ 7].Value, "10月");
-            Assert.AreEqual( 3000, row.Cells[ 8].Value, "11月");
-            Assert.AreEqual( null, row.Cells[ 9].Value, "12月");
-            Assert.AreEqual( 2100, row.Cells[10].Value, "1月");
-            Assert.AreEqual( 2500, row.Cells[11].Value, "2月");
-            Assert.AreEqual( 2900, row.Cells[12].Value, "3月");
+            Assert.AreEqual( 3300, row.Cells[ 1].Value, MSG.MONTH04);
+            Assert.AreEqual( 3700, row.Cells[ 2].Value, MSG.MONTH05);
+            Assert.AreEqual( null, row.Cells[ 3].Value, MSG.MONTH06);
+            Assert.AreEqual( 6300, row.Cells[ 4].Value, MSG.MONTH07);
+            Assert.AreEqual(12500, row.Cells[ 5].Value, MSG.MONTH08);
+            Assert.AreEqual( 2800, row.Cells[ 6].Value, MSG.MONTH09);
+            Assert.AreEqual( 2900, row.Cells[ 7].Value, MSG.MONTH10);
+            Assert.AreEqual( 3000, row.Cells[ 8].Value, MSG.MONTH11);
+            Assert.AreEqual( null, row.Cells[ 9].Value, MSG.MONTH12);
+            Assert.AreEqual( 2100, row.Cells[10].Value, MSG.MONTH01);
+            Assert.AreEqual( 2500, row.Cells[11].Value, MSG.MONTH02);
+            Assert.AreEqual( 2900, row.Cells[12].Value, MSG.MONTH03);
         }
 
         /// <summary>
@@ -557,18 +598,18 @@
             var dgv = CtDgvGs();
             var row = dgv.Rows[dgv.Rows.Count - 1];
             Assert.AreEqual("ave", row.Cells[ 0].Value);
-            Assert.AreEqual( 3800, row.Cells[ 1].Value, "4月");
-            Assert.AreEqual( 4000, row.Cells[ 2].Value, "5月");
-            Assert.AreEqual( 4200, row.Cells[ 3].Value, "6月");
-            Assert.AreEqual( 4400, row.Cells[ 4].Value, "7月");
-            Assert.AreEqual( 4600, row.Cells[ 5].Value, "8月");
-            Assert.AreEqual( 4800, row.Cells[ 6].Value, "9月");
-            Assert.AreEqual( 5000, row.Cells[ 7].Value, "10月");
-            Assert.AreEqual( 5200, row.Cells[ 8].Value, "11月");
-            Assert.AreEqual( 5400, row.Cells[ 9].Value, "12月");
-            Assert.AreEqual( 3200, row.Cells[10].Value, "1月");
-            Assert.AreEqual( 3400, row.Cells[11].Value, "2月");
-            Assert.AreEqual( 3600, row.Cells[12].Value, "3月");
+            Assert.AreEqual( 3800, row.Cells[ 1].Value, MSG.MONTH04);
+            Assert.AreEqual( 4000, row.Cells[ 2].Value, MSG.MONTH05);
+            Assert.AreEqual( 4200, row.Cells[ 3].Value, MSG.MONTH06);
+            Assert.AreEqual( 4400, row.Cells[ 4].Value, MSG.MONTH07);
+            Assert.AreEqual( 4600, row.Cells[ 5].Value, MSG.MONTH08);
+            Assert.AreEqual( 4800, row.Cells[ 6].Value, MSG.MONTH09);
+            Assert.AreEqual( 5000, row.Cells[ 7].Value, MSG.MONTH10);
+            Assert.AreEqual( 5200, row.Cells[ 8].Value, MSG.MONTH11);
+            Assert.AreEqual( 5400, row.Cells[ 9].Value, MSG.MONTH12);
+            Assert.AreEqual( 3200, row.Cells[10].Value, MSG.MONTH01);
+            Assert.AreEqual( 3400, row.Cells[11].Value, MSG.MONTH02);
+            Assert.AreEqual( 3600, row.Cells[12].Value, MSG.MONTH03);
         }
 
         /// <summary>
@@ -583,18 +624,18 @@
             var dgv = CtDgvWt();
             var row = dgv.Rows[dgv.Rows.Count - 1];
             Assert.AreEqual("ave", row.Cells[ 0].Value);
-            Assert.AreEqual( 1900, row.Cells[ 1].Value, "4月");
-            Assert.AreEqual( 2000, row.Cells[ 2].Value, "5月");
-            Assert.AreEqual( 2100, row.Cells[ 3].Value, "6月");
-            Assert.AreEqual( 2200, row.Cells[ 4].Value, "7月");
-            Assert.AreEqual( 2300, row.Cells[ 5].Value, "8月");
-            Assert.AreEqual( 2400, row.Cells[ 6].Value, "9月");
-            Assert.AreEqual( 2500, row.Cells[ 7].Value, "10月");
-            Assert.AreEqual( 2600, row.Cells[ 8].Value, "11月");
-            Assert.AreEqual( 2700, row.Cells[ 9].Value, "12月");
-            Assert.AreEqual( 1600, row.Cells[10].Value, "1月");
-            Assert.AreEqual( 1700, row.Cells[11].Value, "2月");
-            Assert.AreEqual( 1800, row.Cells[12].Value, "3月");
+            Assert.AreEqual( 1900, row.Cells[ 1].Value, MSG.MONTH04);
+            Assert.AreEqual( 2000, row.Cells[ 2].Value, MSG.MONTH05);
+            Assert.AreEqual( 2100, row.Cells[ 3].Value, MSG.MONTH06);
+            Assert.AreEqual( 2200, row.Cells[ 4].Value, MSG.MONTH07);
+            Assert.AreEqual( 2300, row.Cells[ 5].Value, MSG.MONTH08);
+            Assert.AreEqual( 2400, row.Cells[ 6].Value, MSG.MONTH09);
+            Assert.AreEqual( 2500, row.Cells[ 7].Value, MSG.MONTH10);
+            Assert.AreEqual( 2600, row.Cells[ 8].Value, MSG.MONTH11);
+            Assert.AreEqual( 2700, row.Cells[ 9].Value, MSG.MONTH12);
+            Assert.AreEqual( 1600, row.Cells[10].Value, MSG.MONTH01);
+            Assert.AreEqual( 1700, row.Cells[11].Value, MSG.MONTH02);
+            Assert.AreEqual( 1800, row.Cells[12].Value, MSG.MONTH03);
         }
 
         /// <summary>
@@ -609,18 +650,18 @@
             var dgv = CtDgvEl();
             var row = dgv.Rows[0];
             Assert.AreEqual(2009, row.Cells[ 0].Value);
-            Assert.AreEqual(1804, row.Cells[ 1].Value, "4月");
-            Assert.AreEqual(1359, row.Cells[ 2].Value, "5月");
-            Assert.AreEqual(1550, row.Cells[ 3].Value, "6月");
-            Assert.AreEqual(3780, row.Cells[ 4].Value, "7月");
-            Assert.AreEqual(3853, row.Cells[ 5].Value, "8月");
-            Assert.AreEqual(3143, row.Cells[ 6].Value, "9月");
-            Assert.AreEqual(1416, row.Cells[ 7].Value, "10月");
-            Assert.AreEqual(1250, row.Cells[ 8].Value, "11月");
-            Assert.AreEqual( 501, row.Cells[ 9].Value, "12月");
-            Assert.AreEqual( 708, row.Cells[10].Value, "1月");
-            Assert.AreEqual( 690, row.Cells[11].Value, "2月");
-            Assert.AreEqual(1673, row.Cells[12].Value, "3月");
+            Assert.AreEqual(1804, row.Cells[ 1].Value, MSG.MONTH04);
+            Assert.AreEqual(1359, row.Cells[ 2].Value, MSG.MONTH05);
+            Assert.AreEqual(1550, row.Cells[ 3].Value, MSG.MONTH06);
+            Assert.AreEqual(3780, row.Cells[ 4].Value, MSG.MONTH07);
+            Assert.AreEqual(3853, row.Cells[ 5].Value, MSG.MONTH08);
+            Assert.AreEqual(3143, row.Cells[ 6].Value, MSG.MONTH09);
+            Assert.AreEqual(1416, row.Cells[ 7].Value, MSG.MONTH10);
+            Assert.AreEqual(1250, row.Cells[ 8].Value, MSG.MONTH11);
+            Assert.AreEqual( 501, row.Cells[ 9].Value, MSG.MONTH12);
+            Assert.AreEqual( 708, row.Cells[10].Value, MSG.MONTH01);
+            Assert.AreEqual( 690, row.Cells[11].Value, MSG.MONTH02);
+            Assert.AreEqual(1673, row.Cells[12].Value, MSG.MONTH03);
         }
 
         /// <summary>
@@ -635,18 +676,18 @@
             var dgv = CtDgvEl();
             var row = dgv.Rows[1];
             Assert.AreEqual(2010, row.Cells[ 0].Value);
-            Assert.AreEqual(1926, row.Cells[ 1].Value, "4月");
-            Assert.AreEqual(1321, row.Cells[ 2].Value, "5月");
-            Assert.AreEqual(1475, row.Cells[ 3].Value, "6月");
-            Assert.AreEqual(2045, row.Cells[ 4].Value, "7月");
-            Assert.AreEqual(3147, row.Cells[ 5].Value, "8月");
-            Assert.AreEqual(2918, row.Cells[ 6].Value, "9月");
-            Assert.AreEqual(1306, row.Cells[ 7].Value, "10月");
-            Assert.AreEqual(1791, row.Cells[ 8].Value, "11月");
-            Assert.AreEqual(1573, row.Cells[ 9].Value, "12月");
-            Assert.AreEqual(1675, row.Cells[10].Value, "1月");
-            Assert.AreEqual(1783, row.Cells[11].Value, "2月");
-            Assert.AreEqual(1357, row.Cells[12].Value, "3月");
+            Assert.AreEqual(1926, row.Cells[ 1].Value, MSG.MONTH04);
+            Assert.AreEqual(1321, row.Cells[ 2].Value, MSG.MONTH05);
+            Assert.AreEqual(1475, row.Cells[ 3].Value, MSG.MONTH06);
+            Assert.AreEqual(2045, row.Cells[ 4].Value, MSG.MONTH07);
+            Assert.AreEqual(3147, row.Cells[ 5].Value, MSG.MONTH08);
+            Assert.AreEqual(2918, row.Cells[ 6].Value, MSG.MONTH09);
+            Assert.AreEqual(1306, row.Cells[ 7].Value, MSG.MONTH10);
+            Assert.AreEqual(1791, row.Cells[ 8].Value, MSG.MONTH11);
+            Assert.AreEqual(1573, row.Cells[ 9].Value, MSG.MONTH12);
+            Assert.AreEqual(1675, row.Cells[10].Value, MSG.MONTH01);
+            Assert.AreEqual(1783, row.Cells[11].Value, MSG.MONTH02);
+            Assert.AreEqual(1357, row.Cells[12].Value, MSG.MONTH03);
         }
 
         /// <summary>
@@ -661,18 +702,18 @@
             var dgv = CtDgvEl();
             var row = dgv.Rows[2];
             Assert.AreEqual(2011, row.Cells[ 0].Value);
-            Assert.AreEqual(1426, row.Cells[ 1].Value, "4月");
-            Assert.AreEqual(1174, row.Cells[ 2].Value, "5月");
-            Assert.AreEqual(1266, row.Cells[ 3].Value, "6月");
-            Assert.AreEqual(2010, row.Cells[ 4].Value, "7月");
-            Assert.AreEqual(2257, row.Cells[ 5].Value, "8月");
-            Assert.AreEqual(1998, row.Cells[ 6].Value, "9月");
-            Assert.AreEqual(1164, row.Cells[ 7].Value, "10月");
-            Assert.AreEqual(1369, row.Cells[ 8].Value, "11月");
-            Assert.AreEqual(1632, row.Cells[ 9].Value, "12月");
-            Assert.AreEqual(1805, row.Cells[10].Value, "1月");
-            Assert.AreEqual(1745, row.Cells[11].Value, "2月");
-            Assert.AreEqual(1567, row.Cells[12].Value, "3月");
+            Assert.AreEqual(1426, row.Cells[ 1].Value, MSG.MONTH04);
+            Assert.AreEqual(1174, row.Cells[ 2].Value, MSG.MONTH05);
+            Assert.AreEqual(1266, row.Cells[ 3].Value, MSG.MONTH06);
+            Assert.AreEqual(2010, row.Cells[ 4].Value, MSG.MONTH07);
+            Assert.AreEqual(2257, row.Cells[ 5].Value, MSG.MONTH08);
+            Assert.AreEqual(1998, row.Cells[ 6].Value, MSG.MONTH09);
+            Assert.AreEqual(1164, row.Cells[ 7].Value, MSG.MONTH10);
+            Assert.AreEqual(1369, row.Cells[ 8].Value, MSG.MONTH11);
+            Assert.AreEqual(1632, row.Cells[ 9].Value, MSG.MONTH12);
+            Assert.AreEqual(1805, row.Cells[10].Value, MSG.MONTH01);
+            Assert.AreEqual(1745, row.Cells[11].Value, MSG.MONTH02);
+            Assert.AreEqual(1567, row.Cells[12].Value, MSG.MONTH03);
         }
 
         /// <summary>
@@ -687,18 +728,18 @@
             var dgv = CtDgvEl();
             var row = dgv.Rows[3];
             Assert.AreEqual(2012, row.Cells[ 0].Value);
-            Assert.AreEqual(1577, row.Cells[ 1].Value, "4月");
-            Assert.AreEqual(1231, row.Cells[ 2].Value, "5月");
-            Assert.AreEqual(1342, row.Cells[ 3].Value, "6月");
-            Assert.AreEqual(2267, row.Cells[ 4].Value, "7月");
-            Assert.AreEqual(2659, row.Cells[ 5].Value, "8月");
-            Assert.AreEqual(2533, row.Cells[ 6].Value, "9月");
-            Assert.AreEqual(1374, row.Cells[ 7].Value, "10月");
-            Assert.AreEqual(1298, row.Cells[ 8].Value, "11月");
-            Assert.AreEqual(1636, row.Cells[ 9].Value, "12月");
-            Assert.AreEqual(2296, row.Cells[10].Value, "1月");
-            Assert.AreEqual(2071, row.Cells[11].Value, "2月");
-            Assert.AreEqual(1588, row.Cells[12].Value, "3月");
+            Assert.AreEqual(1577, row.Cells[ 1].Value, MSG.MONTH04);
+            Assert.AreEqual(1231, row.Cells[ 2].Value, MSG.MONTH05);
+            Assert.AreEqual(1342, row.Cells[ 3].Value, MSG.MONTH06);
+            Assert.AreEqual(2267, row.Cells[ 4].Value, MSG.MONTH07);
+            Assert.AreEqual(2659, row.Cells[ 5].Value, MSG.MONTH08);
+            Assert.AreEqual(2533, row.Cells[ 6].Value, MSG.MONTH09);
+            Assert.AreEqual(1374, row.Cells[ 7].Value, MSG.MONTH10);
+            Assert.AreEqual(1298, row.Cells[ 8].Value, MSG.MONTH11);
+            Assert.AreEqual(1636, row.Cells[ 9].Value, MSG.MONTH12);
+            Assert.AreEqual(2296, row.Cells[10].Value, MSG.MONTH01);
+            Assert.AreEqual(2071, row.Cells[11].Value, MSG.MONTH02);
+            Assert.AreEqual(1588, row.Cells[12].Value, MSG.MONTH03);
         }
 
         /// <summary>
@@ -713,18 +754,18 @@
             var dgv = CtDgvEl();
             var row = dgv.Rows[4];
             Assert.AreEqual(2013, row.Cells[ 0].Value);
-            Assert.AreEqual(1443, row.Cells[ 1].Value, "4月");
-            Assert.AreEqual(1603, row.Cells[ 2].Value, "5月");
-            Assert.AreEqual(1651, row.Cells[ 3].Value, "6月");
-            Assert.AreEqual(2485, row.Cells[ 4].Value, "7月");
-            Assert.AreEqual(3455, row.Cells[ 5].Value, "8月");
-            Assert.AreEqual(1892, row.Cells[ 6].Value, "9月");
-            Assert.AreEqual(2016, row.Cells[ 7].Value, "10月");
-            Assert.AreEqual(1449, row.Cells[ 8].Value, "11月");
-            Assert.AreEqual(1701, row.Cells[ 9].Value, "12月");
-            Assert.AreEqual(1760, row.Cells[10].Value, "1月");
-            Assert.AreEqual(1743, row.Cells[11].Value, "2月");
-            Assert.AreEqual(1624, row.Cells[12].Value, "3月");
+            Assert.AreEqual(1443, row.Cells[ 1].Value, MSG.MONTH04);
+            Assert.AreEqual(1603, row.Cells[ 2].Value, MSG.MONTH05);
+            Assert.AreEqual(1651, row.Cells[ 3].Value, MSG.MONTH06);
+            Assert.AreEqual(2485, row.Cells[ 4].Value, MSG.MONTH07);
+            Assert.AreEqual(3455, row.Cells[ 5].Value, MSG.MONTH08);
+            Assert.AreEqual(1892, row.Cells[ 6].Value, MSG.MONTH09);
+            Assert.AreEqual(2016, row.Cells[ 7].Value, MSG.MONTH10);
+            Assert.AreEqual(1449, row.Cells[ 8].Value, MSG.MONTH11);
+            Assert.AreEqual(1701, row.Cells[ 9].Value, MSG.MONTH12);
+            Assert.AreEqual(1760, row.Cells[10].Value, MSG.MONTH01);
+            Assert.AreEqual(1743, row.Cells[11].Value, MSG.MONTH02);
+            Assert.AreEqual(1624, row.Cells[12].Value, MSG.MONTH03);
         }
 
         /// <summary>
@@ -739,18 +780,18 @@
             var dgv = CtDgvEl();
             var row = dgv.Rows[5];
             Assert.AreEqual(2014, row.Cells[ 0].Value);
-            Assert.AreEqual(1729, row.Cells[ 1].Value, "4月");
-            Assert.AreEqual(1412, row.Cells[ 2].Value, "5月");
-            Assert.AreEqual(1517, row.Cells[ 3].Value, "6月");
-            Assert.AreEqual(2350, row.Cells[ 4].Value, "7月");
-            Assert.AreEqual(2294, row.Cells[ 5].Value, "8月");
-            Assert.AreEqual(2304, row.Cells[ 6].Value, "9月");
-            Assert.AreEqual(1433, row.Cells[ 7].Value, "10月");
-            Assert.AreEqual(1477, row.Cells[ 8].Value, "11月");
-            Assert.AreEqual(1498, row.Cells[ 9].Value, "12月");
-            Assert.AreEqual(1860, row.Cells[10].Value, "1月");
-            Assert.AreEqual(1413, row.Cells[11].Value, "2月");
-            Assert.AreEqual(1506, row.Cells[12].Value, "3月");
+            Assert.AreEqual(1729, row.Cells[ 1].Value, MSG.MONTH04);
+            Assert.AreEqual(1412, row.Cells[ 2].Value, MSG.MONTH05);
+            Assert.AreEqual(1517, row.Cells[ 3].Value, MSG.MONTH06);
+            Assert.AreEqual(2350, row.Cells[ 4].Value, MSG.MONTH07);
+            Assert.AreEqual(2294, row.Cells[ 5].Value, MSG.MONTH08);
+            Assert.AreEqual(2304, row.Cells[ 6].Value, MSG.MONTH09);
+            Assert.AreEqual(1433, row.Cells[ 7].Value, MSG.MONTH10);
+            Assert.AreEqual(1477, row.Cells[ 8].Value, MSG.MONTH11);
+            Assert.AreEqual(1498, row.Cells[ 9].Value, MSG.MONTH12);
+            Assert.AreEqual(1860, row.Cells[10].Value, MSG.MONTH01);
+            Assert.AreEqual(1413, row.Cells[11].Value, MSG.MONTH02);
+            Assert.AreEqual(1506, row.Cells[12].Value, MSG.MONTH03);
         }
 
         /// <summary>
@@ -765,18 +806,18 @@
             var dgv = CtDgvEl();
             var row = dgv.Rows[dgv.Rows.Count - 1];
             Assert.AreEqual("ave", row.Cells[ 0].Value);
-            Assert.AreEqual( 1651, row.Cells[ 1].Value, "4月");
-            Assert.AreEqual( 1350, row.Cells[ 2].Value, "5月");
-            Assert.AreEqual( 1467, row.Cells[ 3].Value, "6月");
-            Assert.AreEqual( 2490, row.Cells[ 4].Value, "7月");
-            Assert.AreEqual( 2944, row.Cells[ 5].Value, "8月");
-            Assert.AreEqual( 2465, row.Cells[ 6].Value, "9月");
-            Assert.AreEqual( 1452, row.Cells[ 7].Value, "10月");
-            Assert.AreEqual( 1439, row.Cells[ 8].Value, "11月");
-            Assert.AreEqual( 1424, row.Cells[ 9].Value, "12月");
-            Assert.AreEqual( 1684, row.Cells[10].Value, "1月");
-            Assert.AreEqual( 1574, row.Cells[11].Value, "2月");
-            Assert.AreEqual( 1553, row.Cells[12].Value, "3月");
+            Assert.AreEqual( 1651, row.Cells[ 1].Value, MSG.MONTH04);
+            Assert.AreEqual( 1350, row.Cells[ 2].Value, MSG.MONTH05);
+            Assert.AreEqual( 1467, row.Cells[ 3].Value, MSG.MONTH06);
+            Assert.AreEqual( 2490, row.Cells[ 4].Value, MSG.MONTH07);
+            Assert.AreEqual( 2944, row.Cells[ 5].Value, MSG.MONTH08);
+            Assert.AreEqual( 2465, row.Cells[ 6].Value, MSG.MONTH09);
+            Assert.AreEqual( 1452, row.Cells[ 7].Value, MSG.MONTH10);
+            Assert.AreEqual( 1439, row.Cells[ 8].Value, MSG.MONTH11);
+            Assert.AreEqual( 1424, row.Cells[ 9].Value, MSG.MONTH12);
+            Assert.AreEqual( 1684, row.Cells[10].Value, MSG.MONTH01);
+            Assert.AreEqual( 1574, row.Cells[11].Value, MSG.MONTH02);
+            Assert.AreEqual( 1553, row.Cells[12].Value, MSG.MONTH03);
         }
 
         /// <summary>
@@ -791,18 +832,18 @@
             var dgv = CtDgvGs();
             var row = dgv.Rows[0];
             Assert.AreEqual(2009, row.Cells[ 0].Value);
-            Assert.AreEqual(5422, row.Cells[ 1].Value, "4月");
-            Assert.AreEqual(4462, row.Cells[ 2].Value, "5月");
-            Assert.AreEqual(4659, row.Cells[ 3].Value, "6月");
-            Assert.AreEqual(4363, row.Cells[ 4].Value, "7月");
-            Assert.AreEqual(3969, row.Cells[ 5].Value, "8月");
-            Assert.AreEqual(3771, row.Cells[ 6].Value, "9月");
-            Assert.AreEqual(3820, row.Cells[ 7].Value, "10月");
-            Assert.AreEqual(4857, row.Cells[ 8].Value, "11月");
-            Assert.AreEqual(1995, row.Cells[ 9].Value, "12月");
-            Assert.AreEqual(3031, row.Cells[10].Value, "1月");
-            Assert.AreEqual(3574, row.Cells[11].Value, "2月");
-            Assert.AreEqual(6574, row.Cells[12].Value, "3月");
+            Assert.AreEqual(5422, row.Cells[ 1].Value, MSG.MONTH04);
+            Assert.AreEqual(4462, row.Cells[ 2].Value, MSG.MONTH05);
+            Assert.AreEqual(4659, row.Cells[ 3].Value, MSG.MONTH06);
+            Assert.AreEqual(4363, row.Cells[ 4].Value, MSG.MONTH07);
+            Assert.AreEqual(3969, row.Cells[ 5].Value, MSG.MONTH08);
+            Assert.AreEqual(3771, row.Cells[ 6].Value, MSG.MONTH09);
+            Assert.AreEqual(3820, row.Cells[ 7].Value, MSG.MONTH10);
+            Assert.AreEqual(4857, row.Cells[ 8].Value, MSG.MONTH11);
+            Assert.AreEqual(1995, row.Cells[ 9].Value, MSG.MONTH12);
+            Assert.AreEqual(3031, row.Cells[10].Value, MSG.MONTH01);
+            Assert.AreEqual(3574, row.Cells[11].Value, MSG.MONTH02);
+            Assert.AreEqual(6574, row.Cells[12].Value, MSG.MONTH03);
         }
 
         /// <summary>
@@ -817,18 +858,18 @@
             var dgv = CtDgvGs();
             var row = dgv.Rows[1];
             Assert.AreEqual(2010, row.Cells[ 0].Value);
-            Assert.AreEqual(6213, row.Cells[ 1].Value, "4月");
-            Assert.AreEqual(4413, row.Cells[ 2].Value, "5月");
-            Assert.AreEqual(4464, row.Cells[ 3].Value, "6月");
-            Assert.AreEqual(4310, row.Cells[ 4].Value, "7月");
-            Assert.AreEqual(3847, row.Cells[ 5].Value, "8月");
-            Assert.AreEqual(3538, row.Cells[ 6].Value, "9月");
-            Assert.AreEqual(3898, row.Cells[ 7].Value, "10月");
-            Assert.AreEqual(5390, row.Cells[ 8].Value, "11月");
-            Assert.AreEqual(5647, row.Cells[ 9].Value, "12月");
-            Assert.AreEqual(5596, row.Cells[10].Value, "1月");
-            Assert.AreEqual(5596, row.Cells[11].Value, "2月");
-            Assert.AreEqual(5339, row.Cells[12].Value, "3月");
+            Assert.AreEqual(6213, row.Cells[ 1].Value, MSG.MONTH04);
+            Assert.AreEqual(4413, row.Cells[ 2].Value, MSG.MONTH05);
+            Assert.AreEqual(4464, row.Cells[ 3].Value, MSG.MONTH06);
+            Assert.AreEqual(4310, row.Cells[ 4].Value, MSG.MONTH07);
+            Assert.AreEqual(3847, row.Cells[ 5].Value, MSG.MONTH08);
+            Assert.AreEqual(3538, row.Cells[ 6].Value, MSG.MONTH09);
+            Assert.AreEqual(3898, row.Cells[ 7].Value, MSG.MONTH10);
+            Assert.AreEqual(5390, row.Cells[ 8].Value, MSG.MONTH11);
+            Assert.AreEqual(5647, row.Cells[ 9].Value, MSG.MONTH12);
+            Assert.AreEqual(5596, row.Cells[10].Value, MSG.MONTH01);
+            Assert.AreEqual(5596, row.Cells[11].Value, MSG.MONTH02);
+            Assert.AreEqual(5339, row.Cells[12].Value, MSG.MONTH03);
         }
 
         /// <summary>
@@ -843,18 +884,18 @@
             var dgv = CtDgvGs();
             var row = dgv.Rows[2];
             Assert.AreEqual(2011, row.Cells[ 0].Value);
-            Assert.AreEqual(5339, row.Cells[ 1].Value, "4月");
-            Assert.AreEqual(4207, row.Cells[ 2].Value, "5月");
-            Assert.AreEqual(4824, row.Cells[ 3].Value, "6月");
-            Assert.AreEqual(4001, row.Cells[ 4].Value, "7月");
-            Assert.AreEqual(3538, row.Cells[ 5].Value, "8月");
-            Assert.AreEqual(3692, row.Cells[ 6].Value, "9月");
-            Assert.AreEqual(4053, row.Cells[ 7].Value, "10月");
-            Assert.AreEqual(4876, row.Cells[ 8].Value, "11月");
-            Assert.AreEqual(4979, row.Cells[ 9].Value, "12月");
-            Assert.AreEqual(5133, row.Cells[10].Value, "1月");
-            Assert.AreEqual(5339, row.Cells[11].Value, "2月");
-            Assert.AreEqual(5184, row.Cells[12].Value, "3月");
+            Assert.AreEqual(5339, row.Cells[ 1].Value, MSG.MONTH04);
+            Assert.AreEqual(4207, row.Cells[ 2].Value, MSG.MONTH05);
+            Assert.AreEqual(4824, row.Cells[ 3].Value, MSG.MONTH06);
+            Assert.AreEqual(4001, row.Cells[ 4].Value, MSG.MONTH07);
+            Assert.AreEqual(3538, row.Cells[ 5].Value, MSG.MONTH08);
+            Assert.AreEqual(3692, row.Cells[ 6].Value, MSG.MONTH09);
+            Assert.AreEqual(4053, row.Cells[ 7].Value, MSG.MONTH10);
+            Assert.AreEqual(4876, row.Cells[ 8].Value, MSG.MONTH11);
+            Assert.AreEqual(4979, row.Cells[ 9].Value, MSG.MONTH12);
+            Assert.AreEqual(5133, row.Cells[10].Value, MSG.MONTH01);
+            Assert.AreEqual(5339, row.Cells[11].Value, MSG.MONTH02);
+            Assert.AreEqual(5184, row.Cells[12].Value, MSG.MONTH03);
         }
 
         /// <summary>
@@ -869,18 +910,18 @@
             var dgv = CtDgvGs();
             var row = dgv.Rows[3];
             Assert.AreEqual(2012, row.Cells[ 0].Value);
-            Assert.AreEqual(5544, row.Cells[ 1].Value, "4月");
-            Assert.AreEqual(4506, row.Cells[ 2].Value, "5月");
-            Assert.AreEqual(4342, row.Cells[ 3].Value, "6月");
-            Assert.AreEqual(3937, row.Cells[ 4].Value, "7月");
-            Assert.AreEqual(3435, row.Cells[ 5].Value, "8月");
-            Assert.AreEqual(3538, row.Cells[ 6].Value, "9月");
-            Assert.AreEqual(4104, row.Cells[ 7].Value, "10月");
-            Assert.AreEqual(5184, row.Cells[ 8].Value, "11月");
-            Assert.AreEqual(5380, row.Cells[ 9].Value, "12月");
-            Assert.AreEqual(5380, row.Cells[10].Value, "1月");
-            Assert.AreEqual(5871, row.Cells[11].Value, "2月");
-            Assert.AreEqual(5544, row.Cells[12].Value, "3月");
+            Assert.AreEqual(5544, row.Cells[ 1].Value, MSG.MONTH04);
+            Assert.AreEqual(4506, row.Cells[ 2].Value, MSG.MONTH05);
+            Assert.AreEqual(4342, row.Cells[ 3].Value, MSG.MONTH06);
+            Assert.AreEqual(3937, row.Cells[ 4].Value, MSG.MONTH07);
+            Assert.AreEqual(3435, row.Cells[ 5].Value, MSG.MONTH08);
+            Assert.AreEqual(3538, row.Cells[ 6].Value, MSG.MONTH09);
+            Assert.AreEqual(4104, row.Cells[ 7].Value, MSG.MONTH10);
+            Assert.AreEqual(5184, row.Cells[ 8].Value, MSG.MONTH11);
+            Assert.AreEqual(5380, row.Cells[ 9].Value, MSG.MONTH12);
+            Assert.AreEqual(5380, row.Cells[10].Value, MSG.MONTH01);
+            Assert.AreEqual(5871, row.Cells[11].Value, MSG.MONTH02);
+            Assert.AreEqual(5544, row.Cells[12].Value, MSG.MONTH03);
         }
 
         /// <summary>
@@ -895,18 +936,18 @@
             var dgv = CtDgvGs();
             var row = dgv.Rows[4];
             Assert.AreEqual(2013, row.Cells[ 0].Value);
-            Assert.AreEqual(5325, row.Cells[ 1].Value, "4月");
-            Assert.AreEqual(4725, row.Cells[ 2].Value, "5月");
-            Assert.AreEqual(3633, row.Cells[ 3].Value, "6月");
-            Assert.AreEqual(3687, row.Cells[ 4].Value, "7月");
-            Assert.AreEqual(3523, row.Cells[ 5].Value, "8月");
-            Assert.AreEqual(3523, row.Cells[ 6].Value, "9月");
-            Assert.AreEqual(3906, row.Cells[ 7].Value, "10月");
-            Assert.AreEqual(4452, row.Cells[ 8].Value, "11月");
-            Assert.AreEqual(4943, row.Cells[ 9].Value, "12月");
-            Assert.AreEqual(5287, row.Cells[10].Value, "1月");
-            Assert.AreEqual(5758, row.Cells[11].Value, "2月");
-            Assert.AreEqual(5287, row.Cells[12].Value, "3月");
+            Assert.AreEqual(5325, row.Cells[ 1].Value, MSG.MONTH04);
+            Assert.AreEqual(4725, row.Cells[ 2].Value, MSG.MONTH05);
+            Assert.AreEqual(3633, row.Cells[ 3].Value, MSG.MONTH06);
+            Assert.AreEqual(3687, row.Cells[ 4].Value, MSG.MONTH07);
+            Assert.AreEqual(3523, row.Cells[ 5].Value, MSG.MONTH08);
+            Assert.AreEqual(3523, row.Cells[ 6].Value, MSG.MONTH09);
+            Assert.AreEqual(3906, row.Cells[ 7].Value, MSG.MONTH10);
+            Assert.AreEqual(4452, row.Cells[ 8].Value, MSG.MONTH11);
+            Assert.AreEqual(4943, row.Cells[ 9].Value, MSG.MONTH12);
+            Assert.AreEqual(5287, row.Cells[10].Value, MSG.MONTH01);
+            Assert.AreEqual(5758, row.Cells[11].Value, MSG.MONTH02);
+            Assert.AreEqual(5287, row.Cells[12].Value, MSG.MONTH03);
         }
 
         /// <summary>
@@ -921,18 +962,18 @@
             var dgv = CtDgvGs();
             var row = dgv.Rows[5];
             Assert.AreEqual(2014, row.Cells[ 0].Value);
-            Assert.AreEqual(5405, row.Cells[ 1].Value, "4月");
-            Assert.AreEqual(4713, row.Cells[ 2].Value, "5月");
-            Assert.AreEqual(4501, row.Cells[ 3].Value, "6月");
-            Assert.AreEqual(4209, row.Cells[ 4].Value, "7月");
-            Assert.AreEqual(3801, row.Cells[ 5].Value, "8月");
-            Assert.AreEqual(4326, row.Cells[ 6].Value, "9月");
-            Assert.AreEqual(4501, row.Cells[ 7].Value, "10月");
-            Assert.AreEqual(5026, row.Cells[ 8].Value, "11月");
-            Assert.AreEqual(5492, row.Cells[ 9].Value, "12月");
-            Assert.AreEqual(5551, row.Cells[10].Value, "1月");
-            Assert.AreEqual(6116, row.Cells[11].Value, "2月");
-            Assert.AreEqual(5772, row.Cells[12].Value, "3月");
+            Assert.AreEqual(5405, row.Cells[ 1].Value, MSG.MONTH04);
+            Assert.AreEqual(4713, row.Cells[ 2].Value, MSG.MONTH05);
+            Assert.AreEqual(4501, row.Cells[ 3].Value, MSG.MONTH06);
+            Assert.AreEqual(4209, row.Cells[ 4].Value, MSG.MONTH07);
+            Assert.AreEqual(3801, row.Cells[ 5].Value, MSG.MONTH08);
+            Assert.AreEqual(4326, row.Cells[ 6].Value, MSG.MONTH09);
+            Assert.AreEqual(4501, row.Cells[ 7].Value, MSG.MONTH10);
+            Assert.AreEqual(5026, row.Cells[ 8].Value, MSG.MONTH11);
+            Assert.AreEqual(5492, row.Cells[ 9].Value, MSG.MONTH12);
+            Assert.AreEqual(5551, row.Cells[10].Value, MSG.MONTH01);
+            Assert.AreEqual(6116, row.Cells[11].Value, MSG.MONTH02);
+            Assert.AreEqual(5772, row.Cells[12].Value, MSG.MONTH03);
         }
 
         /// <summary>
@@ -947,18 +988,18 @@
             var dgv = CtDgvGs();
             var row = dgv.Rows[dgv.Rows.Count - 1];
             Assert.AreEqual("ave", row.Cells[ 0].Value);
-            Assert.AreEqual( 5541, row.Cells[ 1].Value, "4月");
-            Assert.AreEqual( 4504, row.Cells[ 2].Value, "5月");
-            Assert.AreEqual( 4404, row.Cells[ 3].Value, "6月");
-            Assert.AreEqual( 4085, row.Cells[ 4].Value, "7月");
-            Assert.AreEqual( 3686, row.Cells[ 5].Value, "8月");
-            Assert.AreEqual( 3731, row.Cells[ 6].Value, "9月");
-            Assert.AreEqual( 4047, row.Cells[ 7].Value, "10月");
-            Assert.AreEqual( 4964, row.Cells[ 8].Value, "11月");
-            Assert.AreEqual( 4739, row.Cells[ 9].Value, "12月");
-            Assert.AreEqual( 4996, row.Cells[10].Value, "1月");
-            Assert.AreEqual( 5376, row.Cells[11].Value, "2月");
-            Assert.AreEqual( 5617, row.Cells[12].Value, "3月");
+            Assert.AreEqual( 5541, row.Cells[ 1].Value, MSG.MONTH04);
+            Assert.AreEqual( 4504, row.Cells[ 2].Value, MSG.MONTH05);
+            Assert.AreEqual( 4404, row.Cells[ 3].Value, MSG.MONTH06);
+            Assert.AreEqual( 4085, row.Cells[ 4].Value, MSG.MONTH07);
+            Assert.AreEqual( 3686, row.Cells[ 5].Value, MSG.MONTH08);
+            Assert.AreEqual( 3731, row.Cells[ 6].Value, MSG.MONTH09);
+            Assert.AreEqual( 4047, row.Cells[ 7].Value, MSG.MONTH10);
+            Assert.AreEqual( 4964, row.Cells[ 8].Value, MSG.MONTH11);
+            Assert.AreEqual( 4739, row.Cells[ 9].Value, MSG.MONTH12);
+            Assert.AreEqual( 4996, row.Cells[10].Value, MSG.MONTH01);
+            Assert.AreEqual( 5376, row.Cells[11].Value, MSG.MONTH02);
+            Assert.AreEqual( 5617, row.Cells[12].Value, MSG.MONTH03);
         }
 
         /// <summary>
@@ -973,18 +1014,18 @@
             var dgv = CtDgvWt();
             var row = dgv.Rows[0];
             Assert.AreEqual(2009, row.Cells[ 0].Value);
-            Assert.AreEqual(1848, row.Cells[ 1].Value, "4月");
-            Assert.AreEqual(1848, row.Cells[ 2].Value, "5月");
-            Assert.AreEqual(1896, row.Cells[ 3].Value, "6月");
-            Assert.AreEqual(1896, row.Cells[ 4].Value, "7月");
-            Assert.AreEqual(1896, row.Cells[ 5].Value, "8月");
-            Assert.AreEqual(1896, row.Cells[ 6].Value, "9月");
-            Assert.AreEqual(1848, row.Cells[ 7].Value, "10月");
-            Assert.AreEqual(1848, row.Cells[ 8].Value, "11月");
-            Assert.AreEqual(1462, row.Cells[ 9].Value, "12月");
-            Assert.AreEqual(1462, row.Cells[10].Value, "1月");
-            Assert.AreEqual(1558, row.Cells[11].Value, "2月");
-            Assert.AreEqual(1558, row.Cells[12].Value, "3月");
+            Assert.AreEqual(1848, row.Cells[ 1].Value, MSG.MONTH04);
+            Assert.AreEqual(1848, row.Cells[ 2].Value, MSG.MONTH05);
+            Assert.AreEqual(1896, row.Cells[ 3].Value, MSG.MONTH06);
+            Assert.AreEqual(1896, row.Cells[ 4].Value, MSG.MONTH07);
+            Assert.AreEqual(1896, row.Cells[ 5].Value, MSG.MONTH08);
+            Assert.AreEqual(1896, row.Cells[ 6].Value, MSG.MONTH09);
+            Assert.AreEqual(1848, row.Cells[ 7].Value, MSG.MONTH10);
+            Assert.AreEqual(1848, row.Cells[ 8].Value, MSG.MONTH11);
+            Assert.AreEqual(1462, row.Cells[ 9].Value, MSG.MONTH12);
+            Assert.AreEqual(1462, row.Cells[10].Value, MSG.MONTH01);
+            Assert.AreEqual(1558, row.Cells[11].Value, MSG.MONTH02);
+            Assert.AreEqual(1558, row.Cells[12].Value, MSG.MONTH03);
         }
 
         /// <summary>
@@ -999,18 +1040,18 @@
             var dgv = CtDgvWt();
             var row = dgv.Rows[1];
             Assert.AreEqual(2010, row.Cells[ 0].Value);
-            Assert.AreEqual(1848, row.Cells[ 1].Value, "4月");
-            Assert.AreEqual(1848, row.Cells[ 2].Value, "5月");
-            Assert.AreEqual(1848, row.Cells[ 3].Value, "6月");
-            Assert.AreEqual(1848, row.Cells[ 4].Value, "7月");
-            Assert.AreEqual(1896, row.Cells[ 5].Value, "8月");
-            Assert.AreEqual(1896, row.Cells[ 6].Value, "9月");
-            Assert.AreEqual(1799, row.Cells[ 7].Value, "10月");
-            Assert.AreEqual(1799, row.Cells[ 8].Value, "11月");
-            Assert.AreEqual(1799, row.Cells[ 9].Value, "12月");
-            Assert.AreEqual(1799, row.Cells[10].Value, "1月");
-            Assert.AreEqual(1751, row.Cells[11].Value, "2月");
-            Assert.AreEqual(1751, row.Cells[12].Value, "3月");
+            Assert.AreEqual(1848, row.Cells[ 1].Value, MSG.MONTH04);
+            Assert.AreEqual(1848, row.Cells[ 2].Value, MSG.MONTH05);
+            Assert.AreEqual(1848, row.Cells[ 3].Value, MSG.MONTH06);
+            Assert.AreEqual(1848, row.Cells[ 4].Value, MSG.MONTH07);
+            Assert.AreEqual(1896, row.Cells[ 5].Value, MSG.MONTH08);
+            Assert.AreEqual(1896, row.Cells[ 6].Value, MSG.MONTH09);
+            Assert.AreEqual(1799, row.Cells[ 7].Value, MSG.MONTH10);
+            Assert.AreEqual(1799, row.Cells[ 8].Value, MSG.MONTH11);
+            Assert.AreEqual(1799, row.Cells[ 9].Value, MSG.MONTH12);
+            Assert.AreEqual(1799, row.Cells[10].Value, MSG.MONTH01);
+            Assert.AreEqual(1751, row.Cells[11].Value, MSG.MONTH02);
+            Assert.AreEqual(1751, row.Cells[12].Value, MSG.MONTH03);
         }
 
         /// <summary>
@@ -1025,18 +1066,18 @@
             var dgv = CtDgvWt();
             var row = dgv.Rows[2];
             Assert.AreEqual(2011, row.Cells[ 0].Value);
-            Assert.AreEqual(1703, row.Cells[ 1].Value, "4月");
-            Assert.AreEqual(1703, row.Cells[ 2].Value, "5月");
-            Assert.AreEqual(1848, row.Cells[ 3].Value, "6月");
-            Assert.AreEqual(1848, row.Cells[ 4].Value, "7月");
-            Assert.AreEqual(1848, row.Cells[ 5].Value, "8月");
-            Assert.AreEqual(1848, row.Cells[ 6].Value, "9月");
-            Assert.AreEqual(1751, row.Cells[ 7].Value, "10月");
-            Assert.AreEqual(1751, row.Cells[ 8].Value, "11月");
-            Assert.AreEqual(1751, row.Cells[ 9].Value, "12月");
-            Assert.AreEqual(1751, row.Cells[10].Value, "1月");
-            Assert.AreEqual(1703, row.Cells[11].Value, "2月");
-            Assert.AreEqual(1703, row.Cells[12].Value, "3月");
+            Assert.AreEqual(1703, row.Cells[ 1].Value, MSG.MONTH04);
+            Assert.AreEqual(1703, row.Cells[ 2].Value, MSG.MONTH05);
+            Assert.AreEqual(1848, row.Cells[ 3].Value, MSG.MONTH06);
+            Assert.AreEqual(1848, row.Cells[ 4].Value, MSG.MONTH07);
+            Assert.AreEqual(1848, row.Cells[ 5].Value, MSG.MONTH08);
+            Assert.AreEqual(1848, row.Cells[ 6].Value, MSG.MONTH09);
+            Assert.AreEqual(1751, row.Cells[ 7].Value, MSG.MONTH10);
+            Assert.AreEqual(1751, row.Cells[ 8].Value, MSG.MONTH11);
+            Assert.AreEqual(1751, row.Cells[ 9].Value, MSG.MONTH12);
+            Assert.AreEqual(1751, row.Cells[10].Value, MSG.MONTH01);
+            Assert.AreEqual(1703, row.Cells[11].Value, MSG.MONTH02);
+            Assert.AreEqual(1703, row.Cells[12].Value, MSG.MONTH03);
         }
 
         /// <summary>
@@ -1051,18 +1092,18 @@
             var dgv = CtDgvWt();
             var row = dgv.Rows[3];
             Assert.AreEqual(2012, row.Cells[ 0].Value);
-            Assert.AreEqual(1751, row.Cells[ 1].Value, "4月");
-            Assert.AreEqual(1751, row.Cells[ 2].Value, "5月");
-            Assert.AreEqual(1751, row.Cells[ 3].Value, "6月");
-            Assert.AreEqual(1751, row.Cells[ 4].Value, "7月");
-            Assert.AreEqual(1751, row.Cells[ 5].Value, "8月");
-            Assert.AreEqual(1751, row.Cells[ 6].Value, "9月");
-            Assert.AreEqual(1799, row.Cells[ 7].Value, "10月");
-            Assert.AreEqual(1799, row.Cells[ 8].Value, "11月");
-            Assert.AreEqual(1751, row.Cells[ 9].Value, "12月");
-            Assert.AreEqual(1751, row.Cells[10].Value, "1月");
-            Assert.AreEqual(1751, row.Cells[11].Value, "2月");
-            Assert.AreEqual(1751, row.Cells[12].Value, "3月");
+            Assert.AreEqual(1751, row.Cells[ 1].Value, MSG.MONTH04);
+            Assert.AreEqual(1751, row.Cells[ 2].Value, MSG.MONTH05);
+            Assert.AreEqual(1751, row.Cells[ 3].Value, MSG.MONTH06);
+            Assert.AreEqual(1751, row.Cells[ 4].Value, MSG.MONTH07);
+            Assert.AreEqual(1751, row.Cells[ 5].Value, MSG.MONTH08);
+            Assert.AreEqual(1751, row.Cells[ 6].Value, MSG.MONTH09);
+            Assert.AreEqual(1799, row.Cells[ 7].Value, MSG.MONTH10);
+            Assert.AreEqual(1799, row.Cells[ 8].Value, MSG.MONTH11);
+            Assert.AreEqual(1751, row.Cells[ 9].Value, MSG.MONTH12);
+            Assert.AreEqual(1751, row.Cells[10].Value, MSG.MONTH01);
+            Assert.AreEqual(1751, row.Cells[11].Value, MSG.MONTH02);
+            Assert.AreEqual(1751, row.Cells[12].Value, MSG.MONTH03);
         }
 
         /// <summary>
@@ -1077,18 +1118,18 @@
             var dgv = CtDgvWt();
             var row = dgv.Rows[4];
             Assert.AreEqual(2013, row.Cells[ 0].Value);
-            Assert.AreEqual(1799, row.Cells[ 1].Value, "4月");
-            Assert.AreEqual(1799, row.Cells[ 2].Value, "5月");
-            Assert.AreEqual(1703, row.Cells[ 3].Value, "6月");
-            Assert.AreEqual(1703, row.Cells[ 4].Value, "7月");
-            Assert.AreEqual(1799, row.Cells[ 5].Value, "8月");
-            Assert.AreEqual(1799, row.Cells[ 6].Value, "9月");
-            Assert.AreEqual(1703, row.Cells[ 7].Value, "10月");
-            Assert.AreEqual(1703, row.Cells[ 8].Value, "11月");
-            Assert.AreEqual(1655, row.Cells[ 9].Value, "12月");
-            Assert.AreEqual(1655, row.Cells[10].Value, "1月");
-            Assert.AreEqual(1703, row.Cells[11].Value, "2月");
-            Assert.AreEqual(1703, row.Cells[12].Value, "3月");
+            Assert.AreEqual(1799, row.Cells[ 1].Value, MSG.MONTH04);
+            Assert.AreEqual(1799, row.Cells[ 2].Value, MSG.MONTH05);
+            Assert.AreEqual(1703, row.Cells[ 3].Value, MSG.MONTH06);
+            Assert.AreEqual(1703, row.Cells[ 4].Value, MSG.MONTH07);
+            Assert.AreEqual(1799, row.Cells[ 5].Value, MSG.MONTH08);
+            Assert.AreEqual(1799, row.Cells[ 6].Value, MSG.MONTH09);
+            Assert.AreEqual(1703, row.Cells[ 7].Value, MSG.MONTH10);
+            Assert.AreEqual(1703, row.Cells[ 8].Value, MSG.MONTH11);
+            Assert.AreEqual(1655, row.Cells[ 9].Value, MSG.MONTH12);
+            Assert.AreEqual(1655, row.Cells[10].Value, MSG.MONTH01);
+            Assert.AreEqual(1703, row.Cells[11].Value, MSG.MONTH02);
+            Assert.AreEqual(1703, row.Cells[12].Value, MSG.MONTH03);
         }
 
         /// <summary>
@@ -1103,18 +1144,18 @@
             var dgv = CtDgvWt();
             var row = dgv.Rows[5];
             Assert.AreEqual(2014, row.Cells[ 0].Value);
-            Assert.AreEqual(1703, row.Cells[ 1].Value, "4月");
-            Assert.AreEqual(1703, row.Cells[ 2].Value, "5月");
-            Assert.AreEqual(1801, row.Cells[ 3].Value, "6月");
-            Assert.AreEqual(1801, row.Cells[ 4].Value, "7月");
-            Assert.AreEqual(1851, row.Cells[ 5].Value, "8月");
-            Assert.AreEqual(1851, row.Cells[ 6].Value, "9月");
-            Assert.AreEqual(1801, row.Cells[ 7].Value, "10月");
-            Assert.AreEqual(1801, row.Cells[ 8].Value, "11月");
-            Assert.AreEqual(1801, row.Cells[ 9].Value, "12月");
-            Assert.AreEqual(1801, row.Cells[10].Value, "1月");
-            Assert.AreEqual(1751, row.Cells[11].Value, "2月");
-            Assert.AreEqual(1751, row.Cells[12].Value, "3月");
+            Assert.AreEqual(1703, row.Cells[ 1].Value, MSG.MONTH04);
+            Assert.AreEqual(1703, row.Cells[ 2].Value, MSG.MONTH05);
+            Assert.AreEqual(1801, row.Cells[ 3].Value, MSG.MONTH06);
+            Assert.AreEqual(1801, row.Cells[ 4].Value, MSG.MONTH07);
+            Assert.AreEqual(1851, row.Cells[ 5].Value, MSG.MONTH08);
+            Assert.AreEqual(1851, row.Cells[ 6].Value, MSG.MONTH09);
+            Assert.AreEqual(1801, row.Cells[ 7].Value, MSG.MONTH10);
+            Assert.AreEqual(1801, row.Cells[ 8].Value, MSG.MONTH11);
+            Assert.AreEqual(1801, row.Cells[ 9].Value, MSG.MONTH12);
+            Assert.AreEqual(1801, row.Cells[10].Value, MSG.MONTH01);
+            Assert.AreEqual(1751, row.Cells[11].Value, MSG.MONTH02);
+            Assert.AreEqual(1751, row.Cells[12].Value, MSG.MONTH03);
         }
 
         /// <summary>
@@ -1129,18 +1170,18 @@
             var dgv = CtDgvWt();
             var row = dgv.Rows[dgv.Rows.Count - 1];
             Assert.AreEqual("ave", row.Cells[ 0].Value);
-            Assert.AreEqual( 1775, row.Cells[ 1].Value, "4月");
-            Assert.AreEqual( 1775, row.Cells[ 2].Value, "5月");
-            Assert.AreEqual( 1808, row.Cells[ 3].Value, "6月");
-            Assert.AreEqual( 1808, row.Cells[ 4].Value, "7月");
-            Assert.AreEqual( 1840, row.Cells[ 5].Value, "8月");
-            Assert.AreEqual( 1840, row.Cells[ 6].Value, "9月");
-            Assert.AreEqual( 1784, row.Cells[ 7].Value, "10月");
-            Assert.AreEqual( 1784, row.Cells[ 8].Value, "11月");
-            Assert.AreEqual( 1703, row.Cells[ 9].Value, "12月");
-            Assert.AreEqual( 1703, row.Cells[10].Value, "1月");
-            Assert.AreEqual( 1703, row.Cells[11].Value, "2月");
-            Assert.AreEqual( 1703, row.Cells[12].Value, "3月");
+            Assert.AreEqual( 1775, row.Cells[ 1].Value, MSG.MONTH04);
+            Assert.AreEqual( 1775, row.Cells[ 2].Value, MSG.MONTH05);
+            Assert.AreEqual( 1808, row.Cells[ 3].Value, MSG.MONTH06);
+            Assert.AreEqual( 1808, row.Cells[ 4].Value, MSG.MONTH07);
+            Assert.AreEqual( 1840, row.Cells[ 5].Value, MSG.MONTH08);
+            Assert.AreEqual( 1840, row.Cells[ 6].Value, MSG.MONTH09);
+            Assert.AreEqual( 1784, row.Cells[ 7].Value, MSG.MONTH10);
+            Assert.AreEqual( 1784, row.Cells[ 8].Value, MSG.MONTH11);
+            Assert.AreEqual( 1703, row.Cells[ 9].Value, MSG.MONTH12);
+            Assert.AreEqual( 1703, row.Cells[10].Value, MSG.MONTH01);
+            Assert.AreEqual( 1703, row.Cells[11].Value, MSG.MONTH02);
+            Assert.AreEqual( 1703, row.Cells[12].Value, MSG.MONTH03);
         }
 
         /// <summary>
@@ -1150,7 +1191,24 @@
         [Test]
         public void DgvMaxWithOnlyEl()
         {
+            ShowSubEnergy(CSV_ONLY_EL);
+
+            var dgv = CtDgvEl();
+            var row1 = dgv.Rows[0];
+
             //1年分しかデータがないためすべて最大値になる
+            Assert.AreEqual(Color.Red, row1.Cells[ 1].Style.ForeColor, MSG.MONTH04);
+            Assert.AreEqual(Color.Red, row1.Cells[ 2].Style.ForeColor, MSG.MONTH05);
+            // 6月は電気代なし
+            Assert.AreEqual(Color.Red, row1.Cells[ 4].Style.ForeColor, MSG.MONTH07);
+            Assert.AreEqual(Color.Red, row1.Cells[ 5].Style.ForeColor, MSG.MONTH08);
+            Assert.AreEqual(Color.Red, row1.Cells[ 6].Style.ForeColor, MSG.MONTH09);
+            Assert.AreEqual(Color.Red, row1.Cells[ 7].Style.ForeColor, MSG.MONTH10);
+            Assert.AreEqual(Color.Red, row1.Cells[ 8].Style.ForeColor, MSG.MONTH11);
+            // 12月は電気代なし
+            Assert.AreEqual(Color.Red, row1.Cells[10].Style.ForeColor, MSG.MONTH01);
+            Assert.AreEqual(Color.Red, row1.Cells[11].Style.ForeColor, MSG.MONTH02);
+            Assert.AreEqual(Color.Red, row1.Cells[11].Style.ForeColor, MSG.MONTH03);
         }
 
         /// <summary>
@@ -1165,18 +1223,18 @@
             var dgv = CtDgvGs();
             var row1 = dgv.Rows[0];
             var row2 = dgv.Rows[1];
-            Assert.AreEqual(Color.Red, row2.Cells[ 1].Style.ForeColor, "4月");
-            Assert.AreEqual(Color.Red, row2.Cells[ 2].Style.ForeColor, "5月");
-            Assert.AreEqual(Color.Red, row2.Cells[ 3].Style.ForeColor, "6月");
-            Assert.AreEqual(Color.Red, row2.Cells[ 4].Style.ForeColor, "7月");
-            Assert.AreEqual(Color.Red, row2.Cells[ 5].Style.ForeColor, "8月");
-            Assert.AreEqual(Color.Red, row2.Cells[ 6].Style.ForeColor, "9月");
-            Assert.AreEqual(Color.Red, row2.Cells[ 7].Style.ForeColor, "10月");
-            Assert.AreEqual(Color.Red, row2.Cells[ 8].Style.ForeColor, "11月");
-            Assert.AreEqual(Color.Red, row2.Cells[ 9].Style.ForeColor, "12月");
-            Assert.AreEqual(Color.Red, row1.Cells[10].Style.ForeColor, "1月");
-            Assert.AreEqual(Color.Red, row1.Cells[11].Style.ForeColor, "2月");
-            Assert.AreEqual(Color.Red, row1.Cells[12].Style.ForeColor, "3月");
+            Assert.AreEqual(Color.Red, row2.Cells[ 1].Style.ForeColor, MSG.MONTH04);
+            Assert.AreEqual(Color.Red, row2.Cells[ 2].Style.ForeColor, MSG.MONTH05);
+            Assert.AreEqual(Color.Red, row2.Cells[ 3].Style.ForeColor, MSG.MONTH06);
+            Assert.AreEqual(Color.Red, row2.Cells[ 4].Style.ForeColor, MSG.MONTH07);
+            Assert.AreEqual(Color.Red, row2.Cells[ 5].Style.ForeColor, MSG.MONTH08);
+            Assert.AreEqual(Color.Red, row2.Cells[ 6].Style.ForeColor, MSG.MONTH09);
+            Assert.AreEqual(Color.Red, row2.Cells[ 7].Style.ForeColor, MSG.MONTH10);
+            Assert.AreEqual(Color.Red, row2.Cells[ 8].Style.ForeColor, MSG.MONTH11);
+            Assert.AreEqual(Color.Red, row2.Cells[ 9].Style.ForeColor, MSG.MONTH12);
+            Assert.AreEqual(Color.Red, row1.Cells[10].Style.ForeColor, MSG.MONTH01);
+            Assert.AreEqual(Color.Red, row1.Cells[11].Style.ForeColor, MSG.MONTH02);
+            Assert.AreEqual(Color.Red, row1.Cells[12].Style.ForeColor, MSG.MONTH03);
         }
 
         /// <summary>
@@ -1189,20 +1247,21 @@
             ShowSubEnergy(CSV_ONLY_WT);
 
             var dgv = CtDgvWt();
-            var row1 = dgv.Rows[0];
             var row2 = dgv.Rows[2];
-            Assert.AreEqual(Color.Red, row2.Cells[ 1].Style.ForeColor, "4月");
-            Assert.AreEqual(Color.Red, row2.Cells[ 2].Style.ForeColor, "5月");
-            Assert.AreEqual(Color.Red, row2.Cells[ 3].Style.ForeColor, "6月");
-            Assert.AreEqual(Color.Red, row2.Cells[ 4].Style.ForeColor, "7月");
-            Assert.AreEqual(Color.Red, row2.Cells[ 5].Style.ForeColor, "8月");
-            Assert.AreEqual(Color.Red, row2.Cells[ 6].Style.ForeColor, "9月");
-            Assert.AreEqual(Color.Red, row2.Cells[ 7].Style.ForeColor, "10月");
-            Assert.AreEqual(Color.Red, row2.Cells[ 8].Style.ForeColor, "11月");
-            Assert.AreEqual(Color.Red, row2.Cells[ 9].Style.ForeColor, "12月");
-            Assert.AreEqual(Color.Red, row2.Cells[10].Style.ForeColor, "1月");
-            Assert.AreEqual(Color.Red, row2.Cells[11].Style.ForeColor, "2月");
-            Assert.AreEqual(Color.Red, row2.Cells[12].Style.ForeColor, "3月");
+            
+            //2017年がすべて最大
+            Assert.AreEqual(Color.Red, row2.Cells[ 1].Style.ForeColor, MSG.MONTH04);
+            Assert.AreEqual(Color.Red, row2.Cells[ 2].Style.ForeColor, MSG.MONTH05);
+            Assert.AreEqual(Color.Red, row2.Cells[ 3].Style.ForeColor, MSG.MONTH06);
+            Assert.AreEqual(Color.Red, row2.Cells[ 4].Style.ForeColor, MSG.MONTH07);
+            Assert.AreEqual(Color.Red, row2.Cells[ 5].Style.ForeColor, MSG.MONTH08);
+            Assert.AreEqual(Color.Red, row2.Cells[ 6].Style.ForeColor, MSG.MONTH09);
+            Assert.AreEqual(Color.Red, row2.Cells[ 7].Style.ForeColor, MSG.MONTH10);
+            Assert.AreEqual(Color.Red, row2.Cells[ 8].Style.ForeColor, MSG.MONTH11);
+            Assert.AreEqual(Color.Red, row2.Cells[ 9].Style.ForeColor, MSG.MONTH12);
+            Assert.AreEqual(Color.Red, row2.Cells[10].Style.ForeColor, MSG.MONTH01);
+            Assert.AreEqual(Color.Red, row2.Cells[11].Style.ForeColor, MSG.MONTH02);
+            Assert.AreEqual(Color.Red, row2.Cells[12].Style.ForeColor, MSG.MONTH03);
         }
 
         /// <summary>
@@ -1212,7 +1271,24 @@
         [Test]
         public void DgvMinWithOnlyEl()
         {
+            ShowSubEnergy(CSV_ONLY_EL);
+
+            var dgv = CtDgvEl();
+            var row1 = dgv.Rows[0];
+
             //1年分しかデータがないためすべて最大値になる
+            Assert.AreEqual(Color.Red, row1.Cells[1].Style.ForeColor, MSG.MONTH04);
+            Assert.AreEqual(Color.Red, row1.Cells[2].Style.ForeColor, MSG.MONTH05);
+            // 6月は電気代なし
+            Assert.AreEqual(Color.Red, row1.Cells[4].Style.ForeColor, MSG.MONTH07);
+            Assert.AreEqual(Color.Red, row1.Cells[5].Style.ForeColor, MSG.MONTH08);
+            Assert.AreEqual(Color.Red, row1.Cells[6].Style.ForeColor, MSG.MONTH09);
+            Assert.AreEqual(Color.Red, row1.Cells[7].Style.ForeColor, MSG.MONTH10);
+            Assert.AreEqual(Color.Red, row1.Cells[8].Style.ForeColor, MSG.MONTH11);
+            // 12月は電気代なし
+            Assert.AreEqual(Color.Red, row1.Cells[10].Style.ForeColor, MSG.MONTH01);
+            Assert.AreEqual(Color.Red, row1.Cells[11].Style.ForeColor, MSG.MONTH02);
+            Assert.AreEqual(Color.Red, row1.Cells[11].Style.ForeColor, MSG.MONTH03);
         }
 
         /// <summary>
@@ -1227,18 +1303,18 @@
             var dgv = CtDgvGs();
             var row1 = dgv.Rows[0];
             var row2 = dgv.Rows[1];
-            Assert.AreEqual(Color.Blue, row1.Cells[ 1].Style.ForeColor, "4月");
-            Assert.AreEqual(Color.Blue, row1.Cells[ 2].Style.ForeColor, "5月");
-            Assert.AreEqual(Color.Blue, row1.Cells[ 3].Style.ForeColor, "6月");
-            Assert.AreEqual(Color.Blue, row1.Cells[ 4].Style.ForeColor, "7月");
-            Assert.AreEqual(Color.Blue, row1.Cells[ 5].Style.ForeColor, "8月");
-            Assert.AreEqual(Color.Blue, row1.Cells[ 6].Style.ForeColor, "9月");
-            Assert.AreEqual(Color.Blue, row1.Cells[ 7].Style.ForeColor, "10月");
-            Assert.AreEqual(Color.Blue, row1.Cells[ 8].Style.ForeColor, "11月");
-            Assert.AreEqual(Color.Blue, row1.Cells[ 9].Style.ForeColor, "12月");
-            Assert.AreEqual(Color.Blue, row2.Cells[10].Style.ForeColor, "1月");
-            Assert.AreEqual(Color.Blue, row2.Cells[11].Style.ForeColor, "2月");
-            Assert.AreEqual(Color.Blue, row2.Cells[12].Style.ForeColor, "3月");
+            Assert.AreEqual(Color.Blue, row1.Cells[ 1].Style.ForeColor, MSG.MONTH04);
+            Assert.AreEqual(Color.Blue, row1.Cells[ 2].Style.ForeColor, MSG.MONTH05);
+            Assert.AreEqual(Color.Blue, row1.Cells[ 3].Style.ForeColor, MSG.MONTH06);
+            Assert.AreEqual(Color.Blue, row1.Cells[ 4].Style.ForeColor, MSG.MONTH07);
+            Assert.AreEqual(Color.Blue, row1.Cells[ 5].Style.ForeColor, MSG.MONTH08);
+            Assert.AreEqual(Color.Blue, row1.Cells[ 6].Style.ForeColor, MSG.MONTH09);
+            Assert.AreEqual(Color.Blue, row1.Cells[ 7].Style.ForeColor, MSG.MONTH10);
+            Assert.AreEqual(Color.Blue, row1.Cells[ 8].Style.ForeColor, MSG.MONTH11);
+            Assert.AreEqual(Color.Blue, row1.Cells[ 9].Style.ForeColor, MSG.MONTH12);
+            Assert.AreEqual(Color.Blue, row2.Cells[10].Style.ForeColor, MSG.MONTH01);
+            Assert.AreEqual(Color.Blue, row2.Cells[11].Style.ForeColor, MSG.MONTH02);
+            Assert.AreEqual(Color.Blue, row2.Cells[12].Style.ForeColor, MSG.MONTH03);
         }
 
         /// <summary>
@@ -1252,19 +1328,20 @@
 
             var dgv = CtDgvWt();
             var row1 = dgv.Rows[0];
-            var row2 = dgv.Rows[2];
-            Assert.AreEqual(Color.Blue, row1.Cells[ 1].Style.ForeColor, "4月");
-            Assert.AreEqual(Color.Blue, row1.Cells[ 2].Style.ForeColor, "5月");
-            Assert.AreEqual(Color.Blue, row1.Cells[ 3].Style.ForeColor, "6月");
-            Assert.AreEqual(Color.Blue, row1.Cells[ 4].Style.ForeColor, "7月");
-            Assert.AreEqual(Color.Blue, row1.Cells[ 5].Style.ForeColor, "8月");
-            Assert.AreEqual(Color.Blue, row1.Cells[ 6].Style.ForeColor, "9月");
-            Assert.AreEqual(Color.Blue, row1.Cells[ 7].Style.ForeColor, "10月");
-            Assert.AreEqual(Color.Blue, row1.Cells[ 8].Style.ForeColor, "11月");
-            Assert.AreEqual(Color.Blue, row1.Cells[ 9].Style.ForeColor, "12月");
-            Assert.AreEqual(Color.Blue, row1.Cells[10].Style.ForeColor, "1月");
-            Assert.AreEqual(Color.Blue, row1.Cells[11].Style.ForeColor, "2月");
-            Assert.AreEqual(Color.Blue, row1.Cells[12].Style.ForeColor, "3月");
+
+            // 2015年がすべて最小
+            Assert.AreEqual(Color.Blue, row1.Cells[ 1].Style.ForeColor, MSG.MONTH04);
+            Assert.AreEqual(Color.Blue, row1.Cells[ 2].Style.ForeColor, MSG.MONTH05);
+            Assert.AreEqual(Color.Blue, row1.Cells[ 3].Style.ForeColor, MSG.MONTH06);
+            Assert.AreEqual(Color.Blue, row1.Cells[ 4].Style.ForeColor, MSG.MONTH07);
+            Assert.AreEqual(Color.Blue, row1.Cells[ 5].Style.ForeColor, MSG.MONTH08);
+            Assert.AreEqual(Color.Blue, row1.Cells[ 6].Style.ForeColor, MSG.MONTH09);
+            Assert.AreEqual(Color.Blue, row1.Cells[ 7].Style.ForeColor, MSG.MONTH10);
+            Assert.AreEqual(Color.Blue, row1.Cells[ 8].Style.ForeColor, MSG.MONTH11);
+            Assert.AreEqual(Color.Blue, row1.Cells[ 9].Style.ForeColor, MSG.MONTH12);
+            Assert.AreEqual(Color.Blue, row1.Cells[10].Style.ForeColor, MSG.MONTH01);
+            Assert.AreEqual(Color.Blue, row1.Cells[11].Style.ForeColor, MSG.MONTH02);
+            Assert.AreEqual(Color.Blue, row1.Cells[12].Style.ForeColor, MSG.MONTH03);
         }
 
         /// <summary>
@@ -1281,18 +1358,18 @@
             var row2 = dgv.Rows[1];
             var row4 = dgv.Rows[3];
             var row5 = dgv.Rows[4];
-            Assert.AreEqual(Color.Red, row2.Cells[ 1].Style.ForeColor, "4月");
-            Assert.AreEqual(Color.Red, row5.Cells[ 2].Style.ForeColor, "5月");
-            Assert.AreEqual(Color.Red, row5.Cells[ 3].Style.ForeColor, "6月");
-            Assert.AreEqual(Color.Red, row1.Cells[ 4].Style.ForeColor, "7月");
-            Assert.AreEqual(Color.Red, row1.Cells[ 5].Style.ForeColor, "8月");
-            Assert.AreEqual(Color.Red, row1.Cells[ 6].Style.ForeColor, "9月");
-            Assert.AreEqual(Color.Red, row5.Cells[ 7].Style.ForeColor, "10月");
-            Assert.AreEqual(Color.Red, row2.Cells[ 8].Style.ForeColor, "11月");
-            Assert.AreEqual(Color.Red, row5.Cells[ 9].Style.ForeColor, "12月");
-            Assert.AreEqual(Color.Red, row4.Cells[10].Style.ForeColor, "1月");
-            Assert.AreEqual(Color.Red, row4.Cells[11].Style.ForeColor, "2月");
-            Assert.AreEqual(Color.Red, row1.Cells[12].Style.ForeColor, "3月");
+            Assert.AreEqual(Color.Red, row2.Cells[ 1].Style.ForeColor, MSG.MONTH04);
+            Assert.AreEqual(Color.Red, row5.Cells[ 2].Style.ForeColor, MSG.MONTH05);
+            Assert.AreEqual(Color.Red, row5.Cells[ 3].Style.ForeColor, MSG.MONTH06);
+            Assert.AreEqual(Color.Red, row1.Cells[ 4].Style.ForeColor, MSG.MONTH07);
+            Assert.AreEqual(Color.Red, row1.Cells[ 5].Style.ForeColor, MSG.MONTH08);
+            Assert.AreEqual(Color.Red, row1.Cells[ 6].Style.ForeColor, MSG.MONTH09);
+            Assert.AreEqual(Color.Red, row5.Cells[ 7].Style.ForeColor, MSG.MONTH10);
+            Assert.AreEqual(Color.Red, row2.Cells[ 8].Style.ForeColor, MSG.MONTH11);
+            Assert.AreEqual(Color.Red, row5.Cells[ 9].Style.ForeColor, MSG.MONTH12);
+            Assert.AreEqual(Color.Red, row4.Cells[10].Style.ForeColor, MSG.MONTH01);
+            Assert.AreEqual(Color.Red, row4.Cells[11].Style.ForeColor, MSG.MONTH02);
+            Assert.AreEqual(Color.Red, row1.Cells[12].Style.ForeColor, MSG.MONTH03);
         }
 
         /// <summary>
@@ -1310,18 +1387,18 @@
             var row3 = dgv.Rows[2];
             var row5 = dgv.Rows[4];
             var row6 = dgv.Rows[5];
-            Assert.AreEqual(Color.Red, row2.Cells[ 1].Style.ForeColor, "4月");
-            Assert.AreEqual(Color.Red, row5.Cells[ 2].Style.ForeColor, "5月");
-            Assert.AreEqual(Color.Red, row3.Cells[ 3].Style.ForeColor, "6月");
-            Assert.AreEqual(Color.Red, row1.Cells[ 4].Style.ForeColor, "7月");
-            Assert.AreEqual(Color.Red, row1.Cells[ 5].Style.ForeColor, "8月");
-            Assert.AreEqual(Color.Red, row6.Cells[ 6].Style.ForeColor, "9月");
-            Assert.AreEqual(Color.Red, row6.Cells[ 7].Style.ForeColor, "10月");
-            Assert.AreEqual(Color.Red, row2.Cells[ 8].Style.ForeColor, "11月");
-            Assert.AreEqual(Color.Red, row2.Cells[ 9].Style.ForeColor, "12月");
-            Assert.AreEqual(Color.Red, row2.Cells[10].Style.ForeColor, "1月");
-            Assert.AreEqual(Color.Red, row6.Cells[11].Style.ForeColor, "2月");
-            Assert.AreEqual(Color.Red, row1.Cells[12].Style.ForeColor, "3月");
+            Assert.AreEqual(Color.Red, row2.Cells[ 1].Style.ForeColor, MSG.MONTH04);
+            Assert.AreEqual(Color.Red, row5.Cells[ 2].Style.ForeColor, MSG.MONTH05);
+            Assert.AreEqual(Color.Red, row3.Cells[ 3].Style.ForeColor, MSG.MONTH06);
+            Assert.AreEqual(Color.Red, row1.Cells[ 4].Style.ForeColor, MSG.MONTH07);
+            Assert.AreEqual(Color.Red, row1.Cells[ 5].Style.ForeColor, MSG.MONTH08);
+            Assert.AreEqual(Color.Red, row6.Cells[ 6].Style.ForeColor, MSG.MONTH09);
+            Assert.AreEqual(Color.Red, row6.Cells[ 7].Style.ForeColor, MSG.MONTH10);
+            Assert.AreEqual(Color.Red, row2.Cells[ 8].Style.ForeColor, MSG.MONTH11);
+            Assert.AreEqual(Color.Red, row2.Cells[ 9].Style.ForeColor, MSG.MONTH12);
+            Assert.AreEqual(Color.Red, row2.Cells[10].Style.ForeColor, MSG.MONTH01);
+            Assert.AreEqual(Color.Red, row6.Cells[11].Style.ForeColor, MSG.MONTH02);
+            Assert.AreEqual(Color.Red, row1.Cells[12].Style.ForeColor, MSG.MONTH03);
         }
 
         /// <summary>
@@ -1338,26 +1415,26 @@
             var row2 = dgv.Rows[1];
             var row4 = dgv.Rows[3];
             var row6 = dgv.Rows[5];
-            Assert.AreEqual(Color.Red, row1.Cells[ 1].Style.ForeColor, "4月");
-            Assert.AreEqual(Color.Red, row2.Cells[ 1].Style.ForeColor, "4月");
-            Assert.AreEqual(Color.Red, row1.Cells[ 2].Style.ForeColor, "5月");
-            Assert.AreEqual(Color.Red, row2.Cells[ 2].Style.ForeColor, "5月");
-            Assert.AreEqual(Color.Red, row1.Cells[ 3].Style.ForeColor, "6月");
-            Assert.AreEqual(Color.Red, row1.Cells[ 4].Style.ForeColor, "7月");
-            Assert.AreEqual(Color.Red, row1.Cells[ 5].Style.ForeColor, "8月");
-            Assert.AreEqual(Color.Red, row2.Cells[ 5].Style.ForeColor, "8月");
-            Assert.AreEqual(Color.Red, row1.Cells[ 6].Style.ForeColor, "9月");
-            Assert.AreEqual(Color.Red, row2.Cells[ 6].Style.ForeColor, "9月");
-            Assert.AreEqual(Color.Red, row1.Cells[ 7].Style.ForeColor, "10月");
-            Assert.AreEqual(Color.Red, row1.Cells[ 8].Style.ForeColor, "11月");
-            Assert.AreEqual(Color.Red, row6.Cells[ 9].Style.ForeColor, "12月");
-            Assert.AreEqual(Color.Red, row6.Cells[10].Style.ForeColor, "1月");
-            Assert.AreEqual(Color.Red, row2.Cells[11].Style.ForeColor, "2月");
-            Assert.AreEqual(Color.Red, row4.Cells[11].Style.ForeColor, "2月");
-            Assert.AreEqual(Color.Red, row6.Cells[11].Style.ForeColor, "2月");
-            Assert.AreEqual(Color.Red, row2.Cells[12].Style.ForeColor, "3月");
-            Assert.AreEqual(Color.Red, row4.Cells[12].Style.ForeColor, "3月");
-            Assert.AreEqual(Color.Red, row6.Cells[12].Style.ForeColor, "3月");
+            Assert.AreEqual(Color.Red, row1.Cells[ 1].Style.ForeColor, MSG.MONTH04);
+            Assert.AreEqual(Color.Red, row2.Cells[ 1].Style.ForeColor, MSG.MONTH04);
+            Assert.AreEqual(Color.Red, row1.Cells[ 2].Style.ForeColor, MSG.MONTH05);
+            Assert.AreEqual(Color.Red, row2.Cells[ 2].Style.ForeColor, MSG.MONTH05);
+            Assert.AreEqual(Color.Red, row1.Cells[ 3].Style.ForeColor, MSG.MONTH06);
+            Assert.AreEqual(Color.Red, row1.Cells[ 4].Style.ForeColor, MSG.MONTH07);
+            Assert.AreEqual(Color.Red, row1.Cells[ 5].Style.ForeColor, MSG.MONTH08);
+            Assert.AreEqual(Color.Red, row2.Cells[ 5].Style.ForeColor, MSG.MONTH08);
+            Assert.AreEqual(Color.Red, row1.Cells[ 6].Style.ForeColor, MSG.MONTH09);
+            Assert.AreEqual(Color.Red, row2.Cells[ 6].Style.ForeColor, MSG.MONTH09);
+            Assert.AreEqual(Color.Red, row1.Cells[ 7].Style.ForeColor, MSG.MONTH10);
+            Assert.AreEqual(Color.Red, row1.Cells[ 8].Style.ForeColor, MSG.MONTH11);
+            Assert.AreEqual(Color.Red, row6.Cells[ 9].Style.ForeColor, MSG.MONTH12);
+            Assert.AreEqual(Color.Red, row6.Cells[10].Style.ForeColor, MSG.MONTH01);
+            Assert.AreEqual(Color.Red, row2.Cells[11].Style.ForeColor, MSG.MONTH02);
+            Assert.AreEqual(Color.Red, row4.Cells[11].Style.ForeColor, MSG.MONTH02);
+            Assert.AreEqual(Color.Red, row6.Cells[11].Style.ForeColor, MSG.MONTH02);
+            Assert.AreEqual(Color.Red, row2.Cells[12].Style.ForeColor, MSG.MONTH03);
+            Assert.AreEqual(Color.Red, row4.Cells[12].Style.ForeColor, MSG.MONTH03);
+            Assert.AreEqual(Color.Red, row6.Cells[12].Style.ForeColor, MSG.MONTH03);
         }
 
         /// <summary>
@@ -1374,18 +1451,18 @@
             var row2 = dgv.Rows[1];
             var row3 = dgv.Rows[2];
             var row5 = dgv.Rows[4];
-            Assert.AreEqual(Color.Blue, row3.Cells[ 1].Style.ForeColor, "4月");
-            Assert.AreEqual(Color.Blue, row3.Cells[ 2].Style.ForeColor, "5月");
-            Assert.AreEqual(Color.Blue, row3.Cells[ 3].Style.ForeColor, "6月");
-            Assert.AreEqual(Color.Blue, row3.Cells[ 4].Style.ForeColor, "7月");
-            Assert.AreEqual(Color.Blue, row3.Cells[ 5].Style.ForeColor, "8月");
-            Assert.AreEqual(Color.Blue, row5.Cells[ 6].Style.ForeColor, "9月");
-            Assert.AreEqual(Color.Blue, row3.Cells[ 7].Style.ForeColor, "10月");
-            Assert.AreEqual(Color.Blue, row1.Cells[ 8].Style.ForeColor, "11月");
-            Assert.AreEqual(Color.Blue, row1.Cells[ 9].Style.ForeColor, "12月");
-            Assert.AreEqual(Color.Blue, row1.Cells[10].Style.ForeColor, "1月");
-            Assert.AreEqual(Color.Blue, row1.Cells[11].Style.ForeColor, "2月");
-            Assert.AreEqual(Color.Blue, row2.Cells[12].Style.ForeColor, "3月");
+            Assert.AreEqual(Color.Blue, row3.Cells[ 1].Style.ForeColor, MSG.MONTH04);
+            Assert.AreEqual(Color.Blue, row3.Cells[ 2].Style.ForeColor, MSG.MONTH05);
+            Assert.AreEqual(Color.Blue, row3.Cells[ 3].Style.ForeColor, MSG.MONTH06);
+            Assert.AreEqual(Color.Blue, row3.Cells[ 4].Style.ForeColor, MSG.MONTH07);
+            Assert.AreEqual(Color.Blue, row3.Cells[ 5].Style.ForeColor, MSG.MONTH08);
+            Assert.AreEqual(Color.Blue, row5.Cells[ 6].Style.ForeColor, MSG.MONTH09);
+            Assert.AreEqual(Color.Blue, row3.Cells[ 7].Style.ForeColor, MSG.MONTH10);
+            Assert.AreEqual(Color.Blue, row1.Cells[ 8].Style.ForeColor, MSG.MONTH11);
+            Assert.AreEqual(Color.Blue, row1.Cells[ 9].Style.ForeColor, MSG.MONTH12);
+            Assert.AreEqual(Color.Blue, row1.Cells[10].Style.ForeColor, MSG.MONTH01);
+            Assert.AreEqual(Color.Blue, row1.Cells[11].Style.ForeColor, MSG.MONTH02);
+            Assert.AreEqual(Color.Blue, row2.Cells[12].Style.ForeColor, MSG.MONTH03);
         }
 
         /// <summary>
@@ -1402,18 +1479,18 @@
             var row3 = dgv.Rows[2];
             var row4 = dgv.Rows[3];
             var row5 = dgv.Rows[4];
-            Assert.AreEqual(Color.Blue, row5.Cells[ 1].Style.ForeColor, "4月");
-            Assert.AreEqual(Color.Blue, row3.Cells[ 2].Style.ForeColor, "5月");
-            Assert.AreEqual(Color.Blue, row5.Cells[ 3].Style.ForeColor, "6月");
-            Assert.AreEqual(Color.Blue, row5.Cells[ 4].Style.ForeColor, "7月");
-            Assert.AreEqual(Color.Blue, row4.Cells[ 5].Style.ForeColor, "8月");
-            Assert.AreEqual(Color.Blue, row5.Cells[ 6].Style.ForeColor, "9月");
-            Assert.AreEqual(Color.Blue, row1.Cells[ 7].Style.ForeColor, "10月");
-            Assert.AreEqual(Color.Blue, row5.Cells[ 8].Style.ForeColor, "11月");
-            Assert.AreEqual(Color.Blue, row1.Cells[ 9].Style.ForeColor, "12月");
-            Assert.AreEqual(Color.Blue, row1.Cells[10].Style.ForeColor, "1月");
-            Assert.AreEqual(Color.Blue, row1.Cells[11].Style.ForeColor, "2月");
-            Assert.AreEqual(Color.Blue, row3.Cells[12].Style.ForeColor, "3月");
+            Assert.AreEqual(Color.Blue, row5.Cells[ 1].Style.ForeColor, MSG.MONTH04);
+            Assert.AreEqual(Color.Blue, row3.Cells[ 2].Style.ForeColor, MSG.MONTH05);
+            Assert.AreEqual(Color.Blue, row5.Cells[ 3].Style.ForeColor, MSG.MONTH06);
+            Assert.AreEqual(Color.Blue, row5.Cells[ 4].Style.ForeColor, MSG.MONTH07);
+            Assert.AreEqual(Color.Blue, row4.Cells[ 5].Style.ForeColor, MSG.MONTH08);
+            Assert.AreEqual(Color.Blue, row5.Cells[ 6].Style.ForeColor, MSG.MONTH09);
+            Assert.AreEqual(Color.Blue, row1.Cells[ 7].Style.ForeColor, MSG.MONTH10);
+            Assert.AreEqual(Color.Blue, row5.Cells[ 8].Style.ForeColor, MSG.MONTH11);
+            Assert.AreEqual(Color.Blue, row1.Cells[ 9].Style.ForeColor, MSG.MONTH12);
+            Assert.AreEqual(Color.Blue, row1.Cells[10].Style.ForeColor, MSG.MONTH01);
+            Assert.AreEqual(Color.Blue, row1.Cells[11].Style.ForeColor, MSG.MONTH02);
+            Assert.AreEqual(Color.Blue, row3.Cells[12].Style.ForeColor, MSG.MONTH03);
         }
 
         /// <summary>
@@ -1431,20 +1508,37 @@
             var row4 = dgv.Rows[3];
             var row5 = dgv.Rows[4];
             var row6 = dgv.Rows[5];
-            Assert.AreEqual(Color.Blue, row3.Cells[ 1].Style.ForeColor, "4月");
-            Assert.AreEqual(Color.Blue, row6.Cells[ 1].Style.ForeColor, "4月");
-            Assert.AreEqual(Color.Blue, row3.Cells[ 2].Style.ForeColor, "5月");
-            Assert.AreEqual(Color.Blue, row6.Cells[ 2].Style.ForeColor, "5月");
-            Assert.AreEqual(Color.Blue, row5.Cells[ 3].Style.ForeColor, "6月");
-            Assert.AreEqual(Color.Blue, row5.Cells[ 4].Style.ForeColor, "7月");
-            Assert.AreEqual(Color.Blue, row4.Cells[ 5].Style.ForeColor, "8月");
-            Assert.AreEqual(Color.Blue, row4.Cells[ 6].Style.ForeColor, "9月");
-            Assert.AreEqual(Color.Blue, row5.Cells[ 7].Style.ForeColor, "10月");
-            Assert.AreEqual(Color.Blue, row5.Cells[ 8].Style.ForeColor, "11月");
-            Assert.AreEqual(Color.Blue, row1.Cells[ 9].Style.ForeColor, "12月");
-            Assert.AreEqual(Color.Blue, row1.Cells[10].Style.ForeColor, "1月");
-            Assert.AreEqual(Color.Blue, row1.Cells[11].Style.ForeColor, "2月");
-            Assert.AreEqual(Color.Blue, row1.Cells[12].Style.ForeColor, "3月");
+            Assert.AreEqual(Color.Blue, row3.Cells[ 1].Style.ForeColor, MSG.MONTH04);
+            Assert.AreEqual(Color.Blue, row6.Cells[ 1].Style.ForeColor, MSG.MONTH04);
+            Assert.AreEqual(Color.Blue, row3.Cells[ 2].Style.ForeColor, MSG.MONTH05);
+            Assert.AreEqual(Color.Blue, row6.Cells[ 2].Style.ForeColor, MSG.MONTH05);
+            Assert.AreEqual(Color.Blue, row5.Cells[ 3].Style.ForeColor, MSG.MONTH06);
+            Assert.AreEqual(Color.Blue, row5.Cells[ 4].Style.ForeColor, MSG.MONTH07);
+            Assert.AreEqual(Color.Blue, row4.Cells[ 5].Style.ForeColor, MSG.MONTH08);
+            Assert.AreEqual(Color.Blue, row4.Cells[ 6].Style.ForeColor, MSG.MONTH09);
+            Assert.AreEqual(Color.Blue, row5.Cells[ 7].Style.ForeColor, MSG.MONTH10);
+            Assert.AreEqual(Color.Blue, row5.Cells[ 8].Style.ForeColor, MSG.MONTH11);
+            Assert.AreEqual(Color.Blue, row1.Cells[ 9].Style.ForeColor, MSG.MONTH12);
+            Assert.AreEqual(Color.Blue, row1.Cells[10].Style.ForeColor, MSG.MONTH01);
+            Assert.AreEqual(Color.Blue, row1.Cells[11].Style.ForeColor, MSG.MONTH02);
+            Assert.AreEqual(Color.Blue, row1.Cells[12].Style.ForeColor, MSG.MONTH03);
+        }
+
+        /// <summary>
+        /// 0円の光熱費しかない場合のテスト
+        /// エラーにならずに表示されればそれでOK
+        /// </summary>
+        [Test]
+        public void DgvErrorNotOccuredWithOnlyZero()
+        {
+            ShowSubEnergy(CSV_ONLY_ZERO);
+
+            var rowEl = CtDgvEl().Rows[0];
+            Assert.AreEqual(0, rowEl.Cells[3].Value, MSG.MONTH06);
+            var rowGs = CtDgvGs().Rows[0];
+            Assert.AreEqual(0, rowGs.Cells[3].Value, MSG.MONTH06);
+            var rowWt = CtDgvWt().Rows[0];
+            Assert.AreEqual(0, rowWt.Cells[3].Value, MSG.MONTH06);
         }
     }
 }

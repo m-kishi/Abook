@@ -17,6 +17,17 @@
         /// <summary>支出情報リスト</summary>
         private List<AbExpense> expenses;
 
+        /// <summary>定数の定義</summary>
+        private class DEC
+        {
+            /// <summary>値なし</summary>
+            public const decimal NAN = decimal.MinusOne;
+            /// <summary>最小値</summary>
+            public const decimal MIN = decimal.MinValue;
+            /// <summary>最大値</summary>
+            public const decimal MAX = decimal.MaxValue;
+        }
+
         /// <summary>
         /// 光熱費クラス
         /// </summary>
@@ -81,12 +92,18 @@
                     var filter = energies.Where(eng => eng.Date.Month == dtAve.Month);
                     if (filter != null && filter.Count() > 0)
                     {
+                        // 平均
                         rowAveEl.Cells[cIdx].Value = decimal.Round(filter.Average(eng => eng.El), MidpointRounding.AwayFromZero);
                         rowAveGs.Cells[cIdx].Value = decimal.Round(filter.Average(eng => eng.Gs), MidpointRounding.AwayFromZero);
                         rowAveWt.Cells[cIdx].Value = decimal.Round(filter.Average(eng => eng.Wt), MidpointRounding.AwayFromZero);
-                        minEl[cIdx - 1] = filter.Min(eng => eng.El); maxEl[cIdx - 1] = filter.Max(eng => eng.El);
-                        minGs[cIdx - 1] = filter.Min(eng => eng.Gs); maxGs[cIdx - 1] = filter.Max(eng => eng.Gs);
-                        minWt[cIdx - 1] = filter.Min(eng => eng.Wt); maxWt[cIdx - 1] = filter.Max(eng => eng.Wt);
+                        // 最小
+                        minEl[cIdx - 1] = filter.Where(eng => eng.El > 0).DefaultIfEmpty(new Energy() { El = DEC.MIN }).Min(eng => eng.El);
+                        minGs[cIdx - 1] = filter.Where(eng => eng.Gs > 0).DefaultIfEmpty(new Energy() { Gs = DEC.MIN }).Min(eng => eng.Gs);
+                        minWt[cIdx - 1] = filter.Where(eng => eng.Wt > 0).DefaultIfEmpty(new Energy() { Wt = DEC.MIN }).Min(eng => eng.Wt);
+                        // 最大
+                        maxEl[cIdx - 1] = filter.Where(eng => eng.El > 0).DefaultIfEmpty(new Energy() { El = DEC.MAX }).Max(eng => eng.El);
+                        maxGs[cIdx - 1] = filter.Where(eng => eng.Gs > 0).DefaultIfEmpty(new Energy() { Gs = DEC.MAX }).Max(eng => eng.Gs);
+                        maxWt[cIdx - 1] = filter.Where(eng => eng.Wt > 0).DefaultIfEmpty(new Energy() { Wt = DEC.MAX }).Max(eng => eng.Wt);
                     }
                 }
 
@@ -102,9 +119,9 @@
                             eng.Date.Year == dtStr.Year && eng.Date.Month == dtStr.Month
                         ).FirstOrDefault();
 
-                        var valueEl = (energy == null ? -1m : energy.El);
-                        var valueGs = (energy == null ? -1m : energy.Gs);
-                        var valueWt = (energy == null ? -1m : energy.Wt);
+                        var valueEl = (energy == null ? DEC.NAN : energy.El);
+                        var valueGs = (energy == null ? DEC.NAN : energy.Gs);
+                        var valueWt = (energy == null ? DEC.NAN : energy.Wt);
                         SetCellValue(rowEl.Cells[cIdx], valueEl, minEl[cIdx - 1], maxEl[cIdx - 1]);
                         SetCellValue(rowGs.Cells[cIdx], valueGs, minGs[cIdx - 1], maxGs[cIdx - 1]);
                         SetCellValue(rowWt.Cells[cIdx], valueWt, minWt[cIdx - 1], maxWt[cIdx - 1]);
@@ -149,7 +166,7 @@
         /// <param name="max"  >最大値</param>
         private void SetCellValue(DataGridViewCell cell, decimal value, decimal min, decimal max)
         {
-            if (value == -1) return;
+            if (value == DEC.NAN) return;
 
             cell.Value = value;
             if (value == min) { cell.Style.ForeColor = Color.Blue; }
