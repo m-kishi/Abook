@@ -107,6 +107,8 @@
             public const string MONTH = "MM";
             /// <summary>通貨:円"{0:c}"</summary>
             public const string YEN = "{0:c}";
+            /// <summary>カンマ編集</summary>
+            public const string COMMA = "{0:#,0}";
             /// <summary>タイトル(yyyy年MM月)</summary>
             public const string TITLE = "yyyy年MM月";
             /// <summary>日別"{0}-01"</summary>

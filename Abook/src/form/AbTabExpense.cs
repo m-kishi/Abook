@@ -74,14 +74,24 @@
         }
 
         /// <summary>
-        /// セルの編集終了後に種別の自動補完を行う
+        /// セルの編集終了後の処理
+        /// ・種別の自動補完
+        /// ・金額のカンマ編集
         /// </summary>
         private void DgvExpense_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
+            //種別の自動補完
             if (DgvExpense.CurrentCell.ColumnIndex == 1)
             {
                 var row = DgvExpense.Rows[DgvExpense.CurrentCell.RowIndex];
                 row.Cells[COL.TYPE].Value = abComplete.GetType(row.Cells[COL.NAME].Value as string);
+            }
+
+            //金額のカンマ編集
+            if (DgvExpense.CurrentCell.ColumnIndex == 3)
+            {
+                var row = DgvExpense.Rows[DgvExpense.CurrentCell.RowIndex];
+                row.Cells[COL.COST].Value = AbUtilities.ToComma(row.Cells[COL.COST].Value);
             }
         }
 
