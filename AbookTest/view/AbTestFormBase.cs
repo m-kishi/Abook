@@ -200,36 +200,36 @@
         }
 
         /// <summary>
-        /// グラフタブ前年ボタン取得
+        /// 推移(グラフ)タブ前年ボタン取得
         /// </summary>
-        /// <returns>グラフタブ前年ボタン</returns>
+        /// <returns>推移(グラフ)タブ前年ボタン</returns>
         protected ButtonTester TsGraphicBtnPrevYear()
         {
             return TsButton("HeadGraphic.BtnPrevYear");
         }
 
         /// <summary>
-        /// グラフタブ前月ボタン取得
+        /// 推移(グラフ)タブ前月ボタン取得
         /// </summary>
-        /// <returns>グラフタブ前月ボタン</returns>
+        /// <returns>推移(グラフ)タブ前月ボタン</returns>
         protected ButtonTester TsGraphicBtnPrevMonth()
         {
             return TsButton("HeadGraphic.BtnPrevMonth");
         }
 
         /// <summary>
-        /// グラフタブ翌月ボタン取得
+        /// 推移(グラフ)タブ翌月ボタン取得
         /// </summary>
-        /// <returns>グラフタブ翌月ボタン</returns>
+        /// <returns>推移(グラフ)タブ翌月ボタン</returns>
         protected ButtonTester TsGraphicBtnNextMonth()
         {
             return TsButton("HeadGraphic.BtnNextMonth");
         }
 
         /// <summary>
-        /// グラフタブ翌年ボタン取得
+        /// 推移(グラフ)タブ翌年ボタン取得
         /// </summary>
-        /// <returns>グラフタブ翌年ボタン</returns>
+        /// <returns>推移(グラフ)タブ翌年ボタン</returns>
         protected ButtonTester TsGraphicBtnNextYear()
         {
             return TsButton("HeadGraphic.BtnNextYear");
@@ -338,9 +338,9 @@
         }
 
         /// <summary>
-        /// グラフタブヘッダ取得
+        /// 推移(グラフ)タブヘッダ取得
         /// </summary>
-        /// <returns>グラフタブヘッダ</returns>
+        /// <returns>推移(グラフ)タブヘッダ</returns>
         protected AbHeaderControl CtHeadGraphic()
         {
             return CtControl<AbHeaderControl>("HeadGraphic");

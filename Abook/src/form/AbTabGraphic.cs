@@ -6,7 +6,7 @@
     using System.Windows.Forms;
 
     /// <summary>
-    /// グラフタブ
+    /// 推移(グラフ)タブ
     /// </summary>
     public partial class AbFormMain
     {
@@ -14,7 +14,7 @@
         private AbGraphicManager abGraphicManager;
 
         /// <summary>
-        /// グラフタブ初期化
+        /// 推移(グラフ)タブ初期化
         /// </summary>
         /// <param name="summaries">集計値リスト</param>
         private void InitTabGraphic(List<AbSummary> summaries)
@@ -31,7 +31,7 @@
         }
 
         /// <summary>
-        /// グラフタブ表示
+        /// 推移(グラフ)タブ表示
         /// </summary>
         /// <param name="g">Graphicsオブジェクト</param>
         /// <param name="GraphicManager">グラフデータ管理</param>
