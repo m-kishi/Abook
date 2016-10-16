@@ -217,10 +217,10 @@
             /// <summary>秘密収支に属する種別</summary>
             public static readonly string[] PRIVATE = { TYPE.PRVI, TYPE.PRVO };
 
-            /// <summary>集計タブ</summary>
+            /// <summary>月次タブ</summary>
             public static class SUMMARY
             {
-                /// <summary>集計タブでの支出対象</summary>
+                /// <summary>月次タブでの支出対象</summary>
                 public static readonly string[] EXPE =
                 {
                     TYPE.FOOD, TYPE.OTFD, TYPE.GOOD, TYPE.FRND, TYPE.TRFC, TYPE.PLAY,

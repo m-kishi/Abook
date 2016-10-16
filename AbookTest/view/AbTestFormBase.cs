@@ -164,36 +164,36 @@
         }
 
         /// <summary>
-        /// 集計タブ前年ボタン取得
+        /// 月次タブ前年ボタン取得
         /// </summary>
-        /// <returns>集計タブ前年ボタン</returns>
+        /// <returns>月次タブ前年ボタン</returns>
         protected ButtonTester TsSummaryBtnPrevYear()
         {
             return TsButton("HeadSummary.BtnPrevYear");
         }
 
         /// <summary>
-        /// 集計タブ前月ボタン取得
+        /// 月次タブ前月ボタン取得
         /// </summary>
-        /// <returns>集計タブ前月ボタン</returns>
+        /// <returns>月次タブ前月ボタン</returns>
         protected ButtonTester TsSummaryBtnPrevMonth()
         {
             return TsButton("HeadSummary.BtnPrevMonth");
         }
 
         /// <summary>
-        /// 集計タブ翌月ボタン取得
+        /// 月次タブ翌月ボタン取得
         /// </summary>
-        /// <returns>集計タブ翌月ボタン</returns>
+        /// <returns>月次タブ翌月ボタン</returns>
         protected ButtonTester TsSummaryBtnNextMonth()
         {
             return TsButton("HeadSummary.BtnNextMonth");
         }
 
         /// <summary>
-        /// 集計タブ翌年ボタン取得
+        /// 月次タブ翌年ボタン取得
         /// </summary>
-        /// <returns>集計タブ翌年ボタン</returns>
+        /// <returns>月次タブ翌年ボタン</returns>
         protected ButtonTester TsSummaryBtnNextYear()
         {
             return TsButton("HeadSummary.BtnNextYear");
@@ -299,9 +299,9 @@
         }
 
         /// <summary>
-        /// 集計タブヘッダ取得
+        /// 月次タブヘッダ取得
         /// </summary>
-        /// <returns>集計タブヘッダ</returns>
+        /// <returns>月次タブヘッダ</returns>
         protected AbHeaderControl CtHeadSummary()
         {
             return CtControl<AbHeaderControl>("HeadSummary");
