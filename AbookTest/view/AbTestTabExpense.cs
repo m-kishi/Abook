@@ -331,7 +331,147 @@
 
             /// <summary>
             /// CellEndEditテスト
-            /// セル:名称セル以外
+            /// セル:金額セル
+            /// 金額:空白
+            /// </summary>
+            [Test]
+            public void DgvExpenseCellEndEditWithCostEmpty()
+            {
+                ShowFormMain(CSV_EXIST, TAB_IDX);
+
+                var dgvExpense = CtDgvExpense();
+                var idxRow = dgvExpense.Rows.Count - 1;
+                dgvExpense.CurrentCell = dgvExpense.Rows[idxRow].Cells[COL.COST];
+                dgvExpense.CurrentCell.Value = "";
+
+                TsDgvExpense().FireEvent("CellEndEdit", (new DataGridViewCellEventArgs(3, idxRow)));
+
+                Assert.AreEqual(string.Empty, dgvExpense.Rows[idxRow].Cells[COL.COST].Value);
+            }
+
+            /// <summary>
+            /// CellEndEditテスト
+            /// セル:金額セル
+            /// 金額:1000未満
+            /// </summary>
+            [Test]
+            public void DgvExpenseCellEndEditWithCostUnder1000()
+            {
+                ShowFormMain(CSV_EXIST, TAB_IDX);
+
+                var dgvExpense = CtDgvExpense();
+                var idxRow = dgvExpense.Rows.Count - 1;
+                dgvExpense.CurrentCell = dgvExpense.Rows[idxRow].Cells[COL.COST];
+                dgvExpense.CurrentCell.Value = "999";
+
+                TsDgvExpense().FireEvent("CellEndEdit", (new DataGridViewCellEventArgs(3, idxRow)));
+
+                Assert.AreEqual("999", dgvExpense.Rows[idxRow].Cells[COL.COST].Value);
+            }
+
+            /// <summary>
+            /// CellEndEditテスト
+            /// セル:金額セル
+            /// 金額:カンマ編集あり(1箇所)
+            /// </summary>
+            [Test]
+            public void DgvExpenseCellEndEditWithCostIs1000()
+            {
+                ShowFormMain(CSV_EXIST, TAB_IDX);
+
+                var dgvExpense = CtDgvExpense();
+                var idxRow = dgvExpense.Rows.Count - 1;
+                dgvExpense.CurrentCell = dgvExpense.Rows[idxRow].Cells[COL.COST];
+                dgvExpense.CurrentCell.Value = "1000";
+
+                TsDgvExpense().FireEvent("CellEndEdit", (new DataGridViewCellEventArgs(3, idxRow)));
+
+                Assert.AreEqual("1,000", dgvExpense.Rows[idxRow].Cells[COL.COST].Value);
+            }
+
+            /// <summary>
+            /// CellEndEditテスト
+            /// セル:金額セル
+            /// 金額:カンマ編集あり(2箇所)
+            /// </summary>
+            [Test]
+            public void DgvExpenseCellEndEditWithCostIs1000000()
+            {
+                ShowFormMain(CSV_EXIST, TAB_IDX);
+
+                var dgvExpense = CtDgvExpense();
+                var idxRow = dgvExpense.Rows.Count - 1;
+                dgvExpense.CurrentCell = dgvExpense.Rows[idxRow].Cells[COL.COST];
+                dgvExpense.CurrentCell.Value = "1000000";
+
+                TsDgvExpense().FireEvent("CellEndEdit", (new DataGridViewCellEventArgs(3, idxRow)));
+
+                Assert.AreEqual("1,000,000", dgvExpense.Rows[idxRow].Cells[COL.COST].Value);
+            }
+
+            /// <summary>
+            /// CellEndEditテスト
+            /// セル:金額セル
+            /// 金額:カンマ編集あり(3箇所)
+            /// </summary>
+            [Test]
+            public void DgvExpenseCellEndEditWithCostIs1000000000()
+            {
+                ShowFormMain(CSV_EXIST, TAB_IDX);
+
+                var dgvExpense = CtDgvExpense();
+                var idxRow = dgvExpense.Rows.Count - 1;
+                dgvExpense.CurrentCell = dgvExpense.Rows[idxRow].Cells[COL.COST];
+                dgvExpense.CurrentCell.Value = "1000000000";
+
+                TsDgvExpense().FireEvent("CellEndEdit", (new DataGridViewCellEventArgs(3, idxRow)));
+
+                Assert.AreEqual("1,000,000,000", dgvExpense.Rows[idxRow].Cells[COL.COST].Value);
+            }
+
+            /// <summary>
+            /// CellEndEditテスト
+            /// セル:金額セル
+            /// 金額:オーバーフロー
+            /// </summary>
+            [Test]
+            public void DgvExpenseCellEndEditWithCostIsOverflow()
+            {
+                ShowFormMain(CSV_EXIST, TAB_IDX);
+
+                var dgvExpense = CtDgvExpense();
+                var idxRow = dgvExpense.Rows.Count - 1;
+                dgvExpense.CurrentCell = dgvExpense.Rows[idxRow].Cells[COL.COST];
+                dgvExpense.CurrentCell.Value = "99999999999999999999999999999";
+
+                TsDgvExpense().FireEvent("CellEndEdit", (new DataGridViewCellEventArgs(3, idxRow)));
+
+                Assert.AreEqual("", dgvExpense.Rows[idxRow].Cells[COL.COST].Value);
+            }
+
+            /// <summary>
+            /// CellEndEditテスト
+            /// セル:金額セル
+            /// 金額:数値でない
+            /// </summary>
+            [Test]
+            public void DgvExpenseCellEndEditWithCostIsNotNumber()
+            {
+                ShowFormMain(CSV_EXIST, TAB_IDX);
+
+                var dgvExpense = CtDgvExpense();
+                var idxRow = dgvExpense.Rows.Count - 1;
+                dgvExpense.CurrentCell = dgvExpense.Rows[idxRow].Cells[COL.COST];
+                dgvExpense.CurrentCell.Value = "not number char";
+
+                TsDgvExpense().FireEvent("CellEndEdit", (new DataGridViewCellEventArgs(3, idxRow)));
+
+                Assert.AreEqual("", dgvExpense.Rows[idxRow].Cells[COL.COST].Value);
+            }
+
+            /// <summary>
+            /// CellEndEditテスト
+            /// セル:名称・金額セル以外(日付セル)
             /// </summary>
             [Test]
             public void DgvExpenseCellEndEditWithNotNameCell()

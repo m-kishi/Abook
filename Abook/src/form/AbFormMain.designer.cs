@@ -308,7 +308,7 @@
             this.TabSummary.Padding = new System.Windows.Forms.Padding(3);
             this.TabSummary.Size = new System.Drawing.Size(408, 291);
             this.TabSummary.TabIndex = 6;
-            this.TabSummary.Text = "集計";
+            this.TabSummary.Text = "月次";
             this.TabSummary.UseVisualStyleBackColor = true;
             // 
             // HeadSummary
@@ -493,7 +493,7 @@
             this.TabGraphic.Padding = new System.Windows.Forms.Padding(3);
             this.TabGraphic.Size = new System.Drawing.Size(408, 291);
             this.TabGraphic.TabIndex = 24;
-            this.TabGraphic.Text = "グラフ";
+            this.TabGraphic.Text = "推移";
             this.TabGraphic.UseVisualStyleBackColor = true;
             // 
             // HeadGraphic

@@ -107,6 +107,8 @@
             public const string MONTH = "MM";
             /// <summary>通貨:円"{0:c}"</summary>
             public const string YEN = "{0:c}";
+            /// <summary>カンマ編集</summary>
+            public const string COMMA = "{0:#,0}";
             /// <summary>タイトル(yyyy年MM月)</summary>
             public const string TITLE = "yyyy年MM月";
             /// <summary>日別"{0}-01"</summary>
@@ -217,10 +219,10 @@
             /// <summary>秘密収支に属する種別</summary>
             public static readonly string[] PRIVATE = { TYPE.PRVI, TYPE.PRVO };
 
-            /// <summary>集計タブ</summary>
+            /// <summary>月次タブ</summary>
             public static class SUMMARY
             {
-                /// <summary>集計タブでの支出対象</summary>
+                /// <summary>月次タブでの支出対象</summary>
                 public static readonly string[] EXPE =
                 {
                     TYPE.FOOD, TYPE.OTFD, TYPE.GOOD, TYPE.FRND, TYPE.TRFC, TYPE.PLAY,

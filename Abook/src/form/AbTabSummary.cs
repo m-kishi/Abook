@@ -7,7 +7,7 @@
     using UTIL = Abook.AbUtilities;
 
     /// <summary>
-    /// 集計タブ
+    /// 月次タブ
     /// </summary>
     public partial class AbFormMain
     {
@@ -15,7 +15,7 @@
         private AbExpenseManager abExpenseManager;
 
         /// <summary>
-        /// 集計タブ初期化
+        /// 月次タブ初期化
         /// </summary>
         /// <param name="summaries">集計値リスト</param>
         private void InitTabSummary(List<AbSummary> summaries)
@@ -25,7 +25,7 @@
         }
 
         /// <summary>
-        /// 集計タブ表示
+        /// 月次タブ表示
         /// </summary>
         /// <param name="ExpenseManager">支出情報管理処理</param>
         private void SetTabSummary(Action ExpenseManager)

@@ -31,6 +31,28 @@
         }
 
         /// <summary>
+        /// 金額のカンマ編集
+        /// </summary>
+        /// <param name="cost">金額</param>
+        /// <param name="expected">期待値</param>
+        [TestCase(         0,             "0")]
+        [TestCase(       999,           "999")]
+        [TestCase(      1000,         "1,000")]
+        [TestCase(      9999,         "9,999")]
+        [TestCase(     10000,        "10,000")]
+        [TestCase(   1000000,     "1,000,000")]
+        [TestCase(1000000000, "1,000,000,000")]
+        [TestCase("", "")]
+        [TestCase(null, "")]
+        [TestCase("not number char", "")]
+        [TestCase("99999999999999999999999999999", "")]
+        public void ToComma(object cost, string expected)
+        {
+            var actual = AbUtilities.ToComma(cost);
+            Assert.AreEqual(expected, actual);
+        }
+
+        /// <summary>
         /// 種別IDへの変換
         /// </summary>
         /// <param name="type">種別</param>

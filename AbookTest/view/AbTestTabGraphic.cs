@@ -9,7 +9,7 @@
     using FMT = Abook.AbConstants.FMT;
 
     /// <summary>
-    /// グラフタブテスト
+    /// 推移(グラフ)タブテスト
     /// </summary>
     [TestFixture]
     public class AbTestTabGraphic : AbTestFormBase

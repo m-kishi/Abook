@@ -25,6 +25,24 @@
         }
 
         /// <summary>
+        /// 金額のカンマ編集
+        /// </summary>
+        /// <param name="cost">金額</param>
+        /// <returns>カンマ編集後文字列</returns>
+        public static string ToComma(object cost)
+        {
+            var value = 0m;
+            if (cost != null && decimal.TryParse(cost.ToString(), out value))
+            {
+                return string.Format(FMT.COMMA, value);
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+
+        /// <summary>
         /// 種別IDへの変換
         /// </summary>
         /// <param name="type">種別</param>

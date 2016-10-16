@@ -12,7 +12,7 @@
     using TYPE = Abook.AbConstants.TYPE;
 
     /// <summary>
-    /// 集計タブテスト
+    /// 月次タブテスト
     /// </summary>
     [TestFixture]
     public class AbTestTabSummary : AbTestFormBase
