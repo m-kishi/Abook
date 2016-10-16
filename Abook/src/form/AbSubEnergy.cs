@@ -77,30 +77,24 @@
                 dtStr = new DateTime(dtStr.Year - (dtStr.Month < 4 ? 1 : 0), 4,  1);
                 dtEnd = new DateTime(dtEnd.Year + (dtEnd.Month < 4 ? 0 : 1), 3, 31);
 
-                int count = dtEnd.Year - dtStr.Year + 1;
+                int count = dtEnd.Year - dtStr.Year;
                 DgvEl.Rows.Clear(); DgvEl.Rows.Add(count);
                 DgvGs.Rows.Clear(); DgvGs.Rows.Add(count);
                 DgvWt.Rows.Clear(); DgvWt.Rows.Add(count);
 
-                //平均(最大値・最小値も同時に計算)
-                var dtAve = dtStr;
-                var rowAveEl = DgvEl.Rows[DgvEl.Rows.Count - 1]; rowAveEl.Cells[0].Value = "ave";
-                var rowAveGs = DgvGs.Rows[DgvEl.Rows.Count - 1]; rowAveGs.Cells[0].Value = "ave";
-                var rowAveWt = DgvWt.Rows[DgvEl.Rows.Count - 1]; rowAveWt.Cells[0].Value = "ave";
-                for (int cIdx = 1; cIdx <= 12; cIdx++, dtAve = dtAve.AddMonths(1))
+                //最大値・最小値
+                var dt = dtStr;
+                for (int cIdx = 1; cIdx <= 12; cIdx++, dt = dt.AddMonths(1))
                 {
-                    var filter = energies.Where(eng => eng.Date.Month == dtAve.Month);
+                    var filter = energies.Where(eng => eng.Date.Month == dt.Month);
                     if (filter != null && filter.Count() > 0)
                     {
-                        // 平均
-                        rowAveEl.Cells[cIdx].Value = decimal.Round(filter.Average(eng => eng.El), MidpointRounding.AwayFromZero);
-                        rowAveGs.Cells[cIdx].Value = decimal.Round(filter.Average(eng => eng.Gs), MidpointRounding.AwayFromZero);
-                        rowAveWt.Cells[cIdx].Value = decimal.Round(filter.Average(eng => eng.Wt), MidpointRounding.AwayFromZero);
-                        // 最小
+                        //最小
                         minEl[cIdx - 1] = filter.Where(eng => eng.El > 0).DefaultIfEmpty(new Energy() { El = DEC.MIN }).Min(eng => eng.El);
                         minGs[cIdx - 1] = filter.Where(eng => eng.Gs > 0).DefaultIfEmpty(new Energy() { Gs = DEC.MIN }).Min(eng => eng.Gs);
                         minWt[cIdx - 1] = filter.Where(eng => eng.Wt > 0).DefaultIfEmpty(new Energy() { Wt = DEC.MIN }).Min(eng => eng.Wt);
-                        // 最大
+
+                        //最大
                         maxEl[cIdx - 1] = filter.Where(eng => eng.El > 0).DefaultIfEmpty(new Energy() { El = DEC.MAX }).Max(eng => eng.El);
                         maxGs[cIdx - 1] = filter.Where(eng => eng.Gs > 0).DefaultIfEmpty(new Energy() { Gs = DEC.MAX }).Max(eng => eng.Gs);
                         maxWt[cIdx - 1] = filter.Where(eng => eng.Wt > 0).DefaultIfEmpty(new Energy() { Wt = DEC.MAX }).Max(eng => eng.Wt);

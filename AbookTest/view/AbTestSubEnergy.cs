@@ -394,9 +394,9 @@
         public void DgvCountWithOnlyEl()
         {
             ShowSubEnergy(CSV_ONLY_EL);
-            Assert.AreEqual(2, CtDgvEl().Rows.Count);
-            Assert.AreEqual(2, CtDgvGs().Rows.Count);
-            Assert.AreEqual(2, CtDgvWt().Rows.Count);
+            Assert.AreEqual(1, CtDgvEl().Rows.Count);
+            Assert.AreEqual(1, CtDgvGs().Rows.Count);
+            Assert.AreEqual(1, CtDgvWt().Rows.Count);
         }
 
         /// <summary>
@@ -407,9 +407,9 @@
         public void DgvCountWithOnlyGs()
         {
             ShowSubEnergy(CSV_ONLY_GS);
-            Assert.AreEqual(3, CtDgvEl().Rows.Count);
-            Assert.AreEqual(3, CtDgvGs().Rows.Count);
-            Assert.AreEqual(3, CtDgvWt().Rows.Count);
+            Assert.AreEqual(2, CtDgvEl().Rows.Count);
+            Assert.AreEqual(2, CtDgvGs().Rows.Count);
+            Assert.AreEqual(2, CtDgvWt().Rows.Count);
         }
 
         /// <summary>
@@ -420,9 +420,9 @@
         public void DgvCountWithOnlyWt()
         {
             ShowSubEnergy(CSV_ONLY_WT);
-            Assert.AreEqual(4, CtDgvEl().Rows.Count);
-            Assert.AreEqual(4, CtDgvGs().Rows.Count);
-            Assert.AreEqual(4, CtDgvWt().Rows.Count);
+            Assert.AreEqual(3, CtDgvEl().Rows.Count);
+            Assert.AreEqual(3, CtDgvGs().Rows.Count);
+            Assert.AreEqual(3, CtDgvWt().Rows.Count);
         }
 
         /// <summary>
@@ -432,9 +432,9 @@
         public void DgvCountWithEnergies()
         {
             ShowSubEnergy(CSV_ENERGIES);
-            Assert.AreEqual(7, CtDgvEl().Rows.Count);
-            Assert.AreEqual(7, CtDgvGs().Rows.Count);
-            Assert.AreEqual(7, CtDgvWt().Rows.Count);
+            Assert.AreEqual(6, CtDgvEl().Rows.Count);
+            Assert.AreEqual(6, CtDgvGs().Rows.Count);
+            Assert.AreEqual(6, CtDgvWt().Rows.Count);
         }
 
         /// <summary>
@@ -558,84 +558,6 @@
             Assert.AreEqual(2200, row3.Cells[10].Value, MSG.MONTH01);
             Assert.AreEqual(2300, row3.Cells[11].Value, MSG.MONTH02);
             Assert.AreEqual(2400, row3.Cells[12].Value, MSG.MONTH03);
-        }
-
-        /// <summary>
-        /// 光熱費平均のテスト
-        /// 電気代のみ
-        /// </summary>
-        [Test]
-        public void DgvAverageWithOnlyEl()
-        {
-            ShowSubEnergy(CSV_ONLY_EL);
-
-            var dgv = CtDgvEl();
-            var row = dgv.Rows[dgv.Rows.Count - 1];
-            Assert.AreEqual("ave", row.Cells[ 0].Value);
-            Assert.AreEqual( 3300, row.Cells[ 1].Value, MSG.MONTH04);
-            Assert.AreEqual( 3700, row.Cells[ 2].Value, MSG.MONTH05);
-            Assert.AreEqual( null, row.Cells[ 3].Value, MSG.MONTH06);
-            Assert.AreEqual( 6300, row.Cells[ 4].Value, MSG.MONTH07);
-            Assert.AreEqual(12500, row.Cells[ 5].Value, MSG.MONTH08);
-            Assert.AreEqual( 2800, row.Cells[ 6].Value, MSG.MONTH09);
-            Assert.AreEqual( 2900, row.Cells[ 7].Value, MSG.MONTH10);
-            Assert.AreEqual( 3000, row.Cells[ 8].Value, MSG.MONTH11);
-            Assert.AreEqual( null, row.Cells[ 9].Value, MSG.MONTH12);
-            Assert.AreEqual( 2100, row.Cells[10].Value, MSG.MONTH01);
-            Assert.AreEqual( 2500, row.Cells[11].Value, MSG.MONTH02);
-            Assert.AreEqual( 2900, row.Cells[12].Value, MSG.MONTH03);
-        }
-
-        /// <summary>
-        /// 光熱費平均のテスト
-        /// ガス代のみ
-        /// </summary>
-        [Test]
-        public void DgvAverageWithOnlyGs()
-        {
-            ShowSubEnergy(CSV_ONLY_GS);
-
-            var dgv = CtDgvGs();
-            var row = dgv.Rows[dgv.Rows.Count - 1];
-            Assert.AreEqual("ave", row.Cells[ 0].Value);
-            Assert.AreEqual( 3800, row.Cells[ 1].Value, MSG.MONTH04);
-            Assert.AreEqual( 4000, row.Cells[ 2].Value, MSG.MONTH05);
-            Assert.AreEqual( 4200, row.Cells[ 3].Value, MSG.MONTH06);
-            Assert.AreEqual( 4400, row.Cells[ 4].Value, MSG.MONTH07);
-            Assert.AreEqual( 4600, row.Cells[ 5].Value, MSG.MONTH08);
-            Assert.AreEqual( 4800, row.Cells[ 6].Value, MSG.MONTH09);
-            Assert.AreEqual( 5000, row.Cells[ 7].Value, MSG.MONTH10);
-            Assert.AreEqual( 5200, row.Cells[ 8].Value, MSG.MONTH11);
-            Assert.AreEqual( 5400, row.Cells[ 9].Value, MSG.MONTH12);
-            Assert.AreEqual( 3200, row.Cells[10].Value, MSG.MONTH01);
-            Assert.AreEqual( 3400, row.Cells[11].Value, MSG.MONTH02);
-            Assert.AreEqual( 3600, row.Cells[12].Value, MSG.MONTH03);
-        }
-
-        /// <summary>
-        /// 光熱費平均のテスト
-        /// 水道代のみ
-        /// </summary>
-        [Test]
-        public void DgvAverageWithOnlyWt()
-        {
-            ShowSubEnergy(CSV_ONLY_WT);
-
-            var dgv = CtDgvWt();
-            var row = dgv.Rows[dgv.Rows.Count - 1];
-            Assert.AreEqual("ave", row.Cells[ 0].Value);
-            Assert.AreEqual( 1900, row.Cells[ 1].Value, MSG.MONTH04);
-            Assert.AreEqual( 2000, row.Cells[ 2].Value, MSG.MONTH05);
-            Assert.AreEqual( 2100, row.Cells[ 3].Value, MSG.MONTH06);
-            Assert.AreEqual( 2200, row.Cells[ 4].Value, MSG.MONTH07);
-            Assert.AreEqual( 2300, row.Cells[ 5].Value, MSG.MONTH08);
-            Assert.AreEqual( 2400, row.Cells[ 6].Value, MSG.MONTH09);
-            Assert.AreEqual( 2500, row.Cells[ 7].Value, MSG.MONTH10);
-            Assert.AreEqual( 2600, row.Cells[ 8].Value, MSG.MONTH11);
-            Assert.AreEqual( 2700, row.Cells[ 9].Value, MSG.MONTH12);
-            Assert.AreEqual( 1600, row.Cells[10].Value, MSG.MONTH01);
-            Assert.AreEqual( 1700, row.Cells[11].Value, MSG.MONTH02);
-            Assert.AreEqual( 1800, row.Cells[12].Value, MSG.MONTH03);
         }
 
         /// <summary>
@@ -796,32 +718,6 @@
 
         /// <summary>
         /// 光熱費のテスト
-        /// 電気代の平均
-        /// </summary>
-        [Test]
-        public void DgvValueWithElAve()
-        {
-            ShowSubEnergy(CSV_ENERGIES);
-
-            var dgv = CtDgvEl();
-            var row = dgv.Rows[dgv.Rows.Count - 1];
-            Assert.AreEqual("ave", row.Cells[ 0].Value);
-            Assert.AreEqual( 1651, row.Cells[ 1].Value, MSG.MONTH04);
-            Assert.AreEqual( 1350, row.Cells[ 2].Value, MSG.MONTH05);
-            Assert.AreEqual( 1467, row.Cells[ 3].Value, MSG.MONTH06);
-            Assert.AreEqual( 2490, row.Cells[ 4].Value, MSG.MONTH07);
-            Assert.AreEqual( 2944, row.Cells[ 5].Value, MSG.MONTH08);
-            Assert.AreEqual( 2465, row.Cells[ 6].Value, MSG.MONTH09);
-            Assert.AreEqual( 1452, row.Cells[ 7].Value, MSG.MONTH10);
-            Assert.AreEqual( 1439, row.Cells[ 8].Value, MSG.MONTH11);
-            Assert.AreEqual( 1424, row.Cells[ 9].Value, MSG.MONTH12);
-            Assert.AreEqual( 1684, row.Cells[10].Value, MSG.MONTH01);
-            Assert.AreEqual( 1574, row.Cells[11].Value, MSG.MONTH02);
-            Assert.AreEqual( 1553, row.Cells[12].Value, MSG.MONTH03);
-        }
-
-        /// <summary>
-        /// 光熱費のテスト
         /// 2009年ガス代
         /// </summary>
         [Test]
@@ -974,32 +870,6 @@
             Assert.AreEqual(5551, row.Cells[10].Value, MSG.MONTH01);
             Assert.AreEqual(6116, row.Cells[11].Value, MSG.MONTH02);
             Assert.AreEqual(5772, row.Cells[12].Value, MSG.MONTH03);
-        }
-
-        /// <summary>
-        /// 光熱費のテスト
-        /// ガス代の平均
-        /// </summary>
-        [Test]
-        public void DgvValueWithGsAve()
-        {
-            ShowSubEnergy(CSV_ENERGIES);
-
-            var dgv = CtDgvGs();
-            var row = dgv.Rows[dgv.Rows.Count - 1];
-            Assert.AreEqual("ave", row.Cells[ 0].Value);
-            Assert.AreEqual( 5541, row.Cells[ 1].Value, MSG.MONTH04);
-            Assert.AreEqual( 4504, row.Cells[ 2].Value, MSG.MONTH05);
-            Assert.AreEqual( 4404, row.Cells[ 3].Value, MSG.MONTH06);
-            Assert.AreEqual( 4085, row.Cells[ 4].Value, MSG.MONTH07);
-            Assert.AreEqual( 3686, row.Cells[ 5].Value, MSG.MONTH08);
-            Assert.AreEqual( 3731, row.Cells[ 6].Value, MSG.MONTH09);
-            Assert.AreEqual( 4047, row.Cells[ 7].Value, MSG.MONTH10);
-            Assert.AreEqual( 4964, row.Cells[ 8].Value, MSG.MONTH11);
-            Assert.AreEqual( 4739, row.Cells[ 9].Value, MSG.MONTH12);
-            Assert.AreEqual( 4996, row.Cells[10].Value, MSG.MONTH01);
-            Assert.AreEqual( 5376, row.Cells[11].Value, MSG.MONTH02);
-            Assert.AreEqual( 5617, row.Cells[12].Value, MSG.MONTH03);
         }
 
         /// <summary>
@@ -1159,32 +1029,6 @@
         }
 
         /// <summary>
-        /// 光熱費のテスト
-        /// 水道代の平均
-        /// </summary>
-        [Test]
-        public void DgvValueWithWtAve()
-        {
-            ShowSubEnergy(CSV_ENERGIES);
-
-            var dgv = CtDgvWt();
-            var row = dgv.Rows[dgv.Rows.Count - 1];
-            Assert.AreEqual("ave", row.Cells[ 0].Value);
-            Assert.AreEqual( 1775, row.Cells[ 1].Value, MSG.MONTH04);
-            Assert.AreEqual( 1775, row.Cells[ 2].Value, MSG.MONTH05);
-            Assert.AreEqual( 1808, row.Cells[ 3].Value, MSG.MONTH06);
-            Assert.AreEqual( 1808, row.Cells[ 4].Value, MSG.MONTH07);
-            Assert.AreEqual( 1840, row.Cells[ 5].Value, MSG.MONTH08);
-            Assert.AreEqual( 1840, row.Cells[ 6].Value, MSG.MONTH09);
-            Assert.AreEqual( 1784, row.Cells[ 7].Value, MSG.MONTH10);
-            Assert.AreEqual( 1784, row.Cells[ 8].Value, MSG.MONTH11);
-            Assert.AreEqual( 1703, row.Cells[ 9].Value, MSG.MONTH12);
-            Assert.AreEqual( 1703, row.Cells[10].Value, MSG.MONTH01);
-            Assert.AreEqual( 1703, row.Cells[11].Value, MSG.MONTH02);
-            Assert.AreEqual( 1703, row.Cells[12].Value, MSG.MONTH03);
-        }
-
-        /// <summary>
         /// 最大値のテスト
         /// 電気代のみ
         /// </summary>
@@ -1199,13 +1043,13 @@
             //1年分しかデータがないためすべて最大値になる
             Assert.AreEqual(Color.Red, row1.Cells[ 1].Style.ForeColor, MSG.MONTH04);
             Assert.AreEqual(Color.Red, row1.Cells[ 2].Style.ForeColor, MSG.MONTH05);
-            // 6月は電気代なし
+            //6月は電気代なし
             Assert.AreEqual(Color.Red, row1.Cells[ 4].Style.ForeColor, MSG.MONTH07);
             Assert.AreEqual(Color.Red, row1.Cells[ 5].Style.ForeColor, MSG.MONTH08);
             Assert.AreEqual(Color.Red, row1.Cells[ 6].Style.ForeColor, MSG.MONTH09);
             Assert.AreEqual(Color.Red, row1.Cells[ 7].Style.ForeColor, MSG.MONTH10);
             Assert.AreEqual(Color.Red, row1.Cells[ 8].Style.ForeColor, MSG.MONTH11);
-            // 12月は電気代なし
+            //12月は電気代なし
             Assert.AreEqual(Color.Red, row1.Cells[10].Style.ForeColor, MSG.MONTH01);
             Assert.AreEqual(Color.Red, row1.Cells[11].Style.ForeColor, MSG.MONTH02);
             Assert.AreEqual(Color.Red, row1.Cells[11].Style.ForeColor, MSG.MONTH03);
@@ -1248,7 +1092,7 @@
 
             var dgv = CtDgvWt();
             var row2 = dgv.Rows[2];
-            
+
             //2017年がすべて最大
             Assert.AreEqual(Color.Red, row2.Cells[ 1].Style.ForeColor, MSG.MONTH04);
             Assert.AreEqual(Color.Red, row2.Cells[ 2].Style.ForeColor, MSG.MONTH05);
@@ -1279,13 +1123,13 @@
             //1年分しかデータがないためすべて最大値になる
             Assert.AreEqual(Color.Red, row1.Cells[1].Style.ForeColor, MSG.MONTH04);
             Assert.AreEqual(Color.Red, row1.Cells[2].Style.ForeColor, MSG.MONTH05);
-            // 6月は電気代なし
+            //6月は電気代なし
             Assert.AreEqual(Color.Red, row1.Cells[4].Style.ForeColor, MSG.MONTH07);
             Assert.AreEqual(Color.Red, row1.Cells[5].Style.ForeColor, MSG.MONTH08);
             Assert.AreEqual(Color.Red, row1.Cells[6].Style.ForeColor, MSG.MONTH09);
             Assert.AreEqual(Color.Red, row1.Cells[7].Style.ForeColor, MSG.MONTH10);
             Assert.AreEqual(Color.Red, row1.Cells[8].Style.ForeColor, MSG.MONTH11);
-            // 12月は電気代なし
+            //12月は電気代なし
             Assert.AreEqual(Color.Red, row1.Cells[10].Style.ForeColor, MSG.MONTH01);
             Assert.AreEqual(Color.Red, row1.Cells[11].Style.ForeColor, MSG.MONTH02);
             Assert.AreEqual(Color.Red, row1.Cells[11].Style.ForeColor, MSG.MONTH03);
@@ -1329,7 +1173,7 @@
             var dgv = CtDgvWt();
             var row1 = dgv.Rows[0];
 
-            // 2015年がすべて最小
+            //2015年がすべて最小
             Assert.AreEqual(Color.Blue, row1.Cells[ 1].Style.ForeColor, MSG.MONTH04);
             Assert.AreEqual(Color.Blue, row1.Cells[ 2].Style.ForeColor, MSG.MONTH05);
             Assert.AreEqual(Color.Blue, row1.Cells[ 3].Style.ForeColor, MSG.MONTH06);
