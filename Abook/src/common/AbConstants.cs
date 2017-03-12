@@ -156,6 +156,13 @@
             public static readonly string[] ENERGY = { EL, GS, WT };
         }
 
+        /// <summary>汎用</summary>
+        public static class CMM
+        {
+            /// <summary>金額自動補完の候補数</summary>
+            public const int MAX_COST_CANDIDATE = 3;
+        }
+
         /// <summary>種別</summary>
         public static class TYPE
         {
