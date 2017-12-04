@@ -120,7 +120,7 @@ namespace Abook
             this.Name = "AbSubType";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "AbSubType";
             this.Load += new System.EventHandler(this.AbSubType_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DgvExpense)).EndInit();

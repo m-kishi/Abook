@@ -114,7 +114,7 @@ namespace Abook
             this.Name = "AbFormVersion";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "AbFormVersion";
             this.Load += new System.EventHandler(this.AbFormVersion_Load);
             ((System.ComponentModel.ISupportInitialize)(this.PboxIcon)).EndInit();
