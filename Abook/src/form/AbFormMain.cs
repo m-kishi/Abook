@@ -60,7 +60,7 @@ namespace Abook
             }
             catch (Exception ex)
             {
-                MSG.Error(ex.Message);
+                MSG.Abort(ex.Message);
                 Application.Exit();
             }
         }

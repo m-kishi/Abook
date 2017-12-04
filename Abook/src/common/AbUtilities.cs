@@ -279,11 +279,28 @@ namespace Abook
             /// <returns>ダイアログリザルト</returns>
             public static DialogResult OK(string title, string message)
             {
+                AbDialogHook.Hook();
                 return MessageBox.Show(
                     message,
                     title,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Asterisk
+                );
+            }
+
+            /// <summary>
+            /// システムエラーダイアログ
+            /// </summary>
+            /// <param name="message">メッセージ</param>
+            /// <returns>ダイアログリザルト</returns>
+            public static DialogResult Abort(string message)
+            {
+                // フックは無し
+                return MessageBox.Show(
+                    message,
+                    "エラー",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
                 );
             }
 
@@ -294,6 +311,7 @@ namespace Abook
             /// <returns>ダイアログリザルト</returns>
             public static DialogResult Error(string message)
             {
+                AbDialogHook.Hook();
                 return MessageBox.Show(
                     message,
                     "エラー",
@@ -310,6 +328,7 @@ namespace Abook
             /// <returns>ダイアログリザルト</returns>
             public static DialogResult Warning(string title, string message)
             {
+                AbDialogHook.Hook();
                 return MessageBox.Show(
                     message,
                     title,
