@@ -40,15 +40,8 @@ namespace Abook
         /// </summary>
         private void MenuEnergy_Click(object sender, EventArgs e)
         {
-            try
-            {
-                var formEnergy = new AbSubEnergy(AbDBManager.Load(CSV_FILE));
-                formEnergy.ShowDialog();
-            }
-            catch (AbException ex)
-            {
-                MSG.Error(ex.Message);
-            }
+            var formEnergy = new AbSubEnergy(abExpenses);
+            formEnergy.ShowDialog();
         }
 
         /// <summary>

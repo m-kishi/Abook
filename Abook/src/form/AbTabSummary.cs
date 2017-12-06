@@ -92,9 +92,9 @@ namespace Abook
         {
             var label = (Label)sender;
             var subFromType = new AbSubType(
-                this,
                 label.Text,
-                abExpenseManager.CurrentDate
+                abExpenseManager.CurrentDate,
+                abExpenses
             );
             subFromType.ShowDialog();
         }

@@ -170,11 +170,11 @@ namespace Abook
             var errLine = 0;
             try
             {
-                var expenses = AbDBManager.Load(DgvExpense, out errLine);
+                abExpenses = AbDBManager.Load(DgvExpense, out errLine);
 
-                AbDBManager.Store(CSV_FILE, expenses);
+                AbDBManager.Store(CSV_FILE, abExpenses);
 
-                InitFormMain(expenses);
+                InitFormMain(abExpenses);
 
                 MSG.OK("登録完了", "正常に登録しました。");
             }

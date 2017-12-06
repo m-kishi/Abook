@@ -20,23 +20,23 @@ namespace Abook
     public partial class AbSubType : Form
     {
         /// <summary>種別</summary>
-        private string Type { get; set; }
+        private string type;
         /// <summary>対象年月</summary>
-        private DateTime DtCurrent { get; set; }
+        private DateTime dtCurrent;
         /// <summary>フォーム</summary>
-        private AbFormMain MainForm { get; set; }
+        private List<AbExpense> abExpenses;
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        /// <param name="parent" >フォーム</param>
-        /// <param name="type"   >種別    </param>
-        /// <param name="current">対象年月</param>
-        public AbSubType(AbFormMain parent, string type, DateTime current)
+        /// <param name="type"    >種別          </param>
+        /// <param name="current" >対象年月      </param>
+        /// <param name="expenses">支出情報リスト</param>
+        public AbSubType(string type, DateTime current, List<AbExpense> expenses)
         {
-            Type = type;
-            MainForm = parent;
-            DtCurrent = current;
+            this.type = type;
+            this.dtCurrent = current;
+            this.abExpenses = expenses;
 
             InitializeComponent();
         }
@@ -46,11 +46,10 @@ namespace Abook
         /// </summary>
         private void AbSubType_Load(object sender, EventArgs e)
         {
-            this.Text = Type;
+            this.Text = type;
             try
             {
-                var expenses = AbDBManager.Load(MainForm.CSV_FILE);
-                SetDgvExpense(FilterByDateType(expenses));
+                SetDgvExpense(FilterByDateType(abExpenses));
             }
             catch (AbException ex)
             {
@@ -68,9 +67,9 @@ namespace Abook
         {
             CHK.ExpNull(expenses);
             return expenses.Where(exp =>
-                   exp.Date.Year  == DtCurrent.Year
-                && exp.Date.Month == DtCurrent.Month
-                && exp.Type       == Type
+                   exp.Date.Year  == dtCurrent.Year
+                && exp.Date.Month == dtCurrent.Month
+                && exp.Type       == type
             ).ToList();
         }
 

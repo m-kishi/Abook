@@ -21,6 +21,9 @@ namespace Abook
         /// <summary>CSVファイル</summary>
         public string CSV_FILE { get; private set; }
 
+        /// <summary>支出情報リスト</summary>
+        private List<AbExpense> abExpenses;
+
         /// <summary>
         /// アプリケーションメイン
         /// </summary>
@@ -56,11 +59,14 @@ namespace Abook
         {
             try
             {
-                InitFormMain(AbDBManager.Load(CSV_FILE));
+                abExpenses = AbDBManager.Load(CSV_FILE);
+                InitFormMain(abExpenses);
             }
             catch (Exception ex)
             {
                 MSG.Abort(ex.Message);
+                this.Close();
+
                 Application.Exit();
             }
         }

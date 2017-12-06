@@ -94,10 +94,10 @@ namespace AbookTest
         /// <param name="csv">CSVファイル</param>
         protected void ShowSubType(string csv)
         {
-            var parent = new AbFormMain(csv);
             var current = new DateTime(2014, 3, 1);
+            var expenses = AbDBManager.Load(csv);
 
-            form = new AbSubType(parent, TYPE.FOOD, current);
+            form = new AbSubType(TYPE.FOOD, current, expenses);
             form.Show();
         }
 
@@ -168,10 +168,10 @@ namespace AbookTest
         [Test]
         public void DgvExpenseWithCountWithOutOfDate()
         {
-            var parent = new AbFormMain(CSV_EXIST);
             var current = new DateTime(2014, 5, 1);
+            var expenses = AbDBManager.Load(CSV_EXIST);
 
-            form = new AbSubType(parent, TYPE.FOOD, current);
+            form = new AbSubType(TYPE.FOOD, current, expenses);
             form.Show();
 
             Assert.AreEqual(0, CtDgvExpense().Rows.Count);
@@ -184,10 +184,10 @@ namespace AbookTest
         [Test]
         public void DgvExpenseWithCountWithEmptyType()
         {
-            var parent = new AbFormMain(CSV_EXIST);
             var current = new DateTime(2014, 3, 1);
+            var expenses = AbDBManager.Load(CSV_EXIST);
 
-            form = new AbSubType(parent, TYPE.HOUS, current);
+            form = new AbSubType(TYPE.HOUS, current, expenses);
             form.Show();
 
             Assert.AreEqual(0, CtDgvExpense().Rows.Count);
