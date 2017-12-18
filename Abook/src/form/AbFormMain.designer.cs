@@ -50,6 +50,7 @@ namespace Abook
             this.MenuFile      = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuExit      = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuData      = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuSearch    = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuEnergy    = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuUpload    = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuHelp      = new System.Windows.Forms.ToolStripMenuItem();
@@ -150,10 +151,17 @@ namespace Abook
             // 
             // MenuData
             // 
-            this.MenuData.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.MenuEnergy, this.MenuUpload });
+            this.MenuData.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.MenuSearch, this.MenuEnergy, this.MenuUpload });
             this.MenuData.Name = "MenuData";
             this.MenuData.Size = new System.Drawing.Size(61, 20);
             this.MenuData.Text = "データ(&D)";
+            // 
+            // MenuSearch
+            // 
+            this.MenuSearch.Name = "MenuSearch";
+            this.MenuSearch.Size = new System.Drawing.Size(152, 22);
+            this.MenuSearch.Text = "検索(&S)";
+            this.MenuSearch.Click += new System.EventHandler(this.MenuSearch_Click);
             // 
             // MenuEnergy
             // 
@@ -895,6 +903,7 @@ namespace Abook
         private System.Windows.Forms.ToolStripMenuItem MenuFile;
         private System.Windows.Forms.ToolStripMenuItem MenuExit;
         private System.Windows.Forms.ToolStripMenuItem MenuData;
+        private System.Windows.Forms.ToolStripMenuItem MenuSearch;
         private System.Windows.Forms.ToolStripMenuItem MenuEnergy;
         private System.Windows.Forms.ToolStripMenuItem MenuUpload;
         private System.Windows.Forms.ToolStripMenuItem MenuHelp;

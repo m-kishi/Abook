@@ -95,6 +95,12 @@
     <Compile Include="src\form\AbSubEnergy.Designer.cs">
       <DependentUpon>AbSubEnergy.cs</DependentUpon>
     </Compile>
+    <Compile Include="src\form\AbSubSearch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\form\AbSubSearch.Designer.cs">
+      <DependentUpon>AbSubSearch.cs</DependentUpon>
+    </Compile>
     <Compile Include="src\form\AbSubType.cs">
       <SubType>Form</SubType>
     </Compile>

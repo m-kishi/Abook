@@ -36,6 +36,15 @@ namespace Abook
         }
 
         /// <summary>
+        /// 検索サブフォーム表示
+        /// </summary>
+        private void MenuSearch_Click(object sender, EventArgs e)
+        {
+            var formSearch = new AbSubSearch(abExpenses);
+            formSearch.ShowDialog();
+        }
+
+        /// <summary>
         /// 光熱費情報表示
         /// </summary>
         private void MenuEnergy_Click(object sender, EventArgs e)
