@@ -40,8 +40,15 @@ namespace Abook
         /// </summary>
         private void MenuSearch_Click(object sender, EventArgs e)
         {
-            var formSearch = new AbSubSearch(abExpenses);
-            formSearch.ShowDialog();
+            try
+            {
+                var formSearch = new AbSubSearch(abExpenses);
+                formSearch.ShowDialog();
+            }
+            catch (AbException ex)
+            {
+                MSG.Error(ex.Message);
+            }
         }
 
         /// <summary>
@@ -49,8 +56,15 @@ namespace Abook
         /// </summary>
         private void MenuEnergy_Click(object sender, EventArgs e)
         {
-            var formEnergy = new AbSubEnergy(abExpenses);
-            formEnergy.ShowDialog();
+            try
+            {
+                var formEnergy = new AbSubEnergy(abExpenses);
+                formEnergy.ShowDialog();
+            }
+            catch (AbException ex)
+            {
+                MSG.Error(ex.Message);
+            }
         }
 
         /// <summary>

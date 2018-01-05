@@ -11,6 +11,7 @@ namespace AbookTest
     using NUnit.Framework;
     using NUnit.Extensions.Forms;
     using TT   = AbTestTool;
+    using EX   = Abook.AbException.EX;
     using COL  = Abook.AbConstants.COL;
     using CSV  = Abook.AbConstants.CSV;
     using TYPE = Abook.AbConstants.TYPE;
@@ -149,6 +150,19 @@ namespace AbookTest
         {
             ShowSubSearch(CSV_EMPTY);
             Assert.IsTrue(CtAbSubSearch().Visible);
+        }
+
+        /// <summary>
+        /// Loadテスト
+        /// 引数:支出情報リストがNULL
+        /// </summary>
+        [Test, RequiresSTA]
+        public void LoadWithNullExpenses()
+        {
+            var ex = Assert.Throws<AbException>(() =>
+                new AbSubSearch(null)
+            );
+            Assert.AreEqual(EX.EXPENSES_NULL, ex.Message);
         }
 
         /// <summary>
