@@ -85,6 +85,7 @@
     <Compile Include="view\AbTestTabGraphic.cs" />
     <Compile Include="view\AbTestTabPrivate.cs" />
     <Compile Include="view\AbTestTabSummary.cs" />
+    <Compile Include="view\AbTestSubSearch.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Abook\Abook.csproj">

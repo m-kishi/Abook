@@ -76,6 +76,7 @@ namespace Abook
                     row.Cells[COL.TYPE].Value = exp.Type;
                     row.Cells[COL.COST].Value = exp.Cost;
                 }
+                DgvExpense.FirstDisplayedScrollingRowIndex = 0;
             }
         }
     }
