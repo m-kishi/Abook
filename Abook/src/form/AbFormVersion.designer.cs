@@ -1,4 +1,8 @@
-﻿namespace Abook
+﻿// ------------------------------------------------------------
+// Copyright (C) 2010-2017 Masaaki Kishi. All rights reserved.
+// Author: Masaaki Kishi <m.kishi.5@gmail.com>
+// ------------------------------------------------------------
+namespace Abook
 {
     using System.ComponentModel;
 
@@ -110,7 +114,7 @@
             this.Name = "AbFormVersion";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "AbFormVersion";
             this.Load += new System.EventHandler(this.AbFormVersion_Load);
             ((System.ComponentModel.ISupportInitialize)(this.PboxIcon)).EndInit();

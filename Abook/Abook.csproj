@@ -54,6 +54,7 @@
     <Compile Include="src\balance\AbBalanceManager.cs" />
     <Compile Include="src\common\AbConstants.cs" />
     <Compile Include="src\common\AbDBManager.cs" />
+    <Compile Include="src\common\AbDialogHook.cs" />
     <Compile Include="src\common\AbException.cs" />
     <Compile Include="src\common\AbUploaders.cs" />
     <Compile Include="src\common\AbUtilities.cs" />
@@ -93,6 +94,12 @@
     </Compile>
     <Compile Include="src\form\AbSubEnergy.Designer.cs">
       <DependentUpon>AbSubEnergy.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\form\AbSubSearch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\form\AbSubSearch.Designer.cs">
+      <DependentUpon>AbSubSearch.cs</DependentUpon>
     </Compile>
     <Compile Include="src\form\AbSubType.cs">
       <SubType>Form</SubType>

@@ -1,4 +1,8 @@
-﻿namespace AbookTest
+﻿// ------------------------------------------------------------
+// Copyright (C) 2010-2017 Masaaki Kishi. All rights reserved.
+// Author: Masaaki Kishi <m.kishi.5@gmail.com>
+// ------------------------------------------------------------
+namespace AbookTest
 {
     using Abook;
     using System;
@@ -46,6 +50,8 @@
                     var cost = (i * 100M).ToString();
                     sw.WriteLine(TT.ToCSV(date, name, type, cost));
                 }
+                sw.WriteLine(TT.ToCSV("2017-03-01", "name16", TYPE.FOOD, "1000"));
+                sw.WriteLine(TT.ToCSV("2017-03-01", "name16", TYPE.OTFD, "2000"));
                 sw.Close();
             }
             if (File.Exists(CSV_ENTRY))
@@ -97,7 +103,7 @@
             public void CountWithExistData()
             {
                 ShowFormMain(CSV_EXIST, TAB_IDX);
-                Assert.AreEqual(15, CtDgvExpense().Rows.Count);
+                Assert.AreEqual(17, CtDgvExpense().Rows.Count);
             }
 
             /// <summary>
@@ -137,7 +143,7 @@
 
                 var cell = CtDgvExpense().SelectedCells[0];
                 Assert.True(cell.Selected);
-                Assert.AreEqual(14, cell.RowIndex);
+                Assert.AreEqual(16, cell.RowIndex);
                 Assert.AreEqual( 0, cell.ColumnIndex);
                 Assert.AreEqual( 1, CtDgvExpense().SelectedCells.Count);
             }
@@ -266,6 +272,125 @@
                 TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.V)));
 
                 Assert.AreEqual(string.Empty, dgvExpense.Rows[idxRow].Cells[COL.TYPE].Value);
+            }
+
+            /// <summary>
+            /// KeyDownテスト
+            /// キー: Ctrl + v
+            /// 自動補完:金額のカンマ編集
+            /// </summary>
+            /// <remarks>Clipboardを使用するため、RequiresSTAの指定が必要</remarks>
+            [Test, RequiresSTA]
+            public void KeyDownWithCommaFormat()
+            {
+                ShowFormMain(CSV_EXIST, TAB_IDX);
+
+                var dgvExpense = CtDgvExpense();
+                var idxRow = dgvExpense.Rows.Count - 1;
+                dgvExpense.CurrentCell = dgvExpense.Rows[idxRow].Cells[COL.COST];
+
+                Clipboard.Clear();
+                Clipboard.SetText("1000000");
+
+                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.V)));
+
+                Assert.AreEqual("1,000,000", dgvExpense.Rows[idxRow].Cells[COL.COST].Value);
+            }
+
+            /// <summary>
+            /// KeyDownテスト
+            /// キー: Ctrl + v
+            /// 自動補完:名称貼り付け 補完候補あり
+            /// </summary>
+            /// <remarks>Clipboardを使用するため、RequiresSTAの指定が必要</remarks>
+            [Test, RequiresSTA]
+            public void KeyDownWithCostComplementedOfNameCell()
+            {
+                ShowFormMain(CSV_EXIST, TAB_IDX);
+
+                var dgvExpense = CtDgvExpense();
+                var idxRow = dgvExpense.Rows.Count - 1;
+                dgvExpense.CurrentCell = dgvExpense.Rows[idxRow].Cells[COL.NAME];
+
+                Clipboard.Clear();
+                Clipboard.SetText("name10");
+
+                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.V)));
+
+                Assert.AreEqual(TYPE.FOOD, dgvExpense.Rows[idxRow].Cells[COL.TYPE].Value);
+                Assert.AreEqual("1,000", dgvExpense.Rows[idxRow].Cells[COL.COST].Value);
+            }
+
+            /// <summary>
+            /// KeyDownテスト
+            /// キー: Ctrl + v
+            /// 自動補完:名称貼り付け 補完候補なし
+            /// </summary>
+            /// <remarks>Clipboardを使用するため、RequiresSTAの指定が必要</remarks>
+            [Test, RequiresSTA]
+            public void KeyDownWithCostNotComplementedOfNameCell()
+            {
+                ShowFormMain(CSV_EXIST, TAB_IDX);
+
+                var dgvExpense = CtDgvExpense();
+                var idxRow = dgvExpense.Rows.Count - 1;
+                dgvExpense.CurrentCell = dgvExpense.Rows[idxRow].Cells[COL.NAME];
+
+                Clipboard.Clear();
+                Clipboard.SetText("not match");
+
+                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.V)));
+
+                Assert.AreEqual(string.Empty, dgvExpense.Rows[idxRow].Cells[COL.TYPE].Value);
+                Assert.AreEqual(string.Empty, dgvExpense.Rows[idxRow].Cells[COL.COST].Value);
+            }
+
+            /// <summary>
+            /// KeyDownテスト
+            /// キー: Ctrl + v
+            /// 自動補完:名称貼り付け 補完候補あり
+            /// </summary>
+            /// <remarks>Clipboardを使用するため、RequiresSTAの指定が必要</remarks>
+            [Test, RequiresSTA]
+            public void KeyDownWithCostComplementedOfTypeCell()
+            {
+                ShowFormMain(CSV_EXIST, TAB_IDX);
+
+                var dgvExpense = CtDgvExpense();
+                var idxRow = dgvExpense.Rows.Count - 1;
+                dgvExpense.CurrentCell = dgvExpense.Rows[idxRow].Cells[COL.TYPE];
+                Assert.AreEqual(2000, dgvExpense.Rows[idxRow].Cells[COL.COST].Value);
+
+                Clipboard.Clear();
+                Clipboard.SetText(TYPE.FOOD);
+
+                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.V)));
+
+                Assert.AreEqual("1,000", dgvExpense.Rows[idxRow].Cells[COL.COST].Value);
+            }
+
+            /// <summary>
+            /// KeyDownテスト
+            /// キー: Ctrl + v
+            /// 自動補完:名称貼り付け 補完候補なし
+            /// </summary>
+            /// <remarks>Clipboardを使用するため、RequiresSTAの指定が必要</remarks>
+            [Test, RequiresSTA]
+            public void KeyDownWithCostNotComplementedOfTypeCell()
+            {
+                ShowFormMain(CSV_EXIST, TAB_IDX);
+
+                var dgvExpense = CtDgvExpense();
+                var idxRow = dgvExpense.Rows.Count - 1;
+                dgvExpense.CurrentCell = dgvExpense.Rows[idxRow].Cells[COL.TYPE];
+                Assert.AreEqual(2000, dgvExpense.Rows[idxRow].Cells[COL.COST].Value);
+
+                Clipboard.Clear();
+                Clipboard.SetText("not match");
+
+                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.V)));
+
+                Assert.AreEqual(string.Empty, dgvExpense.Rows[idxRow].Cells[COL.COST].Value);
             }
 
             /// <summary>
@@ -487,6 +612,91 @@
 
                 Assert.AreEqual(string.Empty, dgvExpense.Rows[idxRow].Cells[COL.TYPE].Value);
             }
+
+            /// <summary>
+            /// CellEndEditテスト
+            /// セル:名称セル
+            /// 自動補完:補完候補あり
+            /// </summary>
+            [Test]
+            public void DgvExpenseCellEndEditWithCostComplementedOfNameCell()
+            {
+                ShowFormMain(CSV_EXIST, TAB_IDX);
+
+                var dgvExpense = CtDgvExpense();
+                var idxRow = dgvExpense.Rows.Count - 1;
+                dgvExpense.CurrentCell = dgvExpense.Rows[idxRow].Cells[COL.NAME];
+                dgvExpense.CurrentCell.Value = "name10";
+
+                TsDgvExpense().FireEvent("CellEndEdit", (new DataGridViewCellEventArgs(0, idxRow)));
+
+                Assert.AreEqual(TYPE.FOOD, dgvExpense.Rows[idxRow].Cells[COL.TYPE].Value);
+                Assert.AreEqual("1,000", dgvExpense.Rows[idxRow].Cells[COL.COST].Value);
+            }
+
+            /// <summary>
+            /// CellEndEditテスト
+            /// セル:名称セル
+            /// 自動補完:補完候補なし
+            /// </summary>
+            [Test]
+            public void DgvExpenseCellEndEditWithCostNotComplementedOfNameCell()
+            {
+                ShowFormMain(CSV_EXIST, TAB_IDX);
+
+                var dgvExpense = CtDgvExpense();
+                var idxRow = dgvExpense.Rows.Count - 1;
+                dgvExpense.CurrentCell = dgvExpense.Rows[idxRow].Cells[COL.NAME];
+                dgvExpense.CurrentCell.Value = "not match";
+
+                TsDgvExpense().FireEvent("CellEndEdit", (new DataGridViewCellEventArgs(0, idxRow)));
+
+                Assert.AreEqual(string.Empty, dgvExpense.Rows[idxRow].Cells[COL.TYPE].Value);
+                Assert.AreEqual(string.Empty, dgvExpense.Rows[idxRow].Cells[COL.COST].Value);
+            }
+
+            /// <summary>
+            /// CellEndEditテスト
+            /// セル:種別セル
+            /// 自動補完:補完候補あり
+            /// </summary>
+            [Test]
+            public void DgvExpenseCellEndEditWithCostComplementedOfTypeCell()
+            {
+                ShowFormMain(CSV_EXIST, TAB_IDX);
+
+                var dgvExpense = CtDgvExpense();
+                var idxRow = dgvExpense.Rows.Count - 1;
+                dgvExpense.CurrentCell = dgvExpense.Rows[idxRow].Cells[COL.TYPE];
+                dgvExpense.CurrentCell.Value = TYPE.FOOD;
+                Assert.AreEqual(2000, dgvExpense.Rows[idxRow].Cells[COL.COST].Value);
+
+                TsDgvExpense().FireEvent("CellEndEdit", (new DataGridViewCellEventArgs(0, idxRow)));
+
+                Assert.AreEqual("1,000", dgvExpense.Rows[idxRow].Cells[COL.COST].Value);
+            }
+
+            /// <summary>
+            /// CellEndEditテスト
+            /// セル:種別セル
+            /// 自動補完:補完候補あり
+            /// </summary>
+            [Test]
+            public void DgvExpenseCellEndEditWithCostNotComplementedOfTypeCell()
+            {
+                ShowFormMain(CSV_EXIST, TAB_IDX);
+
+                var dgvExpense = CtDgvExpense();
+                var idxRow = dgvExpense.Rows.Count - 1;
+                dgvExpense.CurrentCell = dgvExpense.Rows[idxRow].Cells[COL.TYPE];
+                dgvExpense.CurrentCell.Value = "not match";
+                Assert.AreEqual(2000, dgvExpense.Rows[idxRow].Cells[COL.COST].Value);
+
+                TsDgvExpense().FireEvent("CellEndEdit", (new DataGridViewCellEventArgs(0, idxRow)));
+
+                Assert.AreEqual(string.Empty, dgvExpense.Rows[idxRow].Cells[COL.COST].Value);
+            }
+
         }
 
         /// <summary>

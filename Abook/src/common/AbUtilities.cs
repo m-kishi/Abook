@@ -1,4 +1,8 @@
-﻿namespace Abook
+﻿// ------------------------------------------------------------
+// Copyright (C) 2010-2017 Masaaki Kishi. All rights reserved.
+// Author: Masaaki Kishi <m.kishi.5@gmail.com>
+// ------------------------------------------------------------
+namespace Abook
 {
     using System;
     using System.Collections.Generic;
@@ -275,11 +279,28 @@
             /// <returns>ダイアログリザルト</returns>
             public static DialogResult OK(string title, string message)
             {
+                AbDialogHook.Hook();
                 return MessageBox.Show(
                     message,
                     title,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Asterisk
+                );
+            }
+
+            /// <summary>
+            /// システムエラーダイアログ
+            /// </summary>
+            /// <param name="message">メッセージ</param>
+            /// <returns>ダイアログリザルト</returns>
+            public static DialogResult Abort(string message)
+            {
+                // フックは無し
+                return MessageBox.Show(
+                    message,
+                    "エラー",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
                 );
             }
 
@@ -290,6 +311,7 @@
             /// <returns>ダイアログリザルト</returns>
             public static DialogResult Error(string message)
             {
+                AbDialogHook.Hook();
                 return MessageBox.Show(
                     message,
                     "エラー",
@@ -306,6 +328,7 @@
             /// <returns>ダイアログリザルト</returns>
             public static DialogResult Warning(string title, string message)
             {
+                AbDialogHook.Hook();
                 return MessageBox.Show(
                     message,
                     title,

@@ -7,9 +7,9 @@ namespace Abook
     using System.ComponentModel;
 
     /// <summary>
-    /// 種別明細サブフォームデザイナ
+    /// 検索サブフォーム
     /// </summary>
-    partial class AbSubType
+    partial class AbSubSearch
     {
         /// <summary>デザイナ変数</summary>
         private IContainer components = null;
@@ -36,6 +36,8 @@ namespace Abook
             System.Windows.Forms.DataGridViewCellStyle styleName = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle styleType = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle styleCost = new System.Windows.Forms.DataGridViewCellStyle();
+            this.CmbName    = new System.Windows.Forms.ComboBox();
+            this.BtnSearch  = new System.Windows.Forms.Button();
             this.DgvExpense = new System.Windows.Forms.DataGridView();
             this.ColDate    = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColName    = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -43,6 +45,28 @@ namespace Abook
             this.ColCost    = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.DgvExpense)).BeginInit();
             this.SuspendLayout();
+            // 
+            // CmbName
+            // 
+            this.CmbName.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.CmbName.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.CmbName.DropDownHeight = 242;
+            this.CmbName.FormattingEnabled = true;
+            this.CmbName.IntegralHeight = false;
+            this.CmbName.Location = new System.Drawing.Point(12, 12);
+            this.CmbName.Name = "CmbName";
+            this.CmbName.Size = new System.Drawing.Size(336, 20);
+            this.CmbName.TabIndex = 0;
+            // 
+            // BtnSearch
+            // 
+            this.BtnSearch.Location = new System.Drawing.Point(354, 10);
+            this.BtnSearch.Name = "BtnSearch";
+            this.BtnSearch.Size = new System.Drawing.Size(50, 23);
+            this.BtnSearch.TabIndex = 1;
+            this.BtnSearch.Text = "検索";
+            this.BtnSearch.UseVisualStyleBackColor = true;
+            this.BtnSearch.Click += new System.EventHandler(this.BtnEntry_Click);
             // 
             // DgvExpense
             // 
@@ -53,15 +77,15 @@ namespace Abook
             this.DgvExpense.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.DgvExpense.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DgvExpense.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.ColDate, this.ColName, this.ColType, this.ColCost });
-            this.DgvExpense.Location = new System.Drawing.Point(2, 2);
+            this.DgvExpense.Location = new System.Drawing.Point(12, 39);
             this.DgvExpense.Name = "DgvExpense";
             this.DgvExpense.ReadOnly = true;
             this.DgvExpense.RowHeadersWidth = 24;
             this.DgvExpense.RowTemplate.Height = 21;
             this.DgvExpense.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.DgvExpense.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DgvExpense.Size = new System.Drawing.Size(392, 130);
-            this.DgvExpense.TabIndex = 0;
+            this.DgvExpense.Size = new System.Drawing.Size(392, 234);
+            this.DgvExpense.TabIndex = 2;
             // 
             // ColDate
             // 
@@ -108,26 +132,31 @@ namespace Abook
             this.ColCost.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.ColCost.Width = 60;
             // 
-            // AbSubType
+            // AbSubSearch
             // 
+            this.AcceptButton = this.BtnSearch;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(395, 132);
+            this.ClientSize = new System.Drawing.Size(416, 284);
+            this.Controls.Add(this.CmbName);
+            this.Controls.Add(this.BtnSearch);
             this.Controls.Add(this.DgvExpense);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "AbSubType";
+            this.Name = "AbSubSearch";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "AbSubType";
-            this.Load += new System.EventHandler(this.AbSubType_Load);
+            this.Text = "支出検索";
+            this.Load += new System.EventHandler(this.AbSubSearch_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DgvExpense)).EndInit();
             this.ResumeLayout(false);
 
         }
 
+        private System.Windows.Forms.ComboBox CmbName;
+        private System.Windows.Forms.Button BtnSearch;
         private System.Windows.Forms.DataGridView DgvExpense;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColDate;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColName;

@@ -1,4 +1,8 @@
-﻿namespace Abook
+﻿// ------------------------------------------------------------
+// Copyright (C) 2010-2017 Masaaki Kishi. All rights reserved.
+// Author: Masaaki Kishi <m.kishi.5@gmail.com>
+// ------------------------------------------------------------
+namespace Abook
 {
     using System;
     using System.Collections.Generic;
@@ -75,23 +79,41 @@
 
         /// <summary>
         /// セルの編集終了後の処理
-        /// ・種別の自動補完
-        /// ・金額のカンマ編集
         /// </summary>
+        /// <remarks>
+        /// ・種別と金額の自動補完
+        /// ・金額はカンマ編集する
+        /// </remarks>
         private void DgvExpense_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            //種別の自動補完
-            if (DgvExpense.CurrentCell.ColumnIndex == 1)
+            var row = DgvExpense.Rows[DgvExpense.CurrentCell.RowIndex];
+            switch (DgvExpense.CurrentCell.ColumnIndex)
             {
-                var row = DgvExpense.Rows[DgvExpense.CurrentCell.RowIndex];
-                row.Cells[COL.TYPE].Value = abComplete.GetType(row.Cells[COL.NAME].Value as string);
-            }
-
-            //金額のカンマ編集
-            if (DgvExpense.CurrentCell.ColumnIndex == 3)
-            {
-                var row = DgvExpense.Rows[DgvExpense.CurrentCell.RowIndex];
-                row.Cells[COL.COST].Value = AbUtilities.ToComma(row.Cells[COL.COST].Value);
+                case 0:
+                    break;
+                case 1:
+                    {
+                        var name = row.Cells[COL.NAME].Value as string;
+                        var type = abComplete.GetType(name);
+                        row.Cells[COL.TYPE].Value = type;
+                        row.Cells[COL.COST].Value = abComplete.GetCost(name, type);
+                    }
+                    break;
+                case 2:
+                    {
+                        var name = row.Cells[COL.NAME].Value as string;
+                        var type = row.Cells[COL.TYPE].Value as string;
+                        row.Cells[COL.COST].Value = abComplete.GetCost(name, type);
+                    }
+                    break;
+                case 3:
+                    {
+                        var cost = row.Cells[COL.COST].Value;
+                        row.Cells[COL.COST].Value = AbUtilities.ToComma(cost);
+                    }
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -102,12 +124,34 @@
         {
             if (e.Modifiers == Keys.Control && e.KeyCode == Keys.V)
             {
+                var row = DgvExpense.Rows[DgvExpense.CurrentCell.RowIndex];
+
                 var value = Clipboard.GetText();
                 DgvExpense.CurrentCell.Value = value;
-                if (DgvExpense.CurrentCell.ColumnIndex == 1)
+                switch (DgvExpense.CurrentCell.ColumnIndex)
                 {
-                    var row = DgvExpense.Rows[DgvExpense.CurrentCell.RowIndex];
-                    row.Cells[COL.TYPE].Value = abComplete.GetType(value);
+                    case 0:
+                        break;
+                    case 1:
+                        {
+                            var type = abComplete.GetType(value);
+                            row.Cells[COL.TYPE].Value = type;
+                            row.Cells[COL.COST].Value = abComplete.GetCost(value, type);
+                        }
+                        break;
+                    case 2:
+                        {
+                            var name = row.Cells[COL.NAME].Value as string;
+                            row.Cells[COL.COST].Value = abComplete.GetCost(name, value);
+                        }
+                        break;
+                    case 3:
+                        {
+                            DgvExpense.CurrentCell.Value = AbUtilities.ToComma(value);
+                        }
+                        break;
+                    default:
+                        break;
                 }
             }
         }
@@ -126,11 +170,11 @@
             var errLine = 0;
             try
             {
-                var expenses = AbDBManager.Load(DgvExpense, out errLine);
+                abExpenses = AbDBManager.Load(DgvExpense, out errLine);
 
-                AbDBManager.Store(CSV_FILE, expenses);
+                AbDBManager.Store(CSV_FILE, abExpenses);
 
-                InitFormMain(expenses);
+                InitFormMain(abExpenses);
 
                 MSG.OK("登録完了", "正常に登録しました。");
             }

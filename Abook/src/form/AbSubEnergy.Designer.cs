@@ -1,4 +1,8 @@
-﻿namespace Abook
+﻿// ------------------------------------------------------------
+// Copyright (C) 2010-2017 Masaaki Kishi. All rights reserved.
+// Author: Masaaki Kishi <m.kishi.5@gmail.com>
+// ------------------------------------------------------------
+namespace Abook
 {
     using System.ComponentModel;
 
@@ -688,7 +692,7 @@
             this.Name = "AbSubEnergy";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "光熱費";
             this.Load += new System.EventHandler(this.AbSubEnergy_Load);
             this.TabControl.ResumeLayout(false);

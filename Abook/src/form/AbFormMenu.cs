@@ -1,4 +1,8 @@
-﻿namespace Abook
+﻿// ------------------------------------------------------------
+// Copyright (C) 2010-2017 Masaaki Kishi. All rights reserved.
+// Author: Masaaki Kishi <m.kishi.5@gmail.com>
+// ------------------------------------------------------------
+namespace Abook
 {
     using System;
     using System.Windows.Forms;
@@ -32,13 +36,29 @@
         }
 
         /// <summary>
+        /// 検索サブフォーム表示
+        /// </summary>
+        private void MenuSearch_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var formSearch = new AbSubSearch(abExpenses);
+                formSearch.ShowDialog();
+            }
+            catch (AbException ex)
+            {
+                MSG.Error(ex.Message);
+            }
+        }
+
+        /// <summary>
         /// 光熱費情報表示
         /// </summary>
         private void MenuEnergy_Click(object sender, EventArgs e)
         {
             try
             {
-                var formEnergy = new AbSubEnergy(AbDBManager.Load(CSV_FILE));
+                var formEnergy = new AbSubEnergy(abExpenses);
                 formEnergy.ShowDialog();
             }
             catch (AbException ex)

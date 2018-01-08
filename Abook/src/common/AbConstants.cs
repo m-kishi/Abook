@@ -1,4 +1,8 @@
-﻿namespace Abook
+﻿// ------------------------------------------------------------
+// Copyright (C) 2010-2017 Masaaki Kishi. All rights reserved.
+// Author: Masaaki Kishi <m.kishi.5@gmail.com>
+// ------------------------------------------------------------
+namespace Abook
 {
     using System;
     using System.Collections.Generic;
@@ -154,6 +158,13 @@
 
             /// <summary>光熱費に属する名称</summary>
             public static readonly string[] ENERGY = { EL, GS, WT };
+        }
+
+        /// <summary>汎用</summary>
+        public static class CMM
+        {
+            /// <summary>金額自動補完の候補数</summary>
+            public const int MAX_COST_CANDIDATE = 3;
         }
 
         /// <summary>種別</summary>

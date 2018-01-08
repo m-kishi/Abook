@@ -1,4 +1,8 @@
-﻿namespace Abook
+﻿// ------------------------------------------------------------
+// Copyright (C) 2010-2017 Masaaki Kishi. All rights reserved.
+// Author: Masaaki Kishi <m.kishi.5@gmail.com>
+// ------------------------------------------------------------
+namespace Abook
 {
     using System;
     using System.Collections.Generic;
@@ -88,9 +92,9 @@
         {
             var label = (Label)sender;
             var subFromType = new AbSubType(
-                this,
                 label.Text,
-                abExpenseManager.CurrentDate
+                abExpenseManager.CurrentDate,
+                abExpenses
             );
             subFromType.ShowDialog();
         }
