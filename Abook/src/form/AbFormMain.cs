@@ -84,5 +84,16 @@ namespace Abook
             InitTabSummary(summaries);
             InitTabGraphic(summaries);
         }
+
+        /// <summary>
+        /// 備考をツールチップに表示
+        /// </summary>
+        /// <param name="row">行</param>
+        /// <param name="col">列</param>
+        /// <param name="note">備考</param>
+        private void SetToolTipText(DataGridViewRow row, string col, string note)
+        {
+            row.Cells[col].ToolTipText = note;
+        }
     }
 }

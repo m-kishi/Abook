@@ -118,6 +118,15 @@ namespace Abook
             }
 
             /// <summary>
+            /// NULLチェック(備考)
+            /// </summary>
+            /// <param name="note">備考</param>
+            public static void NoteNull(string note)
+            {
+                if (note == null) AbException.Throw(EX.NOTE_NULL);
+            }
+
+            /// <summary>
             /// NULLチェック(CSVファイル名)
             /// </summary>
             /// <param name="csv">CSVファイル名</param>

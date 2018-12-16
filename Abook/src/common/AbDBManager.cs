@@ -55,9 +55,13 @@ namespace Abook
                         line++;
 
                         var fields = tp.ReadFields();
-                        if (fields.Length < CSV.FIELD) AbException.Throw(EX.CSV_FIELD_LESS);
-                        if (fields.Length > CSV.FIELD) AbException.Throw(EX.CSV_FIELD_MORE);
-                        expenses.Add(new AbExpense(fields[0], fields[1], fields[2], fields[3]));
+                        if (fields.Length < CSV.OLD_FIELD) AbException.Throw(EX.CSV_FIELD_LESS);
+                        if (fields.Length > CSV.CUR_FIELD) AbException.Throw(EX.CSV_FIELD_MORE);
+                        expenses.Add(
+                            fields.Length == CSV.OLD_FIELD ?
+                            new AbExpense(fields[0], fields[1], fields[2], fields[3]) :
+                            new AbExpense(fields[0], fields[1], fields[2], fields[3], fields[4])
+                        );
                     }
                 }
                 catch (AbException ex)
@@ -93,11 +97,12 @@ namespace Abook
                     var name = Convert.ToString(row.Cells[COL.NAME].Value);
                     var type = Convert.ToString(row.Cells[COL.TYPE].Value);
                     var cost = Convert.ToString(row.Cells[COL.COST].Value);
+                    var note = Convert.ToString(row.Cells[COL.NOTE].Value);
 
                     var args = new string[] { date, name, type, cost };
                     if (args.All(arg => !string.IsNullOrEmpty(arg)))
                     {
-                        expenses.Add(new AbExpense(date, name, type, cost));
+                        expenses.Add(new AbExpense(date, name, type, cost, note));
                     }
                 }
                 catch (AbException ex)

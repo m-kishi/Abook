@@ -64,6 +64,7 @@ namespace Abook
             this.ColName       = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColType       = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColCost       = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColNote       = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TabSummary    = new System.Windows.Forms.TabPage();
             this.HeadSummary   = new Abook.AbHeaderControl();
             this.LblFood       = new Abook.AbLabelControl();
@@ -242,8 +243,10 @@ namespace Abook
             // DgvExpense
             // 
             this.DgvExpense.AllowUserToAddRows = false;
+            this.DgvExpense.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvExpense_CellEndEdit);
             this.DgvExpense.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DgvExpense.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.ColDate, this.ColName, this.ColType, this.ColCost });
+            this.DgvExpense.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.ColDate, this.ColName, this.ColType, this.ColCost, this.ColNote });
+            this.DgvExpense.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DgvExpense_KeyDown);
             this.DgvExpense.Location = new System.Drawing.Point(6, 35);
             this.DgvExpense.Name = "DgvExpense";
             this.DgvExpense.RowHeadersWidth = 24;
@@ -251,8 +254,6 @@ namespace Abook
             this.DgvExpense.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.DgvExpense.Size = new System.Drawing.Size(392, 246);
             this.DgvExpense.TabIndex = 5;
-            this.DgvExpense.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvExpense_CellEndEdit);
-            this.DgvExpense.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DgvExpense_KeyDown);
             // 
             // ColDate
             // 
@@ -294,6 +295,12 @@ namespace Abook
             this.ColCost.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.ColCost.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.ColCost.Width = 60;
+            // 
+            // ColNote
+            // 
+            this.ColNote.HeaderText = "備考";
+            this.ColNote.Name = "ColNote";
+            this.ColNote.Visible = false;
             // 
             // TabSummary
             // 
@@ -917,6 +924,7 @@ namespace Abook
         private System.Windows.Forms.DataGridViewTextBoxColumn ColName;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColType;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColCost;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColNote;
         private System.Windows.Forms.TabPage TabSummary;
         private AbHeaderControl HeadSummary;
         private AbLabelControl LblFood;

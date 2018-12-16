@@ -58,6 +58,8 @@ namespace Abook
             public const string TYPE_NULL = "種別がありません。";
             /// <summary>金額がありません。</summary>
             public const string COST_NULL = "金額がありません。";
+            /// <summary>備考がNULLです。</summary>
+            public const string NOTE_NULL = "備考がNULLです。";
             /// <summary>種別が正しくありません。</summary>
             public const string TYPE_WRONG = "種別が正しくありません。";
             /// <summary>金額がマイナスです。</summary>

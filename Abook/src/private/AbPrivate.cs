@@ -23,6 +23,8 @@ namespace Abook
         public decimal Cost { get; private set; }
         /// <summary>収支</summary>
         public decimal Blnc { get; private set; }
+        /// <summary>備考</summary>
+        public string  Note { get; private set; }
 
         /// <summary>
         /// コンストラクタ
@@ -36,6 +38,7 @@ namespace Abook
             Date = ParseDate(expense);
             Name = ParseName(expense);
             Cost = ParseCost(expense);
+            Note = ParseNote(expense);
             Blnc = ParseBlnc(Cost, balance);
         }
 
@@ -86,6 +89,16 @@ namespace Abook
         private decimal ParseBlnc(decimal cost, decimal balance)
         {
             return balance + cost;
+        }
+
+        /// <summary>
+        /// 備考設定
+        /// </summary>
+        /// <param name="expense">支出情報</param>
+        /// <returns>備考</returns>
+        private string ParseNote(AbExpense expense)
+        {
+            return expense.Note;
         }
     }
 }
