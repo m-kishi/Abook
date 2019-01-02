@@ -31,7 +31,7 @@ namespace AbookTest
         public void SetUp()
         {
             argBalance = 300;
-            argExpense = new AbExpense("2012-04-01", "小遣い", TYPE.PRVI, "5000");
+            argExpense = new AbExpense("2012-04-01", "小遣い", TYPE.PRVI, "5000", "備考");
             abPrivate  = new AbPrivate(argExpense, argBalance);
         }
 
@@ -119,6 +119,16 @@ namespace AbookTest
                 new AbPrivate(argExpense, argBalance)
             );
             Assert.AreEqual(EX.TYPE_PRIVATE_ERR, ex.Message);
+        }
+
+        /// <summary>
+        /// コンストラクタ
+        /// 引数:備考のテスト
+        /// </summary>
+        [Test]
+        public void AbPrivateWithNote()
+        {
+            Assert.AreEqual("備考", abPrivate.Note);
         }
     }
 }

@@ -36,9 +36,9 @@ namespace Abook
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            AbFormMain form = null;
-            form = new AbFormMain(CSV.FILE);
+            var form = new AbFormMain(CSV.FILE);
             form.SetUploadParameters(UPD.URL_LOGIN, UPD.URL_UPLOAD);
+
             Application.Run(form);
         }
 
@@ -83,6 +83,17 @@ namespace Abook
             InitTabPrivate(expenses);
             InitTabSummary(summaries);
             InitTabGraphic(summaries);
+        }
+
+        /// <summary>
+        /// 備考をツールチップに表示
+        /// </summary>
+        /// <param name="row">行</param>
+        /// <param name="col">列</param>
+        /// <param name="note">備考</param>
+        private void SetToolTipText(DataGridViewRow row, string col, string note)
+        {
+            row.Cells[col].ToolTipText = note;
         }
     }
 }

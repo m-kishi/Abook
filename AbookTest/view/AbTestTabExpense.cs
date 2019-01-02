@@ -48,7 +48,8 @@ namespace AbookTest
                     var name = "name" + i.ToString("D2");
                     var type = TYPE.FOOD;
                     var cost = (i * 100M).ToString();
-                    sw.WriteLine(TT.ToCSV(date, name, type, cost));
+                    var note = "note" + i.ToString("D2");
+                    sw.WriteLine(TT.ToCSV(date, name, type, cost, note));
                 }
                 sw.WriteLine(TT.ToCSV("2017-03-01", "name16", TYPE.FOOD, "1000"));
                 sw.WriteLine(TT.ToCSV("2017-03-01", "name16", TYPE.OTFD, "2000"));
@@ -124,12 +125,17 @@ namespace AbookTest
                     var name = string.Format("name{0:D2}", i);
                     var type = TYPE.FOOD;
                     var cost = i * 100M;
+                    var note = string.Format("note{0:D2}", i);
 
                     Assert.AreEqual(date, row.Cells[COL.DATE].Value, "DATE");
                     Assert.AreEqual(name, row.Cells[COL.NAME].Value, "NAME");
                     Assert.AreEqual(type, row.Cells[COL.TYPE].Value, "TYPE");
                     Assert.AreEqual(cost, row.Cells[COL.COST].Value, "COST");
+                    Assert.AreEqual(note, row.Cells[COL.NAME].ToolTipText, "NOTE");
                 }
+
+                Assert.AreEqual("", dgvExpense.Rows[15].Cells[COL.NAME].ToolTipText, "NOTE");
+                Assert.AreEqual("", dgvExpense.Rows[16].Cells[COL.NAME].ToolTipText, "NOTE");
             }
 
             /// <summary>

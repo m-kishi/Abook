@@ -24,6 +24,8 @@ namespace Abook
             public const string TYPE = "ColType";
             /// <summary>金額</summary>
             public const string COST = "ColCost";
+            /// <summary>備考</summary>
+            public const string NOTE = "ColNote";
             /// <summary>年度</summary>
             public const string YEAR = "ColYear";
             /// <summary>収入</summary>
@@ -56,8 +58,10 @@ namespace Abook
             public const string FILE = "Abook.db";
             /// <summary>区切り文字</summary>
             public const string DELIMITER = ",";
-            /// <summary>フィールド数</summary>
-            public const int FIELD = 4;
+            /// <summary>フィールド数(旧)</summary>
+            public const int OLD_FIELD = 4;
+            /// <summary>フィールド数(新)</summary>
+            public const int CUR_FIELD = 5;
             /// <summary>改行文字(LF)</summary>
             public const string LF = "\n";
             /// <summary>文字コード(UTF-8 BOM無し)</summary>
@@ -103,8 +107,8 @@ namespace Abook
         /// <summary>フォーマット</summary>
         public static class FMT
         {
-            /// <summary>CSV("date","name","type","cost")</summary>
-            public const string CSV = "\"{0}\",\"{1}\",\"{2}\",\"{3}\"";
+            /// <summary>CSV("date","name","type","cost","note")</summary>
+            public const string CSV = "\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\"";
             /// <summary>日付"yyyy-MM-dd"</summary>
             public const string DATE = "yyyy-MM-dd";
             /// <summary>月"MM"</summary>

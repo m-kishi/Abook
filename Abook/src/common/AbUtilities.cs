@@ -19,6 +19,16 @@ namespace Abook
     public static class AbUtilities
     {
         /// <summary>
+        /// 文字列型への変換
+        /// </summary>
+        /// <param name="obj">対象</param>
+        /// <returns>変換した文字列</returns>
+        public static string ToStr(object obj)
+        {
+            return Convert.ToString(obj);
+        }
+
+        /// <summary>
         /// 円通貨形式変換
         /// </summary>
         /// <param name="cost">金額</param>
@@ -115,6 +125,15 @@ namespace Abook
             public static void CostNull(string cost)
             {
                 if (string.IsNullOrEmpty(cost)) AbException.Throw(EX.COST_NULL);
+            }
+
+            /// <summary>
+            /// NULLチェック(備考)
+            /// </summary>
+            /// <param name="note">備考</param>
+            public static void NoteNull(string note)
+            {
+                if (note == null) AbException.Throw(EX.NOTE_NULL);
             }
 
             /// <summary>

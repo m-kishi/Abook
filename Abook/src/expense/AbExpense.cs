@@ -24,9 +24,12 @@ namespace Abook
         public string   Type { get; private set; }
         /// <summary>金額</summary>
         public decimal  Cost { get; private set; }
+        /// <summary>備考</summary>
+        public string   Note { get; private set; }
 
         /// <summary>
-        /// コンストラクタ
+        /// コンストラクタ<br />
+        /// 旧バージョンのデータ移行のために残す
         /// </summary>
         /// <param name="date">日付</param>
         /// <param name="name">名称</param>
@@ -38,6 +41,24 @@ namespace Abook
             Name = ParseName(name);
             Type = ParseType(type);
             Cost = ParseCost(cost);
+            Note = ParseNote("");
+        }
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="date">日付</param>
+        /// <param name="name">名称</param>
+        /// <param name="type">種別</param>
+        /// <param name="cost">金額</param>
+        /// <param name="note">備考</param>
+        public AbExpense(string date, string name, string type, string cost, string note)
+        {
+            Date = ParseDate(date);
+            Name = ParseName(name);
+            Type = ParseType(type);
+            Cost = ParseCost(cost);
+            Note = ParseNote(note);
         }
 
         /// <summary>
@@ -111,12 +132,23 @@ namespace Abook
         }
 
         /// <summary>
+        /// 備考設定
+        /// </summary>
+        /// <param name="note">備考</param>
+        /// <returns>備考</returns>
+        private string ParseNote(string note)
+        {
+            CHK.NoteNull(note);
+            return note;
+        }
+
+        /// <summary>
         /// CSV形式
         /// </summary>
         /// <returns>CSV形式</returns>
         public string ToCSV()
         {
-            return string.Format(FMT.CSV, Date.ToString(FMT.DATE), Name, Type, Cost);
+            return string.Format(FMT.CSV, Date.ToString(FMT.DATE), Name, Type, Cost, Note);
         }
 
         /// <summary>

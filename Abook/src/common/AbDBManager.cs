@@ -14,6 +14,7 @@ namespace Abook
     using CHK = Abook.AbUtilities.CHK;
     using COL = Abook.AbConstants.COL;
     using CSV = Abook.AbConstants.CSV;
+    using UTL = Abook.AbUtilities;
 
     /// <summary>
     /// DBファイル管理クラス
@@ -55,9 +56,13 @@ namespace Abook
                         line++;
 
                         var fields = tp.ReadFields();
-                        if (fields.Length < CSV.FIELD) AbException.Throw(EX.CSV_FIELD_LESS);
-                        if (fields.Length > CSV.FIELD) AbException.Throw(EX.CSV_FIELD_MORE);
-                        expenses.Add(new AbExpense(fields[0], fields[1], fields[2], fields[3]));
+                        if (fields.Length < CSV.OLD_FIELD) AbException.Throw(EX.CSV_FIELD_LESS);
+                        if (fields.Length > CSV.CUR_FIELD) AbException.Throw(EX.CSV_FIELD_MORE);
+                        expenses.Add(
+                            fields.Length == CSV.OLD_FIELD ?
+                            new AbExpense(fields[0], fields[1], fields[2], fields[3]) :
+                            new AbExpense(fields[0], fields[1], fields[2], fields[3], fields[4])
+                        );
                     }
                 }
                 catch (AbException ex)
@@ -89,15 +94,16 @@ namespace Abook
                 errLine++;
                 try
                 {
-                    var date = Convert.ToString(row.Cells[COL.DATE].Value);
-                    var name = Convert.ToString(row.Cells[COL.NAME].Value);
-                    var type = Convert.ToString(row.Cells[COL.TYPE].Value);
-                    var cost = Convert.ToString(row.Cells[COL.COST].Value);
+                    var date = UTL.ToStr(row.Cells[COL.DATE].Value);
+                    var name = UTL.ToStr(row.Cells[COL.NAME].Value);
+                    var type = UTL.ToStr(row.Cells[COL.TYPE].Value);
+                    var cost = UTL.ToStr(row.Cells[COL.COST].Value);
+                    var note = UTL.ToStr(row.Cells[COL.NOTE].Value);
 
                     var args = new string[] { date, name, type, cost };
                     if (args.All(arg => !string.IsNullOrEmpty(arg)))
                     {
-                        expenses.Add(new AbExpense(date, name, type, cost));
+                        expenses.Add(new AbExpense(date, name, type, cost, note));
                     }
                 }
                 catch (AbException ex)
