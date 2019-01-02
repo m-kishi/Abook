@@ -46,7 +46,7 @@ namespace AbookTest
                 sw.WriteLine(TT.ToCSV("2011-09-01", "private06", TYPE.PRVI, "60000"));
                 sw.WriteLine(TT.ToCSV("2011-09-30", "dummy"    , TYPE.SPCL, "65000"));
                 sw.WriteLine(TT.ToCSV("2012-10-01", "private07", TYPE.PRVI, "70000"));
-                sw.WriteLine(TT.ToCSV("2012-11-01", "private08", TYPE.PRVO, "80000"));
+                sw.WriteLine(TT.ToCSV("2012-11-01", "private08", TYPE.PRVO, "80000", "note08"));
                 sw.Close();
             }
         }
@@ -137,6 +137,25 @@ namespace AbookTest
             Assert.AreEqual( 60000, dgvPrivate.Rows[5].Cells[COL.PRIVATE.COST].Value);
             Assert.AreEqual( 70000, dgvPrivate.Rows[6].Cells[COL.PRIVATE.COST].Value);
             Assert.AreEqual(-80000, dgvPrivate.Rows[7].Cells[COL.PRIVATE.COST].Value);
+        }
+
+        /// <summary>
+        /// 備考のテスト
+        /// </summary>
+        [Test]
+        public void DgvPrivateWithNote()
+        {
+            ShowFormMain(CSV_EXIST, TAB_IDX);
+
+            var dgvPrivate = CtDgvPrivate();
+            Assert.AreEqual("", dgvPrivate.Rows[0].Cells[COL.PRIVATE.NAME].ToolTipText);
+            Assert.AreEqual("", dgvPrivate.Rows[1].Cells[COL.PRIVATE.NAME].ToolTipText);
+            Assert.AreEqual("", dgvPrivate.Rows[2].Cells[COL.PRIVATE.NAME].ToolTipText);
+            Assert.AreEqual("", dgvPrivate.Rows[3].Cells[COL.PRIVATE.NAME].ToolTipText);
+            Assert.AreEqual("", dgvPrivate.Rows[4].Cells[COL.PRIVATE.NAME].ToolTipText);
+            Assert.AreEqual("", dgvPrivate.Rows[5].Cells[COL.PRIVATE.NAME].ToolTipText);
+            Assert.AreEqual("", dgvPrivate.Rows[6].Cells[COL.PRIVATE.NAME].ToolTipText);
+            Assert.AreEqual("note08", dgvPrivate.Rows[7].Cells[COL.PRIVATE.NAME].ToolTipText);
         }
 
         /// <summary>

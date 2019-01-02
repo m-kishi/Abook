@@ -345,6 +345,41 @@ namespace AbookTest
             }
 
             /// <summary>
+            /// NULLチェック(備考)
+            /// </summary>
+            [Test]
+            public void NoteNull()
+            {
+                var argNote = "付帯情報";
+                Assert.DoesNotThrow(() => CHK.NoteNull(argNote));
+            }
+
+            /// <summary>
+            /// NULLチェック(備考)
+            /// 引数:備考がNULL
+            /// </summary>
+            [Test]
+            public void NoteNullWithNullNote()
+            {
+                string argNote = null;
+                var ex = Assert.Throws<AbException>(() =>
+                    CHK.NoteNull(argNote)
+                );
+                Assert.AreEqual(EX.NOTE_NULL, ex.Message);
+            }
+
+            /// <summary>
+            /// NULLチェック(備考)
+            /// 引数:備考が空文字列
+            /// </summary>
+            [Test]
+            public void NoteNullWithEmptyNote()
+            {
+                var argNote = string.Empty;
+                Assert.DoesNotThrow(() => CHK.NoteNull(argNote));
+            }
+
+            /// <summary>
             /// NULLチェック(CSVファイル名)
             /// </summary>
             [Test]

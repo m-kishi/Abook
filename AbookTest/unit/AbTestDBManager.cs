@@ -52,7 +52,7 @@ namespace AbookTest
             using (StreamWriter sw = new StreamWriter("MoreCSVFields.db", false, CSV.ENCODING))
             {
                 sw.NewLine = CSV.LF;
-                sw.WriteLine("\"column1\",\"column2\",\"column3\",\"column4\",\"column5\"");
+                sw.WriteLine("\"column1\",\"column2\",\"column3\",\"column4\",\"column5\",\"column6\"");
                 sw.Close();
             }
 
@@ -71,9 +71,9 @@ namespace AbookTest
             using (StreamWriter sw = new StreamWriter("InData.db", false, CSV.ENCODING))
             {
                 sw.NewLine = CSV.LF;
-                sw.WriteLine("\"2009-04-01\",\"name1\",\"食費\",\"100\"");
-                sw.WriteLine("\"2009-04-01\",\"name2\",\"食費\",\"200\"");
-                sw.WriteLine("\"2009-04-02\",\"name3\",\"食費\",\"300\"");
+                sw.WriteLine("\"2009-04-01\",\"name1\",\"食費\",\"100\",\"\"");
+                sw.WriteLine("\"2009-04-01\",\"name2\",\"食費\",\"200\",\"\"");
+                sw.WriteLine("\"2009-04-02\",\"name3\",\"食費\",\"300\",\"備考\"");
                 sw.Close();
             }
         }
@@ -109,6 +109,7 @@ namespace AbookTest
             argDgv.Columns.Add(COL.NAME, "名称");
             argDgv.Columns.Add(COL.TYPE, "種別");
             argDgv.Columns.Add(COL.COST, "金額");
+            argDgv.Columns.Add(COL.NOTE, "備考");
             argDgv.AllowUserToAddRows = false;
 
             argDgv.Rows.Clear();
@@ -120,13 +121,14 @@ namespace AbookTest
                 argDgv.Rows[i].Cells[COL.NAME].Value = exp.Name;
                 argDgv.Rows[i].Cells[COL.TYPE].Value = exp.Type;
                 argDgv.Rows[i].Cells[COL.COST].Value = exp.Cost;
+                argDgv.Rows[i].Cells[COL.NOTE].Value = exp.Note;
             }
 
             expected = new List<AbExpense>()
             {
                 new AbExpense("2009-04-01", "name1", "食費", "100"),
-                new AbExpense("2009-04-01", "name2", "食費", "200"),
-                new AbExpense("2009-04-02", "name3", "食費", "300")
+                new AbExpense("2009-04-01", "name2", "食費", "200", ""),
+                new AbExpense("2009-04-02", "name3", "食費", "300", "備考")
             };
         }
 
@@ -309,6 +311,7 @@ namespace AbookTest
                 Assert.AreEqual(expected[i].Name, expenses[i].Name);
                 Assert.AreEqual(expected[i].Type, expenses[i].Type);
                 Assert.AreEqual(expected[i].Cost, expenses[i].Cost);
+                Assert.AreEqual(expected[i].Note, expenses[i].Note);
             }
         }
 
@@ -326,6 +329,7 @@ namespace AbookTest
                 Assert.AreEqual(expected[i].Name, expenses[i].Name);
                 Assert.AreEqual(expected[i].Type, expenses[i].Type);
                 Assert.AreEqual(expected[i].Cost, expenses[i].Cost);
+                Assert.AreEqual(expected[i].Note, expenses[i].Note);
             }
         }
 

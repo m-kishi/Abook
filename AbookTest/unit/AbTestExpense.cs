@@ -24,8 +24,12 @@ namespace AbookTest
         private string argType;
         /// <summary>引数:金額</summary>
         private string argCost;
-        /// <summary>対象:支出情報</summary>
-        private AbExpense abExpense;
+        /// <summary>引数:備考</summary>
+        private string argNote;
+        /// <summary>対象:支出情報(旧バージョン)</summary>
+        private AbExpense abExpenseOld;
+        /// <summary>対象:支出情報(新バージョン)</summary>
+        private AbExpense abExpenseCur;
 
         /// <summary>
         /// SetUp
@@ -37,7 +41,9 @@ namespace AbookTest
             argName = "おにぎり";
             argType = "食費";
             argCost = "105";
-            abExpense = new AbExpense(argDate, argName, argType, argCost);
+            argNote = "備考";
+            abExpenseOld = new AbExpense(argDate, argName, argType, argCost);
+            abExpenseCur = new AbExpense(argDate, argName, argType, argCost, argNote);
         }
 
         /// <summary>
@@ -48,7 +54,8 @@ namespace AbookTest
         public void AbExpenseWithDate()
         {
             var expected = DateTime.Parse(argDate);
-            Assert.AreEqual(expected, abExpense.Date);
+            Assert.AreEqual(expected, abExpenseOld.Date);
+            Assert.AreEqual(expected, abExpenseCur.Date);
         }
 
         /// <summary>
@@ -59,7 +66,8 @@ namespace AbookTest
         public void AbExpenseWithName()
         {
             var expected = argName;
-            Assert.AreEqual(expected, abExpense.Name);
+            Assert.AreEqual(expected, abExpenseOld.Name);
+            Assert.AreEqual(expected, abExpenseCur.Name);
         }
 
         /// <summary>
@@ -70,7 +78,8 @@ namespace AbookTest
         public void AbExpenseWithType()
         {
             var expected = argType;
-            Assert.AreEqual(expected, abExpense.Type);
+            Assert.AreEqual(expected, abExpenseOld.Type);
+            Assert.AreEqual(expected, abExpenseCur.Type);
         }
 
         /// <summary>
@@ -81,15 +90,28 @@ namespace AbookTest
         public void AbExpenseWithCost()
         {
             var expected = decimal.Parse(argCost);
-            Assert.AreEqual(expected, abExpense.Cost);
+            Assert.AreEqual(expected, abExpenseOld.Cost);
+            Assert.AreEqual(expected, abExpenseCur.Cost);
         }
 
         /// <summary>
         /// コンストラクタ
+        /// 引数:備考のテスト
+        /// </summary>
+        [Test]
+        public void AbExpenseWithNote()
+        {
+            var expected = argNote;
+            Assert.AreEqual(""      , abExpenseOld.Note);
+            Assert.AreEqual(expected, abExpenseCur.Note);
+        }
+
+        /// <summary>
+        /// コンストラクタ(旧)
         /// 引数:日付がNULL
         /// </summary>
         [Test]
-        public void AbExpenseWithNullDate()
+        public void AbExpenseWithNullDateOld()
         {
             argDate = null;
             var ex = Assert.Throws<AbException>(() =>
@@ -99,11 +121,25 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// コンストラクタ
+        /// コンストラクタ(新)
+        /// 引数:日付がNULL
+        /// </summary>
+        [Test]
+        public void AbExpenseWithNullDateCur()
+        {
+            argDate = null;
+            var ex = Assert.Throws<AbException>(() =>
+                new AbExpense(argDate, argName, argType, argCost, argNote)
+            );
+            Assert.AreEqual(EX.DATE_NULL, ex.Message);
+        }
+
+        /// <summary>
+        /// コンストラクタ(旧)
         /// 引数:日付が空文字列
         /// </summary>
         [Test]
-        public void AbExpenseWithEmptyDate()
+        public void AbExpenseWithEmptyDateOld()
         {
             argDate = string.Empty;
             var ex = Assert.Throws<AbException>(() =>
@@ -113,11 +149,25 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// コンストラクタ
+        /// コンストラクタ(新)
+        /// 引数:日付が空文字列
+        /// </summary>
+        [Test]
+        public void AbExpenseWithEmptyDateCur()
+        {
+            argDate = string.Empty;
+            var ex = Assert.Throws<AbException>(() =>
+                new AbExpense(argDate, argName, argType, argCost, argNote)
+            );
+            Assert.AreEqual(EX.DATE_NULL, ex.Message);
+        }
+
+        /// <summary>
+        /// コンストラクタ(旧)
         /// 引数:日付の形式が不正
         /// </summary>
         [Test]
-        public void AbExpenseWithInvalidDate()
+        public void AbExpenseWithInvalidDateOld()
         {
             argDate = "invalid";
             var ex = Assert.Throws<AbException>(() =>
@@ -127,11 +177,25 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// コンストラクタ
+        /// コンストラクタ(新)
+        /// 引数:日付の形式が不正
+        /// </summary>
+        [Test]
+        public void AbExpenseWithInvalidDateCur()
+        {
+            argDate = "invalid";
+            var ex = Assert.Throws<AbException>(() =>
+                new AbExpense(argDate, argName, argType, argCost, argNote)
+            );
+            Assert.AreEqual(EX.DATE_FORMAT, ex.Message);
+        }
+
+        /// <summary>
+        /// コンストラクタ(旧)
         /// 引数:名称がNULL
         /// </summary>
         [Test]
-        public void AbExpenseWithNullName()
+        public void AbExpenseWithNullNameOld()
         {
             argName = null;
             var ex = Assert.Throws<AbException>(() =>
@@ -141,11 +205,25 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// コンストラクタ
+        /// コンストラクタ(新)
+        /// 引数:名称がNULL
+        /// </summary>
+        [Test]
+        public void AbExpenseWithNullNameCur()
+        {
+            argName = null;
+            var ex = Assert.Throws<AbException>(() =>
+                new AbExpense(argDate, argName, argType, argCost, argNote)
+            );
+            Assert.AreEqual(EX.NAME_NULL, ex.Message);
+        }
+
+        /// <summary>
+        /// コンストラクタ(旧)
         /// 引数:名称が空文字列
         /// </summary>
         [Test]
-        public void AbExpenseWithEmptyName()
+        public void AbExpenseWithEmptyNameOld()
         {
             argName = string.Empty;
             var ex = Assert.Throws<AbException>(() =>
@@ -155,11 +233,25 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// コンストラクタ
+        /// コンストラクタ(新)
+        /// 引数:名称が空文字列
+        /// </summary>
+        [Test]
+        public void AbExpenseWithEmptyNameCur()
+        {
+            argName = string.Empty;
+            var ex = Assert.Throws<AbException>(() =>
+                new AbExpense(argDate, argName, argType, argCost, argNote)
+            );
+            Assert.AreEqual(EX.NAME_NULL, ex.Message);
+        }
+
+        /// <summary>
+        /// コンストラクタ(旧)
         /// 引数:種別がNULL
         /// </summary>
         [Test]
-        public void AbExpenseWithNullType()
+        public void AbExpenseWithNullTypeOld()
         {
             argType = null;
             var ex = Assert.Throws<AbException>(() =>
@@ -169,11 +261,25 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// コンストラクタ
+        /// コンストラクタ(新)
+        /// 引数:種別がNULL
+        /// </summary>
+        [Test]
+        public void AbExpenseWithNullTypeCur()
+        {
+            argType = null;
+            var ex = Assert.Throws<AbException>(() =>
+                new AbExpense(argDate, argName, argType, argCost, argNote)
+            );
+            Assert.AreEqual(EX.TYPE_NULL, ex.Message);
+        }
+
+        /// <summary>
+        /// コンストラクタ(旧)
         /// 引数:種別が空文字列
         /// </summary>
         [Test]
-        public void AbExpenseWithEmptyType()
+        public void AbExpenseWithEmptyTypeOld()
         {
             argType = string.Empty;
             var ex = Assert.Throws<AbException>(() =>
@@ -183,11 +289,25 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// コンストラクタ
+        /// コンストラクタ(新)
+        /// 引数:種別が空文字列
+        /// </summary>
+        [Test]
+        public void AbExpenseWithEmptyTypeCur()
+        {
+            argType = string.Empty;
+            var ex = Assert.Throws<AbException>(() =>
+                new AbExpense(argDate, argName, argType, argCost, argNote)
+            );
+            Assert.AreEqual(EX.TYPE_NULL, ex.Message);
+        }
+
+        /// <summary>
+        /// コンストラクタ(旧)
         /// 引数:種別が不正
         /// </summary>
         [Test]
-        public void AbExpenseWithWrongType()
+        public void AbExpenseWithWrongTypeOld()
         {
             argType = "wrong";
             var ex = Assert.Throws<AbException>(() =>
@@ -197,11 +317,25 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// コンストラクタ
+        /// コンストラクタ(新)
+        /// 引数:種別が不正
+        /// </summary>
+        [Test]
+        public void AbExpenseWithWrongTypeCur()
+        {
+            argType = "wrong";
+            var ex = Assert.Throws<AbException>(() =>
+                new AbExpense(argDate, argName, argType, argCost, argNote)
+            );
+            Assert.AreEqual(EX.TYPE_WRONG, ex.Message);
+        }
+
+        /// <summary>
+        /// コンストラクタ(旧)
         /// 引数:金額がNULL
         /// </summary>
         [Test]
-        public void AbExpenseWithNullCost()
+        public void AbExpenseWithNullCostOld()
         {
             argCost = null;
             var ex = Assert.Throws<AbException>(() =>
@@ -211,11 +345,25 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// コンストラクタ
+        /// コンストラクタ(新)
+        /// 引数:金額がNULL
+        /// </summary>
+        [Test]
+        public void AbExpenseWithNullCostCur()
+        {
+            argCost = null;
+            var ex = Assert.Throws<AbException>(() =>
+                new AbExpense(argDate, argName, argType, argCost, argNote)
+            );
+            Assert.AreEqual(EX.COST_NULL, ex.Message);
+        }
+
+        /// <summary>
+        /// コンストラクタ(旧)
         /// 引数:金額が空文字列
         /// </summary>
         [Test]
-        public void AbExpenseWithEmptyCost()
+        public void AbExpenseWithEmptyCostOld()
         {
             argCost = string.Empty;
             var ex = Assert.Throws<AbException>(() =>
@@ -225,11 +373,25 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// コンストラクタ
+        /// コンストラクタ(新)
+        /// 引数:金額が空文字列
+        /// </summary>
+        [Test]
+        public void AbExpenseWithEmptyCostCur()
+        {
+            argCost = string.Empty;
+            var ex = Assert.Throws<AbException>(() =>
+                new AbExpense(argDate, argName, argType, argCost, argNote)
+            );
+            Assert.AreEqual(EX.COST_NULL, ex.Message);
+        }
+
+        /// <summary>
+        /// コンストラクタ(旧)
         /// 引数:金額の形式が不正
         /// </summary>
         [Test]
-        public void AbExpenseWithInvalidCost()
+        public void AbExpenseWithInvalidCostOld()
         {
             argCost = "invalid";
             var ex = Assert.Throws<AbException>(() =>
@@ -239,11 +401,25 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// コンストラクタ
+        /// コンストラクタ(新)
+        /// 引数:金額の形式が不正
+        /// </summary>
+        [Test]
+        public void AbExpenseWithInvalidCostCur()
+        {
+            argCost = "invalid";
+            var ex = Assert.Throws<AbException>(() =>
+                new AbExpense(argDate, argName, argType, argCost, argNote)
+            );
+            Assert.AreEqual(EX.COST_FORMAT, ex.Message);
+        }
+
+        /// <summary>
+        /// コンストラクタ(旧)
         /// 引数:金額がマイナス
         /// </summary>
         [Test]
-        public void AbExpenseWithMinusCost()
+        public void AbExpenseWithMinusCostOld()
         {
             argCost = "-100";
             var ex = Assert.Throws<AbException>(() =>
@@ -253,11 +429,25 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// コンストラクタ
+        /// コンストラクタ(新)
+        /// 引数:金額がマイナス
+        /// </summary>
+        [Test]
+        public void AbExpenseWithMinusCostCur()
+        {
+            argCost = "-100";
+            var ex = Assert.Throws<AbException>(() =>
+                new AbExpense(argDate, argName, argType, argCost, argNote)
+            );
+            Assert.AreEqual(EX.COST_MINUS, ex.Message);
+        }
+
+        /// <summary>
+        /// コンストラクタ(旧)
         /// 引数:金額がオーバーフロー
         /// </summary>
         [Test]
-        public void AbExpenseWithOverflowCost()
+        public void AbExpenseWithOverflowCostOld()
         {
             argCost = Convert.ToString(decimal.MaxValue) + "0";
             var ex = Assert.Throws<AbException>(() =>
@@ -267,13 +457,64 @@ namespace AbookTest
         }
 
         /// <summary>
+        /// コンストラクタ(新)
+        /// 引数:金額がオーバーフロー
+        /// </summary>
+        [Test]
+        public void AbExpenseWithOverflowCostCur()
+        {
+            argCost = Convert.ToString(decimal.MaxValue) + "0";
+            var ex = Assert.Throws<AbException>(() =>
+                new AbExpense(argDate, argName, argType, argCost, argNote)
+            );
+            Assert.AreEqual(EX.COST_OVERFLOW, ex.Message);
+        }
+
+        /// <summary>
+        /// コンストラクタ(新)
+        /// 引数:備考がNULL
+        /// </summary>
+        [Test]
+        public void AbExpenseWithNullNoteCur()
+        {
+            argNote = null;
+            var ex = Assert.Throws<AbException>(() =>
+                new AbExpense(argDate, argName, argType, argCost, argNote)
+            );
+            Assert.AreEqual(EX.NOTE_NULL, ex.Message);
+        }
+
+        /// <summary>
+        /// コンストラクタ(新)
+        /// 引数:備考が空文字列
+        /// </summary>
+        [Test]
+        public void AbExpenseWithEmptyNoteCur()
+        {
+            argNote = string.Empty;
+            Assert.DoesNotThrow(() =>
+                new AbExpense(argDate, argName, argType, argCost, argNote)
+            );
+        }
+
+        /// <summary>
         /// CSV形式
         /// </summary>
         [Test]
-        public void ToCSV()
+        public void OldToCSV()
         {
-            var expected = string.Format(FMT.CSV, argDate, argName, argType, argCost);
-            Assert.AreEqual(expected, abExpense.ToCSV());
+            var expected = string.Format(FMT.CSV, argDate, argName, argType, argCost, "");
+            Assert.AreEqual(expected, abExpenseOld.ToCSV());
+        }
+
+        /// <summary>
+        /// CSV形式
+        /// </summary>
+        [Test]
+        public void CurToCSV()
+        {
+            var expected = string.Format(FMT.CSV, argDate, argName, argType, argCost, argNote);
+            Assert.AreEqual(expected, abExpenseCur.ToCSV());
         }
 
         /// <summary>
@@ -284,7 +525,8 @@ namespace AbookTest
         {
             var type = AbUtilities.ToTypeId(argType);
             var expected = string.Format(FMT.SQL, argDate, argName, type, argCost);
-            Assert.AreEqual(expected, abExpense.ToSQL());
+            Assert.AreEqual(expected, abExpenseOld.ToSQL());
+            Assert.AreEqual(expected, abExpenseCur.ToSQL());
         }
     }
 }
