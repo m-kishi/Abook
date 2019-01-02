@@ -14,6 +14,7 @@ namespace Abook
     using CHK = Abook.AbUtilities.CHK;
     using COL = Abook.AbConstants.COL;
     using CSV = Abook.AbConstants.CSV;
+    using UTL = Abook.AbUtilities;
 
     /// <summary>
     /// DBファイル管理クラス
@@ -93,11 +94,11 @@ namespace Abook
                 errLine++;
                 try
                 {
-                    var date = Convert.ToString(row.Cells[COL.DATE].Value);
-                    var name = Convert.ToString(row.Cells[COL.NAME].Value);
-                    var type = Convert.ToString(row.Cells[COL.TYPE].Value);
-                    var cost = Convert.ToString(row.Cells[COL.COST].Value);
-                    var note = Convert.ToString(row.Cells[COL.NOTE].Value);
+                    var date = UTL.ToStr(row.Cells[COL.DATE].Value);
+                    var name = UTL.ToStr(row.Cells[COL.NAME].Value);
+                    var type = UTL.ToStr(row.Cells[COL.TYPE].Value);
+                    var cost = UTL.ToStr(row.Cells[COL.COST].Value);
+                    var note = UTL.ToStr(row.Cells[COL.NOTE].Value);
 
                     var args = new string[] { date, name, type, cost };
                     if (args.All(arg => !string.IsNullOrEmpty(arg)))

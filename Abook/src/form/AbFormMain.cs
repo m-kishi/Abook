@@ -36,9 +36,9 @@ namespace Abook
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            AbFormMain form = null;
-            form = new AbFormMain(CSV.FILE);
+            var form = new AbFormMain(CSV.FILE);
             form.SetUploadParameters(UPD.URL_LOGIN, UPD.URL_UPLOAD);
+
             Application.Run(form);
         }
 
