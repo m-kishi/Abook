@@ -37,6 +37,7 @@ namespace Abook
             System.Windows.Forms.DataGridViewCellStyle styleType = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle styleCost = new System.Windows.Forms.DataGridViewCellStyle();
             this.CmbName    = new System.Windows.Forms.ComboBox();
+            this.CmbType    = new System.Windows.Forms.ComboBox();
             this.BtnSearch  = new System.Windows.Forms.Button();
             this.DgvExpense = new System.Windows.Forms.DataGridView();
             this.ColDate    = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -55,15 +56,25 @@ namespace Abook
             this.CmbName.IntegralHeight = false;
             this.CmbName.Location = new System.Drawing.Point(12, 12);
             this.CmbName.Name = "CmbName";
-            this.CmbName.Size = new System.Drawing.Size(336, 20);
+            this.CmbName.Size = new System.Drawing.Size(265, 20);
             this.CmbName.TabIndex = 0;
+            // 
+            // CmbType
+            // 
+            this.CmbType.DropDownHeight = 242;
+            this.CmbType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CmbType.IntegralHeight = false;
+            this.CmbType.Location = new System.Drawing.Point(283, 12);
+            this.CmbType.Name = "CmbType";
+            this.CmbType.Size = new System.Drawing.Size(65, 20);
+            this.CmbType.TabIndex = 1;
             // 
             // BtnSearch
             // 
             this.BtnSearch.Location = new System.Drawing.Point(354, 10);
             this.BtnSearch.Name = "BtnSearch";
             this.BtnSearch.Size = new System.Drawing.Size(50, 23);
-            this.BtnSearch.TabIndex = 1;
+            this.BtnSearch.TabIndex = 2;
             this.BtnSearch.Text = "検索";
             this.BtnSearch.UseVisualStyleBackColor = true;
             this.BtnSearch.Click += new System.EventHandler(this.BtnEntry_Click);
@@ -85,7 +96,7 @@ namespace Abook
             this.DgvExpense.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.DgvExpense.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DgvExpense.Size = new System.Drawing.Size(392, 234);
-            this.DgvExpense.TabIndex = 2;
+            this.DgvExpense.TabIndex = 3;
             // 
             // ColDate
             // 
@@ -139,6 +150,7 @@ namespace Abook
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(416, 284);
             this.Controls.Add(this.CmbName);
+            this.Controls.Add(this.CmbType);
             this.Controls.Add(this.BtnSearch);
             this.Controls.Add(this.DgvExpense);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
@@ -156,6 +168,7 @@ namespace Abook
         }
 
         private System.Windows.Forms.ComboBox CmbName;
+        private System.Windows.Forms.ComboBox CmbType;
         private System.Windows.Forms.Button BtnSearch;
         private System.Windows.Forms.DataGridView DgvExpense;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColDate;

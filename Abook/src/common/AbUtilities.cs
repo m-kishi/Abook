@@ -69,6 +69,16 @@ namespace Abook
         }
 
         /// <summary>
+        /// 空文字判定
+        /// </summary>
+        /// <param name="text">文字列</param>
+        /// <returns>true:Null or Empty false:空白でない</returns>
+        public static bool IsEmpty(string text)
+        {
+            return string.IsNullOrEmpty(text);
+        }
+
+        /// <summary>
         /// チェックユーティリティ
         /// </summary>
         public static class CHK

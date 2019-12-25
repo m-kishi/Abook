@@ -8,9 +8,11 @@ namespace Abook
     using System.Collections.Generic;
     using System.Linq;
     using System.Windows.Forms;
+    using UTL = Abook.AbUtilities;
     using CHK = Abook.AbUtilities.CHK;
     using COL = Abook.AbConstants.COL;
     using FMT = Abook.AbConstants.FMT;
+    using TYPE = Abook.AbConstants.TYPE;
 
     /// <summary>
     /// 検索サブフォーム
@@ -40,7 +42,11 @@ namespace Abook
             var names = abExpenses.GroupBy(exp => exp.Name).Select(obj => obj.Key).ToList();
             names.Sort();
 
+            var types = new List<string>() { "" };
+            types.AddRange(TYPE.EXPENCE);
+
             CmbName.DataSource = names;
+            CmbType.DataSource = types;
         }
 
         /// <summary>
@@ -59,6 +65,20 @@ namespace Abook
                 predicate = new Func<AbExpense, bool>(exp =>
                     exp.Name.Contains(text)
                 );
+            }
+
+            var type = UTL.ToStr(CmbType.SelectedValue);
+            if (!UTL.IsEmpty(type))
+            {
+                predicate = new Func<AbExpense, bool>(exp =>
+                    exp.Name == text && exp.Type == type
+                );
+                if (selectedIndex < 0)
+                {
+                    predicate = new Func<AbExpense, bool>(exp =>
+                        exp.Name.Contains(text) && exp.Type == type
+                    );
+                }
             }
 
             DgvExpense.Rows.Clear();
