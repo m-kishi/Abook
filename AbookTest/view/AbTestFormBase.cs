@@ -1,6 +1,5 @@
 ﻿// ------------------------------------------------------------
-// Copyright (C) 2010-2017 Masaaki Kishi. All rights reserved.
-// Author: Masaaki Kishi <m.kishi.5@gmail.com>
+// © 2010 Masaaki Kishi
 // ------------------------------------------------------------
 namespace AbookTest
 {
