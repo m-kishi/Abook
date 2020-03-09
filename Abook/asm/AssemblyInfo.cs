@@ -1,6 +1,5 @@
 ﻿// ------------------------------------------------------------
-// Copyright (C) 2010-2017 Masaaki Kishi. All rights reserved.
-// Author: Masaaki Kishi <m.kishi.5@gmail.com>
+// © 2010 Masaaki Kishi
 // ------------------------------------------------------------
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -13,5 +12,5 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("5.8.0")]
 [assembly: AssemblyFileVersion("5.8.0")]
 [assembly: AssemblyInformationalVersion("5.8.0")]
-[assembly: AssemblyCopyright("Copyright @ 2010-2019 m-kishi")]
+[assembly: AssemblyCopyright("@ 2010 Masaaki Kishi")]
 [assembly: AssemblyDescription("This is my account book application.")]
