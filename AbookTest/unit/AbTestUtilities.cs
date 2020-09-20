@@ -34,6 +34,29 @@ namespace AbookTest
         }
 
         /// <summary>
+        /// 金額変換
+        /// </summary>
+        /// <param name="cost">金額</param>
+        /// <param name="expected">期待値</param>
+        [TestCase(         null,        0)]
+        [TestCase(          "0",        0)]
+        [TestCase(        "100",      100)]
+        [TestCase(       "-100",     -100)]
+        [TestCase(  "9,999,999",  9999999)]
+        [TestCase( "-9,999,999", -9999999)]
+        [TestCase(            0,        0)]
+        [TestCase(          100,      100)]
+        [TestCase(         -100,     -100)]
+        [TestCase(      9999999,  9999999)]
+        [TestCase(     -9999999, -9999999)]
+        [TestCase("not decimal",        0)]
+        public void ToCost(object cost, decimal expected)
+        {
+            var actual = AbUtilities.ToCost(cost);
+            Assert.AreEqual(expected, actual);
+        }
+
+        /// <summary>
         /// 金額のカンマ編集
         /// </summary>
         /// <param name="cost">金額</param>
@@ -82,6 +105,29 @@ namespace AbookTest
         public void ToTypeId(string type, string expected)
         {
             var actual = AbUtilities.ToTypeId(type);
+            Assert.AreEqual(expected, actual);
+        }
+
+        /// <summary>
+        /// 金額判定
+        /// </summary>
+        /// <param name="cost">金額</param>
+        /// <param name="expected">期待値</param>
+        [TestCase(         null, false)]
+        [TestCase(          "0",  true)]
+        [TestCase(        "100",  true)]
+        [TestCase(       "-100",  true)]
+        [TestCase(  "9,999,999",  true)]
+        [TestCase( "-9,999,999",  true)]
+        [TestCase(            0,  true)]
+        [TestCase(          100,  true)]
+        [TestCase(         -100,  true)]
+        [TestCase(      9999999,  true)]
+        [TestCase(     -9999999,  true)]
+        [TestCase("not decimal", false)]
+        public void IsCost(object cost, bool expected)
+        {
+            var actual = AbUtilities.IsCost(cost);
             Assert.AreEqual(expected, actual);
         }
 

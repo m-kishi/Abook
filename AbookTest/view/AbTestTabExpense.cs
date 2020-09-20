@@ -420,6 +420,231 @@ namespace AbookTest
             }
 
             /// <summary>
+            /// KeyDownテスト
+            /// キー: Ctrl + t
+            /// 選択範囲の合計表示:範囲選択なし
+            /// </summary>
+            [Test]
+            public void KeyDownWithTotalCostNoSelection()
+            {
+                //ダイアログの表示テスト
+                DialogBoxHandler = (name, hWnd) =>
+                {
+                    var tsMessageBox = new MessageBoxTester(hWnd);
+
+                    //タイトル
+                    var title = "合計";
+                    Assert.AreEqual(title, tsMessageBox.Title);
+
+                    //テキスト
+                    var text = @"\0";
+                    Assert.AreEqual(text, tsMessageBox.Text);
+
+                    //OKボタンクリック
+                    tsMessageBox.ClickOk();
+                };
+
+                ShowFormMain(CSV_EXIST, TAB_IDX);
+
+                var dgvExpense = CtDgvExpense();
+                dgvExpense.ClearSelection();
+
+                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.T)));
+            }
+
+            /// <summary>
+            /// KeyDownテスト
+            /// キー: Ctrl + t
+            /// 選択範囲の合計表示:金額列範囲外
+            /// </summary>
+            [Test]
+            public void KeyDownWithTotalCostWithoutCostColumn()
+            {
+                //ダイアログの表示テスト
+                DialogBoxHandler = (name, hWnd) =>
+                {
+                    var tsMessageBox = new MessageBoxTester(hWnd);
+
+                    //タイトル
+                    var title = "合計";
+                    Assert.AreEqual(title, tsMessageBox.Title);
+
+                    //テキスト
+                    var text = @"\0";
+                    Assert.AreEqual(text, tsMessageBox.Text);
+
+                    //OKボタンクリック
+                    tsMessageBox.ClickOk();
+                };
+
+                ShowFormMain(CSV_EXIST, TAB_IDX);
+
+                var dgvExpense = CtDgvExpense();
+                for (int i = 0; i < 3; i++) {
+                    var row = dgvExpense.Rows[i];
+                    row.Cells[COL.DATE].Selected = true;
+                    row.Cells[COL.NAME].Selected = true;
+                    row.Cells[COL.TYPE].Selected = true;
+                }
+
+                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.T)));
+            }
+
+            /// <summary>
+            /// KeyDownテスト
+            /// キー: Ctrl + t
+            /// 選択範囲の合計表示:金額単一セル
+            /// </summary>
+            [Test]
+            public void KeyDownWithTotalCostSingleCell()
+            {
+                //ダイアログの表示テスト
+                DialogBoxHandler = (name, hWnd) =>
+                {
+                    var tsMessageBox = new MessageBoxTester(hWnd);
+
+                    //タイトル
+                    var title = "合計";
+                    Assert.AreEqual(title, tsMessageBox.Title);
+
+                    //テキスト
+                    var text = @"\100";
+                    Assert.AreEqual(text, tsMessageBox.Text);
+
+                    //OKボタンクリック
+                    tsMessageBox.ClickOk();
+                };
+
+                ShowFormMain(CSV_EXIST, TAB_IDX);
+
+                var dgvExpense = CtDgvExpense();
+                dgvExpense.Rows[0].Cells[COL.COST].Selected = true;
+
+                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.T)));
+            }
+
+            /// <summary>
+            /// KeyDownテスト
+            /// キー: Ctrl + t
+            /// 選択範囲の合計表示:金額複数セル
+            /// </summary>
+            [Test]
+            public void KeyDownWithTotalCostMultiCell()
+            {
+                //ダイアログの表示テスト
+                DialogBoxHandler = (name, hWnd) =>
+                {
+                    var tsMessageBox = new MessageBoxTester(hWnd);
+
+                    //タイトル
+                    var title = "合計";
+                    Assert.AreEqual(title, tsMessageBox.Title);
+
+                    //テキスト
+                    var text = @"\900";
+                    Assert.AreEqual(text, tsMessageBox.Text);
+
+                    //OKボタンクリック
+                    tsMessageBox.ClickOk();
+                };
+
+                ShowFormMain(CSV_EXIST, TAB_IDX);
+
+                var dgvExpense = CtDgvExpense();
+                for (int i = 1; i < 4; i++)
+                {
+                    dgvExpense.Rows[i].Cells[COL.COST].Selected = true;
+                }
+
+                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.T)));
+            }
+
+            /// <summary>
+            /// KeyDownテスト
+            /// キー: Ctrl + t
+            /// 選択範囲の合計表示:金額列以外のセルも含む
+            /// </summary>
+            [Test]
+            public void KeyDownWithTotalCostIncludeOtherCell()
+            {
+                //ダイアログの表示テスト
+                DialogBoxHandler = (name, hWnd) =>
+                {
+                    var tsMessageBox = new MessageBoxTester(hWnd);
+
+                    //タイトル
+                    var title = "合計";
+                    Assert.AreEqual(title, tsMessageBox.Title);
+
+                    //テキスト
+                    var text = @"\900";
+                    Assert.AreEqual(text, tsMessageBox.Text);
+
+                    //OKボタンクリック
+                    tsMessageBox.ClickOk();
+                };
+
+                ShowFormMain(CSV_EXIST, TAB_IDX);
+
+                var dgvExpense = CtDgvExpense();
+                for (int i = 1; i < 4; i++)
+                {
+                    var row = dgvExpense.Rows[i];
+                    row.Cells[COL.DATE].Selected = true;
+                    row.Cells[COL.NAME].Selected = true;
+                    row.Cells[COL.TYPE].Selected = true;
+                    row.Cells[COL.COST].Selected = true;
+                }
+
+                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.T)));
+            }
+
+            /// <summary>
+            /// KeyDownテスト
+            /// キー: Ctrl + t
+            /// 選択範囲の合計表示:金額列に空白を含む
+            /// </summary>
+            [Test]
+            public void KeyDownWithTotalCostIncludeEmptyCost()
+            {
+                //ダイアログの表示テスト
+                DialogBoxHandler = (name, hWnd) =>
+                {
+                    var tsMessageBox = new MessageBoxTester(hWnd);
+
+                    //タイトル
+                    var title = "合計";
+                    Assert.AreEqual(title, tsMessageBox.Title);
+
+                    //テキスト
+                    var text = @"\600";
+                    Assert.AreEqual(text, tsMessageBox.Text);
+
+                    //OKボタンクリック
+                    tsMessageBox.ClickOk();
+                };
+
+                ShowFormMain(CSV_EXIST, TAB_IDX);
+
+                var dgvExpense = CtDgvExpense();
+                for (int i = 1; i < 4; i++)
+                {
+                    var row = dgvExpense.Rows[i];
+                    row.Cells[COL.DATE].Selected = true;
+                    row.Cells[COL.NAME].Selected = true;
+                    row.Cells[COL.TYPE].Selected = true;
+                    row.Cells[COL.COST].Selected = true;
+
+                    if (i == 2)
+                    {
+                        row.Cells[COL.COST].Value = "";
+                    }
+                }
+
+                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.T)));
+            }
+
+            /// <summary>
             /// CellEndEditテスト
             /// セル:名称セル
             /// 自動補完:補完候補あり
