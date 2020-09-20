@@ -5,11 +5,13 @@ namespace Abook
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Windows.Forms;
     using COL = Abook.AbConstants.COL;
     using CSV = Abook.AbConstants.CSV;
     using DGV = Abook.AbConstants.DGV;
     using FMT = Abook.AbConstants.FMT;
+    using UTL = Abook.AbUtilities;
     using MSG = Abook.AbUtilities.MSG;
 
     /// <summary>
@@ -119,10 +121,11 @@ namespace Abook
         }
 
         /// <summary>
-        /// DataGridViewへペースト
+        /// キーダウン時の処理
         /// </summary>
         private void DgvExpense_KeyDown(object sender, KeyEventArgs e)
         {
+            //ペースト
             if (e.Modifiers == Keys.Control && e.KeyCode == Keys.V)
             {
                 var row = DgvExpense.Rows[DgvExpense.CurrentCell.RowIndex];
@@ -154,6 +157,17 @@ namespace Abook
                     default:
                         break;
                 }
+            }
+
+            //選択範囲の合計表示
+            if (e.Modifiers == Keys.Control && e.KeyCode == Keys.T)
+            {
+                var total = DgvExpense.SelectedCells.Cast<DataGridViewCell>().Where(c =>
+                    c.ColumnIndex == 3 && UTL.IsCost(c.Value)
+                ).Select(c =>
+                    UTL.ToCost(c.Value)
+                ).Sum();
+                MSG.OK("合計", UTL.ToYen(total));
             }
         }
 

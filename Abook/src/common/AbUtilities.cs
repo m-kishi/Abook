@@ -38,6 +38,17 @@ namespace Abook
         }
 
         /// <summary>
+        /// 金額変換
+        /// </summary>
+        /// <param name="cost">金額</param>
+        /// <returns>金額(金額に変換できないときは0)</returns>
+        public static decimal ToCost(object cost)
+        {
+            if (!IsCost(cost)) return 0m;
+            return decimal.Parse(ToStr(cost));
+        }
+
+        /// <summary>
         /// 金額のカンマ編集
         /// </summary>
         /// <param name="cost">金額</param>
@@ -75,6 +86,17 @@ namespace Abook
         public static bool IsEmpty(string text)
         {
             return string.IsNullOrEmpty(text);
+        }
+
+        /// <summary>
+        /// 金額判定
+        /// </summary>
+        /// <param name="cost">金額</param>
+        /// <returns>true:decimal false:decimalでない</returns>
+        public static bool IsCost(object cost)
+        {
+            var value = 0m;
+            return decimal.TryParse(ToStr(cost), out value);
         }
 
         /// <summary>
