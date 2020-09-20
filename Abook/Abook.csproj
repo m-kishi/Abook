@@ -151,4 +151,7 @@
       <DependentUpon>AbSubUpload.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(ProjectDir)bin\Release\$(TargetFileName)" "$(ProjectDir)exe\" /Y</PostBuildEvent>
+  </PropertyGroup>
 </Project>
