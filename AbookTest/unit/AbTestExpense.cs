@@ -515,17 +515,5 @@ namespace AbookTest
             var expected = string.Format(FMT.CSV, argDate, argName, argType, argCost, argNote);
             Assert.AreEqual(expected, abExpenseCur.ToCSV());
         }
-
-        /// <summary>
-        /// SQL形式
-        /// </summary>
-        [Test]
-        public void ToSQL()
-        {
-            var type = AbUtilities.ToTypeId(argType);
-            var expected = string.Format(FMT.SQL, argDate, argName, type, argCost);
-            Assert.AreEqual(expected, abExpenseOld.ToSQL());
-            Assert.AreEqual(expected, abExpenseCur.ToSQL());
-        }
     }
 }

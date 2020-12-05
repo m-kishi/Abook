@@ -12,11 +12,6 @@ namespace Abook
     /// </summary>
     public partial class AbFormMain : Form
     {
-        /// <summary>ログインURL</summary>
-        public string URL_LOGIN  { get; set; }
-        /// <summary>アップロードURL</summary>
-        public string URL_UPLOAD { get; set; }
-
         /// <summary>
         /// アプリケーション終了
         /// </summary>
@@ -64,26 +59,6 @@ namespace Abook
             {
                 MSG.Error(ex.Message);
             }
-        }
-
-        /// <summary>
-        /// アップロードのパラメタ設定
-        /// </summary>
-        /// <param name="login">ログインURL</param>
-        /// <param name="upload">アップロードURL</param>
-        public void SetUploadParameters(string login, string upload)
-        {
-            this.URL_LOGIN = login;
-            this.URL_UPLOAD = upload;
-        }
-
-        /// <summary>
-        /// アップロード
-        /// </summary>
-        private void MenuUpload_Click(object sender, EventArgs e)
-        {
-            var formUpload = new AbSubUpload(CSV_FILE, URL_LOGIN, URL_UPLOAD);
-            formUpload.ShowDialog();
         }
     }
 }

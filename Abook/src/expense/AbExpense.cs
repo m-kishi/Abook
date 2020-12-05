@@ -149,15 +149,5 @@ namespace Abook
         {
             return string.Format(FMT.CSV, Date.ToString(FMT.DATE), Name, Type, Cost, Note);
         }
-
-        /// <summary>
-        /// SQL形式
-        /// </summary>
-        /// <returns>SQL形式</returns>
-        public string ToSQL()
-        {
-            var type = UTIL.ToTypeId(Type);
-            return string.Format(FMT.SQL, Date.ToString(FMT.DATE), Name, type, Cost);
-        }
     }
 }

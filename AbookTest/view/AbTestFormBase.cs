@@ -76,7 +76,6 @@ namespace AbookTest
         protected void ShowFormMain(string csv, string login, string upload)
         {
             form = new AbFormMain(csv);
-            form.SetUploadParameters(login, upload);
             form.Show();
         }
 
@@ -100,15 +99,6 @@ namespace AbookTest
         protected ToolStripMenuItemTester TsMenuEnergy()
         {
             return (new ToolStripMenuItemTester("MenuEnergy", form));
-        }
-
-        /// <summary>
-        /// アップロードメニュー取得
-        /// </summary>
-        /// <returns>アップロードメニュー</returns>
-        protected ToolStripMenuItemTester TsMenuUpload()
-        {
-            return (new ToolStripMenuItemTester("MenuUpload", form));
         }
 
         /// <summary>

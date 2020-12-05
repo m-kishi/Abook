@@ -56,7 +56,6 @@
     <Compile Include="src\common\AbDBManager.cs" />
     <Compile Include="src\common\AbDialogHook.cs" />
     <Compile Include="src\common\AbException.cs" />
-    <Compile Include="src\common\AbUploaders.cs" />
     <Compile Include="src\common\AbUtilities.cs" />
     <Compile Include="src\control\AbHeaderControl.cs">
       <SubType>UserControl</SubType>
@@ -107,12 +106,6 @@
     <Compile Include="src\form\AbSubType.Designer.cs">
       <DependentUpon>AbSubType.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\form\AbSubUpload.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="src\form\AbSubUpload.Designer.cs">
-      <DependentUpon>AbSubUpload.cs</DependentUpon>
-    </Compile>
     <Compile Include="src\form\AbTabBalance.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -146,9 +139,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="src\form\AbFormVersion.resx">
       <DependentUpon>AbFormVersion.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="src\form\AbSubUpload.resx">
-      <DependentUpon>AbSubUpload.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
