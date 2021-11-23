@@ -9,8 +9,8 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("Abook")]
 [assembly: AssemblyProduct("Abook")]
-[assembly: AssemblyVersion("5.9.0")]
-[assembly: AssemblyFileVersion("5.9.0")]
-[assembly: AssemblyInformationalVersion("5.9.0")]
+[assembly: AssemblyVersion("6.0.0")]
+[assembly: AssemblyFileVersion("6.0.0")]
+[assembly: AssemblyInformationalVersion("6.0.0")]
 [assembly: AssemblyCopyright("@ 2010 Masaaki Kishi")]
 [assembly: AssemblyDescription("This is my account book application.")]
