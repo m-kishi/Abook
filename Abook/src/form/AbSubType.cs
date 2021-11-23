@@ -92,6 +92,7 @@ namespace Abook
                     row.Cells[COL.NAME].Value = exp.Name;
                     row.Cells[COL.TYPE].Value = exp.Type;
                     row.Cells[COL.COST].Value = exp.Cost;
+                    row.Cells[COL.NAME].ToolTipText = exp.Note;
                 }
                 DgvExpense.FirstDisplayedScrollingRowIndex = 0;
             }

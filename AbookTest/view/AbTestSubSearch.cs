@@ -61,7 +61,7 @@ namespace AbookTest
             using (StreamWriter sw = new StreamWriter(CSV_EXIST, false, CSV.ENCODING))
             {
                 sw.NewLine = CSV.LF;
-                sw.WriteLine(TT.ToCSV("2017-12-01", "おにぎり"    , TYPE.FOOD, "100"));
+                sw.WriteLine(TT.ToCSV("2017-12-01", "おにぎり"    , TYPE.FOOD, "100", "note1"));
                 sw.WriteLine(TT.ToCSV("2017-12-02", "おにぎり"    , TYPE.FOOD, "200"));
                 sw.WriteLine(TT.ToCSV("2017-12-03", "おにぎりＡ"  , TYPE.FOOD, "300"));
                 sw.WriteLine(TT.ToCSV("2017-12-04", "Ｂおにぎり"  , TYPE.FOOD, "400"));
@@ -600,6 +600,42 @@ namespace AbookTest
             TsBtnSearch().Click();
 
             Assert.AreEqual(-1, dgvExpense.FirstDisplayedScrollingRowIndex);
+        }
+
+        /// <summary>
+        /// 備考のテスト
+        /// 備考: あり
+        /// </summary>
+        [Test, RequiresSTA]
+        public void Note()
+        {
+            ShowSubSearch(CSV_EXIST);
+
+            var cmbName = CtCmbName();
+            cmbName.SelectedIndex = 2;
+
+            TsBtnSearch().Click();
+
+            var dgvExpense = CtDgvExpense();
+            Assert.AreEqual("note1", dgvExpense.Rows[0].Cells[COL.NAME].ToolTipText);
+        }
+
+        /// <summary>
+        /// 備考のテスト
+        /// 備考: なし
+        /// </summary>
+        [Test, RequiresSTA]
+        public void NoteWithEmpty()
+        {
+            ShowSubSearch(CSV_EXIST);
+
+            var cmbName = CtCmbName();
+            cmbName.SelectedIndex = 2;
+
+            TsBtnSearch().Click();
+
+            var dgvExpense = CtDgvExpense();
+            Assert.AreEqual("", dgvExpense.Rows[1].Cells[COL.NAME].ToolTipText);
         }
     }
 }

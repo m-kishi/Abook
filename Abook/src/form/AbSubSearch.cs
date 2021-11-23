@@ -51,7 +51,7 @@ namespace Abook
         /// <summary>
         /// 検索
         /// </summary>
-        private void BtnEntry_Click(object sender, EventArgs e)
+        private void BtnSearch_Click(object sender, EventArgs e)
         {
             var text = CmbName.Text;
             var selectedIndex = CmbName.SelectedIndex;
@@ -94,6 +94,7 @@ namespace Abook
                     row.Cells[COL.NAME].Value = exp.Name;
                     row.Cells[COL.TYPE].Value = exp.Type;
                     row.Cells[COL.COST].Value = exp.Cost;
+                    row.Cells[COL.NAME].ToolTipText = exp.Note;
                 }
                 DgvExpense.FirstDisplayedScrollingRowIndex = 0;
             }
