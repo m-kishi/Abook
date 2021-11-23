@@ -88,6 +88,28 @@ namespace Abook
         }
 
         /// <summary>
+        /// 消費税計算(8%)
+        /// </summary>
+        /// <param name="cost">金額</param>
+        /// <returns>税込金額(小数点以下四捨五入)</returns>
+        public static decimal Tax8(object cost)
+        {
+            var value = ToCost(cost);
+            return Math.Round(value * 1.08m, 0, MidpointRounding.AwayFromZero);
+        }
+
+        /// <summary>
+        /// 消費税計算(10%)
+        /// </summary>
+        /// <param name="cost">金額</param>
+        /// <returns>税込金額(小数点以下四捨五入)</returns>
+        public static decimal Tax10(object cost)
+        {
+            var value = ToCost(cost);
+            return Math.Round(value * 1.1m, 0, MidpointRounding.AwayFromZero);
+        }
+
+        /// <summary>
         /// チェックユーティリティ
         /// </summary>
         public static class CHK

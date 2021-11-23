@@ -159,6 +159,28 @@ namespace Abook
                 }
             }
 
+            //消費税計算(8%)
+            if (e.Modifiers == Keys.Control && e.KeyCode == Keys.D8)
+            {
+                DgvExpense.SelectedCells.Cast<DataGridViewCell>().Where(c =>
+                    c.ColumnIndex == 3 && UTL.IsCost(c.Value)
+                ).ToList().ForEach(c =>
+                {
+                    c.Value = UTL.Tax8(c.Value);
+                });
+            }
+
+            //消費税計算(10%)
+            if (e.Modifiers == Keys.Control && e.KeyCode == Keys.D1)
+            {
+                DgvExpense.SelectedCells.Cast<DataGridViewCell>().Where(c =>
+                    c.ColumnIndex == 3 && UTL.IsCost(c.Value)
+                ).ToList().ForEach(c =>
+                {
+                    c.Value = UTL.Tax10(c.Value);
+                });
+            }
+
             //選択範囲の合計表示
             if (e.Modifiers == Keys.Control && e.KeyCode == Keys.T)
             {

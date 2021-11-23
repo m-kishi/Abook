@@ -102,6 +102,38 @@ namespace AbookTest
         }
 
         /// <summary>
+        /// 消費税計算(8%)
+        /// </summary>
+        /// <param name="cost">金額</param>
+        /// <param name="expected">期待値</param>
+        [TestCase(         null,   0)]
+        [TestCase(           78,  84)]
+        [TestCase(           98, 106)]
+        [TestCase(          100, 108)]
+        [TestCase("not decimal",   0)]
+        public void Tax8(object cost, decimal expected)
+        {
+            var actual = AbUtilities.Tax8(cost);
+            Assert.AreEqual(expected, actual);
+        }
+
+        /// <summary>
+        /// 消費税計算(10%)
+        /// </summary>
+        /// <param name="cost">金額</param>
+        /// <param name="expected">期待値</param>
+        [TestCase(         null,   0)]
+        [TestCase(           64,  70)]
+        [TestCase(           98, 108)]
+        [TestCase(          100, 110)]
+        [TestCase("not decimal",   0)]
+        public void Tax10(object cost, decimal expected)
+        {
+            var actual = AbUtilities.Tax10(cost);
+            Assert.AreEqual(expected, actual);
+        }
+
+        /// <summary>
         /// チェックユーティリティテスト
         /// </summary>
         [TestFixture]
