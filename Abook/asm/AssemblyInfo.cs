@@ -1,5 +1,5 @@
 ﻿// ------------------------------------------------------------
-// © 2010 Masaaki Kishi
+// © 2010 https://github.com/m-kishi
 // ------------------------------------------------------------
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -12,5 +12,5 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("6.0.0")]
 [assembly: AssemblyFileVersion("6.0.0")]
 [assembly: AssemblyInformationalVersion("6.0.0")]
-[assembly: AssemblyCopyright("@ 2010 Masaaki Kishi")]
+[assembly: AssemblyCopyright("@ 2010 https://github.com/m-kishi")]
 [assembly: AssemblyDescription("This is my account book application.")]
