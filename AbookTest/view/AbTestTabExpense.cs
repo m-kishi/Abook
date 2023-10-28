@@ -181,8 +181,9 @@ namespace AbookTest
             {
                 ShowFormMain(CSV_EXIST, TAB_IDX);
 
+                // 最終行から 9 行上の行がFirstDisplayedCell
                 var cell = CtDgvExpense().SelectedCells[0];
-                Assert.AreEqual(CtDgvExpense().FirstDisplayedCell.RowIndex, cell.RowIndex - 9); //最終行から 9 行上の行がFirstDisplayedCell
+                Assert.AreEqual(CtDgvExpense().FirstDisplayedCell.RowIndex, cell.RowIndex - 9);
                 Assert.AreEqual(CtDgvExpense().FirstDisplayedCell.ColumnIndex, cell.ColumnIndex);
             }
         }
@@ -446,20 +447,20 @@ namespace AbookTest
             [Test]
             public void KeyDownWithTotalCostNoSelection()
             {
-                //ダイアログの表示テスト
+                // ダイアログの表示テスト
                 DialogBoxHandler = (name, hWnd) =>
                 {
                     var tsMessageBox = new MessageBoxTester(hWnd);
 
-                    //タイトル
+                    // タイトル
                     var title = "合計";
                     Assert.AreEqual(title, tsMessageBox.Title);
 
-                    //テキスト
+                    // テキスト
                     var text = @"\0";
                     Assert.AreEqual(text, tsMessageBox.Text);
 
-                    //OKボタンクリック
+                    // OKボタンクリック
                     tsMessageBox.ClickOk();
                 };
 
@@ -479,20 +480,20 @@ namespace AbookTest
             [Test]
             public void KeyDownWithTotalCostWithoutCostColumn()
             {
-                //ダイアログの表示テスト
+                // ダイアログの表示テスト
                 DialogBoxHandler = (name, hWnd) =>
                 {
                     var tsMessageBox = new MessageBoxTester(hWnd);
 
-                    //タイトル
+                    // タイトル
                     var title = "合計";
                     Assert.AreEqual(title, tsMessageBox.Title);
 
-                    //テキスト
+                    // テキスト
                     var text = @"\0";
                     Assert.AreEqual(text, tsMessageBox.Text);
 
-                    //OKボタンクリック
+                    // OKボタンクリック
                     tsMessageBox.ClickOk();
                 };
 
@@ -517,20 +518,20 @@ namespace AbookTest
             [Test]
             public void KeyDownWithTotalCostSingleCell()
             {
-                //ダイアログの表示テスト
+                // ダイアログの表示テスト
                 DialogBoxHandler = (name, hWnd) =>
                 {
                     var tsMessageBox = new MessageBoxTester(hWnd);
 
-                    //タイトル
+                    // タイトル
                     var title = "合計";
                     Assert.AreEqual(title, tsMessageBox.Title);
 
-                    //テキスト
+                    // テキスト
                     var text = @"\100";
                     Assert.AreEqual(text, tsMessageBox.Text);
 
-                    //OKボタンクリック
+                    // OKボタンクリック
                     tsMessageBox.ClickOk();
                 };
 
@@ -550,20 +551,20 @@ namespace AbookTest
             [Test]
             public void KeyDownWithTotalCostMultiCell()
             {
-                //ダイアログの表示テスト
+                // ダイアログの表示テスト
                 DialogBoxHandler = (name, hWnd) =>
                 {
                     var tsMessageBox = new MessageBoxTester(hWnd);
 
-                    //タイトル
+                    // タイトル
                     var title = "合計";
                     Assert.AreEqual(title, tsMessageBox.Title);
 
-                    //テキスト
+                    // テキスト
                     var text = @"\900";
                     Assert.AreEqual(text, tsMessageBox.Text);
 
-                    //OKボタンクリック
+                    // OKボタンクリック
                     tsMessageBox.ClickOk();
                 };
 
@@ -586,20 +587,20 @@ namespace AbookTest
             [Test]
             public void KeyDownWithTotalCostIncludeOtherCell()
             {
-                //ダイアログの表示テスト
+                // ダイアログの表示テスト
                 DialogBoxHandler = (name, hWnd) =>
                 {
                     var tsMessageBox = new MessageBoxTester(hWnd);
 
-                    //タイトル
+                    // タイトル
                     var title = "合計";
                     Assert.AreEqual(title, tsMessageBox.Title);
 
-                    //テキスト
+                    // テキスト
                     var text = @"\900";
                     Assert.AreEqual(text, tsMessageBox.Text);
 
-                    //OKボタンクリック
+                    // OKボタンクリック
                     tsMessageBox.ClickOk();
                 };
 
@@ -626,20 +627,20 @@ namespace AbookTest
             [Test]
             public void KeyDownWithTotalCostIncludeEmptyCost()
             {
-                //ダイアログの表示テスト
+                // ダイアログの表示テスト
                 DialogBoxHandler = (name, hWnd) =>
                 {
                     var tsMessageBox = new MessageBoxTester(hWnd);
 
-                    //タイトル
+                    // タイトル
                     var title = "合計";
                     Assert.AreEqual(title, tsMessageBox.Title);
 
-                    //テキスト
+                    // テキスト
                     var text = @"\600";
                     Assert.AreEqual(text, tsMessageBox.Text);
 
-                    //OKボタンクリック
+                    // OKボタンクリック
                     tsMessageBox.ClickOk();
                 };
 
@@ -1292,20 +1293,20 @@ namespace AbookTest
             [Test]
             public void WithSuccess()
             {
-                //ダイアログの表示テスト
+                // ダイアログの表示テスト
                 DialogBoxHandler = (name, hWnd) =>
                 {
                     var tsMessageBox = new MessageBoxTester(hWnd);
 
-                    //タイトル
+                    // タイトル
                     var title = "登録完了";
                     Assert.AreEqual(title, tsMessageBox.Title);
 
-                    //テキスト
+                    // テキスト
                     var text = "正常に登録しました。";
                     Assert.AreEqual(text, tsMessageBox.Text);
 
-                    //OKボタンクリック
+                    // OKボタンクリック
                     tsMessageBox.ClickOk();
                 };
 
@@ -1323,20 +1324,20 @@ namespace AbookTest
             [Test]
             public void ErrorWithRowCountZero()
             {
-                //ダイアログの表示テスト
+                // ダイアログの表示テスト
                 DialogBoxHandler = (name, hWnd) =>
                 {
                     var tsMessageBox = new MessageBoxTester(hWnd);
 
-                    //タイトル
+                    // タイトル
                     var title = "警告";
                     Assert.AreEqual(title, tsMessageBox.Title);
 
-                    //テキスト
+                    // テキスト
                     var text = "レコードが1件もありません。";
                     Assert.AreEqual(text, tsMessageBox.Text);
 
-                    //OKボタンクリック
+                    // OKボタンクリック
                     tsMessageBox.ClickOk();
                 };
 
@@ -1354,20 +1355,20 @@ namespace AbookTest
             [Test]
             public void WithIgnoreEmptyCell()
             {
-                //ダイアログの表示テスト
+                // ダイアログの表示テスト
                 DialogBoxHandler = (name, hWnd) =>
                 {
                     var tsMessageBox = new MessageBoxTester(hWnd);
 
-                    //タイトル
+                    // タイトル
                     var title = "登録完了";
                     Assert.AreEqual(title, tsMessageBox.Title);
 
-                    //テキスト
+                    // テキスト
                     var text = "正常に登録しました。";
                     Assert.AreEqual(text, tsMessageBox.Text);
 
-                    //OKボタンクリック
+                    // OKボタンクリック
                     tsMessageBox.ClickOk();
                 };
 
@@ -1395,23 +1396,23 @@ namespace AbookTest
             [Test]
             public void WithInvalidDate()
             {
-                //ダイアログの表示テスト
+                // ダイアログの表示テスト
                 DialogBoxHandler = (name, hWnd) =>
                 {
                     var tsMessageBox = new MessageBoxTester(hWnd);
 
-                    //タイトル
+                    // タイトル
                     var title = "エラー";
                     Assert.AreEqual(title, tsMessageBox.Title);
 
-                    //テキスト
+                    // テキスト
                     var text = string.Format(EX.CSV_STORE, 2, EX.DATE_FORMAT);
                     Assert.AreEqual(text, tsMessageBox.Text);
 
-                    //OKボタンクリック
+                    // OKボタンクリック
                     tsMessageBox.ClickOk();
 
-                    //エラー行が選択される
+                    // エラー行が選択される
                     Assert.AreEqual(1, CtDgvExpense().SelectedRows[0].Index);
                 };
 
@@ -1429,23 +1430,23 @@ namespace AbookTest
             [Test]
             public void WithInvalidCost()
             {
-                //ダイアログの表示テスト
+                // ダイアログの表示テスト
                 DialogBoxHandler = (name, hWnd) =>
                 {
                     var tsMessageBox = new MessageBoxTester(hWnd);
 
-                    //タイトル
+                    // タイトル
                     var title = "エラー";
                     Assert.AreEqual(title, tsMessageBox.Title);
 
-                    //テキスト
+                    // テキスト
                     var text = string.Format(EX.CSV_STORE, 5, EX.COST_FORMAT);
                     Assert.AreEqual(text, tsMessageBox.Text);
 
-                    //OKボタンクリック
+                    // OKボタンクリック
                     tsMessageBox.ClickOk();
 
-                    //エラー行が選択される
+                    // エラー行が選択される
                     Assert.AreEqual(4, CtDgvExpense().SelectedRows[0].Index);
                 };
 

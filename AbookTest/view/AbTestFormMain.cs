@@ -64,22 +64,20 @@ namespace AbookTest
         [Test]
         public void LoadWithInvalidDB()
         {
-            //ダイアログの表示テスト
-            //Loadイベント中でダイアログを表示させている場合、NUnitで検証不可 -> AssertするとNUnitが落ちる？
-            //  => Assert が成功する場合は落ちないのかも...
+            // ダイアログの表示テスト
             DialogBoxHandler = (name, hWnd) =>
             {
                 var tsMessageBox = new MessageBoxTester(hWnd);
 
-                //タイトルテスト
+                // タイトルテスト
                 var title = "エラー";
                 Assert.AreEqual(title, tsMessageBox.Title);
 
-                //テキストテスト
+                // テキストテスト
                 var text = string.Format(EX.CSV_LOAD, 2, EX.DATE_FORMAT);
                 Assert.AreEqual(text, tsMessageBox.Text);
 
-                //OKボタンクリック
+                // OKボタンクリック
                 tsMessageBox.ClickOk();
             };
             ShowFormMain(CSV_INVALID);

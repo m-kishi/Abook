@@ -39,7 +39,7 @@ namespace AbookTest
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            //CSVのフィールド数が少ない
+            // CSVのフィールド数が少ない
             using (StreamWriter sw = new StreamWriter("LessCSVFields.db", false, CSV.ENCODING))
             {
                 sw.NewLine = CSV.LF;
@@ -47,7 +47,7 @@ namespace AbookTest
                 sw.Close();
             }
 
-            //CSVのフィールド数が多い
+            // CSVのフィールド数が多い
             using (StreamWriter sw = new StreamWriter("MoreCSVFields.db", false, CSV.ENCODING))
             {
                 sw.NewLine = CSV.LF;
@@ -55,7 +55,7 @@ namespace AbookTest
                 sw.Close();
             }
 
-            //日付が不正
+            // 日付が不正
             using (StreamWriter sw = new StreamWriter("InvalidDateFormat.db", false, CSV.ENCODING))
             {
                 sw.NewLine = CSV.LF;
@@ -63,10 +63,10 @@ namespace AbookTest
                 sw.Close();
             }
 
-            //データなし
+            // データなし
             File.Create("NoData.db").Close();
 
-            //テストデータ
+            // テストデータ
             using (StreamWriter sw = new StreamWriter("InData.db", false, CSV.ENCODING))
             {
                 sw.NewLine = CSV.LF;

@@ -42,7 +42,7 @@ namespace Abook
                 )
             ).ToList();
 
-            //合計
+            // 合計
             if (expenses.Count > 0)
             {
                 var total = new AbBalance(

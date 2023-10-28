@@ -989,16 +989,16 @@ namespace AbookTest
         [TestCase("LblOthr", TYPE.OTHR)]
         public void ClickWithTargetAbLabelLabel(string lblName, string type)
         {
-            //種別明細サブフォームの表示テスト
+            // 種別明細サブフォームの表示テスト
             ModalFormHandler = (name, hWnd, form) =>
             {
-                //フォーム名テスト
+                // フォーム名テスト
                 Assert.AreEqual(name, "AbSubType");
 
-                //フォームタイトル
+                // フォームタイトル
                 Assert.AreEqual(type, form.Text);
 
-                //閉じる
+                // 閉じる
                 form.Close();
             };
 
@@ -1025,16 +1025,16 @@ namespace AbookTest
         [TestCase("LblOthr", TYPE.OTHR)]
         public void ClickWithTargetAbLabelValue(string lblName, string type)
         {
-            //種別明細サブフォームの表示テスト
+            // 種別明細サブフォームの表示テスト
             ModalFormHandler = (name, hWnd, form) =>
             {
-                //フォーム名テスト
+                // フォーム名テスト
                 Assert.AreEqual(name, "AbSubType");
 
-                //フォームタイトル
+                // フォームタイトル
                 Assert.AreEqual(type, form.Text);
 
-                //閉じる
+                // 閉じる
                 form.Close();
             };
 
@@ -1053,7 +1053,7 @@ namespace AbookTest
         {
             ShowFormMain(CSV_EXIST, TAB_IDX);
 
-            //クリックしても何も起きない
+            // クリックしても何も起きない
             TsAbLabelLabel(lblName).Click();
         }
 
@@ -1067,7 +1067,7 @@ namespace AbookTest
         {
             ShowFormMain(CSV_EXIST, TAB_IDX);
 
-            //クリックしても何も起きない
+            // クリックしても何も起きない
             TsAbLabelValue(lblName).Click();
         }
     }

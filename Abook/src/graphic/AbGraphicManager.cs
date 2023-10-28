@@ -64,11 +64,16 @@ namespace Abook
             DtChange();
 
             abGraphDatas = new List<AbGraphicData>();
-            var gdF = new AbGraphicData(Brushes.Red   ); // 食費
-            var gdO = new AbGraphicData(Brushes.Orange); // 外食費
-            var gdE = new AbGraphicData(Brushes.Yellow); // 電気代
-            var gdG = new AbGraphicData(Brushes.Gray  ); // ガス代
-            var gdW = new AbGraphicData(Brushes.Blue  ); // 水道代
+            // 食費
+            var gdF = new AbGraphicData(Brushes.Red   );
+            // 外食費
+            var gdO = new AbGraphicData(Brushes.Orange);
+            // 電気代
+            var gdE = new AbGraphicData(Brushes.Yellow);
+            // ガス代
+            var gdG = new AbGraphicData(Brushes.Gray  );
+            // 水道代
+            var gdW = new AbGraphicData(Brushes.Blue  );
 
             decimal valF, valO, valE, valG, valW;
             for (var dt = dtNow.AddYears(-1); dt <= dtNow; dt = dt.AddMonths(1))

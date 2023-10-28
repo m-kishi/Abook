@@ -28,7 +28,7 @@ namespace AbookTest
         [TestCase(-9999999, "-\u00a59,999,999")]
         public void ToYen(decimal cost, string expected)
         {
-            //\u00a5は円の通貨記号
+            // \u00a5は円の通貨記号
             var actual = AbUtilities.ToYen(cost);
             Assert.AreEqual(expected, actual);
         }

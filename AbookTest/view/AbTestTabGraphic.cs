@@ -40,7 +40,7 @@ namespace AbookTest
         {
             ShowFormMain(CSV, TAB_IDX);
 
-            //明示的に描画イベントを呼び出し
+            // 明示的に描画イベントを呼び出し
             var g = CtPboxGraph().CreateGraphics();
             TsPboxGraph().FireEvent("Paint", new PaintEventArgs(g, System.Drawing.Rectangle.Empty));
 
@@ -263,7 +263,7 @@ namespace AbookTest
         {
             ShowFormMain(CSV, TAB_IDX);
 
-            //明示的に描画イベントを呼び出し
+            // 明示的に描画イベントを呼び出し
             var g = CtPboxGraph().CreateGraphics();
             TsPboxGraph().FireEvent("Paint", new PaintEventArgs(g, System.Drawing.Rectangle.Empty));
 

@@ -64,16 +64,16 @@ namespace AbookTest
         [Test]
         public void MenuVersionClick()
         {
-            //バージョン情報フォームの表示テスト
+            // バージョン情報フォームの表示テスト
             ModalFormHandler = (name, hWnd, form) =>
             {
-                //フォーム名テスト
+                // フォーム名テスト
                 Assert.AreEqual(name, "AbFormVersion");
 
-                //テスト環境でアセンブリ情報の取得は不可
+                // テスト環境でアセンブリ情報の取得は不可
                 Assert.IsNull(System.Reflection.Assembly.GetEntryAssembly());
 
-                //OKボタンクリック
+                // OKボタンクリック
                 (new ButtonTester("BtnOK", form)).Click();
             };
 
@@ -88,10 +88,10 @@ namespace AbookTest
         [Test]
         public void MenuEnergyClick()
         {
-            //光熱費サブフォームが表示される
+            // 光熱費サブフォームが表示される
             ModalFormHandler = (name, hWnd, form) =>
             {
-                //フォーム名テスト
+                // フォーム名テスト
                 Assert.AreEqual(name, "AbSubEnergy");
 
                 // 閉じる

@@ -112,7 +112,7 @@ namespace AbookTest
             var dgvPrivate = CtDgvPrivate();
             var row = dgvPrivate.SelectedRows[0];
 
-            //テストデータではスクロールが発生しないので手動確認することにして無視
+            // テストデータではスクロールが発生しないので手動確認することにして無視
             Assert.AreEqual(dgvPrivate.FirstDisplayedCell.RowIndex, row.Index - 9);
         }
 

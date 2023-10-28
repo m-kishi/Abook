@@ -47,7 +47,7 @@ namespace AbookTest
             }
             catch (NoSuchControlException)
             {
-                //すでに閉じられている
+                // すでに閉じられている
             }
             base.TearDown();
         }

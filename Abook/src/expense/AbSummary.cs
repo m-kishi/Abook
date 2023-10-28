@@ -53,12 +53,12 @@ namespace Abook
                 dic.Add(gObj.Key, gObj.Sum(exp => exp.Cost));
             }
 
-            //合計
+            // 合計
             var excepts = TYPE.SUMMARY.EXPE;
             var total = expenses.Where(exp => excepts.Contains(exp.Type)).Sum(exp => exp.Cost);
             dic.Add(TYPE.TTAL, total);
 
-            //収入
+            // 収入
             var earn = dic.ContainsKey(TYPE.EARN) ? dic[TYPE.EARN] : decimal.Zero;
             var balance = earn - total;
             dic.Add(TYPE.BLNC, balance);

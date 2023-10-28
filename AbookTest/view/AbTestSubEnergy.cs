@@ -86,7 +86,7 @@ namespace AbookTest
             }
             catch (NoSuchControlException)
             {
-                //すでに閉じられている
+                // すでに閉じられている
             }
             base.TearDown();
         }
@@ -1043,16 +1043,16 @@ namespace AbookTest
             var dgv = CtDgvEl();
             var row1 = dgv.Rows[0];
 
-            //1年分しかデータがないためすべて最大値になる
+            // 1年分しかデータがないためすべて最大値になる
             Assert.AreEqual(Color.Red, row1.Cells[ 1].Style.ForeColor, MSG.MONTH04);
             Assert.AreEqual(Color.Red, row1.Cells[ 2].Style.ForeColor, MSG.MONTH05);
-            //6月は電気代なし
+            // 6月は電気代なし
             Assert.AreEqual(Color.Red, row1.Cells[ 4].Style.ForeColor, MSG.MONTH07);
             Assert.AreEqual(Color.Red, row1.Cells[ 5].Style.ForeColor, MSG.MONTH08);
             Assert.AreEqual(Color.Red, row1.Cells[ 6].Style.ForeColor, MSG.MONTH09);
             Assert.AreEqual(Color.Red, row1.Cells[ 7].Style.ForeColor, MSG.MONTH10);
             Assert.AreEqual(Color.Red, row1.Cells[ 8].Style.ForeColor, MSG.MONTH11);
-            //12月は電気代なし
+            // 12月は電気代なし
             Assert.AreEqual(Color.Red, row1.Cells[10].Style.ForeColor, MSG.MONTH01);
             Assert.AreEqual(Color.Red, row1.Cells[11].Style.ForeColor, MSG.MONTH02);
             Assert.AreEqual(Color.Red, row1.Cells[11].Style.ForeColor, MSG.MONTH03);
@@ -1096,7 +1096,7 @@ namespace AbookTest
             var dgv = CtDgvWt();
             var row2 = dgv.Rows[2];
 
-            //2017年がすべて最大
+            // 2017年がすべて最大
             Assert.AreEqual(Color.Red, row2.Cells[ 1].Style.ForeColor, MSG.MONTH04);
             Assert.AreEqual(Color.Red, row2.Cells[ 2].Style.ForeColor, MSG.MONTH05);
             Assert.AreEqual(Color.Red, row2.Cells[ 3].Style.ForeColor, MSG.MONTH06);
@@ -1123,16 +1123,16 @@ namespace AbookTest
             var dgv = CtDgvEl();
             var row1 = dgv.Rows[0];
 
-            //1年分しかデータがないためすべて最大値になる
+            // 1年分しかデータがないためすべて最大値になる
             Assert.AreEqual(Color.Red, row1.Cells[1].Style.ForeColor, MSG.MONTH04);
             Assert.AreEqual(Color.Red, row1.Cells[2].Style.ForeColor, MSG.MONTH05);
-            //6月は電気代なし
+            // 6月は電気代なし
             Assert.AreEqual(Color.Red, row1.Cells[4].Style.ForeColor, MSG.MONTH07);
             Assert.AreEqual(Color.Red, row1.Cells[5].Style.ForeColor, MSG.MONTH08);
             Assert.AreEqual(Color.Red, row1.Cells[6].Style.ForeColor, MSG.MONTH09);
             Assert.AreEqual(Color.Red, row1.Cells[7].Style.ForeColor, MSG.MONTH10);
             Assert.AreEqual(Color.Red, row1.Cells[8].Style.ForeColor, MSG.MONTH11);
-            //12月は電気代なし
+            // 12月は電気代なし
             Assert.AreEqual(Color.Red, row1.Cells[10].Style.ForeColor, MSG.MONTH01);
             Assert.AreEqual(Color.Red, row1.Cells[11].Style.ForeColor, MSG.MONTH02);
             Assert.AreEqual(Color.Red, row1.Cells[11].Style.ForeColor, MSG.MONTH03);
@@ -1176,7 +1176,7 @@ namespace AbookTest
             var dgv = CtDgvWt();
             var row1 = dgv.Rows[0];
 
-            //2015年がすべて最小
+            // 2015年がすべて最小
             Assert.AreEqual(Color.Blue, row1.Cells[ 1].Style.ForeColor, MSG.MONTH04);
             Assert.AreEqual(Color.Blue, row1.Cells[ 2].Style.ForeColor, MSG.MONTH05);
             Assert.AreEqual(Color.Blue, row1.Cells[ 3].Style.ForeColor, MSG.MONTH06);

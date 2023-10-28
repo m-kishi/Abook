@@ -19,7 +19,6 @@ namespace Abook
         /// <param name="message">メッセージ</param>
         private AbException(string message) : base(message)
         {
-            //外部からnew不可
         }
 
         /// <summary>

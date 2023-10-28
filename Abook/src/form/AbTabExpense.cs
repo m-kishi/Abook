@@ -125,7 +125,7 @@ namespace Abook
         /// </summary>
         private void DgvExpense_KeyDown(object sender, KeyEventArgs e)
         {
-            //ペースト
+            // ペースト
             if (e.Modifiers == Keys.Control && e.KeyCode == Keys.V)
             {
                 var row = DgvExpense.Rows[DgvExpense.CurrentCell.RowIndex];
@@ -159,7 +159,7 @@ namespace Abook
                 }
             }
 
-            //消費税計算(8%)
+            // 消費税計算(8%)
             if (e.Modifiers == Keys.Control && e.KeyCode == Keys.D8)
             {
                 DgvExpense.SelectedCells.Cast<DataGridViewCell>().Where(c =>
@@ -170,7 +170,7 @@ namespace Abook
                 });
             }
 
-            //消費税計算(10%)
+            // 消費税計算(10%)
             if (e.Modifiers == Keys.Control && e.KeyCode == Keys.D1)
             {
                 DgvExpense.SelectedCells.Cast<DataGridViewCell>().Where(c =>
@@ -181,7 +181,7 @@ namespace Abook
                 });
             }
 
-            //選択範囲の合計表示
+            // 選択範囲の合計表示
             if (e.Modifiers == Keys.Control && e.KeyCode == Keys.T)
             {
                 var total = DgvExpense.SelectedCells.Cast<DataGridViewCell>().Where(c =>
