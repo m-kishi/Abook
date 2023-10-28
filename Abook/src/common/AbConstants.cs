@@ -67,35 +67,6 @@ namespace Abook
             public static readonly Encoding ENCODING = new UTF8Encoding(false);
         }
 
-        /// <summary>UPD</summary>
-        public static class UPD
-        {
-            /// <summary>ログインURL</summary>
-            public const string URL_LOGIN = "http://10.0.2.2:9999/api/v1/login";
-            /// <summary>アップロードURL</summary>
-            public const string URL_UPLOAD = "http://10.0.2.2:9999/api/v1/upload";
-        }
-
-        /// <summary>HTTP</summary>
-        public static class HTTP
-        {
-            /// <summary>HEADER</summary>
-            public static class HEADER
-            {
-                /// <summary>ACCESS_TOKEN</summary>
-                public const string TOKEN = "ACCESS_TOKEN";
-            }
-
-            /// <summary>PARAMETER</summary>
-            public static class PARAMETER
-            {
-                /// <summary>MAIL</summary>
-                public const string MAIL = "mail";
-                /// <summary>PASS</summary>
-                public const string PASS = "pass";
-            }
-        }
-
         /// <summary>DataGridView</summary>
         public static class DGV
         {
@@ -124,8 +95,6 @@ namespace Abook
             public const string MONTHLY_GROUP = "yyyy-MM";
             /// <summary>年月"yyyy-MM"</summary>
             public const string YEAR_MONTH = "yyyy-MM";
-            /// <summary>SQL(INSERT INTO expenses (date,name,type,cost) VALUES ('date','name','type','cost');</summary>
-            public const string SQL = "INSERT INTO expenses (date,name,type,cost) VALUES ('{0}','{1}','{2}','{3}');";
         }
 
         /// <summary>グラフ</summary>
@@ -211,14 +180,6 @@ namespace Abook
             public const string PRVI = "秘密入";
             /// <summary>秘密出</summary>
             public const string PRVO = "秘密出";
-
-            /// <summary>種別IDの変換テーブル</summary>
-            public static readonly Dictionary<string, string> ID = new Dictionary<string,string>()
-            {
-                { FOOD, "FOOD" }, { OTFD, "OTFD" }, { GOOD, "GOOD" }, { FRND, "FRND" }, { TRFC, "TRFC" }, { PLAY, "PLAY" },
-                { HOUS, "HOUS" }, { ENGY, "ENGY" }, { CNCT, "CNCT" }, { MEDI, "MEDI" }, { INSU, "INSU" }, { OTHR, "OTHR" },
-                { EARN, "EARN" }, { TTAL, "TTAL" }, { BLNC, "BLNC" }, { BNUS, "BNUS" }, { SPCL, "SPCL" }, { PRVI, "PRVI" }, { PRVO, "PRVO" },
-            };
 
             /// <summary>
             /// 支出情報として指定可能な種別

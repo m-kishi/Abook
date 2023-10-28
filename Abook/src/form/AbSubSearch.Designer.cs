@@ -76,7 +76,7 @@ namespace Abook
             this.BtnSearch.TabIndex = 2;
             this.BtnSearch.Text = "検索";
             this.BtnSearch.UseVisualStyleBackColor = true;
-            this.BtnSearch.Click += new System.EventHandler(this.BtnEntry_Click);
+            this.BtnSearch.Click += new System.EventHandler(this.BtnSearch_Click);
             // 
             // DgvExpense
             // 

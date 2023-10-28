@@ -82,6 +82,41 @@ namespace AbookTest
         }
 
         /// <summary>
+        /// DataGridView
+        /// セル選択位置のテスト
+        /// </summary>
+        [Test]
+        public void DgvPrivateWithSelection()
+        {
+            ShowFormMain(CSV_EXIST, TAB_IDX);
+
+            var dgvPrivate = CtDgvPrivate();
+            var row = dgvPrivate.SelectedRows[0];
+            var cell = dgvPrivate.Rows[dgvPrivate.Rows.Count - 1].Cells[COL.PRIVATE.BLNC];
+
+            Assert.True(row.Selected);
+            Assert.True(cell.Selected);
+            Assert.AreEqual(7, row.Index);
+            Assert.AreEqual(1, dgvPrivate.SelectedRows.Count);
+        }
+
+        /// <summary>
+        /// DataGridView
+        /// スクロールバーのテスト
+        /// </summary>
+        [Ignore]
+        public void DgvPrivateWithScrollBar()
+        {
+            ShowFormMain(CSV_EXIST, TAB_IDX);
+
+            var dgvPrivate = CtDgvPrivate();
+            var row = dgvPrivate.SelectedRows[0];
+
+            //テストデータではスクロールが発生しないので手動確認することにして無視
+            Assert.AreEqual(dgvPrivate.FirstDisplayedCell.RowIndex, row.Index - 9);
+        }
+
+        /// <summary>
         /// 年月のテスト
         /// </summary>
         [Test]

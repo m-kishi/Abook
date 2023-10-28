@@ -73,6 +73,7 @@ namespace AbookTest
                 sw.WriteLine(TT.ToCSV("2014-04-01", "name11", TYPE.FOOD, "2000"));
                 sw.WriteLine(TT.ToCSV("2014-04-02", "name12", TYPE.OTFD, "2100"));
                 sw.WriteLine(TT.ToCSV("2014-04-03", "name13", TYPE.GOOD, "2200"));
+                sw.WriteLine(TT.ToCSV("2020-12-07", "name14", TYPE.FOOD, "2300", "note14"));
                 sw.Close();
             }
         }
@@ -246,6 +247,34 @@ namespace AbookTest
             Assert.AreEqual(1300, dgvExpense.Rows[0].Cells[COL.COST].Value);
             Assert.AreEqual(1600, dgvExpense.Rows[1].Cells[COL.COST].Value);
             Assert.AreEqual(1900, dgvExpense.Rows[2].Cells[COL.COST].Value);
+        }
+
+        /// <summary>
+        /// 備考のテスト
+        /// 備考: あり
+        /// </summary>
+        [Test]
+        public void DgvExpenseWithNote()
+        {
+            var current = new DateTime(2020, 12, 1);
+            var expenses = AbDBManager.Load(CSV_EXIST);
+
+            form = new AbSubType(TYPE.FOOD, current, expenses);
+            form.Show();
+
+            Assert.AreEqual("note14", CtDgvExpense().Rows[0].Cells[COL.NAME].ToolTipText);
+        }
+
+        /// <summary>
+        /// 備考のテスト
+        /// 備考: なし
+        /// </summary>
+        [Test]
+        public void DgvExpenseWithNoteWithEmpty()
+        {
+            ShowSubType(CSV_EXIST);
+
+            Assert.AreEqual("", CtDgvExpense().Rows[0].Cells[COL.NAME].ToolTipText);
         }
     }
 }

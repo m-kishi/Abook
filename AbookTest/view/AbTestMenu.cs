@@ -28,7 +28,6 @@ namespace AbookTest
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            AbWebServer.Start();
             using (var sw = new StreamWriter(CSV_FILE, false, CSV.ENCODING))
             {
                 sw.NewLine = CSV.LF;
@@ -43,7 +42,6 @@ namespace AbookTest
         [TestFixtureTearDown]
         public void TestFixtureTearDown()
         {
-            AbWebServer.Finish();
             if (File.Exists(CSV_FILE)) File.Delete(CSV_FILE);
         }
 
@@ -103,125 +101,6 @@ namespace AbookTest
             ShowFormMain(CSV_FILE);
 
             TsMenuEnergy().Click();
-        }
-
-        /// <summary>
-        /// アップロードメニュークリック
-        /// </summary>
-        [Test]
-        public void MenuUploadClickWithShowSubUpload()
-        {
-            //アップロードサブフォームが表示される
-            ModalFormHandler = (name, hWnd, form) =>
-            {
-                //フォーム名テスト
-                Assert.AreEqual("AbSubUpload", name);
-
-                //キャンセルボタンクリック
-                (new ButtonTester("BtnCancel", form)).Click();
-            };
-
-            ShowFormMain(CSV_FILE);
-
-            TsMenuUpload().Click();
-        }
-
-        /// <summary>
-        /// アップロードメニュークリック
-        /// アップロード成功
-        /// </summary>
-        [Test]
-        public void MenuUploadClickWithUploadSuccess()
-        {
-            //アップロードサブフォームが表示される
-            ModalFormHandler = (name, hWnd, form) =>
-            {
-                //アップロード成功ダイアログ
-                DialogBoxHandler = (name2, hWnd2) =>
-                {
-                    var tsMessageBox = new MessageBoxTester(hWnd2);
-
-                    //タイトル
-                    var title = "アップロード";
-                    Assert.AreEqual(title, tsMessageBox.Title);
-
-                    //テキスト
-                    var text = "成功しました。";
-                    Assert.AreEqual(text, tsMessageBox.Text);
-
-                    //OKボタンクリック
-                    tsMessageBox.ClickOk();
-                };
-
-                Application.DoEvents();
-
-                //フォーム名テスト
-                Assert.AreEqual("AbSubUpload", name);
-
-                // メールを入力
-                (new TextBoxTester("TxtMail", form)).Enter(AbWebServer.MAIL);
-
-                // パスワードを入力
-                (new TextBoxTester("TxtPass", form)).Enter(AbWebServer.PASS);
-
-                //アップロードボタンクリック
-                (new ButtonTester("BtnUpload", form)).Click();
-
-            };
-
-            ShowFormMain(CSV_FILE, AbWebServer.URL_LOGIN, AbWebServer.URL_UPLOAD);
-
-            TsMenuUpload().Click();
-        }
-
-        /// <summary>
-        /// アップロードメニュークリック
-        /// アップロード失敗
-        /// </summary>
-        [Test]
-        public void MenuUploadClickWithUploadFailure()
-        {
-            //アップロードサブフォームが表示される
-            ModalFormHandler = (name, hWnd, form) =>
-            {
-                //アップロード失敗ダイアログ
-                DialogBoxHandler = (name2, hWnd2) =>
-                {
-                    var tsMessageBox = new MessageBoxTester(hWnd2);
-
-                    //タイトル
-                    var title = "エラー";
-                    Assert.AreEqual(title, tsMessageBox.Title);
-
-                    //テキスト
-                    Assert.IsTrue(tsMessageBox.Text.Contains(EX.UPD_REQ_FAILED));
-
-                    //OKボタンクリック
-                    tsMessageBox.ClickOk();
-
-                    //アップロードサブフォームのキャンセルボタンをクリック
-                    (new ButtonTester("BtnCancel", form)).Click();
-                };
-
-                Application.DoEvents();
-
-                //フォーム名テスト
-                Assert.AreEqual("AbSubUpload", name);
-
-                // メールを入力
-                (new TextBoxTester("TxtMail", form)).Enter(AbWebServer.MAIL);
-
-                // パスワードを入力
-                (new TextBoxTester("TxtPass", form)).Enter(AbWebServer.PASS);
-
-                //アップロードボタンクリック
-                (new ButtonTester("BtnUpload", form)).Click();
-
-            };
-
-            ShowFormMain(CSV_FILE, AbWebServer.URL_LOGIN_INVALID_ACCESS_TOKEN, AbWebServer.URL_UPLOAD);
-
-            TsMenuUpload().Click();
         }
     }
 }

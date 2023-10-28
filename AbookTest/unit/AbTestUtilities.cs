@@ -79,36 +79,6 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// 種別IDへの変換
-        /// </summary>
-        /// <param name="type">種別</param>
-        /// <param name="expected">期待値</param>
-        [TestCase("食費"  , "FOOD")]
-        [TestCase("外食費", "OTFD")]
-        [TestCase("雑貨"  , "GOOD")]
-        [TestCase("交際費", "FRND")]
-        [TestCase("交通費", "TRFC")]
-        [TestCase("遊行費", "PLAY")]
-        [TestCase("家賃"  , "HOUS")]
-        [TestCase("光熱費", "ENGY")]
-        [TestCase("通信費", "CNCT")]
-        [TestCase("医療費", "MEDI")]
-        [TestCase("保険料", "INSU")]
-        [TestCase("その他", "OTHR")]
-        [TestCase("収入"  , "EARN")]
-        [TestCase("合計"  , "TTAL")]
-        [TestCase("収支"  , "BLNC")]
-        [TestCase("特入"  , "BNUS")]
-        [TestCase("特出"  , "SPCL")]
-        [TestCase("秘密入", "PRVI")]
-        [TestCase("秘密出", "PRVO")]
-        public void ToTypeId(string type, string expected)
-        {
-            var actual = AbUtilities.ToTypeId(type);
-            Assert.AreEqual(expected, actual);
-        }
-
-        /// <summary>
         /// 金額判定
         /// </summary>
         /// <param name="cost">金額</param>
@@ -128,6 +98,38 @@ namespace AbookTest
         public void IsCost(object cost, bool expected)
         {
             var actual = AbUtilities.IsCost(cost);
+            Assert.AreEqual(expected, actual);
+        }
+
+        /// <summary>
+        /// 消費税計算(8%)
+        /// </summary>
+        /// <param name="cost">金額</param>
+        /// <param name="expected">期待値</param>
+        [TestCase(         null,   0)]
+        [TestCase(           78,  84)]
+        [TestCase(           98, 106)]
+        [TestCase(          100, 108)]
+        [TestCase("not decimal",   0)]
+        public void Tax8(object cost, decimal expected)
+        {
+            var actual = AbUtilities.Tax8(cost);
+            Assert.AreEqual(expected, actual);
+        }
+
+        /// <summary>
+        /// 消費税計算(10%)
+        /// </summary>
+        /// <param name="cost">金額</param>
+        /// <param name="expected">期待値</param>
+        [TestCase(         null,   0)]
+        [TestCase(           64,  70)]
+        [TestCase(           98, 108)]
+        [TestCase(          100, 110)]
+        [TestCase("not decimal",   0)]
+        public void Tax10(object cost, decimal expected)
+        {
+            var actual = AbUtilities.Tax10(cost);
             Assert.AreEqual(expected, actual);
         }
 
@@ -308,46 +310,6 @@ namespace AbookTest
                 else
                 {
                     Assert.DoesNotThrow(() => CHK.TypeWrong(type));
-                }
-            }
-
-            /// <summary>
-            /// 種別チェック
-            /// </summary>
-            /// <param name="type">種別</param>
-            /// <param name="isError">true: エラー、false: OK</param>
-            [TestCase(TYPE.FOOD, false)]
-            [TestCase(TYPE.OTFD, false)]
-            [TestCase(TYPE.GOOD, false)]
-            [TestCase(TYPE.FRND, false)]
-            [TestCase(TYPE.TRFC, false)]
-            [TestCase(TYPE.PLAY, false)]
-            [TestCase(TYPE.HOUS, false)]
-            [TestCase(TYPE.ENGY, false)]
-            [TestCase(TYPE.CNCT, false)]
-            [TestCase(TYPE.MEDI, false)]
-            [TestCase(TYPE.INSU, false)]
-            [TestCase(TYPE.OTHR, false)]
-            [TestCase(TYPE.EARN, false)]
-            [TestCase(TYPE.TTAL, false)]
-            [TestCase(TYPE.BLNC, false)]
-            [TestCase(TYPE.BNUS, false)]
-            [TestCase(TYPE.SPCL, false)]
-            [TestCase(TYPE.PRVI, false)]
-            [TestCase(TYPE.PRVO, false)]
-            [TestCase("type wrong", true)]
-            public void TypeIdWrong(string type, bool isError)
-            {
-                if (isError)
-                {
-                    var ex = Assert.Throws<AbException>(() =>
-                        CHK.TypeIdWrong(type)
-                    );
-                    Assert.AreEqual(EX.TYPE_WRONG, ex.Message);
-                }
-                else
-                {
-                    Assert.DoesNotThrow(() => CHK.TypeIdWrong(type));
                 }
             }
 
@@ -705,224 +667,6 @@ namespace AbookTest
                     CHK.BalanceIncorrect(argErn, argExp, argSpc, argBln)
                 );
                 Assert.AreEqual(EX.BALANCE_INCORRECT, ex.Message);
-            }
-
-            /// <summary>
-            /// NULLチェック(ログインURL)
-            /// </summary>
-            [Test]
-            public void LoginNull()
-            {
-                var argLogin = "http://localhost:9999/api/v1/login";
-                Assert.DoesNotThrow(() => CHK.LoginNull(argLogin));
-            }
-
-            /// <summary>
-            /// NULLチェック(ログインURL)
-            /// 引数:ログインURLがNULL
-            /// </summary>
-            [Test]
-            public void LoginNullWithNullLogin()
-            {
-                string argLogin = null;
-                var ex = Assert.Throws<AbException>(() =>
-                    CHK.LoginNull(argLogin)
-                );
-                Assert.AreEqual(EX.LOGIN_NULL, ex.Message);
-            }
-
-            /// <summary>
-            /// NULLチェック(ログインURL)
-            /// 引数:ログインURLが空文字列
-            /// </summary>
-            [Test]
-            public void LoginNullWithEmptyLogin()
-            {
-                var argLogin = string.Empty;
-                var ex = Assert.Throws<AbException>(() =>
-                    CHK.LoginNull(argLogin)
-                );
-                Assert.AreEqual(EX.LOGIN_NULL, ex.Message);
-            }
-
-            /// <summary>
-            /// NULLチェック(アップロードURL)
-            /// </summary>
-            [Test]
-            public void UploadNull()
-            {
-                var argUpload = "http://localhost:9999/api/v1/upload";
-                Assert.DoesNotThrow(() => CHK.UploadNull(argUpload));
-            }
-
-            /// <summary>
-            /// NULLチェック(アップロードURL)
-            /// 引数:アップロードURLがNULL
-            /// </summary>
-            [Test]
-            public void UploadNullWithNullUpload()
-            {
-                string argUpload = null;
-                var ex = Assert.Throws<AbException>(() =>
-                    CHK.UploadNull(argUpload)
-                );
-                Assert.AreEqual(EX.UPLOAD_NULL, ex.Message);
-            }
-
-            /// <summary>
-            /// NULLチェック(アップロードURL)
-            /// 引数:アップロードURLが空文字列
-            /// </summary>
-            [Test]
-            public void UploadNullWithEmptyUpload()
-            {
-                var argUpload = string.Empty;
-                var ex = Assert.Throws<AbException>(() =>
-                    CHK.UploadNull(argUpload)
-                );
-                Assert.AreEqual(EX.UPLOAD_NULL, ex.Message);
-            }
-
-            /// <summary>
-            /// NULLチェック(メール)
-            /// </summary>
-            [Test]
-            public void MailNull()
-            {
-                var argMail = "text@example.com";
-                Assert.DoesNotThrow(() => CHK.MailNull(argMail));
-            }
-
-            /// <summary>
-            /// NULLチェック(メール)
-            /// 引数:メールがNULL
-            /// </summary>
-            [Test]
-            public void MailNullWithNullMail()
-            {
-                string argMail = null;
-                var ex = Assert.Throws<AbException>(() =>
-                    CHK.MailNull(argMail)
-                );
-                Assert.AreEqual(EX.MAIL_NULL, ex.Message);
-            }
-
-            /// <summary>
-            /// NULLチェック(メール)
-            /// 引数:メールが空文字列
-            /// </summary>
-            [Test]
-            public void MailNullWithEmptyMail()
-            {
-                var argMail = string.Empty;
-                var ex = Assert.Throws<AbException>(() =>
-                    CHK.MailNull(argMail)
-                );
-                Assert.AreEqual(EX.MAIL_NULL, ex.Message);
-            }
-
-            /// <summary>
-            /// NULLチェック(パスワード)
-            /// </summary>
-            [Test]
-            public void PassNull()
-            {
-                var argPass = "secret_password";
-                Assert.DoesNotThrow(() => CHK.PassNull(argPass));
-            }
-
-            /// <summary>
-            /// NULLチェック(パスワード)
-            /// 引数:パスワードがNULL
-            /// </summary>
-            [Test]
-            public void PassNullWithNullPass()
-            {
-                string argPass = null;
-                var ex = Assert.Throws<AbException>(() =>
-                    CHK.PassNull(argPass)
-                );
-                Assert.AreEqual(EX.PASS_NULL, ex.Message);
-            }
-
-            /// <summary>
-            /// NULLチェック(パスワード)
-            /// 引数:パスワードが空文字列
-            /// </summary>
-            [Test]
-            public void PassNullWithEmptyPass()
-            {
-                var argPass = string.Empty;
-                var ex = Assert.Throws<AbException>(() =>
-                    CHK.PassNull(argPass)
-                );
-                Assert.AreEqual(EX.PASS_NULL, ex.Message);
-            }
-
-            /// <summary>
-            /// 存在チェック(Abook.db)
-            /// 引数:DBファイルが存在する
-            /// </summary>
-            [Test]
-            public void DbExistWithExist()
-            {
-                var argDb = DB_FILE;
-                Assert.DoesNotThrow(() => CHK.DbExist(argDb));
-            }
-
-            /// <summary>
-            /// 存在チェック(Abook.db)
-            /// 引数:DBファイルが存在しない
-            /// </summary>
-            [Test]
-            public void DbExistWithNotExist()
-            {
-                var argDb = "NOT_EXIST.db";
-                var ex = Assert.Throws<AbException>(() =>
-                    CHK.DbExist(argDb)
-                );
-                Assert.AreEqual(EX.DB_DOES_NOT_EXIST, ex.Message);
-            }
-
-            /// <summary>
-            /// 件数チェック(支出情報リスト)
-            /// </summary>
-            [Test]
-            public void UpdCount()
-            {
-                var argExpenses = new List<AbExpense>()
-                {
-                    new AbExpense("2015-01-01", "おにぎり", TYPE.FOOD, "108"),
-                };
-                Assert.DoesNotThrow(() => CHK.UpdCount(argExpenses));
-            }
-
-            /// <summary>
-            /// 件数チェック(支出情報リスト)
-            /// 引数:支出情報リストがNULL
-            /// </summary>
-            [Test]
-            public void UpdCountWithNullExpenses()
-            {
-                List<AbExpense> argExpenses = null;
-                var ex = Assert.Throws<AbException>(() =>
-                    CHK.UpdCount(argExpenses)
-                );
-                Assert.AreEqual(EX.UPD_RECORD_NOTHING, ex.Message);
-            }
-
-            /// <summary>
-            /// 件数チェック(支出情報リスト)
-            /// 引数:支出情報リストが空リスト
-            /// </summary>
-            [Test]
-            public void UpdCountWithEmptyExpenses()
-            {
-                var argExpenses = new List<AbExpense>();
-                var ex = Assert.Throws<AbException>(() =>
-                    CHK.UpdCount(argExpenses)
-                );
-                Assert.AreEqual(EX.UPD_RECORD_NOTHING, ex.Message);
             }
         }
     }

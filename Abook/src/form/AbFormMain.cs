@@ -10,7 +10,6 @@ namespace Abook
     using System.Windows.Forms;
     using CSV = Abook.AbConstants.CSV;
     using MSG = Abook.AbUtilities.MSG;
-    using UPD = Abook.AbConstants.UPD;
 
     /// <summary>
     /// メイン画面フォーム
@@ -36,8 +35,6 @@ namespace Abook
             Application.SetCompatibleTextRenderingDefault(false);
 
             var form = new AbFormMain(CSV.FILE);
-            form.SetUploadParameters(UPD.URL_LOGIN, UPD.URL_UPLOAD);
-
             Application.Run(form);
         }
 

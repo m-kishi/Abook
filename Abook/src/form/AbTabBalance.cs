@@ -48,6 +48,15 @@ namespace Abook
                     row.Cells[COL.BALANCE].Value = bln.Balance;
                 }
             }
+
+            DgvBalance.ClearSelection();
+            if (DgvBalance.Rows.Count > 0)
+            {
+                var idx = DgvBalance.Rows.Count - 1;
+                DgvBalance.Rows[idx].Selected = true;
+                DgvBalance.FirstDisplayedScrollingRowIndex = idx;
+                DgvBalance.Rows[idx].Cells[COL.YEAR].Selected = true;
+            }
         }
     }
 }

@@ -67,18 +67,6 @@ namespace Abook
         }
 
         /// <summary>
-        /// 種別IDへの変換
-        /// </summary>
-        /// <param name="type">種別</param>
-        /// <returns>種別ID</returns>
-        public static string ToTypeId(string type)
-        {
-            CHK.TypeNull(type);
-            CHK.TypeIdWrong(type);
-            return TYPE.ID[type];
-        }
-
-        /// <summary>
         /// 空文字判定
         /// </summary>
         /// <param name="text">文字列</param>
@@ -97,6 +85,28 @@ namespace Abook
         {
             var value = 0m;
             return decimal.TryParse(ToStr(cost), out value);
+        }
+
+        /// <summary>
+        /// 消費税計算(8%)
+        /// </summary>
+        /// <param name="cost">金額</param>
+        /// <returns>税込金額(小数点以下四捨五入)</returns>
+        public static decimal Tax8(object cost)
+        {
+            var value = ToCost(cost);
+            return Math.Round(value * 1.08m, 0, MidpointRounding.AwayFromZero);
+        }
+
+        /// <summary>
+        /// 消費税計算(10%)
+        /// </summary>
+        /// <param name="cost">金額</param>
+        /// <returns>税込金額(小数点以下四捨五入)</returns>
+        public static decimal Tax10(object cost)
+        {
+            var value = ToCost(cost);
+            return Math.Round(value * 1.1m, 0, MidpointRounding.AwayFromZero);
         }
 
         /// <summary>
@@ -138,15 +148,6 @@ namespace Abook
             public static void TypeWrong(string type)
             {
                 if (!TYPE.EXPENCE.Contains(type)) AbException.Throw(EX.TYPE_WRONG);
-            }
-
-            /// <summary>
-            /// 種別チェック
-            /// </summary>
-            /// <param name="type">種別</param>
-            public static void TypeIdWrong(string type)
-            {
-                if (!TYPE.ID.ContainsKey(type)) AbException.Throw(EX.TYPE_WRONG);
             }
 
             /// <summary>
@@ -259,60 +260,6 @@ namespace Abook
             {
                 var expected = ern - (exp + spc);
                 if (bln != expected) AbException.Throw(EX.BALANCE_INCORRECT);
-            }
-
-            /// <summary>
-            /// NULLチェック(ログインURL)
-            /// </summary>
-            /// <param name="login">ログインURL</param>
-            public static void LoginNull(string login)
-            {
-                if (string.IsNullOrEmpty(login)) AbException.Throw(EX.LOGIN_NULL);
-            }
-
-            /// <summary>
-            /// NULLチェック(アップロードURL)
-            /// </summary>
-            /// <param name="upload">アップロードURL</param>
-            public static void UploadNull(string upload)
-            {
-                if (string.IsNullOrEmpty(upload)) AbException.Throw(EX.UPLOAD_NULL);
-            }
-
-            /// <summary>
-            /// NULLチェック(メール)
-            /// </summary>
-            /// <param name="mail">メール</param>
-            public static void MailNull(string mail)
-            {
-                if (string.IsNullOrEmpty(mail)) AbException.Throw(EX.MAIL_NULL);
-            }
-
-            /// <summary>
-            /// NULLチェック(パスワード)
-            /// </summary>
-            /// <param name="pass">パスワード</param>
-            public static void PassNull(string pass)
-            {
-                if (string.IsNullOrEmpty(pass)) AbException.Throw(EX.PASS_NULL);
-            }
-
-            /// <summary>
-            /// 存在チェック(Abook.db)
-            /// </summary>
-            /// <param name="upd">DBファイル名</param>
-            public static void DbExist(string db)
-            {
-                if (!File.Exists(db)) AbException.Throw(EX.DB_DOES_NOT_EXIST);
-            }
-
-            /// <summary>
-            /// 件数チェック(支出情報リスト)
-            /// </summary>
-            /// <param name="exp">支出情報リスト</param>
-            public static void UpdCount(List<AbExpense> exp)
-            {
-                if (exp == null || exp.Count <= 0) AbException.Throw(EX.UPD_RECORD_NOTHING);
             }
         }
 

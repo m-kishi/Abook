@@ -6,6 +6,7 @@ namespace AbookTest
     using Abook;
     using System;
     using System.IO;
+    using System.Linq;
     using System.Windows.Forms;
     using NUnit.Framework;
     using NUnit.Extensions.Forms;
@@ -29,6 +30,8 @@ namespace AbookTest
         protected const string CSV_EMPTY = "AbTestTabExpenseEmpty.db";
         /// <summary>CSVファイル</summary>
         protected const string CSV_ENTRY = "AbTestTabExpenseEntry.db";
+        /// <summary>CSVファイル</summary>
+        protected const string CSV_TAX_TEST = "AbTestTabExpenseTaxTest.cb";
         /// <summary>タブインデックス</summary>
         protected const int TAB_IDX = 0;
 
@@ -59,6 +62,21 @@ namespace AbookTest
                 File.Delete(CSV_ENTRY);
             }
             File.Copy(CSV_EXIST, CSV_ENTRY);
+
+            using (StreamWriter sw = new StreamWriter(CSV_TAX_TEST, false, CSV.ENCODING))
+            {
+                sw.NewLine = CSV.LF;
+                for (var i = 1; i <= 5; i++)
+                {
+                    var date = (new DateTime(2021, 11, i)).ToString(FMT.DATE);
+                    var name = "name" + i.ToString("D2");
+                    var type = TYPE.FOOD;
+                    var cost = (i * 100M).ToString();
+                    var note = "note" + i.ToString("D2");
+                    sw.WriteLine(TT.ToCSV(date, name, type, cost, note));
+                }
+                sw.Close();
+            }
         }
 
         /// <summary>
@@ -70,6 +88,7 @@ namespace AbookTest
             if (File.Exists(CSV_EXIST)) File.Delete(CSV_EXIST);
             if (File.Exists(CSV_EMPTY)) File.Delete(CSV_EMPTY);
             if (File.Exists(CSV_ENTRY)) File.Delete(CSV_ENTRY);
+            if (File.Exists(CSV_TAX_TEST)) File.Delete(CSV_TAX_TEST);
         }
     }
 
@@ -642,6 +661,338 @@ namespace AbookTest
                 }
 
                 TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.T)));
+            }
+
+            /// <summary>
+            /// KeyDownテスト
+            /// キー: Ctrl + 8
+            /// 消費税(8%):範囲選択なし
+            /// </summary>
+            [Test]
+            public void KeyDownWithTax8NoSelection()
+            {
+                ShowFormMain(CSV_TAX_TEST, TAB_IDX);
+
+                var dgvExpense = CtDgvExpense();
+                dgvExpense.ClearSelection();
+
+                var expecteds = dgvExpense.Rows.Cast<DataGridViewRow>().Select(r => r.Cells[COL.COST].Value).ToList();
+                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.D8)));
+
+                for (int i = 0; i < dgvExpense.Rows.Count; i++)
+                {
+                    Assert.AreEqual(expecteds[i], dgvExpense.Rows[i].Cells[COL.COST].Value);
+                }
+            }
+
+            /// <summary>
+            /// KeyDownテスト
+            /// キー: Ctrl + 8
+            /// 消費税(8%):金額列範囲外
+            /// </summary>
+            [Test]
+            public void KeyDownWithTax8WithoutCostColumn()
+            {
+                ShowFormMain(CSV_TAX_TEST, TAB_IDX);
+
+                var dgvExpense = CtDgvExpense();
+                for (int i = 0; i < dgvExpense.Rows.Count; i++)
+                {
+                    var row = dgvExpense.Rows[i];
+                    row.Cells[COL.DATE].Selected = true;
+                    row.Cells[COL.NAME].Selected = true;
+                    row.Cells[COL.TYPE].Selected = true;
+                }
+
+                var expecteds = dgvExpense.Rows.Cast<DataGridViewRow>().Select(r => r.Cells[COL.COST].Value).ToList();
+                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.D8)));
+
+                for (int i = 0; i < dgvExpense.Rows.Count; i++)
+                {
+                    Assert.AreEqual(expecteds[i], dgvExpense.Rows[i].Cells[COL.COST].Value);
+                }
+            }
+
+            /// <summary>
+            /// KeyDownテスト
+            /// キー: Ctrl + 8
+            /// 消費税(8%):金額単一セル
+            /// </summary>
+            [Test]
+            public void KeyDownWithTax8SingleCell()
+            {
+                ShowFormMain(CSV_TAX_TEST, TAB_IDX);
+
+                var dgvExpense = CtDgvExpense();
+                dgvExpense.Rows[0].Cells[COL.COST].Selected = true;
+
+                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.D8)));
+
+                Assert.AreEqual(108, dgvExpense.Rows[0].Cells[COL.COST].Value);
+            }
+
+            /// <summary>
+            /// KeyDownテスト
+            /// キー: Ctrl + 8
+            /// 消費税(8%):金額複数セル
+            /// </summary>
+            [Test]
+            public void KeyDownWithTax8MultiCell()
+            {
+                ShowFormMain(CSV_TAX_TEST, TAB_IDX);
+
+                var dgvExpense = CtDgvExpense();
+                for (int i = 0; i < dgvExpense.Rows.Count; i++)
+                {
+                    dgvExpense.Rows[i].Cells[COL.COST].Selected = true;
+                }
+
+                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.D8)));
+
+                var expecteds = new decimal[] { 108, 216, 324, 432, 540 };
+                for (int i = 0; i < dgvExpense.Rows.Count; i++)
+                {
+                    var row = dgvExpense.Rows[i];
+                    Assert.AreEqual(expecteds[i], row.Cells[COL.COST].Value);
+                }
+            }
+
+            /// <summary>
+            /// KeyDownテスト
+            /// キー: Ctrl + 8
+            /// 消費税(8%):金額列以外のセルも含む
+            /// </summary>
+            [Test]
+            public void KeyDownWithTax8IncludeOtherCell()
+            {
+                ShowFormMain(CSV_TAX_TEST, TAB_IDX);
+
+                var dgvExpense = CtDgvExpense();
+                for (int i = 0; i < dgvExpense.Rows.Count; i++)
+                {
+                    var row = dgvExpense.Rows[i];
+                    row.Cells[COL.DATE].Selected = true;
+                    row.Cells[COL.NAME].Selected = true;
+                    row.Cells[COL.TYPE].Selected = true;
+                    row.Cells[COL.COST].Selected = true;
+                }
+
+                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.D8)));
+
+                var expecteds = new decimal[] { 108, 216, 324, 432, 540 };
+                for (int i = 0; i < dgvExpense.Rows.Count; i++)
+                {
+                    var row = dgvExpense.Rows[i];
+                    Assert.AreEqual(expecteds[i], row.Cells[COL.COST].Value);
+                }
+            }
+
+            /// <summary>
+            /// KeyDownテスト
+            /// キー: Ctrl + 8
+            /// 消費税(8%):金額列に空白を含む
+            /// </summary>
+            [Test]
+            public void KeyDownWithTax8IncludeEmptyCost()
+            {
+                ShowFormMain(CSV_TAX_TEST, TAB_IDX);
+
+                var dgvExpense = CtDgvExpense();
+                for (int i = 0; i < dgvExpense.Rows.Count; i++)
+                {
+                    var row = dgvExpense.Rows[i];
+                    row.Cells[COL.DATE].Selected = true;
+                    row.Cells[COL.NAME].Selected = true;
+                    row.Cells[COL.TYPE].Selected = true;
+                    row.Cells[COL.COST].Selected = true;
+
+                    if (i == 2)
+                    {
+                        row.Cells[COL.COST].Value = "";
+                    }
+                }
+
+                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.D8)));
+
+                var expecteds = new decimal[] { 108, 216, 300, 432, 540 };
+                for (int i = 0; i < dgvExpense.Rows.Count; i++)
+                {
+                    var row = dgvExpense.Rows[i];
+                    if (i == 2)
+                    {
+                        Assert.IsNullOrEmpty(row.Cells[COL.COST].Value as string);
+                    }
+                    else
+                    {
+                        Assert.AreEqual(expecteds[i], row.Cells[COL.COST].Value);
+                    }
+                }
+            }
+
+            /// <summary>
+            /// KeyDownテスト
+            /// キー: Ctrl + 1
+            /// 消費税(10%):範囲選択なし
+            /// </summary>
+            [Test]
+            public void KeyDownWithTax10NoSelection()
+            {
+                ShowFormMain(CSV_TAX_TEST, TAB_IDX);
+
+                var dgvExpense = CtDgvExpense();
+                dgvExpense.ClearSelection();
+
+                var expecteds = dgvExpense.Rows.Cast<DataGridViewRow>().Select(r => r.Cells[COL.COST].Value).ToList();
+                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.D1)));
+
+                for (int i = 0; i < dgvExpense.Rows.Count; i++)
+                {
+                    Assert.AreEqual(expecteds[i], dgvExpense.Rows[i].Cells[COL.COST].Value);
+                }
+            }
+
+            /// <summary>
+            /// KeyDownテスト
+            /// キー: Ctrl + 1
+            /// 消費税(10%):金額列範囲外
+            /// </summary>
+            [Test]
+            public void KeyDownWithTax10WithoutCostColumn()
+            {
+                ShowFormMain(CSV_TAX_TEST, TAB_IDX);
+
+                var dgvExpense = CtDgvExpense();
+                for (int i = 0; i < dgvExpense.Rows.Count; i++)
+                {
+                    var row = dgvExpense.Rows[i];
+                    row.Cells[COL.DATE].Selected = true;
+                    row.Cells[COL.NAME].Selected = true;
+                    row.Cells[COL.TYPE].Selected = true;
+                }
+
+                var expecteds = dgvExpense.Rows.Cast<DataGridViewRow>().Select(r => r.Cells[COL.COST].Value).ToList();
+                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.D1)));
+
+                for (int i = 0; i < dgvExpense.Rows.Count; i++)
+                {
+                    Assert.AreEqual(expecteds[i], dgvExpense.Rows[i].Cells[COL.COST].Value);
+                }
+            }
+
+            /// <summary>
+            /// KeyDownテスト
+            /// キー: Ctrl + 1
+            /// 消費税(10%):金額単一セル
+            /// </summary>
+            [Test]
+            public void KeyDownWithTax10SingleCell()
+            {
+                ShowFormMain(CSV_TAX_TEST, TAB_IDX);
+
+                var dgvExpense = CtDgvExpense();
+                dgvExpense.Rows[0].Cells[COL.COST].Selected = true;
+
+                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.D1)));
+
+                Assert.AreEqual(110, dgvExpense.Rows[0].Cells[COL.COST].Value);
+            }
+
+            /// <summary>
+            /// KeyDownテスト
+            /// キー: Ctrl + 1
+            /// 消費税(10%):金額複数セル
+            /// </summary>
+            [Test]
+            public void KeyDownWithTax10MultiCell()
+            {
+                ShowFormMain(CSV_TAX_TEST, TAB_IDX);
+
+                var dgvExpense = CtDgvExpense();
+                for (int i = 0; i < dgvExpense.Rows.Count; i++)
+                {
+                    dgvExpense.Rows[i].Cells[COL.COST].Selected = true;
+                }
+
+                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.D1)));
+
+                var expecteds = new decimal[] { 110, 220, 330, 440, 550 };
+                for (int i = 0; i < dgvExpense.Rows.Count; i++)
+                {
+                    var row = dgvExpense.Rows[i];
+                    Assert.AreEqual(expecteds[i], row.Cells[COL.COST].Value);
+                }
+            }
+
+            /// <summary>
+            /// KeyDownテスト
+            /// キー: Ctrl + 1
+            /// 消費税(10%):金額列以外のセルも含む
+            /// </summary>
+            [Test]
+            public void KeyDownWithTax10IncludeOtherCell()
+            {
+                ShowFormMain(CSV_TAX_TEST, TAB_IDX);
+
+                var dgvExpense = CtDgvExpense();
+                for (int i = 0; i < dgvExpense.Rows.Count; i++)
+                {
+                    var row = dgvExpense.Rows[i];
+                    row.Cells[COL.DATE].Selected = true;
+                    row.Cells[COL.NAME].Selected = true;
+                    row.Cells[COL.TYPE].Selected = true;
+                    row.Cells[COL.COST].Selected = true;
+                }
+
+                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.D1)));
+
+                var expecteds = new decimal[] { 110, 220, 330, 440, 550 };
+                for (int i = 0; i < dgvExpense.Rows.Count; i++)
+                {
+                    var row = dgvExpense.Rows[i];
+                    Assert.AreEqual(expecteds[i], row.Cells[COL.COST].Value);
+                }
+            }
+
+            /// <summary>
+            /// KeyDownテスト
+            /// キー: Ctrl + 1
+            /// 消費税(10%):金額列に空白を含む
+            /// </summary>
+            [Test]
+            public void KeyDownWithTax10IncludeEmptyCost()
+            {
+                ShowFormMain(CSV_TAX_TEST, TAB_IDX);
+
+                var dgvExpense = CtDgvExpense();
+                for (int i = 0; i < dgvExpense.Rows.Count; i++)
+                {
+                    var row = dgvExpense.Rows[i];
+                    row.Cells[COL.DATE].Selected = true;
+                    row.Cells[COL.NAME].Selected = true;
+                    row.Cells[COL.TYPE].Selected = true;
+                    row.Cells[COL.COST].Selected = true;
+
+                    if (i == 2)
+                    {
+                        row.Cells[COL.COST].Value = "";
+                    }
+                }
+
+                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.D1)));
+
+                var expecteds = new decimal[] { 110, 220, 330, 440, 550 };
+                for (int i = 0; i < dgvExpense.Rows.Count; i++)
+                {
+                    var row = dgvExpense.Rows[i];
+                    if (i == 2)
+                    {
+                        Assert.IsNullOrEmpty(row.Cells[COL.COST].Value as string);
+                    }
+                    else
+                    {
+                        Assert.AreEqual(expecteds[i], row.Cells[COL.COST].Value);
+                    }
+                }
             }
 
             /// <summary>
