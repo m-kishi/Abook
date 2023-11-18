@@ -5,6 +5,7 @@ namespace AbookTest
 {
     using Abook;
     using System;
+    using System.Drawing;
     using System.IO;
     using System.Windows.Forms;
     using NUnit.Framework;
@@ -12,6 +13,7 @@ namespace AbookTest
     using TT   = AbTestTool;
     using DB   = Abook.AbConstants.DB;
     using COL  = Abook.AbConstants.COL.EXPENSE;
+    using DGV  = Abook.AbConstants.DGV;
     using TYPE = Abook.AbConstants.TYPE;
 
     /// <summary>
@@ -263,6 +265,7 @@ namespace AbookTest
             form.Show();
 
             Assert.AreEqual("note14", CtDgvExpense().Rows[0].Cells[COL.NAME].ToolTipText);
+            Assert.AreEqual(DGV.NOTE_BG_COLOR, CtDgvExpense().Rows[0].DefaultCellStyle.BackColor);
         }
 
         /// <summary>
@@ -275,6 +278,7 @@ namespace AbookTest
             ShowSubType(DB_FILE_EXIST);
 
             Assert.AreEqual("", CtDgvExpense().Rows[0].Cells[COL.NAME].ToolTipText);
+            Assert.AreEqual(Color.Empty, CtDgvExpense().Rows[0].DefaultCellStyle.BackColor);
         }
     }
 }

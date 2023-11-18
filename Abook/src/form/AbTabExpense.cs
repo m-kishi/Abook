@@ -51,7 +51,7 @@ namespace Abook
                     row.Cells[COL.TYPE].Value = exp.Type;
                     row.Cells[COL.COST].Value = exp.Cost;
                     row.Cells[COL.NOTE].Value = exp.Note;
-                    SetToolTipText(row, COL.NAME, exp.Note);
+                    UTL.SetToolTipAndColor(row, COL.NAME, exp.Note);
                 }
             }
 

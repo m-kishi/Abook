@@ -4,6 +4,7 @@
 namespace AbookTest
 {
     using Abook;
+    using System.Drawing;
     using System.IO;
     using System.Windows.Forms;
     using NUnit.Framework;
@@ -12,6 +13,7 @@ namespace AbookTest
     using EX   = Abook.AbException.EX;
     using DB   = Abook.AbConstants.DB;
     using COL  = Abook.AbConstants.COL.EXPENSE;
+    using DGV  = Abook.AbConstants.DGV;
     using TYPE = Abook.AbConstants.TYPE;
 
     /// <summary>
@@ -617,6 +619,7 @@ namespace AbookTest
 
             var dgvExpense = CtDgvExpense();
             Assert.AreEqual("note1", dgvExpense.Rows[0].Cells[COL.NAME].ToolTipText);
+            Assert.AreEqual(DGV.NOTE_BG_COLOR, dgvExpense.Rows[0].DefaultCellStyle.BackColor);
         }
 
         /// <summary>
@@ -635,6 +638,7 @@ namespace AbookTest
 
             var dgvExpense = CtDgvExpense();
             Assert.AreEqual("", dgvExpense.Rows[1].Cells[COL.NAME].ToolTipText);
+            Assert.AreEqual(Color.Empty, dgvExpense.Rows[1].DefaultCellStyle.BackColor);
         }
     }
 }

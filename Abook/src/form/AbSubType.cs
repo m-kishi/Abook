@@ -11,6 +11,7 @@ namespace Abook
     using COL = Abook.AbConstants.COL.EXPENSE;
     using FMT = Abook.AbConstants.FMT;
     using MSG = Abook.AbUtilities.MSG;
+    using UTL = Abook.AbUtilities;
 
     /// <summary>
     /// 種別サブフォーム
@@ -91,7 +92,7 @@ namespace Abook
                     row.Cells[COL.NAME].Value = exp.Name;
                     row.Cells[COL.TYPE].Value = exp.Type;
                     row.Cells[COL.COST].Value = exp.Cost;
-                    row.Cells[COL.NAME].ToolTipText = exp.Note;
+                    UTL.SetToolTipAndColor(row, COL.NAME, exp.Note);
                 }
                 DgvExpense.FirstDisplayedScrollingRowIndex = 0;
             }

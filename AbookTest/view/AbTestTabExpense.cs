@@ -4,6 +4,7 @@
 namespace AbookTest
 {
     using System;
+    using System.Drawing;
     using System.IO;
     using System.Linq;
     using System.Windows.Forms;
@@ -13,8 +14,8 @@ namespace AbookTest
     using EX   = Abook.AbException.EX;
     using DB   = Abook.AbConstants.DB;
     using COL  = Abook.AbConstants.COL.EXPENSE;
-    using FMT  = Abook.AbConstants.FMT;
     using DGV  = Abook.AbConstants.DGV;
+    using FMT  = Abook.AbConstants.FMT;
     using TYPE = Abook.AbConstants.TYPE;
 
     /// <summary>
@@ -149,10 +150,13 @@ namespace AbookTest
                     Assert.AreEqual(type, row.Cells[COL.TYPE].Value, "TYPE");
                     Assert.AreEqual(cost, row.Cells[COL.COST].Value, "COST");
                     Assert.AreEqual(note, row.Cells[COL.NAME].ToolTipText, "NOTE");
+                    Assert.AreEqual(DGV.NOTE_BG_COLOR, row.DefaultCellStyle.BackColor);
                 }
 
                 Assert.AreEqual("", dgvExpense.Rows[15].Cells[COL.NAME].ToolTipText, "NOTE");
                 Assert.AreEqual("", dgvExpense.Rows[16].Cells[COL.NAME].ToolTipText, "NOTE");
+                Assert.AreEqual(Color.Empty, dgvExpense.Rows[15].DefaultCellStyle.BackColor);
+                Assert.AreEqual(Color.Empty, dgvExpense.Rows[16].DefaultCellStyle.BackColor);
             }
 
             /// <summary>

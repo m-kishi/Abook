@@ -3,12 +3,14 @@
 // ------------------------------------------------------------
 namespace AbookTest
 {
+    using System.Drawing;
     using System.IO;
     using NUnit.Framework;
     using NUnit.Extensions.Forms;
     using TT   = AbTestTool;
     using DB   = Abook.AbConstants.DB;
     using COL  = Abook.AbConstants.COL.PRIVATE;
+    using DGV  = Abook.AbConstants.DGV;
     using TYPE = Abook.AbConstants.TYPE;
 
     /// <summary>
@@ -187,6 +189,25 @@ namespace AbookTest
             Assert.AreEqual("", dgvPrivate.Rows[5].Cells[COL.NAME].ToolTipText);
             Assert.AreEqual("", dgvPrivate.Rows[6].Cells[COL.NAME].ToolTipText);
             Assert.AreEqual("note08", dgvPrivate.Rows[7].Cells[COL.NAME].ToolTipText);
+        }
+
+        /// <summary>
+        /// 備考の背景色のテスト
+        /// </summary>
+        [Test]
+        public void DgvPrivateWithNoteBackgroundColor()
+        {
+            ShowFormMain(DB_FILE_EXIST, TAB_IDX);
+
+            var dgvPrivate = CtDgvPrivate();
+            Assert.AreEqual(Color.Empty, dgvPrivate.Rows[0].DefaultCellStyle.BackColor);
+            Assert.AreEqual(Color.Empty, dgvPrivate.Rows[1].DefaultCellStyle.BackColor);
+            Assert.AreEqual(Color.Empty, dgvPrivate.Rows[2].DefaultCellStyle.BackColor);
+            Assert.AreEqual(Color.Empty, dgvPrivate.Rows[3].DefaultCellStyle.BackColor);
+            Assert.AreEqual(Color.Empty, dgvPrivate.Rows[4].DefaultCellStyle.BackColor);
+            Assert.AreEqual(Color.Empty, dgvPrivate.Rows[5].DefaultCellStyle.BackColor);
+            Assert.AreEqual(Color.Empty, dgvPrivate.Rows[6].DefaultCellStyle.BackColor);
+            Assert.AreEqual(DGV.NOTE_BG_COLOR, dgvPrivate.Rows[7].DefaultCellStyle.BackColor);
         }
 
         /// <summary>

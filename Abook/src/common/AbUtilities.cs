@@ -8,6 +8,7 @@ namespace Abook
     using System.Linq;
     using System.Windows.Forms;
     using EX   = Abook.AbException.EX;
+    using DGV  = Abook.AbConstants.DGV;
     using FMT  = Abook.AbConstants.FMT;
     using TYPE = Abook.AbConstants.TYPE;
 
@@ -106,6 +107,21 @@ namespace Abook
         {
             var value = ToCost(cost);
             return Math.Round(value * 1.1m, 0, MidpointRounding.AwayFromZero);
+        }
+
+        /// <summary>
+        /// 備考のツールチップと背景色設定
+        /// </summary>
+        /// <param name="row">行</param>
+        /// <param name="col">列</param>
+        /// <param name="note">備考</param>
+        public static void SetToolTipAndColor(DataGridViewRow row, string col, string note)
+        {
+            if (!IsEmpty(note))
+            {
+                row.Cells[col].ToolTipText = note;
+                row.DefaultCellStyle.BackColor = DGV.NOTE_BG_COLOR;
+            }
         }
 
         /// <summary>

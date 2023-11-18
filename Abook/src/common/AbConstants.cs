@@ -3,6 +3,7 @@
 // ------------------------------------------------------------
 namespace Abook
 {
+    using System.Drawing;
     using System.Text;
 
     /// <summary>
@@ -79,6 +80,8 @@ namespace Abook
         {
             /// <summary>追加入力行数</summary>
             public const int NEW_ROW_SIZE = 30;
+            /// <summary>備考の背景色</summary>
+            public static readonly Color NOTE_BG_COLOR = Color.FromArgb(222, 252, 231);
         }
 
         /// <summary>フォーマット</summary>

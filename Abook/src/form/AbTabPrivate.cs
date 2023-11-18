@@ -6,6 +6,7 @@ namespace Abook
     using System.Collections.Generic;
     using System.Linq;
     using COL = Abook.AbConstants.COL.PRIVATE;
+    using UTL = Abook.AbUtilities;
 
     /// <summary>
     /// 秘密タブ
@@ -43,7 +44,7 @@ namespace Abook
                     row.Cells[COL.NAME].Value = prv.Name;
                     row.Cells[COL.COST].Value = prv.Cost;
                     row.Cells[COL.BLNC].Value = prv.Blnc;
-                    SetToolTipText(row, COL.NAME, prv.Note);
+                    UTL.SetToolTipAndColor(row, COL.NAME, prv.Note);
                 }
             }
 
