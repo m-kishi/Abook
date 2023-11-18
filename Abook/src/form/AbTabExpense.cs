@@ -170,7 +170,7 @@ namespace Abook
             }
 
             // 消費税計算(10%)
-            if (e.Modifiers == Keys.Control && e.KeyCode == Keys.D1)
+            if (e.Modifiers == Keys.Control && e.KeyCode == Keys.D0)
             {
                 DgvExpense.SelectedCells.Cast<DataGridViewCell>().Where(c =>
                     c.ColumnIndex == 3 && UTL.IsCost(c.Value)

@@ -57,7 +57,7 @@ namespace Abook
             this.TabExpense    = new System.Windows.Forms.TabPage();
             this.BtnEntry      = new System.Windows.Forms.Button();
             this.BtnAddRow     = new System.Windows.Forms.Button();
-            this.DgvExpense    = new System.Windows.Forms.DataGridView();
+            this.DgvExpense    = new Abook.AbDataGridView();
             this.ColDate       = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColName       = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColType       = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -909,7 +909,7 @@ namespace Abook
         private System.Windows.Forms.TabPage TabExpense;
         private System.Windows.Forms.Button BtnEntry;
         private System.Windows.Forms.Button BtnAddRow;
-        private System.Windows.Forms.DataGridView DgvExpense;
+        private Abook.AbDataGridView DgvExpense;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColDate;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColName;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColType;

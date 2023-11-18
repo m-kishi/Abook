@@ -831,7 +831,7 @@ namespace AbookTest
 
             /// <summary>
             /// KeyDownテスト
-            /// キー: Ctrl + 1
+            /// キー: Ctrl + 0
             /// 消費税(10%):範囲選択なし
             /// </summary>
             [Test]
@@ -843,7 +843,7 @@ namespace AbookTest
                 dgvExpense.ClearSelection();
 
                 var expecteds = dgvExpense.Rows.Cast<DataGridViewRow>().Select(r => r.Cells[COL.COST].Value).ToList();
-                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.D1)));
+                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.D0)));
 
                 for (int i = 0; i < dgvExpense.Rows.Count; i++)
                 {
@@ -853,7 +853,7 @@ namespace AbookTest
 
             /// <summary>
             /// KeyDownテスト
-            /// キー: Ctrl + 1
+            /// キー: Ctrl + 0
             /// 消費税(10%):金額列範囲外
             /// </summary>
             [Test]
@@ -871,7 +871,7 @@ namespace AbookTest
                 }
 
                 var expecteds = dgvExpense.Rows.Cast<DataGridViewRow>().Select(r => r.Cells[COL.COST].Value).ToList();
-                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.D1)));
+                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.D0)));
 
                 for (int i = 0; i < dgvExpense.Rows.Count; i++)
                 {
@@ -881,7 +881,7 @@ namespace AbookTest
 
             /// <summary>
             /// KeyDownテスト
-            /// キー: Ctrl + 1
+            /// キー: Ctrl + 0
             /// 消費税(10%):金額単一セル
             /// </summary>
             [Test]
@@ -892,14 +892,14 @@ namespace AbookTest
                 var dgvExpense = CtDgvExpense();
                 dgvExpense.Rows[0].Cells[COL.COST].Selected = true;
 
-                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.D1)));
+                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.D0)));
 
                 Assert.AreEqual(110, dgvExpense.Rows[0].Cells[COL.COST].Value);
             }
 
             /// <summary>
             /// KeyDownテスト
-            /// キー: Ctrl + 1
+            /// キー: Ctrl + 0
             /// 消費税(10%):金額複数セル
             /// </summary>
             [Test]
@@ -913,7 +913,7 @@ namespace AbookTest
                     dgvExpense.Rows[i].Cells[COL.COST].Selected = true;
                 }
 
-                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.D1)));
+                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.D0)));
 
                 var expecteds = new decimal[] { 110, 220, 330, 440, 550 };
                 for (int i = 0; i < dgvExpense.Rows.Count; i++)
@@ -925,7 +925,7 @@ namespace AbookTest
 
             /// <summary>
             /// KeyDownテスト
-            /// キー: Ctrl + 1
+            /// キー: Ctrl + 0
             /// 消費税(10%):金額列以外のセルも含む
             /// </summary>
             [Test]
@@ -943,7 +943,7 @@ namespace AbookTest
                     row.Cells[COL.COST].Selected = true;
                 }
 
-                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.D1)));
+                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.D0)));
 
                 var expecteds = new decimal[] { 110, 220, 330, 440, 550 };
                 for (int i = 0; i < dgvExpense.Rows.Count; i++)
@@ -955,7 +955,7 @@ namespace AbookTest
 
             /// <summary>
             /// KeyDownテスト
-            /// キー: Ctrl + 1
+            /// キー: Ctrl + 0
             /// 消費税(10%):金額列に空白を含む
             /// </summary>
             [Test]
@@ -978,7 +978,7 @@ namespace AbookTest
                     }
                 }
 
-                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.D1)));
+                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.D0)));
 
                 var expecteds = new decimal[] { 110, 220, 330, 440, 550 };
                 for (int i = 0; i < dgvExpense.Rows.Count; i++)
