@@ -3,8 +3,6 @@
 // ------------------------------------------------------------
 namespace AbookTest
 {
-    using Abook;
-    using System;
     using System.IO;
     using NUnit.Framework;
     using NUnit.Extensions.Forms;

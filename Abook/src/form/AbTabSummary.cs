@@ -7,7 +7,6 @@ namespace Abook
     using System.Collections.Generic;
     using System.Windows.Forms;
     using TYPE = Abook.AbConstants.TYPE;
-    using UTIL = Abook.AbUtilities;
 
     /// <summary>
     /// 月次タブ

@@ -3,7 +3,6 @@
 // ------------------------------------------------------------
 namespace AbookTest
 {
-    using Abook;
     using System;
     using System.IO;
     using System.Linq;

@@ -7,7 +7,6 @@ namespace Abook
     using System.Collections.Generic;
     using System.Linq;
     using System.Windows.Forms;
-    using DB  = Abook.AbConstants.DB;
     using COL = Abook.AbConstants.COL;
     using DGV = Abook.AbConstants.DGV;
     using FMT = Abook.AbConstants.FMT;

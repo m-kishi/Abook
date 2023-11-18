@@ -4,7 +4,6 @@
 namespace AbookTest
 {
     using Abook;
-    using System;
     using System.Drawing;
     using System.IO;
     using System.Windows.Forms;
@@ -13,7 +12,6 @@ namespace AbookTest
     using TT   = AbTestTool;
     using EX   = Abook.AbException.EX;
     using DB   = Abook.AbConstants.DB;
-    using COL  = Abook.AbConstants.COL;
     using NAME = Abook.AbConstants.NAME;
     using TYPE = Abook.AbConstants.TYPE;
 

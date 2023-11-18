@@ -5,7 +5,6 @@ namespace Abook
 {
     using System;
     using System.Collections.Generic;
-    using System.Drawing;
     using System.Threading;
     using System.Windows.Forms;
     using DB  = Abook.AbConstants.DB;

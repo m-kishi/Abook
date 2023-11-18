@@ -3,7 +3,6 @@
 // ------------------------------------------------------------
 namespace Abook
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using CHK = Abook.AbUtilities.CHK;
@@ -77,7 +76,7 @@ namespace Abook
             var targets = abExpenses.Where(exp =>
                 exp.Name == name && exp.Type == type
             ).Reverse().Take(CMM.MAX_COST_CANDIDATE).Select(exp => AbUtilities.ToComma(exp.Cost)).Distinct().ToArray();
-            return String.Join("/", targets);
+            return string.Join("/", targets);
         }
     }
 }

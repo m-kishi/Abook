@@ -4,11 +4,9 @@
 namespace Abook
 {
     using System;
-    using System.Linq;
     using EX   = Abook.AbException.EX;
     using CHK  = Abook.AbUtilities.CHK;
     using FMT  = Abook.AbConstants.FMT;
-    using UTIL = Abook.AbUtilities;
 
     /// <summary>
     /// 支出情報クラス

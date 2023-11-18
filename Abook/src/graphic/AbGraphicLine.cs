@@ -3,7 +3,6 @@
 // ------------------------------------------------------------
 namespace Abook
 {
-    using System;
     using System.Drawing;
     using GRAPH = Abook.AbConstants.GRAPH;
 

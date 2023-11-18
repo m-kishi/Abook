@@ -4,7 +4,6 @@
 namespace AbookTest
 {
     using Abook;
-    using System;
     using NUnit.Framework;
     using EX = Abook.AbException.EX;
 

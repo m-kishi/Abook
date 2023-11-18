@@ -3,7 +3,6 @@
 // ------------------------------------------------------------
 namespace Abook
 {
-    using System;
     using CHK = Abook.AbUtilities.CHK;
 
     /// <summary>
