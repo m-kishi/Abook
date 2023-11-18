@@ -12,8 +12,8 @@ namespace AbookTest
     using NUnit.Extensions.Forms;
     using TT   = AbTestTool;
     using EX   = Abook.AbException.EX;
+    using DB   = Abook.AbConstants.DB;
     using COL  = Abook.AbConstants.COL;
-    using CSV  = Abook.AbConstants.CSV;
     using FMT  = Abook.AbConstants.FMT;
     using DGV  = Abook.AbConstants.DGV;
     using TYPE = Abook.AbConstants.TYPE;
@@ -24,14 +24,14 @@ namespace AbookTest
     /// </summary>
     public abstract class AbTestTabExpenseBase : AbTestFormBase
     {
-        /// <summary>CSVファイル</summary>
-        protected const string CSV_EXIST = "AbTestTabExpenseExist.db";
-        /// <summary>CSVファイル</summary>
-        protected const string CSV_EMPTY = "AbTestTabExpenseEmpty.db";
-        /// <summary>CSVファイル</summary>
-        protected const string CSV_ENTRY = "AbTestTabExpenseEntry.db";
-        /// <summary>CSVファイル</summary>
-        protected const string CSV_TAX_TEST = "AbTestTabExpenseTaxTest.cb";
+        /// <summary>DBファイル</summary>
+        protected const string DB_FILE_EXIST = "AbTestTabExpenseExist.db";
+        /// <summary>DBファイル</summary>
+        protected const string DB_FILE_EMPTY = "AbTestTabExpenseEmpty.db";
+        /// <summary>DBファイル</summary>
+        protected const string DB_FILE_ENTRY = "AbTestTabExpenseEntry.db";
+        /// <summary>DBファイル</summary>
+        protected const string DB_FILE_TAX_TEST = "AbTestTabExpenseTaxTest.cb";
         /// <summary>タブインデックス</summary>
         protected const int TAB_IDX = 0;
 
@@ -41,9 +41,9 @@ namespace AbookTest
         [TestFixtureSetUp]
         protected void TestFixtureSetUp()
         {
-            using (StreamWriter sw = new StreamWriter(CSV_EXIST, false, CSV.ENCODING))
+            using (StreamWriter sw = new StreamWriter(DB_FILE_EXIST, false, DB.ENCODING))
             {
-                sw.NewLine = CSV.LF;
+                sw.NewLine = DB.LF;
                 for (var i = 1; i <= 15; i++)
                 {
                     var date = (new DateTime(2012, 1, i)).ToString(FMT.DATE);
@@ -51,21 +51,21 @@ namespace AbookTest
                     var type = TYPE.FOOD;
                     var cost = (i * 100M).ToString();
                     var note = "note" + i.ToString("D2");
-                    sw.WriteLine(TT.ToCSV(date, name, type, cost, note));
+                    sw.WriteLine(TT.ToDBFileFormat(date, name, type, cost, note));
                 }
-                sw.WriteLine(TT.ToCSV("2017-03-01", "name16", TYPE.FOOD, "1000"));
-                sw.WriteLine(TT.ToCSV("2017-03-01", "name16", TYPE.OTFD, "2000"));
+                sw.WriteLine(TT.ToDBFileFormat("2017-03-01", "name16", TYPE.FOOD, "1000"));
+                sw.WriteLine(TT.ToDBFileFormat("2017-03-01", "name16", TYPE.OTFD, "2000"));
                 sw.Close();
             }
-            if (File.Exists(CSV_ENTRY))
+            if (File.Exists(DB_FILE_ENTRY))
             {
-                File.Delete(CSV_ENTRY);
+                File.Delete(DB_FILE_ENTRY);
             }
-            File.Copy(CSV_EXIST, CSV_ENTRY);
+            File.Copy(DB_FILE_EXIST, DB_FILE_ENTRY);
 
-            using (StreamWriter sw = new StreamWriter(CSV_TAX_TEST, false, CSV.ENCODING))
+            using (StreamWriter sw = new StreamWriter(DB_FILE_TAX_TEST, false, DB.ENCODING))
             {
-                sw.NewLine = CSV.LF;
+                sw.NewLine = DB.LF;
                 for (var i = 1; i <= 5; i++)
                 {
                     var date = (new DateTime(2021, 11, i)).ToString(FMT.DATE);
@@ -73,7 +73,7 @@ namespace AbookTest
                     var type = TYPE.FOOD;
                     var cost = (i * 100M).ToString();
                     var note = "note" + i.ToString("D2");
-                    sw.WriteLine(TT.ToCSV(date, name, type, cost, note));
+                    sw.WriteLine(TT.ToDBFileFormat(date, name, type, cost, note));
                 }
                 sw.Close();
             }
@@ -85,10 +85,10 @@ namespace AbookTest
         [TestFixtureTearDown]
         protected void TestFixtureTearDown()
         {
-            if (File.Exists(CSV_EXIST)) File.Delete(CSV_EXIST);
-            if (File.Exists(CSV_EMPTY)) File.Delete(CSV_EMPTY);
-            if (File.Exists(CSV_ENTRY)) File.Delete(CSV_ENTRY);
-            if (File.Exists(CSV_TAX_TEST)) File.Delete(CSV_TAX_TEST);
+            if (File.Exists(DB_FILE_EXIST)) File.Delete(DB_FILE_EXIST);
+            if (File.Exists(DB_FILE_EMPTY)) File.Delete(DB_FILE_EMPTY);
+            if (File.Exists(DB_FILE_ENTRY)) File.Delete(DB_FILE_ENTRY);
+            if (File.Exists(DB_FILE_TAX_TEST)) File.Delete(DB_FILE_TAX_TEST);
         }
     }
 
@@ -110,7 +110,7 @@ namespace AbookTest
             [Test]
             public void CountWithEmptyData()
             {
-                ShowFormMain(CSV_EMPTY, TAB_IDX);
+                ShowFormMain(DB_FILE_EMPTY, TAB_IDX);
                 Assert.AreEqual(0, CtDgvExpense().Rows.Count);
             }
 
@@ -121,7 +121,7 @@ namespace AbookTest
             [Test]
             public void CountWithExistData()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
                 Assert.AreEqual(17, CtDgvExpense().Rows.Count);
             }
 
@@ -132,7 +132,7 @@ namespace AbookTest
             [Test]
             public void DgvWithExistData()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 for (var i = 1; i <= 15; i++)
@@ -163,7 +163,7 @@ namespace AbookTest
             [Test]
             public void DgvWithSelectedCell()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var cell = CtDgvExpense().SelectedCells[0];
                 Assert.True(cell.Selected);
@@ -179,7 +179,7 @@ namespace AbookTest
             [Test]
             public void DgvWithScrollBar()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 // 最終行から 9 行上の行がFirstDisplayedCell
                 var cell = CtDgvExpense().SelectedCells[0];
@@ -201,7 +201,7 @@ namespace AbookTest
             [Test]
             public void BtnAddRowClickWithOnce()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var initRowCount = dgvExpense.Rows.Count;
@@ -219,7 +219,7 @@ namespace AbookTest
             [Test]
             public void BtnAddRowClickWithTwice()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var initRowCount = dgvExpense.Rows.Count;
@@ -238,7 +238,7 @@ namespace AbookTest
             [Test]
             public void BtnAddRowClickWithInitialDate()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var initRowCount = dgvExpense.Rows.Count;
@@ -262,7 +262,7 @@ namespace AbookTest
             [Test, RequiresSTA]
             public void KeyDownWithComplemented()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -285,7 +285,7 @@ namespace AbookTest
             [Test, RequiresSTA]
             public void KeyDownWithNotComplemented()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -308,7 +308,7 @@ namespace AbookTest
             [Test, RequiresSTA]
             public void KeyDownWithCommaFormat()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -331,7 +331,7 @@ namespace AbookTest
             [Test, RequiresSTA]
             public void KeyDownWithCostComplementedOfNameCell()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -355,7 +355,7 @@ namespace AbookTest
             [Test, RequiresSTA]
             public void KeyDownWithCostNotComplementedOfNameCell()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -379,7 +379,7 @@ namespace AbookTest
             [Test, RequiresSTA]
             public void KeyDownWithCostComplementedOfTypeCell()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -403,7 +403,7 @@ namespace AbookTest
             [Test, RequiresSTA]
             public void KeyDownWithCostNotComplementedOfTypeCell()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -426,7 +426,7 @@ namespace AbookTest
             [Test, RequiresSTA]
             public void KeyDownWithNotCtrlV()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 TsBtnAddRow().Click();
 
@@ -464,7 +464,7 @@ namespace AbookTest
                     tsMessageBox.ClickOk();
                 };
 
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 dgvExpense.ClearSelection();
@@ -497,7 +497,7 @@ namespace AbookTest
                     tsMessageBox.ClickOk();
                 };
 
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 for (int i = 0; i < 3; i++) {
@@ -535,7 +535,7 @@ namespace AbookTest
                     tsMessageBox.ClickOk();
                 };
 
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 dgvExpense.Rows[0].Cells[COL.COST].Selected = true;
@@ -568,7 +568,7 @@ namespace AbookTest
                     tsMessageBox.ClickOk();
                 };
 
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 for (int i = 1; i < 4; i++)
@@ -604,7 +604,7 @@ namespace AbookTest
                     tsMessageBox.ClickOk();
                 };
 
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 for (int i = 1; i < 4; i++)
@@ -644,7 +644,7 @@ namespace AbookTest
                     tsMessageBox.ClickOk();
                 };
 
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 for (int i = 1; i < 4; i++)
@@ -672,7 +672,7 @@ namespace AbookTest
             [Test]
             public void KeyDownWithTax8NoSelection()
             {
-                ShowFormMain(CSV_TAX_TEST, TAB_IDX);
+                ShowFormMain(DB_FILE_TAX_TEST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 dgvExpense.ClearSelection();
@@ -694,7 +694,7 @@ namespace AbookTest
             [Test]
             public void KeyDownWithTax8WithoutCostColumn()
             {
-                ShowFormMain(CSV_TAX_TEST, TAB_IDX);
+                ShowFormMain(DB_FILE_TAX_TEST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 for (int i = 0; i < dgvExpense.Rows.Count; i++)
@@ -722,7 +722,7 @@ namespace AbookTest
             [Test]
             public void KeyDownWithTax8SingleCell()
             {
-                ShowFormMain(CSV_TAX_TEST, TAB_IDX);
+                ShowFormMain(DB_FILE_TAX_TEST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 dgvExpense.Rows[0].Cells[COL.COST].Selected = true;
@@ -740,7 +740,7 @@ namespace AbookTest
             [Test]
             public void KeyDownWithTax8MultiCell()
             {
-                ShowFormMain(CSV_TAX_TEST, TAB_IDX);
+                ShowFormMain(DB_FILE_TAX_TEST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 for (int i = 0; i < dgvExpense.Rows.Count; i++)
@@ -766,7 +766,7 @@ namespace AbookTest
             [Test]
             public void KeyDownWithTax8IncludeOtherCell()
             {
-                ShowFormMain(CSV_TAX_TEST, TAB_IDX);
+                ShowFormMain(DB_FILE_TAX_TEST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 for (int i = 0; i < dgvExpense.Rows.Count; i++)
@@ -796,7 +796,7 @@ namespace AbookTest
             [Test]
             public void KeyDownWithTax8IncludeEmptyCost()
             {
-                ShowFormMain(CSV_TAX_TEST, TAB_IDX);
+                ShowFormMain(DB_FILE_TAX_TEST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 for (int i = 0; i < dgvExpense.Rows.Count; i++)
@@ -838,7 +838,7 @@ namespace AbookTest
             [Test]
             public void KeyDownWithTax10NoSelection()
             {
-                ShowFormMain(CSV_TAX_TEST, TAB_IDX);
+                ShowFormMain(DB_FILE_TAX_TEST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 dgvExpense.ClearSelection();
@@ -860,7 +860,7 @@ namespace AbookTest
             [Test]
             public void KeyDownWithTax10WithoutCostColumn()
             {
-                ShowFormMain(CSV_TAX_TEST, TAB_IDX);
+                ShowFormMain(DB_FILE_TAX_TEST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 for (int i = 0; i < dgvExpense.Rows.Count; i++)
@@ -888,7 +888,7 @@ namespace AbookTest
             [Test]
             public void KeyDownWithTax10SingleCell()
             {
-                ShowFormMain(CSV_TAX_TEST, TAB_IDX);
+                ShowFormMain(DB_FILE_TAX_TEST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 dgvExpense.Rows[0].Cells[COL.COST].Selected = true;
@@ -906,7 +906,7 @@ namespace AbookTest
             [Test]
             public void KeyDownWithTax10MultiCell()
             {
-                ShowFormMain(CSV_TAX_TEST, TAB_IDX);
+                ShowFormMain(DB_FILE_TAX_TEST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 for (int i = 0; i < dgvExpense.Rows.Count; i++)
@@ -932,7 +932,7 @@ namespace AbookTest
             [Test]
             public void KeyDownWithTax10IncludeOtherCell()
             {
-                ShowFormMain(CSV_TAX_TEST, TAB_IDX);
+                ShowFormMain(DB_FILE_TAX_TEST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 for (int i = 0; i < dgvExpense.Rows.Count; i++)
@@ -962,7 +962,7 @@ namespace AbookTest
             [Test]
             public void KeyDownWithTax10IncludeEmptyCost()
             {
-                ShowFormMain(CSV_TAX_TEST, TAB_IDX);
+                ShowFormMain(DB_FILE_TAX_TEST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 for (int i = 0; i < dgvExpense.Rows.Count; i++)
@@ -1004,7 +1004,7 @@ namespace AbookTest
             [Test]
             public void DgvExpenseCellEndEditWithComplemented()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -1024,7 +1024,7 @@ namespace AbookTest
             [Test]
             public void DgvExpenseCellEndEditWithNotComplemented()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -1044,7 +1044,7 @@ namespace AbookTest
             [Test]
             public void DgvExpenseCellEndEditWithCostEmpty()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -1064,7 +1064,7 @@ namespace AbookTest
             [Test]
             public void DgvExpenseCellEndEditWithCostUnder1000()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -1084,7 +1084,7 @@ namespace AbookTest
             [Test]
             public void DgvExpenseCellEndEditWithCostIs1000()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -1104,7 +1104,7 @@ namespace AbookTest
             [Test]
             public void DgvExpenseCellEndEditWithCostIs1000000()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -1124,7 +1124,7 @@ namespace AbookTest
             [Test]
             public void DgvExpenseCellEndEditWithCostIs1000000000()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -1144,7 +1144,7 @@ namespace AbookTest
             [Test]
             public void DgvExpenseCellEndEditWithCostIsOverflow()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -1164,7 +1164,7 @@ namespace AbookTest
             [Test]
             public void DgvExpenseCellEndEditWithCostIsNotNumber()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -1183,7 +1183,7 @@ namespace AbookTest
             [Test]
             public void DgvExpenseCellEndEditWithNotNameCell()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -1203,7 +1203,7 @@ namespace AbookTest
             [Test]
             public void DgvExpenseCellEndEditWithCostComplementedOfNameCell()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -1224,7 +1224,7 @@ namespace AbookTest
             [Test]
             public void DgvExpenseCellEndEditWithCostNotComplementedOfNameCell()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -1245,7 +1245,7 @@ namespace AbookTest
             [Test]
             public void DgvExpenseCellEndEditWithCostComplementedOfTypeCell()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -1266,7 +1266,7 @@ namespace AbookTest
             [Test]
             public void DgvExpenseCellEndEditWithCostNotComplementedOfTypeCell()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -1310,11 +1310,11 @@ namespace AbookTest
                     tsMessageBox.ClickOk();
                 };
 
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 TsBtnEntry().Click();
 
-                NUnit.Framework.FileAssert.AreEqual(CSV_ENTRY, CSV_EXIST);
+                NUnit.Framework.FileAssert.AreEqual(DB_FILE_ENTRY, DB_FILE_EXIST);
             }
 
             /// <summary>
@@ -1341,7 +1341,7 @@ namespace AbookTest
                     tsMessageBox.ClickOk();
                 };
 
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 CtDgvExpense().Rows.Clear();
 
@@ -1372,7 +1372,7 @@ namespace AbookTest
                     tsMessageBox.ClickOk();
                 };
 
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 TsBtnAddRow().Click();
 
@@ -1386,7 +1386,7 @@ namespace AbookTest
 
                 TsBtnEntry().Click();
 
-                NUnit.Framework.FileAssert.AreEqual(CSV_ENTRY, CSV_EXIST);
+                NUnit.Framework.FileAssert.AreEqual(DB_FILE_ENTRY, DB_FILE_EXIST);
             }
 
             /// <summary>
@@ -1406,7 +1406,7 @@ namespace AbookTest
                     Assert.AreEqual(title, tsMessageBox.Title);
 
                     // テキスト
-                    var text = string.Format(EX.CSV_STORE, 2, EX.DATE_FORMAT);
+                    var text = string.Format(EX.DB_FILE_STORE, 2, EX.DATE_FORMAT);
                     Assert.AreEqual(text, tsMessageBox.Text);
 
                     // OKボタンクリック
@@ -1416,7 +1416,7 @@ namespace AbookTest
                     Assert.AreEqual(1, CtDgvExpense().SelectedRows[0].Index);
                 };
 
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 CtDgvExpense().Rows[1].Cells[COL.DATE].Value = "2013-02-31";
 
@@ -1440,7 +1440,7 @@ namespace AbookTest
                     Assert.AreEqual(title, tsMessageBox.Title);
 
                     // テキスト
-                    var text = string.Format(EX.CSV_STORE, 5, EX.COST_FORMAT);
+                    var text = string.Format(EX.DB_FILE_STORE, 5, EX.COST_FORMAT);
                     Assert.AreEqual(text, tsMessageBox.Text);
 
                     // OKボタンクリック
@@ -1450,7 +1450,7 @@ namespace AbookTest
                     Assert.AreEqual(4, CtDgvExpense().SelectedRows[0].Index);
                 };
 
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 CtDgvExpense().Rows[4].Cells[COL.COST].Value = "XXXXXXXX";
 

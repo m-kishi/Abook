@@ -10,20 +10,20 @@ namespace AbookTest
     using NUnit.Framework;
     using NUnit.Extensions.Forms;
     using TT   = AbTestTool;
+    using DB   = Abook.AbConstants.DB;
     using COL  = Abook.AbConstants.COL;
-    using CSV  = Abook.AbConstants.CSV;
     using TYPE = Abook.AbConstants.TYPE;
 
     /// <summary>
-    /// 秘密収支タブテスト
+    /// 秘密タブテスト
     /// </summary>
     [TestFixture]
     public class AbTestTabPrivate : AbTestFormBase
     {
-        /// <summary>CSVファイル</summary>
-        private const string CSV_EXIST = "AbTestTabPrivateExist.db";
-        /// <summary>CSVファイル</summary>
-        private const string CSV_EMPTY = "AbTestTabPrivateEmpty.db";
+        /// <summary>DBファイル</summary>
+        private const string DB_FILE_EXIST = "AbTestTabPrivateExist.db";
+        /// <summary>DBファイル</summary>
+        private const string DB_FILE_EMPTY = "AbTestTabPrivateEmpty.db";
         /// <summary>タブインデックス</summary>
         private const int TAB_IDX = 4;
 
@@ -33,19 +33,19 @@ namespace AbookTest
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            using (StreamWriter sw = new StreamWriter(CSV_EXIST, false, CSV.ENCODING))
+            using (StreamWriter sw = new StreamWriter(DB_FILE_EXIST, false, DB.ENCODING))
             {
-                sw.NewLine = CSV.LF;
-                sw.WriteLine(TT.ToCSV("2009-04-01", "private01", TYPE.PRVI, "10000"));
-                sw.WriteLine(TT.ToCSV("2009-05-01", "private02", TYPE.PRVI, "20000"));
-                sw.WriteLine(TT.ToCSV("2010-06-01", "private03", TYPE.PRVI, "30000"));
-                sw.WriteLine(TT.ToCSV("2010-06-30", "dummy"    , TYPE.FOOD, "35000"));
-                sw.WriteLine(TT.ToCSV("2010-07-01", "private04", TYPE.PRVO, "40000"));
-                sw.WriteLine(TT.ToCSV("2011-08-01", "private05", TYPE.PRVI, "50000"));
-                sw.WriteLine(TT.ToCSV("2011-09-01", "private06", TYPE.PRVI, "60000"));
-                sw.WriteLine(TT.ToCSV("2011-09-30", "dummy"    , TYPE.SPCL, "65000"));
-                sw.WriteLine(TT.ToCSV("2012-10-01", "private07", TYPE.PRVI, "70000"));
-                sw.WriteLine(TT.ToCSV("2012-11-01", "private08", TYPE.PRVO, "80000", "note08"));
+                sw.NewLine = DB.LF;
+                sw.WriteLine(TT.ToDBFileFormat("2009-04-01", "private01", TYPE.PRVI, "10000"));
+                sw.WriteLine(TT.ToDBFileFormat("2009-05-01", "private02", TYPE.PRVI, "20000"));
+                sw.WriteLine(TT.ToDBFileFormat("2010-06-01", "private03", TYPE.PRVI, "30000"));
+                sw.WriteLine(TT.ToDBFileFormat("2010-06-30", "dummy"    , TYPE.FOOD, "35000"));
+                sw.WriteLine(TT.ToDBFileFormat("2010-07-01", "private04", TYPE.PRVO, "40000"));
+                sw.WriteLine(TT.ToDBFileFormat("2011-08-01", "private05", TYPE.PRVI, "50000"));
+                sw.WriteLine(TT.ToDBFileFormat("2011-09-01", "private06", TYPE.PRVI, "60000"));
+                sw.WriteLine(TT.ToDBFileFormat("2011-09-30", "dummy"    , TYPE.SPCL, "65000"));
+                sw.WriteLine(TT.ToDBFileFormat("2012-10-01", "private07", TYPE.PRVI, "70000"));
+                sw.WriteLine(TT.ToDBFileFormat("2012-11-01", "private08", TYPE.PRVO, "80000", "note08"));
                 sw.Close();
             }
         }
@@ -56,8 +56,8 @@ namespace AbookTest
         [TestFixtureTearDown]
         public void TestFixtureTearDown()
         {
-            if (File.Exists(CSV_EXIST)) File.Delete(CSV_EXIST);
-            if (File.Exists(CSV_EMPTY)) File.Delete(CSV_EMPTY);
+            if (File.Exists(DB_FILE_EXIST)) File.Delete(DB_FILE_EXIST);
+            if (File.Exists(DB_FILE_EMPTY)) File.Delete(DB_FILE_EMPTY);
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace AbookTest
         [Test]
         public void DgvPrivateWithCount()
         {
-            ShowFormMain(CSV_EXIST, TAB_IDX);
+            ShowFormMain(DB_FILE_EXIST, TAB_IDX);
             Assert.AreEqual(8, CtDgvPrivate().Rows.Count);
         }
 
@@ -77,7 +77,7 @@ namespace AbookTest
         [Test]
         public void DgvPrivateWithCountWithEmptyData()
         {
-            ShowFormMain(CSV_EMPTY, TAB_IDX);
+            ShowFormMain(DB_FILE_EMPTY, TAB_IDX);
             Assert.AreEqual(0, CtDgvPrivate().Rows.Count);
         }
 
@@ -88,7 +88,7 @@ namespace AbookTest
         [Test]
         public void DgvPrivateWithSelection()
         {
-            ShowFormMain(CSV_EXIST, TAB_IDX);
+            ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             var dgvPrivate = CtDgvPrivate();
             var row = dgvPrivate.SelectedRows[0];
@@ -107,7 +107,7 @@ namespace AbookTest
         [Ignore]
         public void DgvPrivateWithScrollBar()
         {
-            ShowFormMain(CSV_EXIST, TAB_IDX);
+            ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             var dgvPrivate = CtDgvPrivate();
             var row = dgvPrivate.SelectedRows[0];
@@ -122,7 +122,7 @@ namespace AbookTest
         [Test]
         public void DgvPrivateWithDate()
         {
-            ShowFormMain(CSV_EXIST, TAB_IDX);
+            ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             var dgvPrivate = CtDgvPrivate();
             Assert.AreEqual("2009-04", dgvPrivate.Rows[0].Cells[COL.PRIVATE.DATE].Value);
@@ -141,7 +141,7 @@ namespace AbookTest
         [Test]
         public void DgvPrivateWithName()
         {
-            ShowFormMain(CSV_EXIST, TAB_IDX);
+            ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             var dgvPrivate = CtDgvPrivate();
             Assert.AreEqual("private01", dgvPrivate.Rows[0].Cells[COL.PRIVATE.NAME].Value);
@@ -160,7 +160,7 @@ namespace AbookTest
         [Test]
         public void DgvPrivateWithCost()
         {
-            ShowFormMain(CSV_EXIST, TAB_IDX);
+            ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             var dgvPrivate = CtDgvPrivate();
             Assert.AreEqual( 10000, dgvPrivate.Rows[0].Cells[COL.PRIVATE.COST].Value);
@@ -179,7 +179,7 @@ namespace AbookTest
         [Test]
         public void DgvPrivateWithNote()
         {
-            ShowFormMain(CSV_EXIST, TAB_IDX);
+            ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             var dgvPrivate = CtDgvPrivate();
             Assert.AreEqual("", dgvPrivate.Rows[0].Cells[COL.PRIVATE.NAME].ToolTipText);
@@ -198,7 +198,7 @@ namespace AbookTest
         [Test]
         public void DgvPrivateWithBalance()
         {
-            ShowFormMain(CSV_EXIST, TAB_IDX);
+            ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             var dgvPrivate = CtDgvPrivate();
             Assert.AreEqual( 10000, dgvPrivate.Rows[0].Cells[COL.PRIVATE.BLNC].Value);

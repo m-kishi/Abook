@@ -9,7 +9,7 @@ namespace Abook
     using GRAPH = Abook.AbConstants.GRAPH;
 
     /// <summary>
-    /// グラフデータクラス
+    /// 推移情報クラス
     /// </summary>
     public class AbGraphicData
     {

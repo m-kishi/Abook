@@ -13,7 +13,7 @@ namespace AbookTest
     using TYPE = Abook.AbConstants.TYPE;
 
     /// <summary>
-    /// 集計値テスト
+    /// 月次情報テスト
     /// </summary>
     [TestFixture]
     public class AbTestSummary
@@ -22,7 +22,7 @@ namespace AbookTest
         private DateTime argDate;
         /// <summary>引数:支出情報リスト</summary>
         private List<AbExpense> argExpenses;
-        /// <summary>対象:集計値</summary>
+        /// <summary>対象:月次情報</summary>
         private AbSummary abSummary;
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace AbookTest
 
         /// <summary>
         /// コンストラクタ
-        /// 集計年のテスト
+        /// 年のテスト
         /// </summary>
         [Test]
         public void AbSummaryWithYear()
@@ -95,7 +95,7 @@ namespace AbookTest
 
         /// <summary>
         /// コンストラクタ
-        /// 集計月のテスト
+        /// 月のテスト
         /// </summary>
         [Test]
         public void AbSummaryWithMonth()
@@ -118,7 +118,7 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// 集計値取得
+        /// 金額取得
         /// 引数:種別がNULL
         /// </summary>
         [Test]
@@ -128,7 +128,7 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// 集計値取得
+        /// 金額取得
         /// 引数:種別が空文字列
         /// </summary>
         [Test]
@@ -138,7 +138,7 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// 集計値取得
+        /// 金額取得
         /// 支出情報リストが空リスト
         /// </summary>
         [Test]
@@ -170,7 +170,7 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// 集計値取得
+        /// 金額取得
         /// </summary>
         [Test]
         public void GetCostByTypeWithExpenses()
@@ -198,7 +198,7 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// 集計値取得
+        /// 金額取得
         /// 引数:名称がNULL
         /// </summary>
         [Test]
@@ -208,7 +208,7 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// 集計値取得
+        /// 金額取得
         /// 引数:名称が空文字列
         /// </summary>
         [Test]
@@ -218,7 +218,7 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// 集計値取得
+        /// 金額取得
         /// 支出情報リストが空リスト
         /// </summary>
         [Test]
@@ -250,7 +250,7 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// 集計値取得
+        /// 金額取得
         /// </summary>
         [Test]
         public void GetCostByNameWithExpenses()
@@ -279,14 +279,14 @@ namespace AbookTest
     }
 
     /// <summary>
-    /// 集計値テスト
+    /// 月次情報テスト
     /// </summary>
     [TestFixture]
     public class AbTestStaticSummary
     {
         /// <summary>引数:支出情報リスト</summary>
         private List<AbExpense> argExpenses;
-        /// <summary>対象:集計値リスト</summary>
+        /// <summary>対象:月次情報リスト</summary>
         private List<AbSummary> abSummaries;
 
         /// <summary>
@@ -376,7 +376,7 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// 集計値リスト生成
+        /// 月次情報リスト生成
         /// 引数:支出情報リストがNULL
         /// </summary>
         [Test]
@@ -390,7 +390,7 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// 集計値リスト生成
+        /// 月次情報リスト生成
         /// 引数:支出情報リストが空リスト
         /// </summary>
         [Test]
@@ -403,8 +403,8 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// 集計値リスト生成
-        /// 集計値リスト数のテスト
+        /// 月次情報リスト生成
+        /// 月次情報リスト数のテスト
         /// </summary>
         [Test]
         public void GetSummariesWithCount()
@@ -413,8 +413,8 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// 集計値リスト生成
-        /// 集計値リスト要素のテスト
+        /// 月次情報リスト生成
+        /// 月次情報リスト要素のテスト
         /// </summary>
         [Test]
         public void GetSummariesWithExpenses()
@@ -429,8 +429,8 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// 集計値リスト生成
-        /// 2011年2月の集計値のテスト
+        /// 月次情報リスト生成
+        /// 2011年2月のテスト
         /// </summary>
         [Test]
         public void GetSummariesWith_2011_02_Summary()
@@ -443,8 +443,8 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// 集計値リスト生成
-        /// 2011年3月の集計値のテスト
+        /// 月次情報リスト生成
+        /// 2011年3月のテスト
         /// </summary>
         [Test]
         public void GetSummariesWith_2011_03_Summary()
@@ -478,8 +478,8 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// 集計値リスト生成
-        /// 2011年4月の集計値のテスト
+        /// 月次情報リスト生成
+        /// 2011年4月のテスト
         /// </summary>
         [Test]
         public void GetSummariesWith_2011_04_Summary()

@@ -142,12 +142,12 @@ namespace Abook
         }
 
         /// <summary>
-        /// CSV形式
+        /// DBファイル形式
         /// </summary>
-        /// <returns>CSV形式</returns>
-        public string ToCSV()
+        /// <returns>DBファイル形式</returns>
+        public string ToDBFileFormat()
         {
-            return string.Format(FMT.CSV, Date.ToString(FMT.DATE), Name, Type, Cost, Note);
+            return string.Format(FMT.EXPENSE, Date.ToString(FMT.DATE), Name, Type, Cost, Note);
         }
     }
 }

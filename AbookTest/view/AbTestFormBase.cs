@@ -47,10 +47,10 @@ namespace AbookTest
         /// <summary>
         /// フォーム表示
         /// </summary>
-        /// <param name="csv">CSVファイル</param>
-        protected void ShowFormMain(string csv)
+        /// <param name="dbFile">DBファイル</param>
+        protected void ShowFormMain(string dbFile)
         {
-            form = new AbFormMain(csv);
+            form = new AbFormMain(dbFile);
             form.Show();
         }
 
@@ -58,25 +58,12 @@ namespace AbookTest
         /// フォーム表示
         /// フォーム表示時にタブを選択
         /// </summary>
-        /// <param name="csv">CSVファイル</param>
+        /// <param name="dbFile">DBファイル</param>
         /// <param name="idxTab">タブインデックス</param>
-        protected void ShowFormMain(string csv, int idxTab)
+        protected void ShowFormMain(string dbFile, int idxTab)
         {
-            ShowFormMain(csv);
+            ShowFormMain(dbFile);
             TsTabControl().SelectTab(idxTab);
-        }
-
-        /// <summary>
-        /// フォーム表示
-        /// アップロードテスト用の表示
-        /// </summary>
-        /// <param name="csv">CSVファイル</param>
-        /// <param name="login">ログインURL</param>
-        /// <param name="upload">アップロードURL</param>
-        protected void ShowFormMain(string csv, string login, string upload)
-        {
-            form = new AbFormMain(csv);
-            form.Show();
         }
 
         #endregion
@@ -193,36 +180,36 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// 推移(グラフ)タブ前年ボタン取得
+        /// 推移タブ前年ボタン取得
         /// </summary>
-        /// <returns>推移(グラフ)タブ前年ボタン</returns>
+        /// <returns>推移タブ前年ボタン</returns>
         protected ButtonTester TsGraphicBtnPrevYear()
         {
             return TsButton("HeadGraphic.BtnPrevYear");
         }
 
         /// <summary>
-        /// 推移(グラフ)タブ前月ボタン取得
+        /// 推移タブ前月ボタン取得
         /// </summary>
-        /// <returns>推移(グラフ)タブ前月ボタン</returns>
+        /// <returns>推移タブ前月ボタン</returns>
         protected ButtonTester TsGraphicBtnPrevMonth()
         {
             return TsButton("HeadGraphic.BtnPrevMonth");
         }
 
         /// <summary>
-        /// 推移(グラフ)タブ翌月ボタン取得
+        /// 推移タブ翌月ボタン取得
         /// </summary>
-        /// <returns>推移(グラフ)タブ翌月ボタン</returns>
+        /// <returns>推移タブ翌月ボタン</returns>
         protected ButtonTester TsGraphicBtnNextMonth()
         {
             return TsButton("HeadGraphic.BtnNextMonth");
         }
 
         /// <summary>
-        /// 推移(グラフ)タブ翌年ボタン取得
+        /// 推移タブ翌年ボタン取得
         /// </summary>
-        /// <returns>推移(グラフ)タブ翌年ボタン</returns>
+        /// <returns>推移タブ翌年ボタン</returns>
         protected ButtonTester TsGraphicBtnNextYear()
         {
             return TsButton("HeadGraphic.BtnNextYear");
@@ -331,9 +318,9 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// 推移(グラフ)タブヘッダ取得
+        /// 推移タブヘッダ取得
         /// </summary>
-        /// <returns>推移(グラフ)タブヘッダ</returns>
+        /// <returns>推移タブヘッダ</returns>
         protected AbHeaderControl CtHeadGraphic()
         {
             return CtControl<AbHeaderControl>("HeadGraphic");

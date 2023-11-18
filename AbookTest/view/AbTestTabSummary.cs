@@ -10,7 +10,7 @@ namespace AbookTest
     using NUnit.Framework;
     using NUnit.Extensions.Forms;
     using TT   = AbTestTool;
-    using CSV  = Abook.AbConstants.CSV;
+    using DB   = Abook.AbConstants.DB;
     using FMT  = Abook.AbConstants.FMT;
     using TYPE = Abook.AbConstants.TYPE;
 
@@ -20,10 +20,10 @@ namespace AbookTest
     [TestFixture]
     public class AbTestTabSummary : AbTestFormBase
     {
-        /// <summary>CSVファイル</summary>
-        private const string CSV_EXIST = "AbTestTabSummaryExist.db";
-        /// <summary>CSVファイル</summary>
-        private const string CSV_EMPTY = "AbTestTabSummaryEmpty.db";
+        /// <summary>DBファイル</summary>
+        private const string DB_FILE_EXIST = "AbTestTabSummaryExist.db";
+        /// <summary>DBファイル</summary>
+        private const string DB_FILE_EMPTY = "AbTestTabSummaryEmpty.db";
         /// <summary>タブインデックス</summary>
         private const int TAB_IDX = 1;
 
@@ -33,162 +33,162 @@ namespace AbookTest
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            using (StreamWriter sw = new StreamWriter(CSV_EXIST, false, CSV.ENCODING))
+            using (StreamWriter sw = new StreamWriter(DB_FILE_EXIST, false, DB.ENCODING))
             {
-                sw.NewLine = CSV.LF;
+                sw.NewLine = DB.LF;
 
                 var dtNow = DateTime.Now.ToString(FMT.DATE);
-                sw.WriteLine(TT.ToCSV(dtNow, "name", TYPE.FOOD,  "10000"));
-                sw.WriteLine(TT.ToCSV(dtNow, "name", TYPE.OTFD,  "15000"));
-                sw.WriteLine(TT.ToCSV(dtNow, "name", TYPE.GOOD,   "1200"));
-                sw.WriteLine(TT.ToCSV(dtNow, "name", TYPE.FRND,   "5000"));
-                sw.WriteLine(TT.ToCSV(dtNow, "name", TYPE.TRFC,    "200"));
-                sw.WriteLine(TT.ToCSV(dtNow, "name", TYPE.PLAY,   "3000"));
-                sw.WriteLine(TT.ToCSV(dtNow, "name", TYPE.HOUS,  "40000"));
-                sw.WriteLine(TT.ToCSV(dtNow, "name", TYPE.ENGY,   "8000"));
-                sw.WriteLine(TT.ToCSV(dtNow, "name", TYPE.CNCT,   "2000"));
-                sw.WriteLine(TT.ToCSV(dtNow, "name", TYPE.MEDI,   "1700"));
-                sw.WriteLine(TT.ToCSV(dtNow, "name", TYPE.INSU,   "2700"));
-                sw.WriteLine(TT.ToCSV(dtNow, "name", TYPE.OTHR,    "500"));
-                sw.WriteLine(TT.ToCSV(dtNow, "name", TYPE.EARN, "150000"));
-                sw.WriteLine(TT.ToCSV(dtNow, "name", TYPE.PRVI,  "20000"));
-                sw.WriteLine(TT.ToCSV(dtNow, "name", TYPE.PRVO,  "10000"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNow, "name", TYPE.FOOD,  "10000"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNow, "name", TYPE.OTFD,  "15000"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNow, "name", TYPE.GOOD,   "1200"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNow, "name", TYPE.FRND,   "5000"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNow, "name", TYPE.TRFC,    "200"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNow, "name", TYPE.PLAY,   "3000"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNow, "name", TYPE.HOUS,  "40000"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNow, "name", TYPE.ENGY,   "8000"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNow, "name", TYPE.CNCT,   "2000"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNow, "name", TYPE.MEDI,   "1700"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNow, "name", TYPE.INSU,   "2700"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNow, "name", TYPE.OTHR,    "500"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNow, "name", TYPE.EARN, "150000"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNow, "name", TYPE.PRVI,  "20000"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNow, "name", TYPE.PRVO,  "10000"));
 
                 var dtPrevYear1 = DateTime.Now.AddYears(-1).ToString(FMT.DATE);
-                sw.WriteLine(TT.ToCSV(dtPrevYear1, "name", TYPE.FOOD,  "10100"));
-                sw.WriteLine(TT.ToCSV(dtPrevYear1, "name", TYPE.OTFD,  "15100"));
-                sw.WriteLine(TT.ToCSV(dtPrevYear1, "name", TYPE.GOOD,   "1300"));
-                sw.WriteLine(TT.ToCSV(dtPrevYear1, "name", TYPE.FRND,   "5100"));
-                sw.WriteLine(TT.ToCSV(dtPrevYear1, "name", TYPE.TRFC,    "300"));
-                sw.WriteLine(TT.ToCSV(dtPrevYear1, "name", TYPE.PLAY,   "3100"));
-                sw.WriteLine(TT.ToCSV(dtPrevYear1, "name", TYPE.HOUS,  "40100"));
-                sw.WriteLine(TT.ToCSV(dtPrevYear1, "name", TYPE.ENGY,   "8100"));
-                sw.WriteLine(TT.ToCSV(dtPrevYear1, "name", TYPE.CNCT,   "2100"));
-                sw.WriteLine(TT.ToCSV(dtPrevYear1, "name", TYPE.MEDI,   "1800"));
-                sw.WriteLine(TT.ToCSV(dtPrevYear1, "name", TYPE.INSU,   "2800"));
-                sw.WriteLine(TT.ToCSV(dtPrevYear1, "name", TYPE.OTHR,    "600"));
-                sw.WriteLine(TT.ToCSV(dtPrevYear1, "name", TYPE.EARN, "150100"));
-                sw.WriteLine(TT.ToCSV(dtPrevYear1, "name", TYPE.PRVI,  "20000"));
-                sw.WriteLine(TT.ToCSV(dtPrevYear1, "name", TYPE.PRVO,  "10000"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevYear1, "name", TYPE.FOOD,  "10100"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevYear1, "name", TYPE.OTFD,  "15100"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevYear1, "name", TYPE.GOOD,   "1300"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevYear1, "name", TYPE.FRND,   "5100"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevYear1, "name", TYPE.TRFC,    "300"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevYear1, "name", TYPE.PLAY,   "3100"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevYear1, "name", TYPE.HOUS,  "40100"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevYear1, "name", TYPE.ENGY,   "8100"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevYear1, "name", TYPE.CNCT,   "2100"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevYear1, "name", TYPE.MEDI,   "1800"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevYear1, "name", TYPE.INSU,   "2800"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevYear1, "name", TYPE.OTHR,    "600"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevYear1, "name", TYPE.EARN, "150100"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevYear1, "name", TYPE.PRVI,  "20000"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevYear1, "name", TYPE.PRVO,  "10000"));
 
                 var dtPrevYear2 = DateTime.Now.AddYears(-2).ToString(FMT.DATE);
-                sw.WriteLine(TT.ToCSV(dtPrevYear2, "name", TYPE.FOOD,  "10200"));
-                sw.WriteLine(TT.ToCSV(dtPrevYear2, "name", TYPE.OTFD,  "15200"));
-                sw.WriteLine(TT.ToCSV(dtPrevYear2, "name", TYPE.GOOD,   "1400"));
-                sw.WriteLine(TT.ToCSV(dtPrevYear2, "name", TYPE.FRND,   "5200"));
-                sw.WriteLine(TT.ToCSV(dtPrevYear2, "name", TYPE.TRFC,    "400"));
-                sw.WriteLine(TT.ToCSV(dtPrevYear2, "name", TYPE.PLAY,   "3200"));
-                sw.WriteLine(TT.ToCSV(dtPrevYear2, "name", TYPE.HOUS,  "40200"));
-                sw.WriteLine(TT.ToCSV(dtPrevYear2, "name", TYPE.ENGY,   "8200"));
-                sw.WriteLine(TT.ToCSV(dtPrevYear2, "name", TYPE.CNCT,   "2200"));
-                sw.WriteLine(TT.ToCSV(dtPrevYear2, "name", TYPE.MEDI,   "1900"));
-                sw.WriteLine(TT.ToCSV(dtPrevYear2, "name", TYPE.INSU,   "2900"));
-                sw.WriteLine(TT.ToCSV(dtPrevYear2, "name", TYPE.OTHR,    "700"));
-                sw.WriteLine(TT.ToCSV(dtPrevYear2, "name", TYPE.EARN, "150200"));
-                sw.WriteLine(TT.ToCSV(dtPrevYear2, "name", TYPE.PRVI,  "20000"));
-                sw.WriteLine(TT.ToCSV(dtPrevYear2, "name", TYPE.PRVO,  "10000"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevYear2, "name", TYPE.FOOD,  "10200"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevYear2, "name", TYPE.OTFD,  "15200"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevYear2, "name", TYPE.GOOD,   "1400"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevYear2, "name", TYPE.FRND,   "5200"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevYear2, "name", TYPE.TRFC,    "400"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevYear2, "name", TYPE.PLAY,   "3200"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevYear2, "name", TYPE.HOUS,  "40200"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevYear2, "name", TYPE.ENGY,   "8200"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevYear2, "name", TYPE.CNCT,   "2200"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevYear2, "name", TYPE.MEDI,   "1900"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevYear2, "name", TYPE.INSU,   "2900"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevYear2, "name", TYPE.OTHR,    "700"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevYear2, "name", TYPE.EARN, "150200"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevYear2, "name", TYPE.PRVI,  "20000"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevYear2, "name", TYPE.PRVO,  "10000"));
 
                 var dtPrevMonth1 = DateTime.Now.AddMonths(-1).ToString(FMT.DATE);
-                sw.WriteLine(TT.ToCSV(dtPrevMonth1, "name", TYPE.FOOD,  "10300"));
-                sw.WriteLine(TT.ToCSV(dtPrevMonth1, "name", TYPE.OTFD,  "15300"));
-                sw.WriteLine(TT.ToCSV(dtPrevMonth1, "name", TYPE.GOOD,   "1500"));
-                sw.WriteLine(TT.ToCSV(dtPrevMonth1, "name", TYPE.FRND,   "5300"));
-                sw.WriteLine(TT.ToCSV(dtPrevMonth1, "name", TYPE.TRFC,    "500"));
-                sw.WriteLine(TT.ToCSV(dtPrevMonth1, "name", TYPE.PLAY,   "3300"));
-                sw.WriteLine(TT.ToCSV(dtPrevMonth1, "name", TYPE.HOUS,  "40300"));
-                sw.WriteLine(TT.ToCSV(dtPrevMonth1, "name", TYPE.ENGY,   "8300"));
-                sw.WriteLine(TT.ToCSV(dtPrevMonth1, "name", TYPE.CNCT,   "2300"));
-                sw.WriteLine(TT.ToCSV(dtPrevMonth1, "name", TYPE.MEDI,   "2000"));
-                sw.WriteLine(TT.ToCSV(dtPrevMonth1, "name", TYPE.INSU,   "3000"));
-                sw.WriteLine(TT.ToCSV(dtPrevMonth1, "name", TYPE.OTHR,    "800"));
-                sw.WriteLine(TT.ToCSV(dtPrevMonth1, "name", TYPE.EARN, "150300"));
-                sw.WriteLine(TT.ToCSV(dtPrevMonth1, "name", TYPE.PRVI,  "20000"));
-                sw.WriteLine(TT.ToCSV(dtPrevMonth1, "name", TYPE.PRVO,  "10000"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevMonth1, "name", TYPE.FOOD,  "10300"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevMonth1, "name", TYPE.OTFD,  "15300"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevMonth1, "name", TYPE.GOOD,   "1500"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevMonth1, "name", TYPE.FRND,   "5300"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevMonth1, "name", TYPE.TRFC,    "500"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevMonth1, "name", TYPE.PLAY,   "3300"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevMonth1, "name", TYPE.HOUS,  "40300"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevMonth1, "name", TYPE.ENGY,   "8300"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevMonth1, "name", TYPE.CNCT,   "2300"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevMonth1, "name", TYPE.MEDI,   "2000"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevMonth1, "name", TYPE.INSU,   "3000"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevMonth1, "name", TYPE.OTHR,    "800"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevMonth1, "name", TYPE.EARN, "150300"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevMonth1, "name", TYPE.PRVI,  "20000"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevMonth1, "name", TYPE.PRVO,  "10000"));
 
                 var dtPrevMonth2 = DateTime.Now.AddMonths(-2).ToString(FMT.DATE);
-                sw.WriteLine(TT.ToCSV(dtPrevMonth2, "name", TYPE.FOOD,  "10400"));
-                sw.WriteLine(TT.ToCSV(dtPrevMonth2, "name", TYPE.OTFD,  "15400"));
-                sw.WriteLine(TT.ToCSV(dtPrevMonth2, "name", TYPE.GOOD,   "1600"));
-                sw.WriteLine(TT.ToCSV(dtPrevMonth2, "name", TYPE.FRND,   "5400"));
-                sw.WriteLine(TT.ToCSV(dtPrevMonth2, "name", TYPE.TRFC,    "600"));
-                sw.WriteLine(TT.ToCSV(dtPrevMonth2, "name", TYPE.PLAY,   "3400"));
-                sw.WriteLine(TT.ToCSV(dtPrevMonth2, "name", TYPE.HOUS,  "40400"));
-                sw.WriteLine(TT.ToCSV(dtPrevMonth2, "name", TYPE.ENGY,   "8400"));
-                sw.WriteLine(TT.ToCSV(dtPrevMonth2, "name", TYPE.CNCT,   "2400"));
-                sw.WriteLine(TT.ToCSV(dtPrevMonth2, "name", TYPE.MEDI,   "2100"));
-                sw.WriteLine(TT.ToCSV(dtPrevMonth2, "name", TYPE.INSU,   "3100"));
-                sw.WriteLine(TT.ToCSV(dtPrevMonth2, "name", TYPE.OTHR,    "900"));
-                sw.WriteLine(TT.ToCSV(dtPrevMonth2, "name", TYPE.EARN, "150400"));
-                sw.WriteLine(TT.ToCSV(dtPrevMonth2, "name", TYPE.PRVI,  "20000"));
-                sw.WriteLine(TT.ToCSV(dtPrevMonth2, "name", TYPE.PRVO,  "10000"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevMonth2, "name", TYPE.FOOD,  "10400"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevMonth2, "name", TYPE.OTFD,  "15400"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevMonth2, "name", TYPE.GOOD,   "1600"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevMonth2, "name", TYPE.FRND,   "5400"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevMonth2, "name", TYPE.TRFC,    "600"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevMonth2, "name", TYPE.PLAY,   "3400"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevMonth2, "name", TYPE.HOUS,  "40400"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevMonth2, "name", TYPE.ENGY,   "8400"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevMonth2, "name", TYPE.CNCT,   "2400"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevMonth2, "name", TYPE.MEDI,   "2100"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevMonth2, "name", TYPE.INSU,   "3100"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevMonth2, "name", TYPE.OTHR,    "900"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevMonth2, "name", TYPE.EARN, "150400"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevMonth2, "name", TYPE.PRVI,  "20000"));
+                sw.WriteLine(TT.ToDBFileFormat(dtPrevMonth2, "name", TYPE.PRVO,  "10000"));
 
                 var dtNextMonth1 = DateTime.Now.AddMonths(1).ToString(FMT.DATE);
-                sw.WriteLine(TT.ToCSV(dtNextMonth1, "name", TYPE.FOOD,  "10500"));
-                sw.WriteLine(TT.ToCSV(dtNextMonth1, "name", TYPE.OTFD,  "15500"));
-                sw.WriteLine(TT.ToCSV(dtNextMonth1, "name", TYPE.GOOD,   "1700"));
-                sw.WriteLine(TT.ToCSV(dtNextMonth1, "name", TYPE.FRND,   "5500"));
-                sw.WriteLine(TT.ToCSV(dtNextMonth1, "name", TYPE.TRFC,    "700"));
-                sw.WriteLine(TT.ToCSV(dtNextMonth1, "name", TYPE.PLAY,   "3500"));
-                sw.WriteLine(TT.ToCSV(dtNextMonth1, "name", TYPE.HOUS,  "40500"));
-                sw.WriteLine(TT.ToCSV(dtNextMonth1, "name", TYPE.ENGY,   "8500"));
-                sw.WriteLine(TT.ToCSV(dtNextMonth1, "name", TYPE.CNCT,   "2500"));
-                sw.WriteLine(TT.ToCSV(dtNextMonth1, "name", TYPE.MEDI,   "2200"));
-                sw.WriteLine(TT.ToCSV(dtNextMonth1, "name", TYPE.INSU,   "3200"));
-                sw.WriteLine(TT.ToCSV(dtNextMonth1, "name", TYPE.OTHR,   "1000"));
-                sw.WriteLine(TT.ToCSV(dtNextMonth1, "name", TYPE.EARN, "150500"));
-                sw.WriteLine(TT.ToCSV(dtNextMonth1, "name", TYPE.PRVI,  "20000"));
-                sw.WriteLine(TT.ToCSV(dtNextMonth1, "name", TYPE.PRVO,  "10000"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextMonth1, "name", TYPE.FOOD,  "10500"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextMonth1, "name", TYPE.OTFD,  "15500"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextMonth1, "name", TYPE.GOOD,   "1700"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextMonth1, "name", TYPE.FRND,   "5500"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextMonth1, "name", TYPE.TRFC,    "700"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextMonth1, "name", TYPE.PLAY,   "3500"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextMonth1, "name", TYPE.HOUS,  "40500"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextMonth1, "name", TYPE.ENGY,   "8500"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextMonth1, "name", TYPE.CNCT,   "2500"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextMonth1, "name", TYPE.MEDI,   "2200"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextMonth1, "name", TYPE.INSU,   "3200"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextMonth1, "name", TYPE.OTHR,   "1000"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextMonth1, "name", TYPE.EARN, "150500"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextMonth1, "name", TYPE.PRVI,  "20000"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextMonth1, "name", TYPE.PRVO,  "10000"));
 
                 var dtNextMonth2 = DateTime.Now.AddMonths(2).ToString(FMT.DATE);
-                sw.WriteLine(TT.ToCSV(dtNextMonth2, "name", TYPE.FOOD,  "10600"));
-                sw.WriteLine(TT.ToCSV(dtNextMonth2, "name", TYPE.OTFD,  "15600"));
-                sw.WriteLine(TT.ToCSV(dtNextMonth2, "name", TYPE.GOOD,   "1800"));
-                sw.WriteLine(TT.ToCSV(dtNextMonth2, "name", TYPE.FRND,   "5600"));
-                sw.WriteLine(TT.ToCSV(dtNextMonth2, "name", TYPE.TRFC,    "800"));
-                sw.WriteLine(TT.ToCSV(dtNextMonth2, "name", TYPE.PLAY,   "3600"));
-                sw.WriteLine(TT.ToCSV(dtNextMonth2, "name", TYPE.HOUS,  "40600"));
-                sw.WriteLine(TT.ToCSV(dtNextMonth2, "name", TYPE.ENGY,   "8600"));
-                sw.WriteLine(TT.ToCSV(dtNextMonth2, "name", TYPE.CNCT,   "2600"));
-                sw.WriteLine(TT.ToCSV(dtNextMonth2, "name", TYPE.MEDI,   "2300"));
-                sw.WriteLine(TT.ToCSV(dtNextMonth2, "name", TYPE.INSU,   "3300"));
-                sw.WriteLine(TT.ToCSV(dtNextMonth2, "name", TYPE.OTHR,   "1100"));
-                sw.WriteLine(TT.ToCSV(dtNextMonth2, "name", TYPE.EARN, "150600"));
-                sw.WriteLine(TT.ToCSV(dtNextMonth2, "name", TYPE.PRVI,  "20000"));
-                sw.WriteLine(TT.ToCSV(dtNextMonth2, "name", TYPE.PRVO,  "10000"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextMonth2, "name", TYPE.FOOD,  "10600"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextMonth2, "name", TYPE.OTFD,  "15600"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextMonth2, "name", TYPE.GOOD,   "1800"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextMonth2, "name", TYPE.FRND,   "5600"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextMonth2, "name", TYPE.TRFC,    "800"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextMonth2, "name", TYPE.PLAY,   "3600"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextMonth2, "name", TYPE.HOUS,  "40600"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextMonth2, "name", TYPE.ENGY,   "8600"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextMonth2, "name", TYPE.CNCT,   "2600"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextMonth2, "name", TYPE.MEDI,   "2300"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextMonth2, "name", TYPE.INSU,   "3300"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextMonth2, "name", TYPE.OTHR,   "1100"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextMonth2, "name", TYPE.EARN, "150600"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextMonth2, "name", TYPE.PRVI,  "20000"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextMonth2, "name", TYPE.PRVO,  "10000"));
 
                 var dtNextYear1 = DateTime.Now.AddYears(1).ToString(FMT.DATE);
-                sw.WriteLine(TT.ToCSV(dtNextYear1, "name", TYPE.FOOD,  "10700"));
-                sw.WriteLine(TT.ToCSV(dtNextYear1, "name", TYPE.OTFD,  "15700"));
-                sw.WriteLine(TT.ToCSV(dtNextYear1, "name", TYPE.GOOD,   "1900"));
-                sw.WriteLine(TT.ToCSV(dtNextYear1, "name", TYPE.FRND,   "5700"));
-                sw.WriteLine(TT.ToCSV(dtNextYear1, "name", TYPE.TRFC,    "900"));
-                sw.WriteLine(TT.ToCSV(dtNextYear1, "name", TYPE.PLAY,   "3700"));
-                sw.WriteLine(TT.ToCSV(dtNextYear1, "name", TYPE.HOUS,  "40700"));
-                sw.WriteLine(TT.ToCSV(dtNextYear1, "name", TYPE.ENGY,   "8700"));
-                sw.WriteLine(TT.ToCSV(dtNextYear1, "name", TYPE.CNCT,   "2700"));
-                sw.WriteLine(TT.ToCSV(dtNextYear1, "name", TYPE.MEDI,   "2400"));
-                sw.WriteLine(TT.ToCSV(dtNextYear1, "name", TYPE.INSU,   "3400"));
-                sw.WriteLine(TT.ToCSV(dtNextYear1, "name", TYPE.OTHR,   "1200"));
-                sw.WriteLine(TT.ToCSV(dtNextYear1, "name", TYPE.EARN, "150700"));
-                sw.WriteLine(TT.ToCSV(dtNextYear1, "name", TYPE.PRVI,  "20000"));
-                sw.WriteLine(TT.ToCSV(dtNextYear1, "name", TYPE.PRVO,  "10000"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextYear1, "name", TYPE.FOOD,  "10700"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextYear1, "name", TYPE.OTFD,  "15700"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextYear1, "name", TYPE.GOOD,   "1900"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextYear1, "name", TYPE.FRND,   "5700"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextYear1, "name", TYPE.TRFC,    "900"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextYear1, "name", TYPE.PLAY,   "3700"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextYear1, "name", TYPE.HOUS,  "40700"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextYear1, "name", TYPE.ENGY,   "8700"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextYear1, "name", TYPE.CNCT,   "2700"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextYear1, "name", TYPE.MEDI,   "2400"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextYear1, "name", TYPE.INSU,   "3400"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextYear1, "name", TYPE.OTHR,   "1200"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextYear1, "name", TYPE.EARN, "150700"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextYear1, "name", TYPE.PRVI,  "20000"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextYear1, "name", TYPE.PRVO,  "10000"));
 
                 var dtNextYear2 = DateTime.Now.AddYears(2).ToString(FMT.DATE);
-                sw.WriteLine(TT.ToCSV(dtNextYear2, "name", TYPE.FOOD,  "10800"));
-                sw.WriteLine(TT.ToCSV(dtNextYear2, "name", TYPE.OTFD,  "15800"));
-                sw.WriteLine(TT.ToCSV(dtNextYear2, "name", TYPE.GOOD,   "2000"));
-                sw.WriteLine(TT.ToCSV(dtNextYear2, "name", TYPE.FRND,   "5800"));
-                sw.WriteLine(TT.ToCSV(dtNextYear2, "name", TYPE.TRFC,   "1000"));
-                sw.WriteLine(TT.ToCSV(dtNextYear2, "name", TYPE.PLAY,   "3800"));
-                sw.WriteLine(TT.ToCSV(dtNextYear2, "name", TYPE.HOUS,  "40800"));
-                sw.WriteLine(TT.ToCSV(dtNextYear2, "name", TYPE.ENGY,   "8800"));
-                sw.WriteLine(TT.ToCSV(dtNextYear2, "name", TYPE.CNCT,   "2800"));
-                sw.WriteLine(TT.ToCSV(dtNextYear2, "name", TYPE.MEDI,   "2500"));
-                sw.WriteLine(TT.ToCSV(dtNextYear2, "name", TYPE.INSU,   "3500"));
-                sw.WriteLine(TT.ToCSV(dtNextYear2, "name", TYPE.OTHR,   "1300"));
-                sw.WriteLine(TT.ToCSV(dtNextYear2, "name", TYPE.EARN, "150800"));
-                sw.WriteLine(TT.ToCSV(dtNextYear2, "name", TYPE.PRVI,  "20000"));
-                sw.WriteLine(TT.ToCSV(dtNextYear2, "name", TYPE.PRVO,  "10000"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextYear2, "name", TYPE.FOOD,  "10800"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextYear2, "name", TYPE.OTFD,  "15800"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextYear2, "name", TYPE.GOOD,   "2000"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextYear2, "name", TYPE.FRND,   "5800"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextYear2, "name", TYPE.TRFC,   "1000"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextYear2, "name", TYPE.PLAY,   "3800"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextYear2, "name", TYPE.HOUS,  "40800"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextYear2, "name", TYPE.ENGY,   "8800"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextYear2, "name", TYPE.CNCT,   "2800"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextYear2, "name", TYPE.MEDI,   "2500"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextYear2, "name", TYPE.INSU,   "3500"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextYear2, "name", TYPE.OTHR,   "1300"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextYear2, "name", TYPE.EARN, "150800"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextYear2, "name", TYPE.PRVI,  "20000"));
+                sw.WriteLine(TT.ToDBFileFormat(dtNextYear2, "name", TYPE.PRVO,  "10000"));
 
                 sw.Close();
             }
@@ -200,8 +200,8 @@ namespace AbookTest
         [TestFixtureTearDown]
         public void TestFixtureTearDown()
         {
-            if (File.Exists(CSV_EXIST)) File.Delete(CSV_EXIST);
-            if (File.Exists(CSV_EMPTY)) File.Delete(CSV_EMPTY);
+            if (File.Exists(DB_FILE_EXIST)) File.Delete(DB_FILE_EXIST);
+            if (File.Exists(DB_FILE_EMPTY)) File.Delete(DB_FILE_EMPTY);
         }
 
         /// <summary>
@@ -211,7 +211,7 @@ namespace AbookTest
         [Test]
         public void TitleWithInitial()
         {
-            ShowFormMain(CSV_EXIST, TAB_IDX);
+            ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             var title = DateTime.Now.ToString(FMT.TITLE);
             Assert.AreEqual(title, CtHeadSummary().Title);
@@ -224,7 +224,7 @@ namespace AbookTest
         [Test]
         public void TitleWithPrevYear_1_Time()
         {
-            ShowFormMain(CSV_EXIST, TAB_IDX);
+            ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             TsSummaryBtnPrevYear().Click();
 
@@ -239,7 +239,7 @@ namespace AbookTest
         [Test]
         public void TitleWithPrevYear_2_Time()
         {
-            ShowFormMain(CSV_EXIST, TAB_IDX);
+            ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             TsSummaryBtnPrevYear().Click();
             TsSummaryBtnPrevYear().Click();
@@ -255,7 +255,7 @@ namespace AbookTest
         [Test]
         public void TitleWithPrevYear_3_Time()
         {
-            ShowFormMain(CSV_EXIST, TAB_IDX);
+            ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             TsSummaryBtnPrevYear().Click();
             TsSummaryBtnPrevYear().Click();
@@ -272,7 +272,7 @@ namespace AbookTest
         [Test]
         public void TitleWithPrevMonth_1_Time()
         {
-            ShowFormMain(CSV_EXIST, TAB_IDX);
+            ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             TsSummaryBtnPrevMonth().Click();
 
@@ -287,7 +287,7 @@ namespace AbookTest
         [Test]
         public void TitleWithPrevMonth_2_Time()
         {
-            ShowFormMain(CSV_EXIST, TAB_IDX);
+            ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             TsSummaryBtnPrevMonth().Click();
             TsSummaryBtnPrevMonth().Click();
@@ -303,7 +303,7 @@ namespace AbookTest
         [Test]
         public void TitleWithPrevMonth_3_Time()
         {
-            ShowFormMain(CSV_EXIST, TAB_IDX);
+            ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             TsSummaryBtnPrevMonth().Click();
             TsSummaryBtnPrevMonth().Click();
@@ -320,7 +320,7 @@ namespace AbookTest
         [Test]
         public void TitleWithNextMonth_1_Time()
         {
-            ShowFormMain(CSV_EXIST, TAB_IDX);
+            ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             TsSummaryBtnNextMonth().Click();
 
@@ -335,7 +335,7 @@ namespace AbookTest
         [Test]
         public void TitleWithNextMonth_2_Time()
         {
-            ShowFormMain(CSV_EXIST, TAB_IDX);
+            ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             TsSummaryBtnNextMonth().Click();
             TsSummaryBtnNextMonth().Click();
@@ -351,7 +351,7 @@ namespace AbookTest
         [Test]
         public void TitleWithNextMonth_3_Time()
         {
-            ShowFormMain(CSV_EXIST, TAB_IDX);
+            ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             TsSummaryBtnNextMonth().Click();
             TsSummaryBtnNextMonth().Click();
@@ -368,7 +368,7 @@ namespace AbookTest
         [Test]
         public void TitleWithNextYear_1_Time()
         {
-            ShowFormMain(CSV_EXIST, TAB_IDX);
+            ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             TsSummaryBtnNextYear().Click();
 
@@ -383,7 +383,7 @@ namespace AbookTest
         [Test]
         public void TitleWithNextYear_2_Time()
         {
-            ShowFormMain(CSV_EXIST, TAB_IDX);
+            ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             TsSummaryBtnNextYear().Click();
             TsSummaryBtnNextYear().Click();
@@ -399,7 +399,7 @@ namespace AbookTest
         [Test]
         public void TitleWithNextYear_3_Time()
         {
-            ShowFormMain(CSV_EXIST, TAB_IDX);
+            ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             TsSummaryBtnNextYear().Click();
             TsSummaryBtnNextYear().Click();
@@ -438,7 +438,7 @@ namespace AbookTest
         [Test]
         public void LabelWithInitial()
         {
-            ShowFormMain(CSV_EXIST, TAB_IDX);
+            ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             LabelControlTest(
                 new decimal[] { 10000, 15000, 1200, 5000, 200, 3000, 40000, 8000, 2000, 1700, 2700, 500, 89300, 60700 }
@@ -452,7 +452,7 @@ namespace AbookTest
         [Test]
         public void LabelWithPrevYear_1_Time()
         {
-            ShowFormMain(CSV_EXIST, TAB_IDX);
+            ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             TsSummaryBtnPrevYear().Click();
 
@@ -468,7 +468,7 @@ namespace AbookTest
         [Test]
         public void LabelWithPrevYear_2_Time()
         {
-            ShowFormMain(CSV_EXIST, TAB_IDX);
+            ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             TsSummaryBtnPrevYear().Click();
             TsSummaryBtnPrevYear().Click();
@@ -485,7 +485,7 @@ namespace AbookTest
         [Test]
         public void LabelWithPrevYear_3_Time()
         {
-            ShowFormMain(CSV_EXIST, TAB_IDX);
+            ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             TsSummaryBtnPrevYear().Click();
             TsSummaryBtnPrevYear().Click();
@@ -503,7 +503,7 @@ namespace AbookTest
         [Test]
         public void LabelWithPrevMonth_1_Time()
         {
-            ShowFormMain(CSV_EXIST, TAB_IDX);
+            ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             TsSummaryBtnPrevMonth().Click();
 
@@ -519,7 +519,7 @@ namespace AbookTest
         [Test]
         public void LabelWithPrevMonth_2_Time()
         {
-            ShowFormMain(CSV_EXIST, TAB_IDX);
+            ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             TsSummaryBtnPrevMonth().Click();
             TsSummaryBtnPrevMonth().Click();
@@ -536,7 +536,7 @@ namespace AbookTest
         [Test]
         public void LabelWithPrevMonth_3_Time()
         {
-            ShowFormMain(CSV_EXIST, TAB_IDX);
+            ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             TsSummaryBtnPrevMonth().Click();
             TsSummaryBtnPrevMonth().Click();
@@ -554,7 +554,7 @@ namespace AbookTest
         [Test]
         public void LabelWithNextMonth_1_Time()
         {
-            ShowFormMain(CSV_EXIST, TAB_IDX);
+            ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             TsSummaryBtnNextMonth().Click();
 
@@ -570,7 +570,7 @@ namespace AbookTest
         [Test]
         public void LabelWithNextMonth_2_Time()
         {
-            ShowFormMain(CSV_EXIST, TAB_IDX);
+            ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             TsSummaryBtnNextMonth().Click();
             TsSummaryBtnNextMonth().Click();
@@ -587,7 +587,7 @@ namespace AbookTest
         [Test]
         public void LabelWithNextMonth_3_Time()
         {
-            ShowFormMain(CSV_EXIST, TAB_IDX);
+            ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             TsSummaryBtnNextMonth().Click();
             TsSummaryBtnNextMonth().Click();
@@ -605,7 +605,7 @@ namespace AbookTest
         [Test]
         public void LabelWithNextYear_1_Time()
         {
-            ShowFormMain(CSV_EXIST, TAB_IDX);
+            ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             TsSummaryBtnNextYear().Click();
 
@@ -621,7 +621,7 @@ namespace AbookTest
         [Test]
         public void LabelWithNextYear_2_Time()
         {
-            ShowFormMain(CSV_EXIST, TAB_IDX);
+            ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             TsSummaryBtnNextYear().Click();
             TsSummaryBtnNextYear().Click();
@@ -638,7 +638,7 @@ namespace AbookTest
         [Test]
         public void LabelWithNextYear_3_Time()
         {
-            ShowFormMain(CSV_EXIST, TAB_IDX);
+            ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             TsSummaryBtnNextYear().Click();
             TsSummaryBtnNextYear().Click();
@@ -656,7 +656,7 @@ namespace AbookTest
         [Test]
         public void LabelWithEmptyWithInitial()
         {
-            ShowFormMain(CSV_EMPTY, TAB_IDX);
+            ShowFormMain(DB_FILE_EMPTY, TAB_IDX);
 
             LabelControlTest(
                 new decimal[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
@@ -670,7 +670,7 @@ namespace AbookTest
         [Test]
         public void LabelWithEmptyWithPrevYear_1_Time()
         {
-            ShowFormMain(CSV_EMPTY, TAB_IDX);
+            ShowFormMain(DB_FILE_EMPTY, TAB_IDX);
 
             TsSummaryBtnPrevYear().Click();
 
@@ -686,7 +686,7 @@ namespace AbookTest
         [Test]
         public void LabelWithEmptyWithPrevYear_2_Time()
         {
-            ShowFormMain(CSV_EMPTY, TAB_IDX);
+            ShowFormMain(DB_FILE_EMPTY, TAB_IDX);
 
             TsSummaryBtnPrevYear().Click();
             TsSummaryBtnPrevYear().Click();
@@ -703,7 +703,7 @@ namespace AbookTest
         [Test]
         public void LabelWithEmptyWithPrevYear_3_Time()
         {
-            ShowFormMain(CSV_EMPTY, TAB_IDX);
+            ShowFormMain(DB_FILE_EMPTY, TAB_IDX);
 
             TsSummaryBtnPrevYear().Click();
             TsSummaryBtnPrevYear().Click();
@@ -721,7 +721,7 @@ namespace AbookTest
         [Test]
         public void LabelWithEmptyWithPrevMonth_1_Time()
         {
-            ShowFormMain(CSV_EMPTY, TAB_IDX);
+            ShowFormMain(DB_FILE_EMPTY, TAB_IDX);
 
             TsSummaryBtnPrevMonth().Click();
 
@@ -737,7 +737,7 @@ namespace AbookTest
         [Test]
         public void LabelWithEmptyWithPrevMonth_2_Time()
         {
-            ShowFormMain(CSV_EMPTY, TAB_IDX);
+            ShowFormMain(DB_FILE_EMPTY, TAB_IDX);
 
             TsSummaryBtnPrevMonth().Click();
             TsSummaryBtnPrevMonth().Click();
@@ -754,7 +754,7 @@ namespace AbookTest
         [Test]
         public void LabelWithEmptyWithPrevMonth_3_Time()
         {
-            ShowFormMain(CSV_EMPTY, TAB_IDX);
+            ShowFormMain(DB_FILE_EMPTY, TAB_IDX);
 
             TsSummaryBtnPrevMonth().Click();
             TsSummaryBtnPrevMonth().Click();
@@ -772,7 +772,7 @@ namespace AbookTest
         [Test]
         public void LabelWithEmptyWithNextMonth_1_Time()
         {
-            ShowFormMain(CSV_EMPTY, TAB_IDX);
+            ShowFormMain(DB_FILE_EMPTY, TAB_IDX);
 
             TsSummaryBtnNextMonth().Click();
 
@@ -788,7 +788,7 @@ namespace AbookTest
         [Test]
         public void LabelWithEmptyWithNextMonth_2_Time()
         {
-            ShowFormMain(CSV_EMPTY, TAB_IDX);
+            ShowFormMain(DB_FILE_EMPTY, TAB_IDX);
 
             TsSummaryBtnNextMonth().Click();
             TsSummaryBtnNextMonth().Click();
@@ -805,7 +805,7 @@ namespace AbookTest
         [Test]
         public void LabelWithEmptyWithNextMonth_3_Time()
         {
-            ShowFormMain(CSV_EMPTY, TAB_IDX);
+            ShowFormMain(DB_FILE_EMPTY, TAB_IDX);
 
             TsSummaryBtnNextMonth().Click();
             TsSummaryBtnNextMonth().Click();
@@ -823,7 +823,7 @@ namespace AbookTest
         [Test]
         public void LabelWithEmptyWithNextYear_1_Time()
         {
-            ShowFormMain(CSV_EMPTY, TAB_IDX);
+            ShowFormMain(DB_FILE_EMPTY, TAB_IDX);
 
             TsSummaryBtnNextYear().Click();
 
@@ -839,7 +839,7 @@ namespace AbookTest
         [Test]
         public void LabelWithEmptyWithNextYear_2_Time()
         {
-            ShowFormMain(CSV_EMPTY, TAB_IDX);
+            ShowFormMain(DB_FILE_EMPTY, TAB_IDX);
 
             TsSummaryBtnNextYear().Click();
             TsSummaryBtnNextYear().Click();
@@ -856,7 +856,7 @@ namespace AbookTest
         [Test]
         public void LabelWithEmptyWithNextYear_3_Time()
         {
-            ShowFormMain(CSV_EMPTY, TAB_IDX);
+            ShowFormMain(DB_FILE_EMPTY, TAB_IDX);
 
             TsSummaryBtnNextYear().Click();
             TsSummaryBtnNextYear().Click();
@@ -869,7 +869,7 @@ namespace AbookTest
 
         /// <summary>
         /// マウスオン・オフのテスト
-        /// 種別明細対象のラベルコントロール(Label)
+        /// 対象のラベルコントロール(Label)
         /// </summary>
         [TestCase("LblFood")]
         [TestCase("LblOtfd")]
@@ -885,7 +885,7 @@ namespace AbookTest
         [TestCase("LblOthr")]
         public void MouseOnOffWithTargetAbLabelLabel(string lblName)
         {
-            ShowFormMain(CSV_EXIST, TAB_IDX);
+            ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             var ctLabel = CtAbLabelLabel(lblName);
             Assert.IsFalse(ctLabel.Font.Underline);
@@ -900,7 +900,7 @@ namespace AbookTest
 
         /// <summary>
         /// マウスオン・オフのテスト
-        /// 種別明細対象のラベルコントロール(Value)
+        /// 対象のラベルコントロール(Value)
         /// </summary>
         [TestCase("LblFood")]
         [TestCase("LblOtfd")]
@@ -916,7 +916,7 @@ namespace AbookTest
         [TestCase("LblOthr")]
         public void MouseOnOffWithTargetAbLabelValue(string lblName)
         {
-            ShowFormMain(CSV_EXIST, TAB_IDX);
+            ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             var ctValue = CtAbLabelValue(lblName);
             Assert.IsFalse(ctValue.Font.Underline);
@@ -931,13 +931,13 @@ namespace AbookTest
 
         /// <summary>
         /// マウスオン・オフのテスト
-        /// 種別明細対象外のラベルコントロール(Label)
+        /// 対象外のラベルコントロール(Label)
         /// </summary>
         [TestCase("LblTtal")]
         [TestCase("LblBlnc")]
         public void MouseOnOffWithNotTargetAbLabelLabel(string lblName)
         {
-            ShowFormMain(CSV_EXIST, TAB_IDX);
+            ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             var ctLabel = CtAbLabelLabel(lblName);
             Assert.IsFalse(ctLabel.Font.Underline);
@@ -952,13 +952,13 @@ namespace AbookTest
 
         /// <summary>
         /// マウスオン・オフのテスト
-        /// 種別明細対象外のラベルコントロール(Value)
+        /// 対象外のラベルコントロール(Value)
         /// </summary>
         [TestCase("LblTtal")]
         [TestCase("LblBlnc")]
         public void MouseOnOffWithNotTargetAbLabelValue(string lblName)
         {
-            ShowFormMain(CSV_EXIST, TAB_IDX);
+            ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             var ctValue = CtAbLabelValue(lblName);
             Assert.IsFalse(ctValue.Font.Underline);
@@ -973,7 +973,7 @@ namespace AbookTest
 
         /// <summary>
         /// 種別名クリックのテスト
-        /// 種別明細対象のラベルコントロール(Label)
+        /// 対象のラベルコントロール(Label)
         /// </summary>
         [TestCase("LblFood", TYPE.FOOD)]
         [TestCase("LblOtfd", TYPE.OTFD)]
@@ -989,7 +989,7 @@ namespace AbookTest
         [TestCase("LblOthr", TYPE.OTHR)]
         public void ClickWithTargetAbLabelLabel(string lblName, string type)
         {
-            // 種別明細サブフォームの表示テスト
+            // 種別サブフォームの表示テスト
             ModalFormHandler = (name, hWnd, form) =>
             {
                 // フォーム名テスト
@@ -1002,14 +1002,14 @@ namespace AbookTest
                 form.Close();
             };
 
-            ShowFormMain(CSV_EXIST, TAB_IDX);
+            ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             TsAbLabelLabel(lblName).Click();
         }
 
         /// <summary>
         /// 種別名クリックのテスト
-        /// 種別明細対象のラベルコントロール(Value)
+        /// 対象のラベルコントロール(Value)
         /// </summary>
         [TestCase("LblFood", TYPE.FOOD)]
         [TestCase("LblOtfd", TYPE.OTFD)]
@@ -1025,7 +1025,7 @@ namespace AbookTest
         [TestCase("LblOthr", TYPE.OTHR)]
         public void ClickWithTargetAbLabelValue(string lblName, string type)
         {
-            // 種別明細サブフォームの表示テスト
+            // 種別サブフォームの表示テスト
             ModalFormHandler = (name, hWnd, form) =>
             {
                 // フォーム名テスト
@@ -1038,20 +1038,20 @@ namespace AbookTest
                 form.Close();
             };
 
-            ShowFormMain(CSV_EXIST, TAB_IDX);
+            ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             TsAbLabelValue(lblName).Click();
         }
 
         /// <summary>
         /// 種別名クリックのテスト
-        /// 種別明細対象外のラベルコントロール(Label)
+        /// 対象外のラベルコントロール(Label)
         /// </summary>
         [TestCase("LblTtal", TYPE.TTAL)]
         [TestCase("LblBlnc", TYPE.BLNC)]
         public void ClickWithNotTargetAbLabelLabel(string lblName, string type)
         {
-            ShowFormMain(CSV_EXIST, TAB_IDX);
+            ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             // クリックしても何も起きない
             TsAbLabelLabel(lblName).Click();
@@ -1059,13 +1059,13 @@ namespace AbookTest
 
         /// <summary>
         /// 種別名クリックのテスト
-        /// 種別明細対象外のラベルコントロール(Value)
+        /// 対象外のラベルコントロール(Value)
         /// </summary>
         [TestCase("LblTtal", TYPE.TTAL)]
         [TestCase("LblBlnc", TYPE.BLNC)]
         public void ClickWithNotTargetAbLabelValue(string lblName, string type)
         {
-            ShowFormMain(CSV_EXIST, TAB_IDX);
+            ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             // クリックしても何も起きない
             TsAbLabelValue(lblName).Click();

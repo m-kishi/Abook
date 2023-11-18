@@ -18,7 +18,7 @@ namespace AbookTest
     {
         /// <summary>引数:日付</summary>
         private DateTime argDate;
-        /// <summary>引数:集計値リスト</summary>
+        /// <summary>引数:月次情報リスト</summary>
         private List<AbSummary> argSummaries;
         /// <summary>対象:支出情報管理</summary>
         private AbExpenseManager abExpenseManager;
@@ -55,7 +55,7 @@ namespace AbookTest
 
         /// <summary>
         /// コンストラクタ
-        /// 引数:集計値リストがNULL
+        /// 引数:月次情報リストがNULL
         /// </summary>
         [Test]
         public void AbExpenseManagerWithNullSummaries()
@@ -79,7 +79,7 @@ namespace AbookTest
 
         /// <summary>
         /// タイトル
-        /// 集計値リストが空リストのテスト
+        /// 月次情報リストが空リストのテスト
         /// </summary>
         [Test]
         public void TitleWithEmptySummaries()
@@ -232,7 +232,7 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// 集計値取得
+        /// 金額取得
         /// </summary>
         [Test]
         public void GetCostWithCurrent()
@@ -241,7 +241,7 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// 集計値取得
+        /// 金額取得
         /// 引数:種別がNULL
         /// </summary>
         [Test]
@@ -251,7 +251,7 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// 集計値取得
+        /// 金額取得
         /// 引数:種別が空文字列
         /// </summary>
         [Test]
@@ -261,8 +261,8 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// 集計値取得
-        /// 集計値リストが空リスト
+        /// 金額取得
+        /// 月次情報リストが空リスト
         /// </summary>
         [Test]
         public void GetCostWithEmptySummaries()
@@ -274,7 +274,7 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// 前年集計
+        /// 前年へ切り替え
         /// 1年前のテスト
         /// </summary>
         [Test]
@@ -285,7 +285,7 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// 前年集計
+        /// 前年へ切り替え
         /// 2年前のテスト
         /// </summary>
         [Test]
@@ -297,7 +297,7 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// 前年集計
+        /// 前年へ切り替え
         /// 3年前のテスト
         /// </summary>
         [Test]
@@ -310,7 +310,7 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// 前月集計
+        /// 前月へ切り替え
         /// 1ヶ月前のテスト
         /// </summary>
         [Test]
@@ -321,7 +321,7 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// 前月集計
+        /// 前月へ切り替え
         /// 2ヶ月前のテスト
         /// </summary>
         [Test]
@@ -333,7 +333,7 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// 前月集計
+        /// 前月へ切り替え
         /// 3ヶ月前のテスト
         /// </summary>
         [Test]
@@ -346,7 +346,7 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// 翌月集計
+        /// 翌月へ切り替え
         /// 1ヵ月後のテスト
         /// </summary>
         [Test]
@@ -357,7 +357,7 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// 翌月集計
+        /// 翌月へ切り替え
         /// 2ヵ月後のテスト
         /// </summary>
         [Test]
@@ -369,7 +369,7 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// 翌月集計
+        /// 翌月へ切り替え
         /// 3ヵ月後のテスト
         /// </summary>
         [Test]
@@ -382,7 +382,7 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// 翌年集計
+        /// 翌年へ切り替え
         /// 1年後のテスト
         /// </summary>
         [Test]
@@ -393,7 +393,7 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// 翌年集計
+        /// 翌年へ切り替え
         /// 2年後のテスト
         /// </summary>
         [Test]
@@ -405,7 +405,7 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// 翌年集計
+        /// 翌年へ切り替え
         /// 3年後のテスト
         /// </summary>
         [Test]

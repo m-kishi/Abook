@@ -20,7 +20,7 @@ namespace Abook
         /// <summary>
         /// 月次タブ初期化
         /// </summary>
-        /// <param name="summaries">集計値リスト</param>
+        /// <param name="summaries">月次情報リスト</param>
         private void InitTabSummary(List<AbSummary> summaries)
         {
             abExpenseManager = new AbExpenseManager(DateTime.Now, summaries);

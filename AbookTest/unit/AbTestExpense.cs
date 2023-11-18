@@ -497,23 +497,23 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// CSV形式
+        /// DBファイル形式
         /// </summary>
         [Test]
-        public void OldToCSV()
+        public void OldToDBFileFormat()
         {
-            var expected = string.Format(FMT.CSV, argDate, argName, argType, argCost, "");
-            Assert.AreEqual(expected, abExpenseOld.ToCSV());
+            var expected = string.Format(FMT.EXPENSE, argDate, argName, argType, argCost, "");
+            Assert.AreEqual(expected, abExpenseOld.ToDBFileFormat());
         }
 
         /// <summary>
-        /// CSV形式
+        /// DBファイル形式
         /// </summary>
         [Test]
-        public void CurToCSV()
+        public void CurToDBFileFormat()
         {
-            var expected = string.Format(FMT.CSV, argDate, argName, argType, argCost, argNote);
-            Assert.AreEqual(expected, abExpenseCur.ToCSV());
+            var expected = string.Format(FMT.EXPENSE, argDate, argName, argType, argCost, argNote);
+            Assert.AreEqual(expected, abExpenseCur.ToDBFileFormat());
         }
     }
 }

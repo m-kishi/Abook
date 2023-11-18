@@ -11,16 +11,16 @@ namespace AbookTest
     using FMT = Abook.AbConstants.FMT;
 
     /// <summary>
-    /// グラフデータ管理テスト
+    /// 推移情報管理テスト
     /// </summary>
     [TestFixture]
     public class AbTestGraphicManager
     {
         /// <summary>引数:日付</summary>
         private DateTime argDate;
-        /// <summary>引数:集計値リスト</summary>
+        /// <summary>引数:月次情報リスト</summary>
         private List<AbSummary> argSummaries;
-        /// <summary>対象:グラフデータ管理</summary>
+        /// <summary>対象:推移情報管理</summary>
         private AbGraphicManager abGraphicManager;
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace AbookTest
 
         /// <summary>
         /// コンストラクタ
-        /// 引数:集計値リストがNULL
+        /// 引数:月次情報リストがNULL
         /// </summary>
         [Test]
         public void AbGraphManagerWithNullSummaries()
@@ -75,7 +75,7 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// 前年グラフ
+        /// 前年へ切り替え
         /// </summary>
         /// <param name="prev">月指定</param>
         /// <param name="expected">期待値</param>
@@ -97,7 +97,7 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// 前月グラフ
+        /// 前月へ切り替え
         /// </summary>
         /// <param name="prev">月指定</param>
         /// <param name="expected">期待値</param>
@@ -119,7 +119,7 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// 翌月グラフ
+        /// 翌月へ切り替え
         /// </summary>
         /// <param name="prev">月指定</param>
         /// <param name="expected">期待値</param>
@@ -141,7 +141,7 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// 翌年グラフ
+        /// 翌年へ切り替え
         /// </summary>
         /// <param name="prev">月指定</param>
         /// <param name="expected">期待値</param>

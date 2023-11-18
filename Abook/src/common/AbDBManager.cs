@@ -10,9 +10,9 @@ namespace Abook
     using System.Windows.Forms;
     using Microsoft.VisualBasic.FileIO;
     using EX  = Abook.AbException.EX;
+    using DB  = Abook.AbConstants.DB;
     using CHK = Abook.AbUtilities.CHK;
     using COL = Abook.AbConstants.COL;
-    using CSV = Abook.AbConstants.CSV;
     using UTL = Abook.AbUtilities;
 
     /// <summary>
@@ -21,33 +21,33 @@ namespace Abook
     public static class AbDBManager
     {
         /// <summary>
-        /// CSVファイル読み込み
+        /// DBファイル読み込み
         /// </summary>
-        /// <param name="file">CSVファイル名</param>
+        /// <param name="dbFile">DBファイル</param>
         /// <returns>支出情報リスト</returns>
-        public static List<AbExpense> Load(string file)
+        public static List<AbExpense> Load(string dbFile)
         {
-            CHK.CsvNull(file);
+            CHK.DBFileNull(dbFile);
 
-            if (!File.Exists(file))
+            if (!File.Exists(dbFile))
             {
                 try
                 {
-                    File.Create(file).Close();
+                    File.Create(dbFile).Close();
                 }
                 catch
                 {
-                    AbException.Throw(EX.CSV_CREATE);
+                    AbException.Throw(EX.DB_FILE_CREATE);
                 }
             }
 
             var expenses = new List<AbExpense>();
-            using (var tp = new TextFieldParser(file, CSV.ENCODING))
+            using (var tp = new TextFieldParser(dbFile, DB.ENCODING))
             {
                 var line = 0;
                 try
                 {
-                    tp.SetDelimiters(CSV.DELIMITER);
+                    tp.SetDelimiters(DB.DELIMITER);
                     tp.TextFieldType = FieldType.Delimited;
 
                     while (!tp.EndOfData)
@@ -55,10 +55,10 @@ namespace Abook
                         line++;
 
                         var fields = tp.ReadFields();
-                        if (fields.Length < CSV.OLD_FIELD) AbException.Throw(EX.CSV_FIELD_LESS);
-                        if (fields.Length > CSV.CUR_FIELD) AbException.Throw(EX.CSV_FIELD_MORE);
+                        if (fields.Length < DB.OLD_FIELD) AbException.Throw(EX.DB_FILE_FIELD_LESS);
+                        if (fields.Length > DB.CUR_FIELD) AbException.Throw(EX.DB_FILE_FIELD_MORE);
                         expenses.Add(
-                            fields.Length == CSV.OLD_FIELD ?
+                            fields.Length == DB.OLD_FIELD ?
                             new AbExpense(fields[0], fields[1], fields[2], fields[3]) :
                             new AbExpense(fields[0], fields[1], fields[2], fields[3], fields[4])
                         );
@@ -66,7 +66,7 @@ namespace Abook
                 }
                 catch (AbException ex)
                 {
-                    var message = string.Format(EX.CSV_LOAD, line, ex.Message);
+                    var message = string.Format(EX.DB_FILE_LOAD, line, ex.Message);
                     AbException.Throw(message);
                 }
             }
@@ -107,7 +107,7 @@ namespace Abook
                 }
                 catch (AbException ex)
                 {
-                    var message = string.Format(EX.CSV_LOAD, errLine, ex.Message);
+                    var message = string.Format(EX.DB_FILE_LOAD, errLine, ex.Message);
                     AbException.Throw(message);
                 }
             }
@@ -115,31 +115,31 @@ namespace Abook
         }
 
         /// <summary>
-        /// CSVファイル書き出し
+        /// DBファイル書き出し
         /// </summary>
-        /// <param name="file">CSVファイル名</param>
+        /// <param name="dbFile">DBファイル</param>
         /// <param name="expenses">支出情報リスト</param>
-        public static void Store(string file, List<AbExpense> expenses)
+        public static void Store(string dbFile, List<AbExpense> expenses)
         {
-            CHK.CsvNull(file);
+            CHK.DBFileNull(dbFile);
             CHK.ExpCount(expenses);
 
-            using (var sw = new StreamWriter(file, false, CSV.ENCODING))
+            using (var sw = new StreamWriter(dbFile, false, DB.ENCODING))
             {
                 var line = 0;
                 try
                 {
-                    sw.NewLine = CSV.LF;
+                    sw.NewLine = DB.LF;
                     foreach (var exp in expenses)
                     {
                         line++;
-                        sw.WriteLine(exp.ToCSV());
+                        sw.WriteLine(exp.ToDBFileFormat());
                     }
                     sw.Close();
                 }
                 catch (Exception ex)
                 {
-                    var message = string.Format(EX.CSV_STORE, line, ex.Message);
+                    var message = string.Format(EX.DB_FILE_STORE, line, ex.Message);
                     AbException.Throw(message);
                 }
             }

@@ -50,11 +50,11 @@ namespace Abook
             }
         }
 
-        /// <summary>CSV</summary>
-        public static class CSV
+        /// <summary>DBファイル</summary>
+        public static class DB
         {
-            /// <summary>CSVファイル</summary>
-            public const string FILE = "Abook.db";
+            /// <summary>DBファイル</summary>
+            public const string NAME = "Abook.db";
             /// <summary>区切り文字</summary>
             public const string DELIMITER = ",";
             /// <summary>フィールド数(旧)</summary>
@@ -77,8 +77,8 @@ namespace Abook
         /// <summary>フォーマット</summary>
         public static class FMT
         {
-            /// <summary>CSV("date","name","type","cost","note")</summary>
-            public const string CSV = "\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\"";
+            /// <summary>支出情報("date","name","type","cost","note")</summary>
+            public const string EXPENSE = "\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\"";
             /// <summary>日付"yyyy-MM-dd"</summary>
             public const string DATE = "yyyy-MM-dd";
             /// <summary>月"MM"</summary>

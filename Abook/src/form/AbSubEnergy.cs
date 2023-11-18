@@ -32,7 +32,7 @@ namespace Abook
         }
 
         /// <summary>
-        /// 光熱費クラス
+        /// 光熱費情報
         /// </summary>
         private class Energy
         {

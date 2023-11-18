@@ -7,8 +7,8 @@ namespace Abook
     using System.Collections.Generic;
     using System.Linq;
     using System.Windows.Forms;
+    using DB  = Abook.AbConstants.DB;
     using COL = Abook.AbConstants.COL;
-    using CSV = Abook.AbConstants.CSV;
     using DGV = Abook.AbConstants.DGV;
     using FMT = Abook.AbConstants.FMT;
     using UTL = Abook.AbUtilities;
@@ -194,7 +194,7 @@ namespace Abook
         }
 
         /// <summary>
-        /// CSVファイルへ書き出し
+        /// DBファイルへ書き出し
         /// </summary>
         private void BtnEntry_Click(object sender, EventArgs e)
         {
@@ -209,7 +209,7 @@ namespace Abook
             {
                 abExpenses = AbDBManager.Load(DgvExpense, out errLine);
 
-                AbDBManager.Store(CSV_FILE, abExpenses);
+                AbDBManager.Store(DB_FILE, abExpenses);
 
                 InitFormMain(abExpenses);
 

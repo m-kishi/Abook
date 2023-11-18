@@ -14,7 +14,7 @@ namespace Abook
     using MSG = Abook.AbUtilities.MSG;
 
     /// <summary>
-    /// 種別明細サブフォーム
+    /// 種別サブフォーム
     /// </summary>
     public partial class AbSubType : Form
     {
@@ -22,7 +22,7 @@ namespace Abook
         private string type;
         /// <summary>対象年月</summary>
         private DateTime dtCurrent;
-        /// <summary>フォーム</summary>
+        /// <summary>支出情報リスト</summary>
         private List<AbExpense> abExpenses;
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Abook
         }
 
         /// <summary>
-        /// 種別明細表示
+        /// 支出情報の表示
         /// </summary>
         /// <param name="expenses">支出情報リスト</param>
         private void SetDgvExpense(List<AbExpense> expenses)

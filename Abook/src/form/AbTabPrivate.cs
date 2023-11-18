@@ -10,7 +10,7 @@ namespace Abook
     using COL = Abook.AbConstants.COL.PRIVATE;
 
     /// <summary>
-    /// 秘密収支タブ
+    /// 秘密タブ
     /// </summary>
     public partial class AbFormMain
     {
@@ -18,7 +18,7 @@ namespace Abook
         private AbPrivateManager abPrivateManager;
 
         /// <summary>
-        /// 秘密収支タブ初期化
+        /// 秘密タブ初期化
         /// </summary>
         /// <param name="expenses">支出情報リスト</param>
         private void InitTabPrivate(List<AbExpense> expenses)
@@ -28,7 +28,7 @@ namespace Abook
         }
 
         /// <summary>
-        /// 秘密収支タブ表示
+        /// 秘密タブ表示
         /// </summary>
         private void SetTabPrivate()
         {

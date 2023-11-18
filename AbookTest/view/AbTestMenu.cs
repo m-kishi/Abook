@@ -9,9 +9,9 @@ namespace AbookTest
     using System.Windows.Forms;
     using NUnit.Framework;
     using NUnit.Extensions.Forms;
-    using TT  = AbTestTool;
-    using EX  = Abook.AbException.EX;
-    using CSV = Abook.AbConstants.CSV;
+    using TT = AbTestTool;
+    using EX = Abook.AbException.EX;
+    using DB = Abook.AbConstants.DB;
 
     /// <summary>
     /// メニューテスト
@@ -19,8 +19,8 @@ namespace AbookTest
     [TestFixture]
     public class AbTestMenu : AbTestFormBase
     {
-        /// <summary>CSVファイル</summary>
-        private const string CSV_FILE = "AbTestMenu.db";
+        /// <summary>DBファイル</summary>
+        private const string DB_FILE = "AbTestMenu.db";
 
         /// <summary>
         /// TestFixtureSetUp
@@ -28,10 +28,10 @@ namespace AbookTest
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            using (var sw = new StreamWriter(CSV_FILE, false, CSV.ENCODING))
+            using (var sw = new StreamWriter(DB_FILE, false, DB.ENCODING))
             {
-                sw.NewLine = CSV.LF;
-                sw.WriteLine(TT.ToCSV("2014-11-01", "おにぎり", "食費", "108"));
+                sw.NewLine = DB.LF;
+                sw.WriteLine(TT.ToDBFileFormat("2014-11-01", "おにぎり", "食費", "108"));
                 sw.Close();
             }
         }
@@ -42,7 +42,7 @@ namespace AbookTest
         [TestFixtureTearDown]
         public void TestFixtureTearDown()
         {
-            if (File.Exists(CSV_FILE)) File.Delete(CSV_FILE);
+            if (File.Exists(DB_FILE)) File.Delete(DB_FILE);
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace AbookTest
         [Test]
         public void MenuExitClick()
         {
-            ShowFormMain(CSV_FILE);
+            ShowFormMain(DB_FILE);
 
             TsMenuExit().Click();
 
@@ -77,7 +77,7 @@ namespace AbookTest
                 (new ButtonTester("BtnOK", form)).Click();
             };
 
-            ShowFormMain(CSV_FILE);
+            ShowFormMain(DB_FILE);
 
             TsMenuVersion().Click();
         }
@@ -98,7 +98,7 @@ namespace AbookTest
                 form.Close();
             };
 
-            ShowFormMain(CSV_FILE);
+            ShowFormMain(DB_FILE);
 
             TsMenuEnergy().Click();
         }

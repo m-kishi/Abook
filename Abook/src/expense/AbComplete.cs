@@ -68,7 +68,7 @@ namespace Abook
         /// <param name="name">名称</param>
         /// <param name="type">種別</param>
         /// <returns>金額</returns>
-        /// <remarks>直近3件の金額を取得する。</remarks>
+        /// <remarks>直近3件の金額を取得する</remarks>
         public string GetCost(string name, string type)
         {
             if (string.IsNullOrEmpty(name)) return string.Empty;

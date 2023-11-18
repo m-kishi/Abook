@@ -46,7 +46,7 @@ namespace Abook
         }
 
         /// <summary>
-        /// 光熱費情報表示
+        /// 光熱費サブフォーム表示
         /// </summary>
         private void MenuEnergy_Click(object sender, EventArgs e)
         {

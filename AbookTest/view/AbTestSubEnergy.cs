@@ -12,8 +12,8 @@ namespace AbookTest
     using NUnit.Extensions.Forms;
     using TT   = AbTestTool;
     using EX   = Abook.AbException.EX;
+    using DB   = Abook.AbConstants.DB;
     using COL  = Abook.AbConstants.COL;
-    using CSV  = Abook.AbConstants.CSV;
     using NAME = Abook.AbConstants.NAME;
     using TYPE = Abook.AbConstants.TYPE;
 
@@ -23,19 +23,19 @@ namespace AbookTest
     [TestFixture]
     public class AbTestSubEnergy : NUnitFormTest
     {
-        /// <summary>CSVファイル</summary>
-        private const string CSV_EMPTY   = "AbTestSubEnergyEmpty.db";
-        /// <summary>CSVファイル</summary>
-        private const string CSV_ONLY_EL = "AbTestSubEnergyOnlyEl.db";
-        /// <summary>CSVファイル</summary>
-        private const string CSV_ONLY_GS = "AbTestSubEnergyOnlyGs.db";
-        /// <summary>CSVファイル</summary>
-        private const string CSV_ONLY_WT = "AbTestSubEnergyOnlyWt.db";
-        /// <summary>CSVファイル</summary>
-        private const string CSV_ENERGIES = "AbTestSubEnergies.db";
-        /// <summary>CSVファイル</summary>
-        private const string CSV_ONLY_ZERO = "AbTestSubEnergyOnly0.db";
-        /// <summary>対象:種別明細サブ</summary>
+        /// <summary>DBファイル</summary>
+        private const string DB_FILE_EMPTY     = "AbTestSubEnergyEmpty.db";
+        /// <summary>DBファイル</summary>
+        private const string DB_FILE_ONLY_EL   = "AbTestSubEnergyOnlyEl.db";
+        /// <summary>DBファイル</summary>
+        private const string DB_FILE_ONLY_GS   = "AbTestSubEnergyOnlyGs.db";
+        /// <summary>DBファイル</summary>
+        private const string DB_FILE_ONLY_WT   = "AbTestSubEnergyOnlyWt.db";
+        /// <summary>DBファイル</summary>
+        private const string DB_FILE_ENERGIES  = "AbTestSubEnergies.db";
+        /// <summary>DBファイル</summary>
+        private const string DB_FILE_ONLY_ZERO = "AbTestSubEnergyOnly0.db";
+        /// <summary>対象:光熱費サブフォーム</summary>
         protected AbSubEnergy form;
 
         /// <summary>月表示用クラス</summary>
@@ -97,177 +97,177 @@ namespace AbookTest
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            using (StreamWriter sw = new StreamWriter(CSV_ONLY_EL, false, CSV.ENCODING))
+            using (StreamWriter sw = new StreamWriter(DB_FILE_ONLY_EL, false, DB.ENCODING))
             {
-                sw.NewLine = CSV.LF;
-                sw.WriteLine(TT.ToCSV("2015-04-07", NAME.EL, TYPE.ENGY, "1600"));
-                sw.WriteLine(TT.ToCSV("2015-04-08", NAME.EL, TYPE.ENGY, "1700"));
-                sw.WriteLine(TT.ToCSV("2015-05-09", NAME.EL, TYPE.ENGY, "1800"));
-                sw.WriteLine(TT.ToCSV("2015-05-10", NAME.EL, TYPE.ENGY, "1900"));
-                sw.WriteLine(TT.ToCSV("2015-07-11", NAME.EL, TYPE.ENGY, "2000"));
-                sw.WriteLine(TT.ToCSV("2015-07-12", NAME.EL, TYPE.ENGY, "2100"));
-                sw.WriteLine(TT.ToCSV("2015-07-13", NAME.EL, TYPE.ENGY, "2200"));
-                sw.WriteLine(TT.ToCSV("2015-08-14", NAME.EL, TYPE.ENGY, "2300"));
-                sw.WriteLine(TT.ToCSV("2015-08-15", NAME.EL, TYPE.ENGY, "2400"));
-                sw.WriteLine(TT.ToCSV("2015-08-16", NAME.EL, TYPE.ENGY, "2500"));
-                sw.WriteLine(TT.ToCSV("2015-08-17", NAME.EL, TYPE.ENGY, "2600"));
-                sw.WriteLine(TT.ToCSV("2015-08-18", NAME.EL, TYPE.ENGY, "2700"));
-                sw.WriteLine(TT.ToCSV("2015-09-19", NAME.EL, TYPE.ENGY, "2800"));
-                sw.WriteLine(TT.ToCSV("2015-10-20", NAME.EL, TYPE.ENGY, "2900"));
-                sw.WriteLine(TT.ToCSV("2015-11-21", NAME.EL, TYPE.ENGY, "3000"));
-                sw.WriteLine(TT.ToCSV("2016-01-01", NAME.EL, TYPE.ENGY, "1000"));
-                sw.WriteLine(TT.ToCSV("2016-01-02", NAME.EL, TYPE.ENGY, "1100"));
-                sw.WriteLine(TT.ToCSV("2016-02-03", NAME.EL, TYPE.ENGY, "1200"));
-                sw.WriteLine(TT.ToCSV("2016-02-04", NAME.EL, TYPE.ENGY, "1300"));
-                sw.WriteLine(TT.ToCSV("2016-03-05", NAME.EL, TYPE.ENGY, "1400"));
-                sw.WriteLine(TT.ToCSV("2016-03-06", NAME.EL, TYPE.ENGY, "1500"));
+                sw.NewLine = DB.LF;
+                sw.WriteLine(TT.ToDBFileFormat("2015-04-07", NAME.EL, TYPE.ENGY, "1600"));
+                sw.WriteLine(TT.ToDBFileFormat("2015-04-08", NAME.EL, TYPE.ENGY, "1700"));
+                sw.WriteLine(TT.ToDBFileFormat("2015-05-09", NAME.EL, TYPE.ENGY, "1800"));
+                sw.WriteLine(TT.ToDBFileFormat("2015-05-10", NAME.EL, TYPE.ENGY, "1900"));
+                sw.WriteLine(TT.ToDBFileFormat("2015-07-11", NAME.EL, TYPE.ENGY, "2000"));
+                sw.WriteLine(TT.ToDBFileFormat("2015-07-12", NAME.EL, TYPE.ENGY, "2100"));
+                sw.WriteLine(TT.ToDBFileFormat("2015-07-13", NAME.EL, TYPE.ENGY, "2200"));
+                sw.WriteLine(TT.ToDBFileFormat("2015-08-14", NAME.EL, TYPE.ENGY, "2300"));
+                sw.WriteLine(TT.ToDBFileFormat("2015-08-15", NAME.EL, TYPE.ENGY, "2400"));
+                sw.WriteLine(TT.ToDBFileFormat("2015-08-16", NAME.EL, TYPE.ENGY, "2500"));
+                sw.WriteLine(TT.ToDBFileFormat("2015-08-17", NAME.EL, TYPE.ENGY, "2600"));
+                sw.WriteLine(TT.ToDBFileFormat("2015-08-18", NAME.EL, TYPE.ENGY, "2700"));
+                sw.WriteLine(TT.ToDBFileFormat("2015-09-19", NAME.EL, TYPE.ENGY, "2800"));
+                sw.WriteLine(TT.ToDBFileFormat("2015-10-20", NAME.EL, TYPE.ENGY, "2900"));
+                sw.WriteLine(TT.ToDBFileFormat("2015-11-21", NAME.EL, TYPE.ENGY, "3000"));
+                sw.WriteLine(TT.ToDBFileFormat("2016-01-01", NAME.EL, TYPE.ENGY, "1000"));
+                sw.WriteLine(TT.ToDBFileFormat("2016-01-02", NAME.EL, TYPE.ENGY, "1100"));
+                sw.WriteLine(TT.ToDBFileFormat("2016-02-03", NAME.EL, TYPE.ENGY, "1200"));
+                sw.WriteLine(TT.ToDBFileFormat("2016-02-04", NAME.EL, TYPE.ENGY, "1300"));
+                sw.WriteLine(TT.ToDBFileFormat("2016-03-05", NAME.EL, TYPE.ENGY, "1400"));
+                sw.WriteLine(TT.ToDBFileFormat("2016-03-06", NAME.EL, TYPE.ENGY, "1500"));
                 sw.Close();
             }
 
-            using (StreamWriter sw = new StreamWriter(CSV_ONLY_GS, false, CSV.ENCODING))
+            using (StreamWriter sw = new StreamWriter(DB_FILE_ONLY_GS, false, DB.ENCODING))
             {
-                sw.NewLine = CSV.LF;
-                sw.WriteLine(TT.ToCSV("2015-04-04", NAME.GS, TYPE.ENGY, "2600"));
-                sw.WriteLine(TT.ToCSV("2015-05-05", NAME.GS, TYPE.ENGY, "2800"));
-                sw.WriteLine(TT.ToCSV("2015-06-06", NAME.GS, TYPE.ENGY, "3000"));
-                sw.WriteLine(TT.ToCSV("2015-07-07", NAME.GS, TYPE.ENGY, "3200"));
-                sw.WriteLine(TT.ToCSV("2015-08-08", NAME.GS, TYPE.ENGY, "3400"));
-                sw.WriteLine(TT.ToCSV("2015-09-09", NAME.GS, TYPE.ENGY, "3600"));
-                sw.WriteLine(TT.ToCSV("2015-10-10", NAME.GS, TYPE.ENGY, "3800"));
-                sw.WriteLine(TT.ToCSV("2015-11-11", NAME.GS, TYPE.ENGY, "4000"));
-                sw.WriteLine(TT.ToCSV("2015-12-12", NAME.GS, TYPE.ENGY, "4200"));
-                sw.WriteLine(TT.ToCSV("2016-01-13", NAME.GS, TYPE.ENGY, "4400"));
-                sw.WriteLine(TT.ToCSV("2016-02-14", NAME.GS, TYPE.ENGY, "4600"));
-                sw.WriteLine(TT.ToCSV("2016-03-15", NAME.GS, TYPE.ENGY, "4800"));
-                sw.WriteLine(TT.ToCSV("2016-04-16", NAME.GS, TYPE.ENGY, "5000"));
-                sw.WriteLine(TT.ToCSV("2016-05-17", NAME.GS, TYPE.ENGY, "5200"));
-                sw.WriteLine(TT.ToCSV("2016-06-18", NAME.GS, TYPE.ENGY, "5400"));
-                sw.WriteLine(TT.ToCSV("2016-07-19", NAME.GS, TYPE.ENGY, "5600"));
-                sw.WriteLine(TT.ToCSV("2016-08-20", NAME.GS, TYPE.ENGY, "5800"));
-                sw.WriteLine(TT.ToCSV("2016-09-21", NAME.GS, TYPE.ENGY, "6000"));
-                sw.WriteLine(TT.ToCSV("2016-10-22", NAME.GS, TYPE.ENGY, "6200"));
-                sw.WriteLine(TT.ToCSV("2016-11-23", NAME.GS, TYPE.ENGY, "6400"));
-                sw.WriteLine(TT.ToCSV("2016-12-24", NAME.GS, TYPE.ENGY, "6600"));
-                sw.WriteLine(TT.ToCSV("2017-01-01", NAME.GS, TYPE.ENGY, "2000"));
-                sw.WriteLine(TT.ToCSV("2017-02-02", NAME.GS, TYPE.ENGY, "2200"));
-                sw.WriteLine(TT.ToCSV("2017-03-03", NAME.GS, TYPE.ENGY, "2400"));
+                sw.NewLine = DB.LF;
+                sw.WriteLine(TT.ToDBFileFormat("2015-04-04", NAME.GS, TYPE.ENGY, "2600"));
+                sw.WriteLine(TT.ToDBFileFormat("2015-05-05", NAME.GS, TYPE.ENGY, "2800"));
+                sw.WriteLine(TT.ToDBFileFormat("2015-06-06", NAME.GS, TYPE.ENGY, "3000"));
+                sw.WriteLine(TT.ToDBFileFormat("2015-07-07", NAME.GS, TYPE.ENGY, "3200"));
+                sw.WriteLine(TT.ToDBFileFormat("2015-08-08", NAME.GS, TYPE.ENGY, "3400"));
+                sw.WriteLine(TT.ToDBFileFormat("2015-09-09", NAME.GS, TYPE.ENGY, "3600"));
+                sw.WriteLine(TT.ToDBFileFormat("2015-10-10", NAME.GS, TYPE.ENGY, "3800"));
+                sw.WriteLine(TT.ToDBFileFormat("2015-11-11", NAME.GS, TYPE.ENGY, "4000"));
+                sw.WriteLine(TT.ToDBFileFormat("2015-12-12", NAME.GS, TYPE.ENGY, "4200"));
+                sw.WriteLine(TT.ToDBFileFormat("2016-01-13", NAME.GS, TYPE.ENGY, "4400"));
+                sw.WriteLine(TT.ToDBFileFormat("2016-02-14", NAME.GS, TYPE.ENGY, "4600"));
+                sw.WriteLine(TT.ToDBFileFormat("2016-03-15", NAME.GS, TYPE.ENGY, "4800"));
+                sw.WriteLine(TT.ToDBFileFormat("2016-04-16", NAME.GS, TYPE.ENGY, "5000"));
+                sw.WriteLine(TT.ToDBFileFormat("2016-05-17", NAME.GS, TYPE.ENGY, "5200"));
+                sw.WriteLine(TT.ToDBFileFormat("2016-06-18", NAME.GS, TYPE.ENGY, "5400"));
+                sw.WriteLine(TT.ToDBFileFormat("2016-07-19", NAME.GS, TYPE.ENGY, "5600"));
+                sw.WriteLine(TT.ToDBFileFormat("2016-08-20", NAME.GS, TYPE.ENGY, "5800"));
+                sw.WriteLine(TT.ToDBFileFormat("2016-09-21", NAME.GS, TYPE.ENGY, "6000"));
+                sw.WriteLine(TT.ToDBFileFormat("2016-10-22", NAME.GS, TYPE.ENGY, "6200"));
+                sw.WriteLine(TT.ToDBFileFormat("2016-11-23", NAME.GS, TYPE.ENGY, "6400"));
+                sw.WriteLine(TT.ToDBFileFormat("2016-12-24", NAME.GS, TYPE.ENGY, "6600"));
+                sw.WriteLine(TT.ToDBFileFormat("2017-01-01", NAME.GS, TYPE.ENGY, "2000"));
+                sw.WriteLine(TT.ToDBFileFormat("2017-02-02", NAME.GS, TYPE.ENGY, "2200"));
+                sw.WriteLine(TT.ToDBFileFormat("2017-03-03", NAME.GS, TYPE.ENGY, "2400"));
                 sw.Close();
             }
 
-            using (StreamWriter sw = new StreamWriter(CSV_ONLY_WT, false, CSV.ENCODING))
+            using (StreamWriter sw = new StreamWriter(DB_FILE_ONLY_WT, false, DB.ENCODING))
             {
-                sw.NewLine = CSV.LF;
-                sw.WriteLine(TT.ToCSV("2015-04-04", NAME.WT, TYPE.ENGY, "1300"));
-                sw.WriteLine(TT.ToCSV("2015-05-05", NAME.WT, TYPE.ENGY, "1400"));
-                sw.WriteLine(TT.ToCSV("2015-06-06", NAME.WT, TYPE.ENGY, "1500"));
-                sw.WriteLine(TT.ToCSV("2015-07-07", NAME.WT, TYPE.ENGY, "1600"));
-                sw.WriteLine(TT.ToCSV("2015-08-08", NAME.WT, TYPE.ENGY, "1700"));
-                sw.WriteLine(TT.ToCSV("2015-09-09", NAME.WT, TYPE.ENGY, "1800"));
-                sw.WriteLine(TT.ToCSV("2015-10-10", NAME.WT, TYPE.ENGY, "1900"));
-                sw.WriteLine(TT.ToCSV("2015-11-11", NAME.WT, TYPE.ENGY, "2000"));
-                sw.WriteLine(TT.ToCSV("2015-12-12", NAME.WT, TYPE.ENGY, "2100"));
-                sw.WriteLine(TT.ToCSV("2016-01-01", NAME.WT, TYPE.ENGY, "1000"));
-                sw.WriteLine(TT.ToCSV("2016-02-02", NAME.WT, TYPE.ENGY, "1100"));
-                sw.WriteLine(TT.ToCSV("2016-03-03", NAME.WT, TYPE.ENGY, "1200"));
-                sw.WriteLine(TT.ToCSV("2017-04-16", NAME.WT, TYPE.ENGY, "2500"));
-                sw.WriteLine(TT.ToCSV("2017-05-17", NAME.WT, TYPE.ENGY, "2600"));
-                sw.WriteLine(TT.ToCSV("2017-06-18", NAME.WT, TYPE.ENGY, "2700"));
-                sw.WriteLine(TT.ToCSV("2017-07-19", NAME.WT, TYPE.ENGY, "2800"));
-                sw.WriteLine(TT.ToCSV("2017-08-20", NAME.WT, TYPE.ENGY, "2900"));
-                sw.WriteLine(TT.ToCSV("2017-09-21", NAME.WT, TYPE.ENGY, "3000"));
-                sw.WriteLine(TT.ToCSV("2017-10-22", NAME.WT, TYPE.ENGY, "3100"));
-                sw.WriteLine(TT.ToCSV("2017-11-23", NAME.WT, TYPE.ENGY, "3200"));
-                sw.WriteLine(TT.ToCSV("2017-12-24", NAME.WT, TYPE.ENGY, "3300"));
-                sw.WriteLine(TT.ToCSV("2018-01-13", NAME.WT, TYPE.ENGY, "2200"));
-                sw.WriteLine(TT.ToCSV("2018-02-14", NAME.WT, TYPE.ENGY, "2300"));
-                sw.WriteLine(TT.ToCSV("2018-03-15", NAME.WT, TYPE.ENGY, "2400"));
+                sw.NewLine = DB.LF;
+                sw.WriteLine(TT.ToDBFileFormat("2015-04-04", NAME.WT, TYPE.ENGY, "1300"));
+                sw.WriteLine(TT.ToDBFileFormat("2015-05-05", NAME.WT, TYPE.ENGY, "1400"));
+                sw.WriteLine(TT.ToDBFileFormat("2015-06-06", NAME.WT, TYPE.ENGY, "1500"));
+                sw.WriteLine(TT.ToDBFileFormat("2015-07-07", NAME.WT, TYPE.ENGY, "1600"));
+                sw.WriteLine(TT.ToDBFileFormat("2015-08-08", NAME.WT, TYPE.ENGY, "1700"));
+                sw.WriteLine(TT.ToDBFileFormat("2015-09-09", NAME.WT, TYPE.ENGY, "1800"));
+                sw.WriteLine(TT.ToDBFileFormat("2015-10-10", NAME.WT, TYPE.ENGY, "1900"));
+                sw.WriteLine(TT.ToDBFileFormat("2015-11-11", NAME.WT, TYPE.ENGY, "2000"));
+                sw.WriteLine(TT.ToDBFileFormat("2015-12-12", NAME.WT, TYPE.ENGY, "2100"));
+                sw.WriteLine(TT.ToDBFileFormat("2016-01-01", NAME.WT, TYPE.ENGY, "1000"));
+                sw.WriteLine(TT.ToDBFileFormat("2016-02-02", NAME.WT, TYPE.ENGY, "1100"));
+                sw.WriteLine(TT.ToDBFileFormat("2016-03-03", NAME.WT, TYPE.ENGY, "1200"));
+                sw.WriteLine(TT.ToDBFileFormat("2017-04-16", NAME.WT, TYPE.ENGY, "2500"));
+                sw.WriteLine(TT.ToDBFileFormat("2017-05-17", NAME.WT, TYPE.ENGY, "2600"));
+                sw.WriteLine(TT.ToDBFileFormat("2017-06-18", NAME.WT, TYPE.ENGY, "2700"));
+                sw.WriteLine(TT.ToDBFileFormat("2017-07-19", NAME.WT, TYPE.ENGY, "2800"));
+                sw.WriteLine(TT.ToDBFileFormat("2017-08-20", NAME.WT, TYPE.ENGY, "2900"));
+                sw.WriteLine(TT.ToDBFileFormat("2017-09-21", NAME.WT, TYPE.ENGY, "3000"));
+                sw.WriteLine(TT.ToDBFileFormat("2017-10-22", NAME.WT, TYPE.ENGY, "3100"));
+                sw.WriteLine(TT.ToDBFileFormat("2017-11-23", NAME.WT, TYPE.ENGY, "3200"));
+                sw.WriteLine(TT.ToDBFileFormat("2017-12-24", NAME.WT, TYPE.ENGY, "3300"));
+                sw.WriteLine(TT.ToDBFileFormat("2018-01-13", NAME.WT, TYPE.ENGY, "2200"));
+                sw.WriteLine(TT.ToDBFileFormat("2018-02-14", NAME.WT, TYPE.ENGY, "2300"));
+                sw.WriteLine(TT.ToDBFileFormat("2018-03-15", NAME.WT, TYPE.ENGY, "2400"));
                 sw.Close();
             }
 
-            using (StreamWriter sw = new StreamWriter(CSV_ENERGIES, false, CSV.ENCODING))
+            using (StreamWriter sw = new StreamWriter(DB_FILE_ENERGIES, false, DB.ENCODING))
             {
-                sw.NewLine = CSV.LF;
-                sw.WriteLine(TT.ToCSV("2009-04-30", NAME.EL, TYPE.ENGY, "1804")); sw.WriteLine(TT.ToCSV("2009-04-30", NAME.GS, TYPE.ENGY, "5422")); sw.WriteLine(TT.ToCSV("2009-04-30", NAME.WT, TYPE.ENGY, "1848"));
-                sw.WriteLine(TT.ToCSV("2009-05-31", NAME.EL, TYPE.ENGY, "1359")); sw.WriteLine(TT.ToCSV("2009-05-31", NAME.GS, TYPE.ENGY, "4462")); sw.WriteLine(TT.ToCSV("2009-05-31", NAME.WT, TYPE.ENGY, "1848"));
-                sw.WriteLine(TT.ToCSV("2009-06-30", NAME.EL, TYPE.ENGY, "1550")); sw.WriteLine(TT.ToCSV("2009-06-30", NAME.GS, TYPE.ENGY, "4659")); sw.WriteLine(TT.ToCSV("2009-06-30", NAME.WT, TYPE.ENGY, "1896"));
-                sw.WriteLine(TT.ToCSV("2009-07-31", NAME.EL, TYPE.ENGY, "3780")); sw.WriteLine(TT.ToCSV("2009-07-31", NAME.GS, TYPE.ENGY, "4363")); sw.WriteLine(TT.ToCSV("2009-07-31", NAME.WT, TYPE.ENGY, "1896"));
-                sw.WriteLine(TT.ToCSV("2009-08-31", NAME.EL, TYPE.ENGY, "3853")); sw.WriteLine(TT.ToCSV("2009-08-31", NAME.GS, TYPE.ENGY, "3969")); sw.WriteLine(TT.ToCSV("2009-08-31", NAME.WT, TYPE.ENGY, "1896"));
-                sw.WriteLine(TT.ToCSV("2009-09-30", NAME.EL, TYPE.ENGY, "3143")); sw.WriteLine(TT.ToCSV("2009-09-30", NAME.GS, TYPE.ENGY, "3771")); sw.WriteLine(TT.ToCSV("2009-09-30", NAME.WT, TYPE.ENGY, "1896"));
-                sw.WriteLine(TT.ToCSV("2009-10-31", NAME.EL, TYPE.ENGY, "1416")); sw.WriteLine(TT.ToCSV("2009-10-31", NAME.GS, TYPE.ENGY, "3820")); sw.WriteLine(TT.ToCSV("2009-10-31", NAME.WT, TYPE.ENGY, "1848"));
-                sw.WriteLine(TT.ToCSV("2009-11-30", NAME.EL, TYPE.ENGY, "1250")); sw.WriteLine(TT.ToCSV("2009-11-30", NAME.GS, TYPE.ENGY, "4857")); sw.WriteLine(TT.ToCSV("2009-11-30", NAME.WT, TYPE.ENGY, "1848"));
-                sw.WriteLine(TT.ToCSV("2009-12-31", NAME.EL, TYPE.ENGY,  "501")); sw.WriteLine(TT.ToCSV("2009-12-31", NAME.GS, TYPE.ENGY, "1995")); sw.WriteLine(TT.ToCSV("2009-12-31", NAME.WT, TYPE.ENGY, "1462"));
-                sw.WriteLine(TT.ToCSV("2010-01-31", NAME.EL, TYPE.ENGY,  "708")); sw.WriteLine(TT.ToCSV("2010-01-31", NAME.GS, TYPE.ENGY, "3031")); sw.WriteLine(TT.ToCSV("2010-01-31", NAME.WT, TYPE.ENGY, "1462"));
-                sw.WriteLine(TT.ToCSV("2010-02-28", NAME.EL, TYPE.ENGY,  "690")); sw.WriteLine(TT.ToCSV("2010-02-28", NAME.GS, TYPE.ENGY, "3574")); sw.WriteLine(TT.ToCSV("2010-02-28", NAME.WT, TYPE.ENGY, "1558"));
-                sw.WriteLine(TT.ToCSV("2010-03-31", NAME.EL, TYPE.ENGY, "1673")); sw.WriteLine(TT.ToCSV("2010-03-31", NAME.GS, TYPE.ENGY, "6574")); sw.WriteLine(TT.ToCSV("2010-03-31", NAME.WT, TYPE.ENGY, "1558"));
-                sw.WriteLine(TT.ToCSV("2010-04-30", NAME.EL, TYPE.ENGY, "1926")); sw.WriteLine(TT.ToCSV("2010-04-30", NAME.GS, TYPE.ENGY, "6213")); sw.WriteLine(TT.ToCSV("2010-04-30", NAME.WT, TYPE.ENGY, "1848"));
-                sw.WriteLine(TT.ToCSV("2010-05-31", NAME.EL, TYPE.ENGY, "1321")); sw.WriteLine(TT.ToCSV("2010-05-31", NAME.GS, TYPE.ENGY, "4413")); sw.WriteLine(TT.ToCSV("2010-05-31", NAME.WT, TYPE.ENGY, "1848"));
-                sw.WriteLine(TT.ToCSV("2010-06-30", NAME.EL, TYPE.ENGY, "1475")); sw.WriteLine(TT.ToCSV("2010-06-30", NAME.GS, TYPE.ENGY, "4464")); sw.WriteLine(TT.ToCSV("2010-06-30", NAME.WT, TYPE.ENGY, "1848"));
-                sw.WriteLine(TT.ToCSV("2010-07-31", NAME.EL, TYPE.ENGY, "2045")); sw.WriteLine(TT.ToCSV("2010-07-31", NAME.GS, TYPE.ENGY, "4310")); sw.WriteLine(TT.ToCSV("2010-07-31", NAME.WT, TYPE.ENGY, "1848"));
-                sw.WriteLine(TT.ToCSV("2010-08-31", NAME.EL, TYPE.ENGY, "3147")); sw.WriteLine(TT.ToCSV("2010-08-31", NAME.GS, TYPE.ENGY, "3847")); sw.WriteLine(TT.ToCSV("2010-08-31", NAME.WT, TYPE.ENGY, "1896"));
-                sw.WriteLine(TT.ToCSV("2010-09-30", NAME.EL, TYPE.ENGY, "2918")); sw.WriteLine(TT.ToCSV("2010-09-30", NAME.GS, TYPE.ENGY, "3538")); sw.WriteLine(TT.ToCSV("2010-09-30", NAME.WT, TYPE.ENGY, "1896"));
-                sw.WriteLine(TT.ToCSV("2010-10-31", NAME.EL, TYPE.ENGY, "1306")); sw.WriteLine(TT.ToCSV("2010-10-31", NAME.GS, TYPE.ENGY, "3898")); sw.WriteLine(TT.ToCSV("2010-10-31", NAME.WT, TYPE.ENGY, "1799"));
-                sw.WriteLine(TT.ToCSV("2010-11-30", NAME.EL, TYPE.ENGY, "1791")); sw.WriteLine(TT.ToCSV("2010-11-30", NAME.GS, TYPE.ENGY, "5390")); sw.WriteLine(TT.ToCSV("2010-11-30", NAME.WT, TYPE.ENGY, "1799"));
-                sw.WriteLine(TT.ToCSV("2010-12-31", NAME.EL, TYPE.ENGY, "1573")); sw.WriteLine(TT.ToCSV("2010-12-31", NAME.GS, TYPE.ENGY, "5647")); sw.WriteLine(TT.ToCSV("2010-12-31", NAME.WT, TYPE.ENGY, "1799"));
-                sw.WriteLine(TT.ToCSV("2011-01-31", NAME.EL, TYPE.ENGY, "1675")); sw.WriteLine(TT.ToCSV("2011-01-31", NAME.GS, TYPE.ENGY, "5596")); sw.WriteLine(TT.ToCSV("2011-01-31", NAME.WT, TYPE.ENGY, "1799"));
-                sw.WriteLine(TT.ToCSV("2011-02-28", NAME.EL, TYPE.ENGY, "1783")); sw.WriteLine(TT.ToCSV("2011-02-28", NAME.GS, TYPE.ENGY, "5596")); sw.WriteLine(TT.ToCSV("2011-02-28", NAME.WT, TYPE.ENGY, "1751"));
-                sw.WriteLine(TT.ToCSV("2011-03-31", NAME.EL, TYPE.ENGY, "1357")); sw.WriteLine(TT.ToCSV("2011-03-31", NAME.GS, TYPE.ENGY, "5339")); sw.WriteLine(TT.ToCSV("2011-03-31", NAME.WT, TYPE.ENGY, "1751"));
-                sw.WriteLine(TT.ToCSV("2011-04-30", NAME.EL, TYPE.ENGY, "1426")); sw.WriteLine(TT.ToCSV("2011-04-30", NAME.GS, TYPE.ENGY, "5339")); sw.WriteLine(TT.ToCSV("2011-04-30", NAME.WT, TYPE.ENGY, "1703"));
-                sw.WriteLine(TT.ToCSV("2011-05-31", NAME.EL, TYPE.ENGY, "1174")); sw.WriteLine(TT.ToCSV("2011-05-31", NAME.GS, TYPE.ENGY, "4207")); sw.WriteLine(TT.ToCSV("2011-05-31", NAME.WT, TYPE.ENGY, "1703"));
-                sw.WriteLine(TT.ToCSV("2011-06-30", NAME.EL, TYPE.ENGY, "1266")); sw.WriteLine(TT.ToCSV("2011-06-30", NAME.GS, TYPE.ENGY, "4824")); sw.WriteLine(TT.ToCSV("2011-06-30", NAME.WT, TYPE.ENGY, "1848"));
-                sw.WriteLine(TT.ToCSV("2011-07-31", NAME.EL, TYPE.ENGY, "2010")); sw.WriteLine(TT.ToCSV("2011-07-31", NAME.GS, TYPE.ENGY, "4001")); sw.WriteLine(TT.ToCSV("2011-07-31", NAME.WT, TYPE.ENGY, "1848"));
-                sw.WriteLine(TT.ToCSV("2011-08-31", NAME.EL, TYPE.ENGY, "2257")); sw.WriteLine(TT.ToCSV("2011-08-31", NAME.GS, TYPE.ENGY, "3538")); sw.WriteLine(TT.ToCSV("2011-08-31", NAME.WT, TYPE.ENGY, "1848"));
-                sw.WriteLine(TT.ToCSV("2011-09-30", NAME.EL, TYPE.ENGY, "1998")); sw.WriteLine(TT.ToCSV("2011-09-30", NAME.GS, TYPE.ENGY, "3692")); sw.WriteLine(TT.ToCSV("2011-09-30", NAME.WT, TYPE.ENGY, "1848"));
-                sw.WriteLine(TT.ToCSV("2011-10-31", NAME.EL, TYPE.ENGY, "1164")); sw.WriteLine(TT.ToCSV("2011-10-31", NAME.GS, TYPE.ENGY, "4053")); sw.WriteLine(TT.ToCSV("2011-10-31", NAME.WT, TYPE.ENGY, "1751"));
-                sw.WriteLine(TT.ToCSV("2011-11-30", NAME.EL, TYPE.ENGY, "1369")); sw.WriteLine(TT.ToCSV("2011-11-30", NAME.GS, TYPE.ENGY, "4876")); sw.WriteLine(TT.ToCSV("2011-11-30", NAME.WT, TYPE.ENGY, "1751"));
-                sw.WriteLine(TT.ToCSV("2011-12-31", NAME.EL, TYPE.ENGY, "1632")); sw.WriteLine(TT.ToCSV("2011-12-31", NAME.GS, TYPE.ENGY, "4979")); sw.WriteLine(TT.ToCSV("2011-12-31", NAME.WT, TYPE.ENGY, "1751"));
-                sw.WriteLine(TT.ToCSV("2012-01-31", NAME.EL, TYPE.ENGY, "1805")); sw.WriteLine(TT.ToCSV("2012-01-31", NAME.GS, TYPE.ENGY, "5133")); sw.WriteLine(TT.ToCSV("2012-01-31", NAME.WT, TYPE.ENGY, "1751"));
-                sw.WriteLine(TT.ToCSV("2012-02-29", NAME.EL, TYPE.ENGY, "1745")); sw.WriteLine(TT.ToCSV("2012-02-29", NAME.GS, TYPE.ENGY, "5339")); sw.WriteLine(TT.ToCSV("2012-02-29", NAME.WT, TYPE.ENGY, "1703"));
-                sw.WriteLine(TT.ToCSV("2012-03-31", NAME.EL, TYPE.ENGY, "1567")); sw.WriteLine(TT.ToCSV("2012-03-31", NAME.GS, TYPE.ENGY, "5184")); sw.WriteLine(TT.ToCSV("2012-03-31", NAME.WT, TYPE.ENGY, "1703"));
-                sw.WriteLine(TT.ToCSV("2012-04-30", NAME.EL, TYPE.ENGY, "1577")); sw.WriteLine(TT.ToCSV("2012-04-30", NAME.GS, TYPE.ENGY, "5544")); sw.WriteLine(TT.ToCSV("2012-04-30", NAME.WT, TYPE.ENGY, "1751"));
-                sw.WriteLine(TT.ToCSV("2012-05-31", NAME.EL, TYPE.ENGY, "1231")); sw.WriteLine(TT.ToCSV("2012-05-31", NAME.GS, TYPE.ENGY, "4506")); sw.WriteLine(TT.ToCSV("2012-05-31", NAME.WT, TYPE.ENGY, "1751"));
-                sw.WriteLine(TT.ToCSV("2012-06-30", NAME.EL, TYPE.ENGY, "1342")); sw.WriteLine(TT.ToCSV("2012-06-30", NAME.GS, TYPE.ENGY, "4342")); sw.WriteLine(TT.ToCSV("2012-06-30", NAME.WT, TYPE.ENGY, "1751"));
-                sw.WriteLine(TT.ToCSV("2012-07-31", NAME.EL, TYPE.ENGY, "2267")); sw.WriteLine(TT.ToCSV("2012-07-31", NAME.GS, TYPE.ENGY, "3937")); sw.WriteLine(TT.ToCSV("2012-07-31", NAME.WT, TYPE.ENGY, "1751"));
-                sw.WriteLine(TT.ToCSV("2012-08-31", NAME.EL, TYPE.ENGY, "2659")); sw.WriteLine(TT.ToCSV("2012-08-31", NAME.GS, TYPE.ENGY, "3435")); sw.WriteLine(TT.ToCSV("2012-08-31", NAME.WT, TYPE.ENGY, "1751"));
-                sw.WriteLine(TT.ToCSV("2012-09-30", NAME.EL, TYPE.ENGY, "2533")); sw.WriteLine(TT.ToCSV("2012-09-30", NAME.GS, TYPE.ENGY, "3538")); sw.WriteLine(TT.ToCSV("2012-09-30", NAME.WT, TYPE.ENGY, "1751"));
-                sw.WriteLine(TT.ToCSV("2012-10-31", NAME.EL, TYPE.ENGY, "1374")); sw.WriteLine(TT.ToCSV("2012-10-31", NAME.GS, TYPE.ENGY, "4104")); sw.WriteLine(TT.ToCSV("2012-10-31", NAME.WT, TYPE.ENGY, "1799"));
-                sw.WriteLine(TT.ToCSV("2012-11-30", NAME.EL, TYPE.ENGY, "1298")); sw.WriteLine(TT.ToCSV("2012-11-30", NAME.GS, TYPE.ENGY, "5184")); sw.WriteLine(TT.ToCSV("2012-11-30", NAME.WT, TYPE.ENGY, "1799"));
-                sw.WriteLine(TT.ToCSV("2012-12-31", NAME.EL, TYPE.ENGY, "1636")); sw.WriteLine(TT.ToCSV("2012-12-31", NAME.GS, TYPE.ENGY, "5380")); sw.WriteLine(TT.ToCSV("2012-12-31", NAME.WT, TYPE.ENGY, "1751"));
-                sw.WriteLine(TT.ToCSV("2013-01-31", NAME.EL, TYPE.ENGY, "2296")); sw.WriteLine(TT.ToCSV("2013-01-31", NAME.GS, TYPE.ENGY, "5380")); sw.WriteLine(TT.ToCSV("2013-01-31", NAME.WT, TYPE.ENGY, "1751"));
-                sw.WriteLine(TT.ToCSV("2013-02-28", NAME.EL, TYPE.ENGY, "2071")); sw.WriteLine(TT.ToCSV("2013-02-28", NAME.GS, TYPE.ENGY, "5871")); sw.WriteLine(TT.ToCSV("2013-02-28", NAME.WT, TYPE.ENGY, "1751"));
-                sw.WriteLine(TT.ToCSV("2013-03-31", NAME.EL, TYPE.ENGY, "1588")); sw.WriteLine(TT.ToCSV("2013-03-31", NAME.GS, TYPE.ENGY, "5544")); sw.WriteLine(TT.ToCSV("2013-03-31", NAME.WT, TYPE.ENGY, "1751"));
-                sw.WriteLine(TT.ToCSV("2013-04-30", NAME.EL, TYPE.ENGY, "1443")); sw.WriteLine(TT.ToCSV("2013-04-30", NAME.GS, TYPE.ENGY, "5325")); sw.WriteLine(TT.ToCSV("2013-04-30", NAME.WT, TYPE.ENGY, "1799"));
-                sw.WriteLine(TT.ToCSV("2013-05-31", NAME.EL, TYPE.ENGY, "1603")); sw.WriteLine(TT.ToCSV("2013-05-31", NAME.GS, TYPE.ENGY, "4725")); sw.WriteLine(TT.ToCSV("2013-05-31", NAME.WT, TYPE.ENGY, "1799"));
-                sw.WriteLine(TT.ToCSV("2013-06-30", NAME.EL, TYPE.ENGY, "1651")); sw.WriteLine(TT.ToCSV("2013-06-30", NAME.GS, TYPE.ENGY, "3633")); sw.WriteLine(TT.ToCSV("2013-06-30", NAME.WT, TYPE.ENGY, "1703"));
-                sw.WriteLine(TT.ToCSV("2013-07-31", NAME.EL, TYPE.ENGY, "2485")); sw.WriteLine(TT.ToCSV("2013-07-31", NAME.GS, TYPE.ENGY, "3687")); sw.WriteLine(TT.ToCSV("2013-07-31", NAME.WT, TYPE.ENGY, "1703"));
-                sw.WriteLine(TT.ToCSV("2013-08-31", NAME.EL, TYPE.ENGY, "3455")); sw.WriteLine(TT.ToCSV("2013-08-31", NAME.GS, TYPE.ENGY, "3523")); sw.WriteLine(TT.ToCSV("2013-08-31", NAME.WT, TYPE.ENGY, "1799"));
-                sw.WriteLine(TT.ToCSV("2013-09-30", NAME.EL, TYPE.ENGY, "1892")); sw.WriteLine(TT.ToCSV("2013-09-30", NAME.GS, TYPE.ENGY, "3523")); sw.WriteLine(TT.ToCSV("2013-09-30", NAME.WT, TYPE.ENGY, "1799"));
-                sw.WriteLine(TT.ToCSV("2013-10-31", NAME.EL, TYPE.ENGY, "2016")); sw.WriteLine(TT.ToCSV("2013-10-31", NAME.GS, TYPE.ENGY, "3906")); sw.WriteLine(TT.ToCSV("2013-10-31", NAME.WT, TYPE.ENGY, "1703"));
-                sw.WriteLine(TT.ToCSV("2013-11-30", NAME.EL, TYPE.ENGY, "1449")); sw.WriteLine(TT.ToCSV("2013-11-30", NAME.GS, TYPE.ENGY, "4452")); sw.WriteLine(TT.ToCSV("2013-11-30", NAME.WT, TYPE.ENGY, "1703"));
-                sw.WriteLine(TT.ToCSV("2013-12-31", NAME.EL, TYPE.ENGY, "1701")); sw.WriteLine(TT.ToCSV("2013-12-31", NAME.GS, TYPE.ENGY, "4943")); sw.WriteLine(TT.ToCSV("2013-12-31", NAME.WT, TYPE.ENGY, "1655"));
-                sw.WriteLine(TT.ToCSV("2014-01-31", NAME.EL, TYPE.ENGY, "1760")); sw.WriteLine(TT.ToCSV("2014-01-31", NAME.GS, TYPE.ENGY, "5287")); sw.WriteLine(TT.ToCSV("2014-01-31", NAME.WT, TYPE.ENGY, "1655"));
-                sw.WriteLine(TT.ToCSV("2014-02-28", NAME.EL, TYPE.ENGY, "1743")); sw.WriteLine(TT.ToCSV("2014-02-28", NAME.GS, TYPE.ENGY, "5758")); sw.WriteLine(TT.ToCSV("2014-02-28", NAME.WT, TYPE.ENGY, "1703"));
-                sw.WriteLine(TT.ToCSV("2014-03-31", NAME.EL, TYPE.ENGY, "1624")); sw.WriteLine(TT.ToCSV("2014-03-31", NAME.GS, TYPE.ENGY, "5287")); sw.WriteLine(TT.ToCSV("2014-03-31", NAME.WT, TYPE.ENGY, "1703"));
-                sw.WriteLine(TT.ToCSV("2014-04-30", NAME.EL, TYPE.ENGY, "1729")); sw.WriteLine(TT.ToCSV("2014-04-30", NAME.GS, TYPE.ENGY, "5405")); sw.WriteLine(TT.ToCSV("2014-04-30", NAME.WT, TYPE.ENGY, "1703"));
-                sw.WriteLine(TT.ToCSV("2014-05-31", NAME.EL, TYPE.ENGY, "1412")); sw.WriteLine(TT.ToCSV("2014-05-31", NAME.GS, TYPE.ENGY, "4713")); sw.WriteLine(TT.ToCSV("2014-05-31", NAME.WT, TYPE.ENGY, "1703"));
-                sw.WriteLine(TT.ToCSV("2014-06-30", NAME.EL, TYPE.ENGY, "1517")); sw.WriteLine(TT.ToCSV("2014-06-30", NAME.GS, TYPE.ENGY, "4501")); sw.WriteLine(TT.ToCSV("2014-06-30", NAME.WT, TYPE.ENGY, "1801"));
-                sw.WriteLine(TT.ToCSV("2014-07-31", NAME.EL, TYPE.ENGY, "2350")); sw.WriteLine(TT.ToCSV("2014-07-31", NAME.GS, TYPE.ENGY, "4209")); sw.WriteLine(TT.ToCSV("2014-07-31", NAME.WT, TYPE.ENGY, "1801"));
-                sw.WriteLine(TT.ToCSV("2014-08-31", NAME.EL, TYPE.ENGY, "2294")); sw.WriteLine(TT.ToCSV("2014-08-31", NAME.GS, TYPE.ENGY, "3801")); sw.WriteLine(TT.ToCSV("2014-08-31", NAME.WT, TYPE.ENGY, "1851"));
-                sw.WriteLine(TT.ToCSV("2014-09-30", NAME.EL, TYPE.ENGY, "2304")); sw.WriteLine(TT.ToCSV("2014-09-30", NAME.GS, TYPE.ENGY, "4326")); sw.WriteLine(TT.ToCSV("2014-09-30", NAME.WT, TYPE.ENGY, "1851"));
-                sw.WriteLine(TT.ToCSV("2014-10-31", NAME.EL, TYPE.ENGY, "1433")); sw.WriteLine(TT.ToCSV("2014-10-31", NAME.GS, TYPE.ENGY, "4501")); sw.WriteLine(TT.ToCSV("2014-10-31", NAME.WT, TYPE.ENGY, "1801"));
-                sw.WriteLine(TT.ToCSV("2014-11-30", NAME.EL, TYPE.ENGY, "1477")); sw.WriteLine(TT.ToCSV("2014-11-30", NAME.GS, TYPE.ENGY, "5026")); sw.WriteLine(TT.ToCSV("2014-11-30", NAME.WT, TYPE.ENGY, "1801"));
-                sw.WriteLine(TT.ToCSV("2014-12-31", NAME.EL, TYPE.ENGY, "1498")); sw.WriteLine(TT.ToCSV("2014-12-31", NAME.GS, TYPE.ENGY, "5492")); sw.WriteLine(TT.ToCSV("2014-12-31", NAME.WT, TYPE.ENGY, "1801"));
-                sw.WriteLine(TT.ToCSV("2015-01-31", NAME.EL, TYPE.ENGY, "1860")); sw.WriteLine(TT.ToCSV("2015-01-31", NAME.GS, TYPE.ENGY, "5551")); sw.WriteLine(TT.ToCSV("2015-01-31", NAME.WT, TYPE.ENGY, "1801"));
-                sw.WriteLine(TT.ToCSV("2015-02-28", NAME.EL, TYPE.ENGY, "1413")); sw.WriteLine(TT.ToCSV("2015-02-28", NAME.GS, TYPE.ENGY, "6116")); sw.WriteLine(TT.ToCSV("2015-02-28", NAME.WT, TYPE.ENGY, "1751"));
-                sw.WriteLine(TT.ToCSV("2015-03-31", NAME.EL, TYPE.ENGY, "1506")); sw.WriteLine(TT.ToCSV("2015-03-31", NAME.GS, TYPE.ENGY, "5772")); sw.WriteLine(TT.ToCSV("2015-03-31", NAME.WT, TYPE.ENGY, "1751"));
+                sw.NewLine = DB.LF;
+                sw.WriteLine(TT.ToDBFileFormat("2009-04-30", NAME.EL, TYPE.ENGY, "1804")); sw.WriteLine(TT.ToDBFileFormat("2009-04-30", NAME.GS, TYPE.ENGY, "5422")); sw.WriteLine(TT.ToDBFileFormat("2009-04-30", NAME.WT, TYPE.ENGY, "1848"));
+                sw.WriteLine(TT.ToDBFileFormat("2009-05-31", NAME.EL, TYPE.ENGY, "1359")); sw.WriteLine(TT.ToDBFileFormat("2009-05-31", NAME.GS, TYPE.ENGY, "4462")); sw.WriteLine(TT.ToDBFileFormat("2009-05-31", NAME.WT, TYPE.ENGY, "1848"));
+                sw.WriteLine(TT.ToDBFileFormat("2009-06-30", NAME.EL, TYPE.ENGY, "1550")); sw.WriteLine(TT.ToDBFileFormat("2009-06-30", NAME.GS, TYPE.ENGY, "4659")); sw.WriteLine(TT.ToDBFileFormat("2009-06-30", NAME.WT, TYPE.ENGY, "1896"));
+                sw.WriteLine(TT.ToDBFileFormat("2009-07-31", NAME.EL, TYPE.ENGY, "3780")); sw.WriteLine(TT.ToDBFileFormat("2009-07-31", NAME.GS, TYPE.ENGY, "4363")); sw.WriteLine(TT.ToDBFileFormat("2009-07-31", NAME.WT, TYPE.ENGY, "1896"));
+                sw.WriteLine(TT.ToDBFileFormat("2009-08-31", NAME.EL, TYPE.ENGY, "3853")); sw.WriteLine(TT.ToDBFileFormat("2009-08-31", NAME.GS, TYPE.ENGY, "3969")); sw.WriteLine(TT.ToDBFileFormat("2009-08-31", NAME.WT, TYPE.ENGY, "1896"));
+                sw.WriteLine(TT.ToDBFileFormat("2009-09-30", NAME.EL, TYPE.ENGY, "3143")); sw.WriteLine(TT.ToDBFileFormat("2009-09-30", NAME.GS, TYPE.ENGY, "3771")); sw.WriteLine(TT.ToDBFileFormat("2009-09-30", NAME.WT, TYPE.ENGY, "1896"));
+                sw.WriteLine(TT.ToDBFileFormat("2009-10-31", NAME.EL, TYPE.ENGY, "1416")); sw.WriteLine(TT.ToDBFileFormat("2009-10-31", NAME.GS, TYPE.ENGY, "3820")); sw.WriteLine(TT.ToDBFileFormat("2009-10-31", NAME.WT, TYPE.ENGY, "1848"));
+                sw.WriteLine(TT.ToDBFileFormat("2009-11-30", NAME.EL, TYPE.ENGY, "1250")); sw.WriteLine(TT.ToDBFileFormat("2009-11-30", NAME.GS, TYPE.ENGY, "4857")); sw.WriteLine(TT.ToDBFileFormat("2009-11-30", NAME.WT, TYPE.ENGY, "1848"));
+                sw.WriteLine(TT.ToDBFileFormat("2009-12-31", NAME.EL, TYPE.ENGY,  "501")); sw.WriteLine(TT.ToDBFileFormat("2009-12-31", NAME.GS, TYPE.ENGY, "1995")); sw.WriteLine(TT.ToDBFileFormat("2009-12-31", NAME.WT, TYPE.ENGY, "1462"));
+                sw.WriteLine(TT.ToDBFileFormat("2010-01-31", NAME.EL, TYPE.ENGY,  "708")); sw.WriteLine(TT.ToDBFileFormat("2010-01-31", NAME.GS, TYPE.ENGY, "3031")); sw.WriteLine(TT.ToDBFileFormat("2010-01-31", NAME.WT, TYPE.ENGY, "1462"));
+                sw.WriteLine(TT.ToDBFileFormat("2010-02-28", NAME.EL, TYPE.ENGY,  "690")); sw.WriteLine(TT.ToDBFileFormat("2010-02-28", NAME.GS, TYPE.ENGY, "3574")); sw.WriteLine(TT.ToDBFileFormat("2010-02-28", NAME.WT, TYPE.ENGY, "1558"));
+                sw.WriteLine(TT.ToDBFileFormat("2010-03-31", NAME.EL, TYPE.ENGY, "1673")); sw.WriteLine(TT.ToDBFileFormat("2010-03-31", NAME.GS, TYPE.ENGY, "6574")); sw.WriteLine(TT.ToDBFileFormat("2010-03-31", NAME.WT, TYPE.ENGY, "1558"));
+                sw.WriteLine(TT.ToDBFileFormat("2010-04-30", NAME.EL, TYPE.ENGY, "1926")); sw.WriteLine(TT.ToDBFileFormat("2010-04-30", NAME.GS, TYPE.ENGY, "6213")); sw.WriteLine(TT.ToDBFileFormat("2010-04-30", NAME.WT, TYPE.ENGY, "1848"));
+                sw.WriteLine(TT.ToDBFileFormat("2010-05-31", NAME.EL, TYPE.ENGY, "1321")); sw.WriteLine(TT.ToDBFileFormat("2010-05-31", NAME.GS, TYPE.ENGY, "4413")); sw.WriteLine(TT.ToDBFileFormat("2010-05-31", NAME.WT, TYPE.ENGY, "1848"));
+                sw.WriteLine(TT.ToDBFileFormat("2010-06-30", NAME.EL, TYPE.ENGY, "1475")); sw.WriteLine(TT.ToDBFileFormat("2010-06-30", NAME.GS, TYPE.ENGY, "4464")); sw.WriteLine(TT.ToDBFileFormat("2010-06-30", NAME.WT, TYPE.ENGY, "1848"));
+                sw.WriteLine(TT.ToDBFileFormat("2010-07-31", NAME.EL, TYPE.ENGY, "2045")); sw.WriteLine(TT.ToDBFileFormat("2010-07-31", NAME.GS, TYPE.ENGY, "4310")); sw.WriteLine(TT.ToDBFileFormat("2010-07-31", NAME.WT, TYPE.ENGY, "1848"));
+                sw.WriteLine(TT.ToDBFileFormat("2010-08-31", NAME.EL, TYPE.ENGY, "3147")); sw.WriteLine(TT.ToDBFileFormat("2010-08-31", NAME.GS, TYPE.ENGY, "3847")); sw.WriteLine(TT.ToDBFileFormat("2010-08-31", NAME.WT, TYPE.ENGY, "1896"));
+                sw.WriteLine(TT.ToDBFileFormat("2010-09-30", NAME.EL, TYPE.ENGY, "2918")); sw.WriteLine(TT.ToDBFileFormat("2010-09-30", NAME.GS, TYPE.ENGY, "3538")); sw.WriteLine(TT.ToDBFileFormat("2010-09-30", NAME.WT, TYPE.ENGY, "1896"));
+                sw.WriteLine(TT.ToDBFileFormat("2010-10-31", NAME.EL, TYPE.ENGY, "1306")); sw.WriteLine(TT.ToDBFileFormat("2010-10-31", NAME.GS, TYPE.ENGY, "3898")); sw.WriteLine(TT.ToDBFileFormat("2010-10-31", NAME.WT, TYPE.ENGY, "1799"));
+                sw.WriteLine(TT.ToDBFileFormat("2010-11-30", NAME.EL, TYPE.ENGY, "1791")); sw.WriteLine(TT.ToDBFileFormat("2010-11-30", NAME.GS, TYPE.ENGY, "5390")); sw.WriteLine(TT.ToDBFileFormat("2010-11-30", NAME.WT, TYPE.ENGY, "1799"));
+                sw.WriteLine(TT.ToDBFileFormat("2010-12-31", NAME.EL, TYPE.ENGY, "1573")); sw.WriteLine(TT.ToDBFileFormat("2010-12-31", NAME.GS, TYPE.ENGY, "5647")); sw.WriteLine(TT.ToDBFileFormat("2010-12-31", NAME.WT, TYPE.ENGY, "1799"));
+                sw.WriteLine(TT.ToDBFileFormat("2011-01-31", NAME.EL, TYPE.ENGY, "1675")); sw.WriteLine(TT.ToDBFileFormat("2011-01-31", NAME.GS, TYPE.ENGY, "5596")); sw.WriteLine(TT.ToDBFileFormat("2011-01-31", NAME.WT, TYPE.ENGY, "1799"));
+                sw.WriteLine(TT.ToDBFileFormat("2011-02-28", NAME.EL, TYPE.ENGY, "1783")); sw.WriteLine(TT.ToDBFileFormat("2011-02-28", NAME.GS, TYPE.ENGY, "5596")); sw.WriteLine(TT.ToDBFileFormat("2011-02-28", NAME.WT, TYPE.ENGY, "1751"));
+                sw.WriteLine(TT.ToDBFileFormat("2011-03-31", NAME.EL, TYPE.ENGY, "1357")); sw.WriteLine(TT.ToDBFileFormat("2011-03-31", NAME.GS, TYPE.ENGY, "5339")); sw.WriteLine(TT.ToDBFileFormat("2011-03-31", NAME.WT, TYPE.ENGY, "1751"));
+                sw.WriteLine(TT.ToDBFileFormat("2011-04-30", NAME.EL, TYPE.ENGY, "1426")); sw.WriteLine(TT.ToDBFileFormat("2011-04-30", NAME.GS, TYPE.ENGY, "5339")); sw.WriteLine(TT.ToDBFileFormat("2011-04-30", NAME.WT, TYPE.ENGY, "1703"));
+                sw.WriteLine(TT.ToDBFileFormat("2011-05-31", NAME.EL, TYPE.ENGY, "1174")); sw.WriteLine(TT.ToDBFileFormat("2011-05-31", NAME.GS, TYPE.ENGY, "4207")); sw.WriteLine(TT.ToDBFileFormat("2011-05-31", NAME.WT, TYPE.ENGY, "1703"));
+                sw.WriteLine(TT.ToDBFileFormat("2011-06-30", NAME.EL, TYPE.ENGY, "1266")); sw.WriteLine(TT.ToDBFileFormat("2011-06-30", NAME.GS, TYPE.ENGY, "4824")); sw.WriteLine(TT.ToDBFileFormat("2011-06-30", NAME.WT, TYPE.ENGY, "1848"));
+                sw.WriteLine(TT.ToDBFileFormat("2011-07-31", NAME.EL, TYPE.ENGY, "2010")); sw.WriteLine(TT.ToDBFileFormat("2011-07-31", NAME.GS, TYPE.ENGY, "4001")); sw.WriteLine(TT.ToDBFileFormat("2011-07-31", NAME.WT, TYPE.ENGY, "1848"));
+                sw.WriteLine(TT.ToDBFileFormat("2011-08-31", NAME.EL, TYPE.ENGY, "2257")); sw.WriteLine(TT.ToDBFileFormat("2011-08-31", NAME.GS, TYPE.ENGY, "3538")); sw.WriteLine(TT.ToDBFileFormat("2011-08-31", NAME.WT, TYPE.ENGY, "1848"));
+                sw.WriteLine(TT.ToDBFileFormat("2011-09-30", NAME.EL, TYPE.ENGY, "1998")); sw.WriteLine(TT.ToDBFileFormat("2011-09-30", NAME.GS, TYPE.ENGY, "3692")); sw.WriteLine(TT.ToDBFileFormat("2011-09-30", NAME.WT, TYPE.ENGY, "1848"));
+                sw.WriteLine(TT.ToDBFileFormat("2011-10-31", NAME.EL, TYPE.ENGY, "1164")); sw.WriteLine(TT.ToDBFileFormat("2011-10-31", NAME.GS, TYPE.ENGY, "4053")); sw.WriteLine(TT.ToDBFileFormat("2011-10-31", NAME.WT, TYPE.ENGY, "1751"));
+                sw.WriteLine(TT.ToDBFileFormat("2011-11-30", NAME.EL, TYPE.ENGY, "1369")); sw.WriteLine(TT.ToDBFileFormat("2011-11-30", NAME.GS, TYPE.ENGY, "4876")); sw.WriteLine(TT.ToDBFileFormat("2011-11-30", NAME.WT, TYPE.ENGY, "1751"));
+                sw.WriteLine(TT.ToDBFileFormat("2011-12-31", NAME.EL, TYPE.ENGY, "1632")); sw.WriteLine(TT.ToDBFileFormat("2011-12-31", NAME.GS, TYPE.ENGY, "4979")); sw.WriteLine(TT.ToDBFileFormat("2011-12-31", NAME.WT, TYPE.ENGY, "1751"));
+                sw.WriteLine(TT.ToDBFileFormat("2012-01-31", NAME.EL, TYPE.ENGY, "1805")); sw.WriteLine(TT.ToDBFileFormat("2012-01-31", NAME.GS, TYPE.ENGY, "5133")); sw.WriteLine(TT.ToDBFileFormat("2012-01-31", NAME.WT, TYPE.ENGY, "1751"));
+                sw.WriteLine(TT.ToDBFileFormat("2012-02-29", NAME.EL, TYPE.ENGY, "1745")); sw.WriteLine(TT.ToDBFileFormat("2012-02-29", NAME.GS, TYPE.ENGY, "5339")); sw.WriteLine(TT.ToDBFileFormat("2012-02-29", NAME.WT, TYPE.ENGY, "1703"));
+                sw.WriteLine(TT.ToDBFileFormat("2012-03-31", NAME.EL, TYPE.ENGY, "1567")); sw.WriteLine(TT.ToDBFileFormat("2012-03-31", NAME.GS, TYPE.ENGY, "5184")); sw.WriteLine(TT.ToDBFileFormat("2012-03-31", NAME.WT, TYPE.ENGY, "1703"));
+                sw.WriteLine(TT.ToDBFileFormat("2012-04-30", NAME.EL, TYPE.ENGY, "1577")); sw.WriteLine(TT.ToDBFileFormat("2012-04-30", NAME.GS, TYPE.ENGY, "5544")); sw.WriteLine(TT.ToDBFileFormat("2012-04-30", NAME.WT, TYPE.ENGY, "1751"));
+                sw.WriteLine(TT.ToDBFileFormat("2012-05-31", NAME.EL, TYPE.ENGY, "1231")); sw.WriteLine(TT.ToDBFileFormat("2012-05-31", NAME.GS, TYPE.ENGY, "4506")); sw.WriteLine(TT.ToDBFileFormat("2012-05-31", NAME.WT, TYPE.ENGY, "1751"));
+                sw.WriteLine(TT.ToDBFileFormat("2012-06-30", NAME.EL, TYPE.ENGY, "1342")); sw.WriteLine(TT.ToDBFileFormat("2012-06-30", NAME.GS, TYPE.ENGY, "4342")); sw.WriteLine(TT.ToDBFileFormat("2012-06-30", NAME.WT, TYPE.ENGY, "1751"));
+                sw.WriteLine(TT.ToDBFileFormat("2012-07-31", NAME.EL, TYPE.ENGY, "2267")); sw.WriteLine(TT.ToDBFileFormat("2012-07-31", NAME.GS, TYPE.ENGY, "3937")); sw.WriteLine(TT.ToDBFileFormat("2012-07-31", NAME.WT, TYPE.ENGY, "1751"));
+                sw.WriteLine(TT.ToDBFileFormat("2012-08-31", NAME.EL, TYPE.ENGY, "2659")); sw.WriteLine(TT.ToDBFileFormat("2012-08-31", NAME.GS, TYPE.ENGY, "3435")); sw.WriteLine(TT.ToDBFileFormat("2012-08-31", NAME.WT, TYPE.ENGY, "1751"));
+                sw.WriteLine(TT.ToDBFileFormat("2012-09-30", NAME.EL, TYPE.ENGY, "2533")); sw.WriteLine(TT.ToDBFileFormat("2012-09-30", NAME.GS, TYPE.ENGY, "3538")); sw.WriteLine(TT.ToDBFileFormat("2012-09-30", NAME.WT, TYPE.ENGY, "1751"));
+                sw.WriteLine(TT.ToDBFileFormat("2012-10-31", NAME.EL, TYPE.ENGY, "1374")); sw.WriteLine(TT.ToDBFileFormat("2012-10-31", NAME.GS, TYPE.ENGY, "4104")); sw.WriteLine(TT.ToDBFileFormat("2012-10-31", NAME.WT, TYPE.ENGY, "1799"));
+                sw.WriteLine(TT.ToDBFileFormat("2012-11-30", NAME.EL, TYPE.ENGY, "1298")); sw.WriteLine(TT.ToDBFileFormat("2012-11-30", NAME.GS, TYPE.ENGY, "5184")); sw.WriteLine(TT.ToDBFileFormat("2012-11-30", NAME.WT, TYPE.ENGY, "1799"));
+                sw.WriteLine(TT.ToDBFileFormat("2012-12-31", NAME.EL, TYPE.ENGY, "1636")); sw.WriteLine(TT.ToDBFileFormat("2012-12-31", NAME.GS, TYPE.ENGY, "5380")); sw.WriteLine(TT.ToDBFileFormat("2012-12-31", NAME.WT, TYPE.ENGY, "1751"));
+                sw.WriteLine(TT.ToDBFileFormat("2013-01-31", NAME.EL, TYPE.ENGY, "2296")); sw.WriteLine(TT.ToDBFileFormat("2013-01-31", NAME.GS, TYPE.ENGY, "5380")); sw.WriteLine(TT.ToDBFileFormat("2013-01-31", NAME.WT, TYPE.ENGY, "1751"));
+                sw.WriteLine(TT.ToDBFileFormat("2013-02-28", NAME.EL, TYPE.ENGY, "2071")); sw.WriteLine(TT.ToDBFileFormat("2013-02-28", NAME.GS, TYPE.ENGY, "5871")); sw.WriteLine(TT.ToDBFileFormat("2013-02-28", NAME.WT, TYPE.ENGY, "1751"));
+                sw.WriteLine(TT.ToDBFileFormat("2013-03-31", NAME.EL, TYPE.ENGY, "1588")); sw.WriteLine(TT.ToDBFileFormat("2013-03-31", NAME.GS, TYPE.ENGY, "5544")); sw.WriteLine(TT.ToDBFileFormat("2013-03-31", NAME.WT, TYPE.ENGY, "1751"));
+                sw.WriteLine(TT.ToDBFileFormat("2013-04-30", NAME.EL, TYPE.ENGY, "1443")); sw.WriteLine(TT.ToDBFileFormat("2013-04-30", NAME.GS, TYPE.ENGY, "5325")); sw.WriteLine(TT.ToDBFileFormat("2013-04-30", NAME.WT, TYPE.ENGY, "1799"));
+                sw.WriteLine(TT.ToDBFileFormat("2013-05-31", NAME.EL, TYPE.ENGY, "1603")); sw.WriteLine(TT.ToDBFileFormat("2013-05-31", NAME.GS, TYPE.ENGY, "4725")); sw.WriteLine(TT.ToDBFileFormat("2013-05-31", NAME.WT, TYPE.ENGY, "1799"));
+                sw.WriteLine(TT.ToDBFileFormat("2013-06-30", NAME.EL, TYPE.ENGY, "1651")); sw.WriteLine(TT.ToDBFileFormat("2013-06-30", NAME.GS, TYPE.ENGY, "3633")); sw.WriteLine(TT.ToDBFileFormat("2013-06-30", NAME.WT, TYPE.ENGY, "1703"));
+                sw.WriteLine(TT.ToDBFileFormat("2013-07-31", NAME.EL, TYPE.ENGY, "2485")); sw.WriteLine(TT.ToDBFileFormat("2013-07-31", NAME.GS, TYPE.ENGY, "3687")); sw.WriteLine(TT.ToDBFileFormat("2013-07-31", NAME.WT, TYPE.ENGY, "1703"));
+                sw.WriteLine(TT.ToDBFileFormat("2013-08-31", NAME.EL, TYPE.ENGY, "3455")); sw.WriteLine(TT.ToDBFileFormat("2013-08-31", NAME.GS, TYPE.ENGY, "3523")); sw.WriteLine(TT.ToDBFileFormat("2013-08-31", NAME.WT, TYPE.ENGY, "1799"));
+                sw.WriteLine(TT.ToDBFileFormat("2013-09-30", NAME.EL, TYPE.ENGY, "1892")); sw.WriteLine(TT.ToDBFileFormat("2013-09-30", NAME.GS, TYPE.ENGY, "3523")); sw.WriteLine(TT.ToDBFileFormat("2013-09-30", NAME.WT, TYPE.ENGY, "1799"));
+                sw.WriteLine(TT.ToDBFileFormat("2013-10-31", NAME.EL, TYPE.ENGY, "2016")); sw.WriteLine(TT.ToDBFileFormat("2013-10-31", NAME.GS, TYPE.ENGY, "3906")); sw.WriteLine(TT.ToDBFileFormat("2013-10-31", NAME.WT, TYPE.ENGY, "1703"));
+                sw.WriteLine(TT.ToDBFileFormat("2013-11-30", NAME.EL, TYPE.ENGY, "1449")); sw.WriteLine(TT.ToDBFileFormat("2013-11-30", NAME.GS, TYPE.ENGY, "4452")); sw.WriteLine(TT.ToDBFileFormat("2013-11-30", NAME.WT, TYPE.ENGY, "1703"));
+                sw.WriteLine(TT.ToDBFileFormat("2013-12-31", NAME.EL, TYPE.ENGY, "1701")); sw.WriteLine(TT.ToDBFileFormat("2013-12-31", NAME.GS, TYPE.ENGY, "4943")); sw.WriteLine(TT.ToDBFileFormat("2013-12-31", NAME.WT, TYPE.ENGY, "1655"));
+                sw.WriteLine(TT.ToDBFileFormat("2014-01-31", NAME.EL, TYPE.ENGY, "1760")); sw.WriteLine(TT.ToDBFileFormat("2014-01-31", NAME.GS, TYPE.ENGY, "5287")); sw.WriteLine(TT.ToDBFileFormat("2014-01-31", NAME.WT, TYPE.ENGY, "1655"));
+                sw.WriteLine(TT.ToDBFileFormat("2014-02-28", NAME.EL, TYPE.ENGY, "1743")); sw.WriteLine(TT.ToDBFileFormat("2014-02-28", NAME.GS, TYPE.ENGY, "5758")); sw.WriteLine(TT.ToDBFileFormat("2014-02-28", NAME.WT, TYPE.ENGY, "1703"));
+                sw.WriteLine(TT.ToDBFileFormat("2014-03-31", NAME.EL, TYPE.ENGY, "1624")); sw.WriteLine(TT.ToDBFileFormat("2014-03-31", NAME.GS, TYPE.ENGY, "5287")); sw.WriteLine(TT.ToDBFileFormat("2014-03-31", NAME.WT, TYPE.ENGY, "1703"));
+                sw.WriteLine(TT.ToDBFileFormat("2014-04-30", NAME.EL, TYPE.ENGY, "1729")); sw.WriteLine(TT.ToDBFileFormat("2014-04-30", NAME.GS, TYPE.ENGY, "5405")); sw.WriteLine(TT.ToDBFileFormat("2014-04-30", NAME.WT, TYPE.ENGY, "1703"));
+                sw.WriteLine(TT.ToDBFileFormat("2014-05-31", NAME.EL, TYPE.ENGY, "1412")); sw.WriteLine(TT.ToDBFileFormat("2014-05-31", NAME.GS, TYPE.ENGY, "4713")); sw.WriteLine(TT.ToDBFileFormat("2014-05-31", NAME.WT, TYPE.ENGY, "1703"));
+                sw.WriteLine(TT.ToDBFileFormat("2014-06-30", NAME.EL, TYPE.ENGY, "1517")); sw.WriteLine(TT.ToDBFileFormat("2014-06-30", NAME.GS, TYPE.ENGY, "4501")); sw.WriteLine(TT.ToDBFileFormat("2014-06-30", NAME.WT, TYPE.ENGY, "1801"));
+                sw.WriteLine(TT.ToDBFileFormat("2014-07-31", NAME.EL, TYPE.ENGY, "2350")); sw.WriteLine(TT.ToDBFileFormat("2014-07-31", NAME.GS, TYPE.ENGY, "4209")); sw.WriteLine(TT.ToDBFileFormat("2014-07-31", NAME.WT, TYPE.ENGY, "1801"));
+                sw.WriteLine(TT.ToDBFileFormat("2014-08-31", NAME.EL, TYPE.ENGY, "2294")); sw.WriteLine(TT.ToDBFileFormat("2014-08-31", NAME.GS, TYPE.ENGY, "3801")); sw.WriteLine(TT.ToDBFileFormat("2014-08-31", NAME.WT, TYPE.ENGY, "1851"));
+                sw.WriteLine(TT.ToDBFileFormat("2014-09-30", NAME.EL, TYPE.ENGY, "2304")); sw.WriteLine(TT.ToDBFileFormat("2014-09-30", NAME.GS, TYPE.ENGY, "4326")); sw.WriteLine(TT.ToDBFileFormat("2014-09-30", NAME.WT, TYPE.ENGY, "1851"));
+                sw.WriteLine(TT.ToDBFileFormat("2014-10-31", NAME.EL, TYPE.ENGY, "1433")); sw.WriteLine(TT.ToDBFileFormat("2014-10-31", NAME.GS, TYPE.ENGY, "4501")); sw.WriteLine(TT.ToDBFileFormat("2014-10-31", NAME.WT, TYPE.ENGY, "1801"));
+                sw.WriteLine(TT.ToDBFileFormat("2014-11-30", NAME.EL, TYPE.ENGY, "1477")); sw.WriteLine(TT.ToDBFileFormat("2014-11-30", NAME.GS, TYPE.ENGY, "5026")); sw.WriteLine(TT.ToDBFileFormat("2014-11-30", NAME.WT, TYPE.ENGY, "1801"));
+                sw.WriteLine(TT.ToDBFileFormat("2014-12-31", NAME.EL, TYPE.ENGY, "1498")); sw.WriteLine(TT.ToDBFileFormat("2014-12-31", NAME.GS, TYPE.ENGY, "5492")); sw.WriteLine(TT.ToDBFileFormat("2014-12-31", NAME.WT, TYPE.ENGY, "1801"));
+                sw.WriteLine(TT.ToDBFileFormat("2015-01-31", NAME.EL, TYPE.ENGY, "1860")); sw.WriteLine(TT.ToDBFileFormat("2015-01-31", NAME.GS, TYPE.ENGY, "5551")); sw.WriteLine(TT.ToDBFileFormat("2015-01-31", NAME.WT, TYPE.ENGY, "1801"));
+                sw.WriteLine(TT.ToDBFileFormat("2015-02-28", NAME.EL, TYPE.ENGY, "1413")); sw.WriteLine(TT.ToDBFileFormat("2015-02-28", NAME.GS, TYPE.ENGY, "6116")); sw.WriteLine(TT.ToDBFileFormat("2015-02-28", NAME.WT, TYPE.ENGY, "1751"));
+                sw.WriteLine(TT.ToDBFileFormat("2015-03-31", NAME.EL, TYPE.ENGY, "1506")); sw.WriteLine(TT.ToDBFileFormat("2015-03-31", NAME.GS, TYPE.ENGY, "5772")); sw.WriteLine(TT.ToDBFileFormat("2015-03-31", NAME.WT, TYPE.ENGY, "1751"));
                 sw.Close();
             }
 
-            using (StreamWriter sw = new StreamWriter(CSV_ONLY_ZERO, false, CSV.ENCODING))
+            using (StreamWriter sw = new StreamWriter(DB_FILE_ONLY_ZERO, false, DB.ENCODING))
             {
-                sw.NewLine = CSV.LF;
-                sw.WriteLine(TT.ToCSV("2016-06-30", NAME.EL, TYPE.ENGY, "0"));
-                sw.WriteLine(TT.ToCSV("2016-06-30", NAME.GS, TYPE.ENGY, "0"));
-                sw.WriteLine(TT.ToCSV("2016-06-30", NAME.WT, TYPE.ENGY, "0"));
+                sw.NewLine = DB.LF;
+                sw.WriteLine(TT.ToDBFileFormat("2016-06-30", NAME.EL, TYPE.ENGY, "0"));
+                sw.WriteLine(TT.ToDBFileFormat("2016-06-30", NAME.GS, TYPE.ENGY, "0"));
+                sw.WriteLine(TT.ToDBFileFormat("2016-06-30", NAME.WT, TYPE.ENGY, "0"));
                 sw.Close();
             }
         }
@@ -278,21 +278,21 @@ namespace AbookTest
         [TestFixtureTearDown]
         public void TestFixtureTearDown()
         {
-            if (File.Exists(CSV_EMPTY   )) File.Delete(CSV_EMPTY);
-            if (File.Exists(CSV_ONLY_EL )) File.Delete(CSV_ONLY_EL);
-            if (File.Exists(CSV_ONLY_GS )) File.Delete(CSV_ONLY_GS);
-            if (File.Exists(CSV_ONLY_WT )) File.Delete(CSV_ONLY_WT);
-            if (File.Exists(CSV_ENERGIES)) File.Delete(CSV_ENERGIES);
-            if (File.Exists(CSV_ONLY_ZERO)) File.Delete(CSV_ONLY_ZERO);
+            if (File.Exists(DB_FILE_EMPTY    )) File.Delete(DB_FILE_EMPTY);
+            if (File.Exists(DB_FILE_ONLY_EL  )) File.Delete(DB_FILE_ONLY_EL);
+            if (File.Exists(DB_FILE_ONLY_GS  )) File.Delete(DB_FILE_ONLY_GS);
+            if (File.Exists(DB_FILE_ONLY_WT  )) File.Delete(DB_FILE_ONLY_WT);
+            if (File.Exists(DB_FILE_ENERGIES )) File.Delete(DB_FILE_ENERGIES);
+            if (File.Exists(DB_FILE_ONLY_ZERO)) File.Delete(DB_FILE_ONLY_ZERO);
         }
 
         /// <summary>
         /// フォーム表示
         /// </summary>
-        /// <param name="csv">CSVファイル</param>
-        protected void ShowSubEnergy(string csv)
+        /// <param name="dbFile">DBファイル</param>
+        protected void ShowSubEnergy(string dbFile)
         {
-            form = new AbSubEnergy(AbDBManager.Load(csv));
+            form = new AbSubEnergy(AbDBManager.Load(dbFile));
             form.Show();
         }
 
@@ -352,7 +352,7 @@ namespace AbookTest
         [Test]
         public void LoadWithTitle()
         {
-            ShowSubEnergy(CSV_EMPTY);
+            ShowSubEnergy(DB_FILE_EMPTY);
             Assert.AreEqual("光熱費", form.Text);
         }
 
@@ -363,7 +363,7 @@ namespace AbookTest
         [Test]
         public void DgvElWithCountWithEmptyData()
         {
-            ShowSubEnergy(CSV_EMPTY);
+            ShowSubEnergy(DB_FILE_EMPTY);
             Assert.AreEqual(0, CtDgvEl().Rows.Count);
         }
 
@@ -374,7 +374,7 @@ namespace AbookTest
         [Test]
         public void DgvGsWithCountWithEmptyData()
         {
-            ShowSubEnergy(CSV_EMPTY);
+            ShowSubEnergy(DB_FILE_EMPTY);
             Assert.AreEqual(0, CtDgvGs().Rows.Count);
         }
 
@@ -385,7 +385,7 @@ namespace AbookTest
         [Test]
         public void DgvWtWithCountWithEmptyData()
         {
-            ShowSubEnergy(CSV_EMPTY);
+            ShowSubEnergy(DB_FILE_EMPTY);
             Assert.AreEqual(0, CtDgvWt().Rows.Count);
         }
 
@@ -396,7 +396,7 @@ namespace AbookTest
         [Test]
         public void DgvCountWithOnlyEl()
         {
-            ShowSubEnergy(CSV_ONLY_EL);
+            ShowSubEnergy(DB_FILE_ONLY_EL);
             Assert.AreEqual(1, CtDgvEl().Rows.Count);
             Assert.AreEqual(1, CtDgvGs().Rows.Count);
             Assert.AreEqual(1, CtDgvWt().Rows.Count);
@@ -409,7 +409,7 @@ namespace AbookTest
         [Test]
         public void DgvCountWithOnlyGs()
         {
-            ShowSubEnergy(CSV_ONLY_GS);
+            ShowSubEnergy(DB_FILE_ONLY_GS);
             Assert.AreEqual(2, CtDgvEl().Rows.Count);
             Assert.AreEqual(2, CtDgvGs().Rows.Count);
             Assert.AreEqual(2, CtDgvWt().Rows.Count);
@@ -422,7 +422,7 @@ namespace AbookTest
         [Test]
         public void DgvCountWithOnlyWt()
         {
-            ShowSubEnergy(CSV_ONLY_WT);
+            ShowSubEnergy(DB_FILE_ONLY_WT);
             Assert.AreEqual(3, CtDgvEl().Rows.Count);
             Assert.AreEqual(3, CtDgvGs().Rows.Count);
             Assert.AreEqual(3, CtDgvWt().Rows.Count);
@@ -434,7 +434,7 @@ namespace AbookTest
         [Test]
         public void DgvCountWithEnergies()
         {
-            ShowSubEnergy(CSV_ENERGIES);
+            ShowSubEnergy(DB_FILE_ENERGIES);
             Assert.AreEqual(6, CtDgvEl().Rows.Count);
             Assert.AreEqual(6, CtDgvGs().Rows.Count);
             Assert.AreEqual(6, CtDgvWt().Rows.Count);
@@ -447,7 +447,7 @@ namespace AbookTest
         [Test]
         public void DgvValueWithOnlyEl()
         {
-            ShowSubEnergy(CSV_ONLY_EL);
+            ShowSubEnergy(DB_FILE_ONLY_EL);
 
             var dgv = CtDgvEl();
             var row = dgv.Rows[0];
@@ -473,7 +473,7 @@ namespace AbookTest
         [Test]
         public void DgvValueWithOnlyGs()
         {
-            ShowSubEnergy(CSV_ONLY_GS);
+            ShowSubEnergy(DB_FILE_ONLY_GS);
 
             var dgv = CtDgvGs();
             var row1 = dgv.Rows[0];
@@ -514,7 +514,7 @@ namespace AbookTest
         [Test]
         public void DgvValueWithOnlyWt()
         {
-            ShowSubEnergy(CSV_ONLY_WT);
+            ShowSubEnergy(DB_FILE_ONLY_WT);
 
             var dgv = CtDgvWt();
             var row1 = dgv.Rows[0];
@@ -570,7 +570,7 @@ namespace AbookTest
         [Test]
         public void DgvValueWithEl2009()
         {
-            ShowSubEnergy(CSV_ENERGIES);
+            ShowSubEnergy(DB_FILE_ENERGIES);
 
             var dgv = CtDgvEl();
             var row = dgv.Rows[0];
@@ -596,7 +596,7 @@ namespace AbookTest
         [Test]
         public void DgvValueWithEl2010()
         {
-            ShowSubEnergy(CSV_ENERGIES);
+            ShowSubEnergy(DB_FILE_ENERGIES);
 
             var dgv = CtDgvEl();
             var row = dgv.Rows[1];
@@ -622,7 +622,7 @@ namespace AbookTest
         [Test]
         public void DgvValueWithEl2011()
         {
-            ShowSubEnergy(CSV_ENERGIES);
+            ShowSubEnergy(DB_FILE_ENERGIES);
 
             var dgv = CtDgvEl();
             var row = dgv.Rows[2];
@@ -648,7 +648,7 @@ namespace AbookTest
         [Test]
         public void DgvValueWithEl2012()
         {
-            ShowSubEnergy(CSV_ENERGIES);
+            ShowSubEnergy(DB_FILE_ENERGIES);
 
             var dgv = CtDgvEl();
             var row = dgv.Rows[3];
@@ -674,7 +674,7 @@ namespace AbookTest
         [Test]
         public void DgvValueWithEl2013()
         {
-            ShowSubEnergy(CSV_ENERGIES);
+            ShowSubEnergy(DB_FILE_ENERGIES);
 
             var dgv = CtDgvEl();
             var row = dgv.Rows[4];
@@ -700,7 +700,7 @@ namespace AbookTest
         [Test]
         public void DgvValueWithEl2014()
         {
-            ShowSubEnergy(CSV_ENERGIES);
+            ShowSubEnergy(DB_FILE_ENERGIES);
 
             var dgv = CtDgvEl();
             var row = dgv.Rows[5];
@@ -726,7 +726,7 @@ namespace AbookTest
         [Test]
         public void DgvValueWithGs2009()
         {
-            ShowSubEnergy(CSV_ENERGIES);
+            ShowSubEnergy(DB_FILE_ENERGIES);
 
             var dgv = CtDgvGs();
             var row = dgv.Rows[0];
@@ -752,7 +752,7 @@ namespace AbookTest
         [Test]
         public void DgvValueWithGs2010()
         {
-            ShowSubEnergy(CSV_ENERGIES);
+            ShowSubEnergy(DB_FILE_ENERGIES);
 
             var dgv = CtDgvGs();
             var row = dgv.Rows[1];
@@ -778,7 +778,7 @@ namespace AbookTest
         [Test]
         public void DgvValueWithGs2011()
         {
-            ShowSubEnergy(CSV_ENERGIES);
+            ShowSubEnergy(DB_FILE_ENERGIES);
 
             var dgv = CtDgvGs();
             var row = dgv.Rows[2];
@@ -804,7 +804,7 @@ namespace AbookTest
         [Test]
         public void DgvValueWithGs2012()
         {
-            ShowSubEnergy(CSV_ENERGIES);
+            ShowSubEnergy(DB_FILE_ENERGIES);
 
             var dgv = CtDgvGs();
             var row = dgv.Rows[3];
@@ -830,7 +830,7 @@ namespace AbookTest
         [Test]
         public void DgvValueWithGs2013()
         {
-            ShowSubEnergy(CSV_ENERGIES);
+            ShowSubEnergy(DB_FILE_ENERGIES);
 
             var dgv = CtDgvGs();
             var row = dgv.Rows[4];
@@ -856,7 +856,7 @@ namespace AbookTest
         [Test]
         public void DgvValueWithGs2014()
         {
-            ShowSubEnergy(CSV_ENERGIES);
+            ShowSubEnergy(DB_FILE_ENERGIES);
 
             var dgv = CtDgvGs();
             var row = dgv.Rows[5];
@@ -882,7 +882,7 @@ namespace AbookTest
         [Test]
         public void DgvValueWithWt2009()
         {
-            ShowSubEnergy(CSV_ENERGIES);
+            ShowSubEnergy(DB_FILE_ENERGIES);
 
             var dgv = CtDgvWt();
             var row = dgv.Rows[0];
@@ -908,7 +908,7 @@ namespace AbookTest
         [Test]
         public void DgvValueWithWt2010()
         {
-            ShowSubEnergy(CSV_ENERGIES);
+            ShowSubEnergy(DB_FILE_ENERGIES);
 
             var dgv = CtDgvWt();
             var row = dgv.Rows[1];
@@ -934,7 +934,7 @@ namespace AbookTest
         [Test]
         public void DgvValueWithWt2011()
         {
-            ShowSubEnergy(CSV_ENERGIES);
+            ShowSubEnergy(DB_FILE_ENERGIES);
 
             var dgv = CtDgvWt();
             var row = dgv.Rows[2];
@@ -960,7 +960,7 @@ namespace AbookTest
         [Test]
         public void DgvValueWithWt2012()
         {
-            ShowSubEnergy(CSV_ENERGIES);
+            ShowSubEnergy(DB_FILE_ENERGIES);
 
             var dgv = CtDgvWt();
             var row = dgv.Rows[3];
@@ -986,7 +986,7 @@ namespace AbookTest
         [Test]
         public void DgvValueWithWt2013()
         {
-            ShowSubEnergy(CSV_ENERGIES);
+            ShowSubEnergy(DB_FILE_ENERGIES);
 
             var dgv = CtDgvWt();
             var row = dgv.Rows[4];
@@ -1012,7 +1012,7 @@ namespace AbookTest
         [Test]
         public void DgvValueWithWt2014()
         {
-            ShowSubEnergy(CSV_ENERGIES);
+            ShowSubEnergy(DB_FILE_ENERGIES);
 
             var dgv = CtDgvWt();
             var row = dgv.Rows[5];
@@ -1038,7 +1038,7 @@ namespace AbookTest
         [Test]
         public void DgvMaxWithOnlyEl()
         {
-            ShowSubEnergy(CSV_ONLY_EL);
+            ShowSubEnergy(DB_FILE_ONLY_EL);
 
             var dgv = CtDgvEl();
             var row1 = dgv.Rows[0];
@@ -1065,7 +1065,7 @@ namespace AbookTest
         [Test]
         public void DgvMaxWithOnlyGs()
         {
-            ShowSubEnergy(CSV_ONLY_GS);
+            ShowSubEnergy(DB_FILE_ONLY_GS);
 
             var dgv = CtDgvGs();
             var row1 = dgv.Rows[0];
@@ -1091,7 +1091,7 @@ namespace AbookTest
         [Test]
         public void DgvMaxWithOnlyWt()
         {
-            ShowSubEnergy(CSV_ONLY_WT);
+            ShowSubEnergy(DB_FILE_ONLY_WT);
 
             var dgv = CtDgvWt();
             var row2 = dgv.Rows[2];
@@ -1118,7 +1118,7 @@ namespace AbookTest
         [Test]
         public void DgvMinWithOnlyEl()
         {
-            ShowSubEnergy(CSV_ONLY_EL);
+            ShowSubEnergy(DB_FILE_ONLY_EL);
 
             var dgv = CtDgvEl();
             var row1 = dgv.Rows[0];
@@ -1145,7 +1145,7 @@ namespace AbookTest
         [Test]
         public void DgvMinWithOnlyGs()
         {
-            ShowSubEnergy(CSV_ONLY_GS);
+            ShowSubEnergy(DB_FILE_ONLY_GS);
 
             var dgv = CtDgvGs();
             var row1 = dgv.Rows[0];
@@ -1171,7 +1171,7 @@ namespace AbookTest
         [Test]
         public void DgvMinWithOnlyWt()
         {
-            ShowSubEnergy(CSV_ONLY_WT);
+            ShowSubEnergy(DB_FILE_ONLY_WT);
 
             var dgv = CtDgvWt();
             var row1 = dgv.Rows[0];
@@ -1198,7 +1198,7 @@ namespace AbookTest
         [Test]
         public void DgvMaxWithEl()
         {
-            ShowSubEnergy(CSV_ENERGIES);
+            ShowSubEnergy(DB_FILE_ENERGIES);
 
             var dgv = CtDgvEl();
             var row1 = dgv.Rows[0];
@@ -1226,7 +1226,7 @@ namespace AbookTest
         [Test]
         public void DgvMaxWithGs()
         {
-            ShowSubEnergy(CSV_ENERGIES);
+            ShowSubEnergy(DB_FILE_ENERGIES);
 
             var dgv = CtDgvGs();
             var row1 = dgv.Rows[0];
@@ -1255,7 +1255,7 @@ namespace AbookTest
         [Test]
         public void DgvMaxWithWt()
         {
-            ShowSubEnergy(CSV_ENERGIES);
+            ShowSubEnergy(DB_FILE_ENERGIES);
 
             var dgv = CtDgvWt();
             var row1 = dgv.Rows[0];
@@ -1291,7 +1291,7 @@ namespace AbookTest
         [Test]
         public void DgvMinWithEl()
         {
-            ShowSubEnergy(CSV_ENERGIES);
+            ShowSubEnergy(DB_FILE_ENERGIES);
 
             var dgv = CtDgvEl();
             var row1 = dgv.Rows[0];
@@ -1319,7 +1319,7 @@ namespace AbookTest
         [Test]
         public void DgvMinWithGs()
         {
-            ShowSubEnergy(CSV_ENERGIES);
+            ShowSubEnergy(DB_FILE_ENERGIES);
 
             var dgv = CtDgvGs();
             var row1 = dgv.Rows[0];
@@ -1347,7 +1347,7 @@ namespace AbookTest
         [Test]
         public void DgvMinWithWt()
         {
-            ShowSubEnergy(CSV_ENERGIES);
+            ShowSubEnergy(DB_FILE_ENERGIES);
 
             var dgv = CtDgvWt();
             var row1 = dgv.Rows[0];
@@ -1378,7 +1378,7 @@ namespace AbookTest
         [Test]
         public void DgvErrorNotOccuredWithOnlyZero()
         {
-            ShowSubEnergy(CSV_ONLY_ZERO);
+            ShowSubEnergy(DB_FILE_ONLY_ZERO);
 
             var rowEl = CtDgvEl().Rows[0];
             Assert.AreEqual(0, rowEl.Cells[3].Value, MSG.MONTH06);

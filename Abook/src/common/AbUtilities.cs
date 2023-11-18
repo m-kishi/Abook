@@ -169,12 +169,12 @@ namespace Abook
             }
 
             /// <summary>
-            /// NULLチェック(CSVファイル名)
+            /// NULLチェック(DBファイル)
             /// </summary>
-            /// <param name="csv">CSVファイル名</param>
-            public static void CsvNull(string csv)
+            /// <param name="dbFile">DBファイル</param>
+            public static void DBFileNull(string dbFile)
             {
-                if (string.IsNullOrEmpty(csv)) AbException.Throw(EX.CSV_NULL);
+                if (string.IsNullOrEmpty(dbFile)) AbException.Throw(EX.DB_FILE_NULL);
             }
 
             /// <summary>
@@ -201,13 +201,13 @@ namespace Abook
             /// <param name="exp">支出情報リスト</param>
             public static void ExpCount(List<AbExpense> exp)
             {
-                if (exp == null || exp.Count <= 0) AbException.Throw(EX.CSV_RECORD_NOTHING);
+                if (exp == null || exp.Count <= 0) AbException.Throw(EX.DB_FILE_RECORD_NOTHING);
             }
 
             /// <summary>
-            /// NULLチェック(集計値リスト)
+            /// NULLチェック(月次情報リスト)
             /// </summary>
-            /// <param name="sum">集計値リスト</param>
+            /// <param name="sum">月次情報リスト</param>
             public static void SumNull(List<AbSummary> sum)
             {
                 if (sum == null) AbException.Throw(EX.SUMMARIES_NULL);

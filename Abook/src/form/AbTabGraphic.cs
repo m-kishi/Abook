@@ -9,24 +9,24 @@ namespace Abook
     using System.Windows.Forms;
 
     /// <summary>
-    /// 推移(グラフ)タブ
+    /// 推移タブ
     /// </summary>
     public partial class AbFormMain
     {
-        /// <summary>グラフデータ管理</summary>
+        /// <summary>推移情報管理</summary>
         private AbGraphicManager abGraphicManager;
 
         /// <summary>
-        /// 推移(グラフ)タブ初期化
+        /// 推移タブ初期化
         /// </summary>
-        /// <param name="summaries">集計値リスト</param>
+        /// <param name="summaries">月次情報リスト</param>
         private void InitTabGraphic(List<AbSummary> summaries)
         {
             abGraphicManager = new AbGraphicManager(DateTime.Now, summaries);
         }
 
         /// <summary>
-        /// グラフ描画イベント
+        /// 描画イベント
         /// </summary>
         private void PboxGraph_Paint(object sender, PaintEventArgs e)
         {
@@ -34,10 +34,10 @@ namespace Abook
         }
 
         /// <summary>
-        /// 推移(グラフ)タブ表示
+        /// 推移タブ表示
         /// </summary>
         /// <param name="g">Graphicsオブジェクト</param>
-        /// <param name="GraphicManager">グラフデータ管理</param>
+        /// <param name="GraphicManager">推移情報管理</param>
         private void SetViewGraph(Graphics g, Action GraphicManager)
         {
             GraphicManager();

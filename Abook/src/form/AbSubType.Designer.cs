@@ -6,7 +6,7 @@ namespace Abook
     using System.ComponentModel;
 
     /// <summary>
-    /// 種別明細サブフォームデザイナ
+    /// 種別サブフォームデザイナ
     /// </summary>
     partial class AbSubType
     {

@@ -10,21 +10,21 @@ namespace AbookTest
     using NUnit.Framework;
     using NUnit.Extensions.Forms;
     using TT   = AbTestTool;
+    using DB   = Abook.AbConstants.DB;
     using COL  = Abook.AbConstants.COL;
-    using CSV  = Abook.AbConstants.CSV;
     using TYPE = Abook.AbConstants.TYPE;
 
     /// <summary>
-    /// 種別明細サブフォームテスト
+    /// 種別サブフォームテスト
     /// </summary>
     [TestFixture]
     public class AbTestSubType : NUnitFormTest
     {
-        /// <summary>CSVファイル</summary>
-        private const string CSV_EMPTY = "AbTestSubTypeEmpty.db";
-        /// <summary>CSVファイル</summary>
-        private const string CSV_EXIST = "AbTestSubTypeExist.db";
-        /// <summary>対象:種別明細サブ</summary>
+        /// <summary>DBファイル</summary>
+        private const string DB_FILE_EMPTY = "AbTestSubTypeEmpty.db";
+        /// <summary>DBファイル</summary>
+        private const string DB_FILE_EXIST = "AbTestSubTypeExist.db";
+        /// <summary>対象:種別サブフォーム</summary>
         protected AbSubType form;
 
         /// <summary>
@@ -57,23 +57,23 @@ namespace AbookTest
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            using (StreamWriter sw = new StreamWriter(CSV_EXIST, false, CSV.ENCODING))
+            using (StreamWriter sw = new StreamWriter(DB_FILE_EXIST, false, DB.ENCODING))
             {
-                sw.NewLine = CSV.LF;
-                sw.WriteLine(TT.ToCSV("2014-02-26", "name01", TYPE.FOOD, "1000"));
-                sw.WriteLine(TT.ToCSV("2014-02-27", "name02", TYPE.OTFD, "1100"));
-                sw.WriteLine(TT.ToCSV("2014-02-28", "name03", TYPE.GOOD, "1200"));
-                sw.WriteLine(TT.ToCSV("2014-03-01", "name04", TYPE.FOOD, "1300"));
-                sw.WriteLine(TT.ToCSV("2014-03-02", "name05", TYPE.OTFD, "1400"));
-                sw.WriteLine(TT.ToCSV("2014-03-03", "name06", TYPE.GOOD, "1500"));
-                sw.WriteLine(TT.ToCSV("2014-03-28", "name07", TYPE.FOOD, "1600"));
-                sw.WriteLine(TT.ToCSV("2014-03-29", "name08", TYPE.OTFD, "1700"));
-                sw.WriteLine(TT.ToCSV("2014-03-30", "name09", TYPE.GOOD, "1800"));
-                sw.WriteLine(TT.ToCSV("2014-03-31", "name10", TYPE.FOOD, "1900"));
-                sw.WriteLine(TT.ToCSV("2014-04-01", "name11", TYPE.FOOD, "2000"));
-                sw.WriteLine(TT.ToCSV("2014-04-02", "name12", TYPE.OTFD, "2100"));
-                sw.WriteLine(TT.ToCSV("2014-04-03", "name13", TYPE.GOOD, "2200"));
-                sw.WriteLine(TT.ToCSV("2020-12-07", "name14", TYPE.FOOD, "2300", "note14"));
+                sw.NewLine = DB.LF;
+                sw.WriteLine(TT.ToDBFileFormat("2014-02-26", "name01", TYPE.FOOD, "1000"));
+                sw.WriteLine(TT.ToDBFileFormat("2014-02-27", "name02", TYPE.OTFD, "1100"));
+                sw.WriteLine(TT.ToDBFileFormat("2014-02-28", "name03", TYPE.GOOD, "1200"));
+                sw.WriteLine(TT.ToDBFileFormat("2014-03-01", "name04", TYPE.FOOD, "1300"));
+                sw.WriteLine(TT.ToDBFileFormat("2014-03-02", "name05", TYPE.OTFD, "1400"));
+                sw.WriteLine(TT.ToDBFileFormat("2014-03-03", "name06", TYPE.GOOD, "1500"));
+                sw.WriteLine(TT.ToDBFileFormat("2014-03-28", "name07", TYPE.FOOD, "1600"));
+                sw.WriteLine(TT.ToDBFileFormat("2014-03-29", "name08", TYPE.OTFD, "1700"));
+                sw.WriteLine(TT.ToDBFileFormat("2014-03-30", "name09", TYPE.GOOD, "1800"));
+                sw.WriteLine(TT.ToDBFileFormat("2014-03-31", "name10", TYPE.FOOD, "1900"));
+                sw.WriteLine(TT.ToDBFileFormat("2014-04-01", "name11", TYPE.FOOD, "2000"));
+                sw.WriteLine(TT.ToDBFileFormat("2014-04-02", "name12", TYPE.OTFD, "2100"));
+                sw.WriteLine(TT.ToDBFileFormat("2014-04-03", "name13", TYPE.GOOD, "2200"));
+                sw.WriteLine(TT.ToDBFileFormat("2020-12-07", "name14", TYPE.FOOD, "2300", "note14"));
                 sw.Close();
             }
         }
@@ -84,27 +84,27 @@ namespace AbookTest
         [TestFixtureTearDown]
         public void TestFixtureTearDown()
         {
-            if (File.Exists(CSV_EMPTY)) File.Delete(CSV_EMPTY);
-            if (File.Exists(CSV_EXIST)) File.Delete(CSV_EXIST);
+            if (File.Exists(DB_FILE_EMPTY)) File.Delete(DB_FILE_EMPTY);
+            if (File.Exists(DB_FILE_EXIST)) File.Delete(DB_FILE_EXIST);
         }
 
         /// <summary>
         /// フォーム表示
         /// </summary>
-        /// <param name="csv">CSVファイル</param>
-        protected void ShowSubType(string csv)
+        /// <param name="dbFile">DBファイル</param>
+        protected void ShowSubType(string dbFile)
         {
             var current = new DateTime(2014, 3, 1);
-            var expenses = AbDBManager.Load(csv);
+            var expenses = AbDBManager.Load(dbFile);
 
             form = new AbSubType(TYPE.FOOD, current, expenses);
             form.Show();
         }
 
         /// <summary>
-        /// 種別明細サブフォーム取得
+        /// 種別サブフォーム取得
         /// </summary>
-        /// <returns>種別明細サブフォーム</returns>
+        /// <returns>種別サブフォーム</returns>
         protected Form CtAbSubType()
         {
             var finder = new FormFinder();
@@ -126,7 +126,7 @@ namespace AbookTest
         [Test]
         public void Load()
         {
-            ShowSubType(CSV_EMPTY);
+            ShowSubType(DB_FILE_EMPTY);
             Assert.IsTrue(CtAbSubType().Visible);
         }
 
@@ -136,7 +136,7 @@ namespace AbookTest
         [Test]
         public void LoadWithTypeName()
         {
-            ShowSubType(CSV_EMPTY);
+            ShowSubType(DB_FILE_EMPTY);
             Assert.AreEqual(TYPE.FOOD, form.Text);
         }
 
@@ -146,7 +146,7 @@ namespace AbookTest
         [Test]
         public void DgvExpenseWithCount()
         {
-            ShowSubType(CSV_EXIST);
+            ShowSubType(DB_FILE_EXIST);
             Assert.AreEqual(3, CtDgvExpense().Rows.Count);
         }
 
@@ -157,7 +157,7 @@ namespace AbookTest
         [Test]
         public void DgvExpenseWithCountWithEmptyData()
         {
-            ShowSubType(CSV_EMPTY);
+            ShowSubType(DB_FILE_EMPTY);
             Assert.AreEqual(0, CtDgvExpense().Rows.Count);
         }
 
@@ -169,7 +169,7 @@ namespace AbookTest
         public void DgvExpenseWithCountWithOutOfDate()
         {
             var current = new DateTime(2014, 5, 1);
-            var expenses = AbDBManager.Load(CSV_EXIST);
+            var expenses = AbDBManager.Load(DB_FILE_EXIST);
 
             form = new AbSubType(TYPE.FOOD, current, expenses);
             form.Show();
@@ -185,7 +185,7 @@ namespace AbookTest
         public void DgvExpenseWithCountWithEmptyType()
         {
             var current = new DateTime(2014, 3, 1);
-            var expenses = AbDBManager.Load(CSV_EXIST);
+            var expenses = AbDBManager.Load(DB_FILE_EXIST);
 
             form = new AbSubType(TYPE.HOUS, current, expenses);
             form.Show();
@@ -199,7 +199,7 @@ namespace AbookTest
         [Test]
         public void DgvExpenseWithDate()
         {
-            ShowSubType(CSV_EXIST);
+            ShowSubType(DB_FILE_EXIST);
 
             var dgvExpense = CtDgvExpense();
             Assert.AreEqual("2014-03-01", dgvExpense.Rows[0].Cells[COL.DATE].Value);
@@ -213,7 +213,7 @@ namespace AbookTest
         [Test]
         public void DgvExpenseWithName()
         {
-            ShowSubType(CSV_EXIST);
+            ShowSubType(DB_FILE_EXIST);
 
             var dgvExpense = CtDgvExpense();
             Assert.AreEqual("name04", dgvExpense.Rows[0].Cells[COL.NAME].Value);
@@ -227,7 +227,7 @@ namespace AbookTest
         [Test]
         public void DgvExpenseWithType()
         {
-            ShowSubType(CSV_EXIST);
+            ShowSubType(DB_FILE_EXIST);
 
             var dgvExpense = CtDgvExpense();
             Assert.AreEqual(TYPE.FOOD, dgvExpense.Rows[0].Cells[COL.TYPE].Value);
@@ -241,7 +241,7 @@ namespace AbookTest
         [Test]
         public void DgvExpenseWithCost()
         {
-            ShowSubType(CSV_EXIST);
+            ShowSubType(DB_FILE_EXIST);
 
             var dgvExpense = CtDgvExpense();
             Assert.AreEqual(1300, dgvExpense.Rows[0].Cells[COL.COST].Value);
@@ -257,7 +257,7 @@ namespace AbookTest
         public void DgvExpenseWithNote()
         {
             var current = new DateTime(2020, 12, 1);
-            var expenses = AbDBManager.Load(CSV_EXIST);
+            var expenses = AbDBManager.Load(DB_FILE_EXIST);
 
             form = new AbSubType(TYPE.FOOD, current, expenses);
             form.Show();
@@ -272,7 +272,7 @@ namespace AbookTest
         [Test]
         public void DgvExpenseWithNoteWithEmpty()
         {
-            ShowSubType(CSV_EXIST);
+            ShowSubType(DB_FILE_EXIST);
 
             Assert.AreEqual("", CtDgvExpense().Rows[0].Cells[COL.NAME].ToolTipText);
         }

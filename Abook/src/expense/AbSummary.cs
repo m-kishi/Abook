@@ -12,23 +12,23 @@ namespace Abook
     using TYPE = Abook.AbConstants.TYPE;
 
     /// <summary>
-    /// 集計値クラス
+    /// 月次情報クラス
     /// </summary>
     public partial class AbSummary
     {
-        /// <summary>集計年</summary>
+        /// <summary>年</summary>
         public int Year  { get; private set; }
-        /// <summary>集計月</summary>
+        /// <summary>月</summary>
         public int Month { get; private set; }
-        /// <summary>種別ごとの集計値</summary>
+        /// <summary>種別ごとの集計</summary>
         private Dictionary<string, decimal> dicSumByType;
-        /// <summary>名前ごとの集計値</summary>
+        /// <summary>名称ごとの集計</summary>
         private Dictionary<string, decimal> dicSumByName;
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        /// <param name="date">集計日付</param>
+        /// <param name="date">日付</param>
         /// <param name="expenses">支出情報リスト</param>
         public AbSummary(DateTime date, List<AbExpense> expenses)
         {
@@ -67,10 +67,10 @@ namespace Abook
         }
 
         /// <summary>
-        /// 名前ごとの集計
+        /// 名称ごとの集計
         /// </summary>
         /// <param name="expenses">支出情報リスト</param>
-        /// <returns>名前ごとの集計</returns>
+        /// <returns>名称ごとの集計</returns>
         private Dictionary<string, decimal> SummaryByName(List<AbExpense> expenses)
         {
             CHK.ExpNull(expenses);
@@ -86,10 +86,10 @@ namespace Abook
         }
 
         /// <summary>
-        /// 集計値取得
+        /// 金額取得
         /// </summary>
         /// <param name="type">種別</param>
-        /// <returns>集計値</returns>
+        /// <returns>金額</returns>
         public decimal GetCostByType(string type)
         {
             if (string.IsNullOrEmpty(type)) return decimal.Zero;
@@ -97,10 +97,10 @@ namespace Abook
         }
 
         /// <summary>
-        /// 集計値取得
+        /// 金額取得
         /// </summary>
         /// <param name="name">名称</param>
-        /// <returns>集計値</returns>
+        /// <returns>金額</returns>
         public decimal GetCostByName(string name)
         {
             if (string.IsNullOrEmpty(name)) return decimal.Zero;
@@ -109,16 +109,16 @@ namespace Abook
     }
 
     /// <summary>
-    /// 集計値クラス
+    /// 月次情報クラス
     /// staticメソッド定義
     /// </summary>
     public partial class AbSummary
     {
         /// <summary>
-        /// 集計値リスト生成
+        /// 月次情報リスト生成
         /// </summary>
         /// <param name="expenses">支出情報リスト</param>
-        /// <returns>集計値リスト</returns>
+        /// <returns>月次情報リスト</returns>
         public static List<AbSummary> GetSummaries(List<AbExpense> expenses)
         {
             CHK.ExpNull(expenses);
