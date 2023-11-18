@@ -8,7 +8,7 @@ namespace Abook
     using System.Linq;
     using System.Windows.Forms;
     using CHK = Abook.AbUtilities.CHK;
-    using COL = Abook.AbConstants.COL;
+    using COL = Abook.AbConstants.COL.EXPENSE;
     using FMT = Abook.AbConstants.FMT;
     using MSG = Abook.AbUtilities.MSG;
 

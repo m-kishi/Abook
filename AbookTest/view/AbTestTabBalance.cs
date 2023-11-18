@@ -8,7 +8,7 @@ namespace AbookTest
     using NUnit.Extensions.Forms;
     using TT   = AbTestTool;
     using DB   = Abook.AbConstants.DB;
-    using COL  = Abook.AbConstants.COL;
+    using COL  = Abook.AbConstants.COL.BALANCE;
     using TYPE = Abook.AbConstants.TYPE;
 
     /// <summary>
@@ -187,10 +187,10 @@ namespace AbookTest
             ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             var dgvBalance = CtDgvBalance();
-            Assert.AreEqual(1100000, dgvBalance.Rows[0].Cells[COL.EXPENSE].Value);
-            Assert.AreEqual(1000000, dgvBalance.Rows[1].Cells[COL.EXPENSE].Value);
-            Assert.AreEqual(1200000, dgvBalance.Rows[2].Cells[COL.EXPENSE].Value);
-            Assert.AreEqual(3300000, dgvBalance.Rows[3].Cells[COL.EXPENSE].Value);
+            Assert.AreEqual(1100000, dgvBalance.Rows[0].Cells[COL.EXPC].Value);
+            Assert.AreEqual(1000000, dgvBalance.Rows[1].Cells[COL.EXPC].Value);
+            Assert.AreEqual(1200000, dgvBalance.Rows[2].Cells[COL.EXPC].Value);
+            Assert.AreEqual(3300000, dgvBalance.Rows[3].Cells[COL.EXPC].Value);
         }
 
         /// <summary>
@@ -202,10 +202,10 @@ namespace AbookTest
             ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             var dgvBalance = CtDgvBalance();
-            Assert.AreEqual(180000, dgvBalance.Rows[0].Cells[COL.SPECIAL].Value);
-            Assert.AreEqual(138000, dgvBalance.Rows[1].Cells[COL.SPECIAL].Value);
-            Assert.AreEqual(100000, dgvBalance.Rows[2].Cells[COL.SPECIAL].Value);
-            Assert.AreEqual(418000, dgvBalance.Rows[3].Cells[COL.SPECIAL].Value);
+            Assert.AreEqual(180000, dgvBalance.Rows[0].Cells[COL.SPCL].Value);
+            Assert.AreEqual(138000, dgvBalance.Rows[1].Cells[COL.SPCL].Value);
+            Assert.AreEqual(100000, dgvBalance.Rows[2].Cells[COL.SPCL].Value);
+            Assert.AreEqual(418000, dgvBalance.Rows[3].Cells[COL.SPCL].Value);
         }
 
         /// <summary>
@@ -217,10 +217,10 @@ namespace AbookTest
             ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             var dgvBalance = CtDgvBalance();
-            Assert.AreEqual( 1045000, dgvBalance.Rows[0].Cells[COL.BALANCE].Value);
-            Assert.AreEqual( 1265000, dgvBalance.Rows[1].Cells[COL.BALANCE].Value);
-            Assert.AreEqual(-1300000, dgvBalance.Rows[2].Cells[COL.BALANCE].Value);
-            Assert.AreEqual( 1010000, dgvBalance.Rows[3].Cells[COL.BALANCE].Value);
+            Assert.AreEqual( 1045000, dgvBalance.Rows[0].Cells[COL.BLNC].Value);
+            Assert.AreEqual( 1265000, dgvBalance.Rows[1].Cells[COL.BLNC].Value);
+            Assert.AreEqual(-1300000, dgvBalance.Rows[2].Cells[COL.BLNC].Value);
+            Assert.AreEqual( 1010000, dgvBalance.Rows[3].Cells[COL.BLNC].Value);
         }
     }
 }

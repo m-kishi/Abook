@@ -9,7 +9,7 @@ namespace Abook
     using System.Windows.Forms;
     using UTL = Abook.AbUtilities;
     using CHK = Abook.AbUtilities.CHK;
-    using COL = Abook.AbConstants.COL;
+    using COL = Abook.AbConstants.COL.EXPENSE;
     using FMT = Abook.AbConstants.FMT;
     using TYPE = Abook.AbConstants.TYPE;
 

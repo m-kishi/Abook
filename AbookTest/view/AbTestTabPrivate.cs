@@ -8,7 +8,7 @@ namespace AbookTest
     using NUnit.Extensions.Forms;
     using TT   = AbTestTool;
     using DB   = Abook.AbConstants.DB;
-    using COL  = Abook.AbConstants.COL;
+    using COL  = Abook.AbConstants.COL.PRIVATE;
     using TYPE = Abook.AbConstants.TYPE;
 
     /// <summary>
@@ -89,7 +89,7 @@ namespace AbookTest
 
             var dgvPrivate = CtDgvPrivate();
             var row = dgvPrivate.SelectedRows[0];
-            var cell = dgvPrivate.Rows[dgvPrivate.Rows.Count - 1].Cells[COL.PRIVATE.BLNC];
+            var cell = dgvPrivate.Rows[dgvPrivate.Rows.Count - 1].Cells[COL.BLNC];
 
             Assert.True(row.Selected);
             Assert.True(cell.Selected);
@@ -122,14 +122,14 @@ namespace AbookTest
             ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             var dgvPrivate = CtDgvPrivate();
-            Assert.AreEqual("2009-04", dgvPrivate.Rows[0].Cells[COL.PRIVATE.DATE].Value);
-            Assert.AreEqual("2009-05", dgvPrivate.Rows[1].Cells[COL.PRIVATE.DATE].Value);
-            Assert.AreEqual("2010-06", dgvPrivate.Rows[2].Cells[COL.PRIVATE.DATE].Value);
-            Assert.AreEqual("2010-07", dgvPrivate.Rows[3].Cells[COL.PRIVATE.DATE].Value);
-            Assert.AreEqual("2011-08", dgvPrivate.Rows[4].Cells[COL.PRIVATE.DATE].Value);
-            Assert.AreEqual("2011-09", dgvPrivate.Rows[5].Cells[COL.PRIVATE.DATE].Value);
-            Assert.AreEqual("2012-10", dgvPrivate.Rows[6].Cells[COL.PRIVATE.DATE].Value);
-            Assert.AreEqual("2012-11", dgvPrivate.Rows[7].Cells[COL.PRIVATE.DATE].Value);
+            Assert.AreEqual("2009-04", dgvPrivate.Rows[0].Cells[COL.DATE].Value);
+            Assert.AreEqual("2009-05", dgvPrivate.Rows[1].Cells[COL.DATE].Value);
+            Assert.AreEqual("2010-06", dgvPrivate.Rows[2].Cells[COL.DATE].Value);
+            Assert.AreEqual("2010-07", dgvPrivate.Rows[3].Cells[COL.DATE].Value);
+            Assert.AreEqual("2011-08", dgvPrivate.Rows[4].Cells[COL.DATE].Value);
+            Assert.AreEqual("2011-09", dgvPrivate.Rows[5].Cells[COL.DATE].Value);
+            Assert.AreEqual("2012-10", dgvPrivate.Rows[6].Cells[COL.DATE].Value);
+            Assert.AreEqual("2012-11", dgvPrivate.Rows[7].Cells[COL.DATE].Value);
         }
 
         /// <summary>
@@ -141,14 +141,14 @@ namespace AbookTest
             ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             var dgvPrivate = CtDgvPrivate();
-            Assert.AreEqual("private01", dgvPrivate.Rows[0].Cells[COL.PRIVATE.NAME].Value);
-            Assert.AreEqual("private02", dgvPrivate.Rows[1].Cells[COL.PRIVATE.NAME].Value);
-            Assert.AreEqual("private03", dgvPrivate.Rows[2].Cells[COL.PRIVATE.NAME].Value);
-            Assert.AreEqual("private04", dgvPrivate.Rows[3].Cells[COL.PRIVATE.NAME].Value);
-            Assert.AreEqual("private05", dgvPrivate.Rows[4].Cells[COL.PRIVATE.NAME].Value);
-            Assert.AreEqual("private06", dgvPrivate.Rows[5].Cells[COL.PRIVATE.NAME].Value);
-            Assert.AreEqual("private07", dgvPrivate.Rows[6].Cells[COL.PRIVATE.NAME].Value);
-            Assert.AreEqual("private08", dgvPrivate.Rows[7].Cells[COL.PRIVATE.NAME].Value);
+            Assert.AreEqual("private01", dgvPrivate.Rows[0].Cells[COL.NAME].Value);
+            Assert.AreEqual("private02", dgvPrivate.Rows[1].Cells[COL.NAME].Value);
+            Assert.AreEqual("private03", dgvPrivate.Rows[2].Cells[COL.NAME].Value);
+            Assert.AreEqual("private04", dgvPrivate.Rows[3].Cells[COL.NAME].Value);
+            Assert.AreEqual("private05", dgvPrivate.Rows[4].Cells[COL.NAME].Value);
+            Assert.AreEqual("private06", dgvPrivate.Rows[5].Cells[COL.NAME].Value);
+            Assert.AreEqual("private07", dgvPrivate.Rows[6].Cells[COL.NAME].Value);
+            Assert.AreEqual("private08", dgvPrivate.Rows[7].Cells[COL.NAME].Value);
         }
 
         /// <summary>
@@ -160,14 +160,14 @@ namespace AbookTest
             ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             var dgvPrivate = CtDgvPrivate();
-            Assert.AreEqual( 10000, dgvPrivate.Rows[0].Cells[COL.PRIVATE.COST].Value);
-            Assert.AreEqual( 20000, dgvPrivate.Rows[1].Cells[COL.PRIVATE.COST].Value);
-            Assert.AreEqual( 30000, dgvPrivate.Rows[2].Cells[COL.PRIVATE.COST].Value);
-            Assert.AreEqual(-40000, dgvPrivate.Rows[3].Cells[COL.PRIVATE.COST].Value);
-            Assert.AreEqual( 50000, dgvPrivate.Rows[4].Cells[COL.PRIVATE.COST].Value);
-            Assert.AreEqual( 60000, dgvPrivate.Rows[5].Cells[COL.PRIVATE.COST].Value);
-            Assert.AreEqual( 70000, dgvPrivate.Rows[6].Cells[COL.PRIVATE.COST].Value);
-            Assert.AreEqual(-80000, dgvPrivate.Rows[7].Cells[COL.PRIVATE.COST].Value);
+            Assert.AreEqual( 10000, dgvPrivate.Rows[0].Cells[COL.COST].Value);
+            Assert.AreEqual( 20000, dgvPrivate.Rows[1].Cells[COL.COST].Value);
+            Assert.AreEqual( 30000, dgvPrivate.Rows[2].Cells[COL.COST].Value);
+            Assert.AreEqual(-40000, dgvPrivate.Rows[3].Cells[COL.COST].Value);
+            Assert.AreEqual( 50000, dgvPrivate.Rows[4].Cells[COL.COST].Value);
+            Assert.AreEqual( 60000, dgvPrivate.Rows[5].Cells[COL.COST].Value);
+            Assert.AreEqual( 70000, dgvPrivate.Rows[6].Cells[COL.COST].Value);
+            Assert.AreEqual(-80000, dgvPrivate.Rows[7].Cells[COL.COST].Value);
         }
 
         /// <summary>
@@ -179,14 +179,14 @@ namespace AbookTest
             ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             var dgvPrivate = CtDgvPrivate();
-            Assert.AreEqual("", dgvPrivate.Rows[0].Cells[COL.PRIVATE.NAME].ToolTipText);
-            Assert.AreEqual("", dgvPrivate.Rows[1].Cells[COL.PRIVATE.NAME].ToolTipText);
-            Assert.AreEqual("", dgvPrivate.Rows[2].Cells[COL.PRIVATE.NAME].ToolTipText);
-            Assert.AreEqual("", dgvPrivate.Rows[3].Cells[COL.PRIVATE.NAME].ToolTipText);
-            Assert.AreEqual("", dgvPrivate.Rows[4].Cells[COL.PRIVATE.NAME].ToolTipText);
-            Assert.AreEqual("", dgvPrivate.Rows[5].Cells[COL.PRIVATE.NAME].ToolTipText);
-            Assert.AreEqual("", dgvPrivate.Rows[6].Cells[COL.PRIVATE.NAME].ToolTipText);
-            Assert.AreEqual("note08", dgvPrivate.Rows[7].Cells[COL.PRIVATE.NAME].ToolTipText);
+            Assert.AreEqual("", dgvPrivate.Rows[0].Cells[COL.NAME].ToolTipText);
+            Assert.AreEqual("", dgvPrivate.Rows[1].Cells[COL.NAME].ToolTipText);
+            Assert.AreEqual("", dgvPrivate.Rows[2].Cells[COL.NAME].ToolTipText);
+            Assert.AreEqual("", dgvPrivate.Rows[3].Cells[COL.NAME].ToolTipText);
+            Assert.AreEqual("", dgvPrivate.Rows[4].Cells[COL.NAME].ToolTipText);
+            Assert.AreEqual("", dgvPrivate.Rows[5].Cells[COL.NAME].ToolTipText);
+            Assert.AreEqual("", dgvPrivate.Rows[6].Cells[COL.NAME].ToolTipText);
+            Assert.AreEqual("note08", dgvPrivate.Rows[7].Cells[COL.NAME].ToolTipText);
         }
 
         /// <summary>
@@ -198,14 +198,14 @@ namespace AbookTest
             ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             var dgvPrivate = CtDgvPrivate();
-            Assert.AreEqual( 10000, dgvPrivate.Rows[0].Cells[COL.PRIVATE.BLNC].Value);
-            Assert.AreEqual( 30000, dgvPrivate.Rows[1].Cells[COL.PRIVATE.BLNC].Value);
-            Assert.AreEqual( 60000, dgvPrivate.Rows[2].Cells[COL.PRIVATE.BLNC].Value);
-            Assert.AreEqual( 20000, dgvPrivate.Rows[3].Cells[COL.PRIVATE.BLNC].Value);
-            Assert.AreEqual( 70000, dgvPrivate.Rows[4].Cells[COL.PRIVATE.BLNC].Value);
-            Assert.AreEqual(130000, dgvPrivate.Rows[5].Cells[COL.PRIVATE.BLNC].Value);
-            Assert.AreEqual(200000, dgvPrivate.Rows[6].Cells[COL.PRIVATE.BLNC].Value);
-            Assert.AreEqual(120000, dgvPrivate.Rows[7].Cells[COL.PRIVATE.BLNC].Value);
+            Assert.AreEqual( 10000, dgvPrivate.Rows[0].Cells[COL.BLNC].Value);
+            Assert.AreEqual( 30000, dgvPrivate.Rows[1].Cells[COL.BLNC].Value);
+            Assert.AreEqual( 60000, dgvPrivate.Rows[2].Cells[COL.BLNC].Value);
+            Assert.AreEqual( 20000, dgvPrivate.Rows[3].Cells[COL.BLNC].Value);
+            Assert.AreEqual( 70000, dgvPrivate.Rows[4].Cells[COL.BLNC].Value);
+            Assert.AreEqual(130000, dgvPrivate.Rows[5].Cells[COL.BLNC].Value);
+            Assert.AreEqual(200000, dgvPrivate.Rows[6].Cells[COL.BLNC].Value);
+            Assert.AreEqual(120000, dgvPrivate.Rows[7].Cells[COL.BLNC].Value);
         }
     }
 }

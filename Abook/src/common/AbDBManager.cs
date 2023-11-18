@@ -12,7 +12,7 @@ namespace Abook
     using EX  = Abook.AbException.EX;
     using DB  = Abook.AbConstants.DB;
     using CHK = Abook.AbUtilities.CHK;
-    using COL = Abook.AbConstants.COL;
+    using COL = Abook.AbConstants.COL.EXPENSE;
     using UTL = Abook.AbUtilities;
 
     /// <summary>

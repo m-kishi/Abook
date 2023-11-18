@@ -11,7 +11,7 @@ namespace AbookTest
     using NUnit.Extensions.Forms;
     using TT   = AbTestTool;
     using DB   = Abook.AbConstants.DB;
-    using COL  = Abook.AbConstants.COL;
+    using COL  = Abook.AbConstants.COL.EXPENSE;
     using TYPE = Abook.AbConstants.TYPE;
 
     /// <summary>

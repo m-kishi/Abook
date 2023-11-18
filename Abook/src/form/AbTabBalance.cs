@@ -5,7 +5,7 @@ namespace Abook
 {
     using System.Collections.Generic;
     using System.Linq;
-    using COL = Abook.AbConstants.COL;
+    using COL = Abook.AbConstants.COL.BALANCE;
 
     /// <summary>
     /// 収支タブ
@@ -41,9 +41,9 @@ namespace Abook
                     var row = DgvBalance.Rows[i++];
                     row.Cells[COL.YEAR].Value = bln.Year;
                     row.Cells[COL.EARN].Value = bln.Earn;
-                    row.Cells[COL.EXPENSE].Value = bln.Expense;
-                    row.Cells[COL.SPECIAL].Value = bln.Special;
-                    row.Cells[COL.BALANCE].Value = bln.Balance;
+                    row.Cells[COL.EXPC].Value = bln.Expense;
+                    row.Cells[COL.SPCL].Value = bln.Special;
+                    row.Cells[COL.BLNC].Value = bln.Balance;
                 }
             }
 

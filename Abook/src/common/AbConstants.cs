@@ -13,26 +13,35 @@ namespace Abook
         /// <summary>カラム</summary>
         public static class COL
         {
-            /// <summary>日付</summary>
-            public const string DATE = "ColDate";
-            /// <summary>名称</summary>
-            public const string NAME = "ColName";
-            /// <summary>種別</summary>
-            public const string TYPE = "ColType";
-            /// <summary>金額</summary>
-            public const string COST = "ColCost";
-            /// <summary>備考</summary>
-            public const string NOTE = "ColNote";
-            /// <summary>年度</summary>
-            public const string YEAR = "ColYear";
-            /// <summary>収入</summary>
-            public const string EARN = "ColEarn";
             /// <summary>支出</summary>
-            public const string EXPENSE = "ColExpense";
-            /// <summary>特出</summary>
-            public const string SPECIAL = "ColSpecial";
+            public static class EXPENSE
+            {
+                /// <summary>日付</summary>
+                public const string DATE = "ColDate";
+                /// <summary>名称</summary>
+                public const string NAME = "ColName";
+                /// <summary>種別</summary>
+                public const string TYPE = "ColType";
+                /// <summary>金額</summary>
+                public const string COST = "ColCost";
+                /// <summary>備考</summary>
+                public const string NOTE = "ColNote";
+            }
+
             /// <summary>収支</summary>
-            public const string BALANCE = "ColBalance";
+            public static class BALANCE
+            {
+                /// <summary>年度</summary>
+                public const string YEAR = "ColYear";
+                /// <summary>収入</summary>
+                public const string EARN = "ColEarn";
+                /// <summary>支出</summary>
+                public const string EXPC = "ColExpense";
+                /// <summary>特出</summary>
+                public const string SPCL = "ColSpecial";
+                /// <summary>収支</summary>
+                public const string BLNC = "ColBalance";
+            }
 
             /// <summary>秘密収支</summary>
             public static class PRIVATE
