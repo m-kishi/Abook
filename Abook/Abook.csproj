@@ -57,6 +57,9 @@
     <Compile Include="src\common\AbDialogHook.cs" />
     <Compile Include="src\common\AbException.cs" />
     <Compile Include="src\common\AbUtilities.cs" />
+    <Compile Include="src\control\AbDataGridView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="src\control\AbHeaderControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

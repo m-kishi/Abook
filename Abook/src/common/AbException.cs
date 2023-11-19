@@ -1,5 +1,5 @@
 ﻿// ------------------------------------------------------------
-// © 2010 Masaaki Kishi
+// © 2010 https://github.com/m-kishi
 // ------------------------------------------------------------
 namespace Abook
 {
@@ -19,11 +19,10 @@ namespace Abook
         /// <param name="message">メッセージ</param>
         private AbException(string message) : base(message)
         {
-            //外部からnew不可
         }
 
         /// <summary>
-        /// 例外スロー
+        /// 例外を投げる
         /// </summary>
         /// <param name="message">メッセージ</param>
         public static void Throw(string message)
@@ -70,27 +69,27 @@ namespace Abook
             /// <summary>金額が大き過ぎます。</summary>
             public const string COST_OVERFLOW = "金額が大き過ぎます。";
 
-            /// <summary>CSVファイルがありません。</summary>
-            public const string CSV_NULL = "CSVファイルがありません。";
+            /// <summary>DBファイルがありません。</summary>
+            public const string DB_FILE_NULL = "DBファイルがありません。";
             /// <summary>{0} 行目: {1}</summary>
-            public const string CSV_LOAD = "{0} 行目: {1}";
-            /// <summary>{0} 行目: {1}</summary>
-            public const string CSV_STORE = "{0} 行目: {1}";
-            /// <summary>CSVファイルの作成に失敗しました。</summary>
-            public const string CSV_CREATE = "CSVファイルの作成に失敗しました。";
+            public const string DB_FILE_LOAD = "{0} 行目: {1}";
+            /// <summary>DBファイル登録エラー: {0}</summary>
+            public const string DB_FILE_STORE = "DBファイル登録エラー: {0}";
+            /// <summary>DBファイルの作成に失敗しました。</summary>
+            public const string DB_FILE_CREATE = "DBファイルの作成に失敗しました。";
             /// <summary>フィールド数が少ないです。</summary>
-            public const string CSV_FIELD_LESS = "フィールド数が少ないです。";
+            public const string DB_FILE_FIELD_LESS = "フィールド数が少ないです。";
             /// <summary>フィールド数が多いです。</summary>
-            public const string CSV_FIELD_MORE = "フィールド数が多いです。";
+            public const string DB_FILE_FIELD_MORE = "フィールド数が多いです。";
             /// <summary>登録するデータがありません。</summary>
-            public const string CSV_RECORD_NOTHING = "登録するデータがありません。";
+            public const string DB_FILE_RECORD_NOTHING = "登録するデータがありません。";
 
             /// <summary>支出情報がありません。</summary>
             public const string EXPENSE_NULL = "支出情報がありません。";
             /// <summary>支出情報リストがありません。</summary>
             public const string EXPENSES_NULL = "支出情報リストがありません。";
-            /// <summary>集計値リストがありません。</summary>
-            public const string SUMMARIES_NULL = "集計値リストがありません。";
+            /// <summary>月次情報リストがありません。</summary>
+            public const string SUMMARIES_NULL = "月次情報リストがありません。";
 
             /// <summary>年度がマイナスです。</summary>
             public const string YEAR_MINUS = "年度がマイナスです。";

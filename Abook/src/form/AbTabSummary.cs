@@ -1,5 +1,5 @@
 ﻿// ------------------------------------------------------------
-// © 2010 Masaaki Kishi
+// © 2010 https://github.com/m-kishi
 // ------------------------------------------------------------
 namespace Abook
 {
@@ -7,7 +7,6 @@ namespace Abook
     using System.Collections.Generic;
     using System.Windows.Forms;
     using TYPE = Abook.AbConstants.TYPE;
-    using UTIL = Abook.AbUtilities;
 
     /// <summary>
     /// 月次タブ
@@ -20,7 +19,7 @@ namespace Abook
         /// <summary>
         /// 月次タブ初期化
         /// </summary>
-        /// <param name="summaries">集計値リスト</param>
+        /// <param name="summaries">月次情報リスト</param>
         private void InitTabSummary(List<AbSummary> summaries)
         {
             abExpenseManager = new AbExpenseManager(DateTime.Now, summaries);

@@ -1,10 +1,9 @@
 ﻿// ------------------------------------------------------------
-// © 2010 Masaaki Kishi
+// © 2010 https://github.com/m-kishi
 // ------------------------------------------------------------
 namespace Abook
 {
-    using System;
-    using System.Collections.Generic;
+    using System.Drawing;
     using System.Text;
 
     /// <summary>
@@ -15,26 +14,35 @@ namespace Abook
         /// <summary>カラム</summary>
         public static class COL
         {
-            /// <summary>日付</summary>
-            public const string DATE = "ColDate";
-            /// <summary>名称</summary>
-            public const string NAME = "ColName";
-            /// <summary>種別</summary>
-            public const string TYPE = "ColType";
-            /// <summary>金額</summary>
-            public const string COST = "ColCost";
-            /// <summary>備考</summary>
-            public const string NOTE = "ColNote";
-            /// <summary>年度</summary>
-            public const string YEAR = "ColYear";
-            /// <summary>収入</summary>
-            public const string EARN = "ColEarn";
             /// <summary>支出</summary>
-            public const string EXPENSE = "ColExpense";
-            /// <summary>特出</summary>
-            public const string SPECIAL = "ColSpecial";
+            public static class EXPENSE
+            {
+                /// <summary>日付</summary>
+                public const string DATE = "ColDate";
+                /// <summary>名称</summary>
+                public const string NAME = "ColName";
+                /// <summary>種別</summary>
+                public const string TYPE = "ColType";
+                /// <summary>金額</summary>
+                public const string COST = "ColCost";
+                /// <summary>備考</summary>
+                public const string NOTE = "ColNote";
+            }
+
             /// <summary>収支</summary>
-            public const string BALANCE = "ColBalance";
+            public static class BALANCE
+            {
+                /// <summary>年度</summary>
+                public const string YEAR = "ColYear";
+                /// <summary>収入</summary>
+                public const string EARN = "ColEarn";
+                /// <summary>支出</summary>
+                public const string EXPC = "ColExpense";
+                /// <summary>特出</summary>
+                public const string SPCL = "ColSpecial";
+                /// <summary>収支</summary>
+                public const string BLNC = "ColBalance";
+            }
 
             /// <summary>秘密収支</summary>
             public static class PRIVATE
@@ -50,11 +58,11 @@ namespace Abook
             }
         }
 
-        /// <summary>CSV</summary>
-        public static class CSV
+        /// <summary>DBファイル</summary>
+        public static class DB
         {
-            /// <summary>CSVファイル</summary>
-            public const string FILE = "Abook.db";
+            /// <summary>DBファイル</summary>
+            public const string NAME = "Abook.db";
             /// <summary>区切り文字</summary>
             public const string DELIMITER = ",";
             /// <summary>フィールド数(旧)</summary>
@@ -72,13 +80,15 @@ namespace Abook
         {
             /// <summary>追加入力行数</summary>
             public const int NEW_ROW_SIZE = 30;
+            /// <summary>備考の背景色</summary>
+            public static readonly Color NOTE_BG_COLOR = Color.FromArgb(222, 252, 231);
         }
 
         /// <summary>フォーマット</summary>
         public static class FMT
         {
-            /// <summary>CSV("date","name","type","cost","note")</summary>
-            public const string CSV = "\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\"";
+            /// <summary>支出情報("date","name","type","cost","note")</summary>
+            public const string EXPENSE = "\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\"";
             /// <summary>日付"yyyy-MM-dd"</summary>
             public const string DATE = "yyyy-MM-dd";
             /// <summary>月"MM"</summary>

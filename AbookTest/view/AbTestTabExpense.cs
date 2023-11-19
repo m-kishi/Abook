@@ -1,10 +1,10 @@
 ﻿// ------------------------------------------------------------
-// © 2010 Masaaki Kishi
+// © 2010 https://github.com/m-kishi
 // ------------------------------------------------------------
 namespace AbookTest
 {
-    using Abook;
     using System;
+    using System.Drawing;
     using System.IO;
     using System.Linq;
     using System.Windows.Forms;
@@ -12,10 +12,10 @@ namespace AbookTest
     using NUnit.Extensions.Forms;
     using TT   = AbTestTool;
     using EX   = Abook.AbException.EX;
-    using COL  = Abook.AbConstants.COL;
-    using CSV  = Abook.AbConstants.CSV;
-    using FMT  = Abook.AbConstants.FMT;
+    using DB   = Abook.AbConstants.DB;
+    using COL  = Abook.AbConstants.COL.EXPENSE;
     using DGV  = Abook.AbConstants.DGV;
+    using FMT  = Abook.AbConstants.FMT;
     using TYPE = Abook.AbConstants.TYPE;
 
     /// <summary>
@@ -24,14 +24,14 @@ namespace AbookTest
     /// </summary>
     public abstract class AbTestTabExpenseBase : AbTestFormBase
     {
-        /// <summary>CSVファイル</summary>
-        protected const string CSV_EXIST = "AbTestTabExpenseExist.db";
-        /// <summary>CSVファイル</summary>
-        protected const string CSV_EMPTY = "AbTestTabExpenseEmpty.db";
-        /// <summary>CSVファイル</summary>
-        protected const string CSV_ENTRY = "AbTestTabExpenseEntry.db";
-        /// <summary>CSVファイル</summary>
-        protected const string CSV_TAX_TEST = "AbTestTabExpenseTaxTest.cb";
+        /// <summary>DBファイル</summary>
+        protected const string DB_FILE_EXIST = "AbTestTabExpenseExist.db";
+        /// <summary>DBファイル</summary>
+        protected const string DB_FILE_EMPTY = "AbTestTabExpenseEmpty.db";
+        /// <summary>DBファイル</summary>
+        protected const string DB_FILE_ENTRY = "AbTestTabExpenseEntry.db";
+        /// <summary>DBファイル</summary>
+        protected const string DB_FILE_TAX_TEST = "AbTestTabExpenseTaxTest.cb";
         /// <summary>タブインデックス</summary>
         protected const int TAB_IDX = 0;
 
@@ -41,9 +41,9 @@ namespace AbookTest
         [TestFixtureSetUp]
         protected void TestFixtureSetUp()
         {
-            using (StreamWriter sw = new StreamWriter(CSV_EXIST, false, CSV.ENCODING))
+            using (StreamWriter sw = new StreamWriter(DB_FILE_EXIST, false, DB.ENCODING))
             {
-                sw.NewLine = CSV.LF;
+                sw.NewLine = DB.LF;
                 for (var i = 1; i <= 15; i++)
                 {
                     var date = (new DateTime(2012, 1, i)).ToString(FMT.DATE);
@@ -51,21 +51,21 @@ namespace AbookTest
                     var type = TYPE.FOOD;
                     var cost = (i * 100M).ToString();
                     var note = "note" + i.ToString("D2");
-                    sw.WriteLine(TT.ToCSV(date, name, type, cost, note));
+                    sw.WriteLine(TT.ToDBFileFormat(date, name, type, cost, note));
                 }
-                sw.WriteLine(TT.ToCSV("2017-03-01", "name16", TYPE.FOOD, "1000"));
-                sw.WriteLine(TT.ToCSV("2017-03-01", "name16", TYPE.OTFD, "2000"));
+                sw.WriteLine(TT.ToDBFileFormat("2017-03-01", "name16", TYPE.FOOD, "1000"));
+                sw.WriteLine(TT.ToDBFileFormat("2017-03-01", "name16", TYPE.OTFD, "2000"));
                 sw.Close();
             }
-            if (File.Exists(CSV_ENTRY))
+            if (File.Exists(DB_FILE_ENTRY))
             {
-                File.Delete(CSV_ENTRY);
+                File.Delete(DB_FILE_ENTRY);
             }
-            File.Copy(CSV_EXIST, CSV_ENTRY);
+            File.Copy(DB_FILE_EXIST, DB_FILE_ENTRY);
 
-            using (StreamWriter sw = new StreamWriter(CSV_TAX_TEST, false, CSV.ENCODING))
+            using (StreamWriter sw = new StreamWriter(DB_FILE_TAX_TEST, false, DB.ENCODING))
             {
-                sw.NewLine = CSV.LF;
+                sw.NewLine = DB.LF;
                 for (var i = 1; i <= 5; i++)
                 {
                     var date = (new DateTime(2021, 11, i)).ToString(FMT.DATE);
@@ -73,7 +73,7 @@ namespace AbookTest
                     var type = TYPE.FOOD;
                     var cost = (i * 100M).ToString();
                     var note = "note" + i.ToString("D2");
-                    sw.WriteLine(TT.ToCSV(date, name, type, cost, note));
+                    sw.WriteLine(TT.ToDBFileFormat(date, name, type, cost, note));
                 }
                 sw.Close();
             }
@@ -85,10 +85,10 @@ namespace AbookTest
         [TestFixtureTearDown]
         protected void TestFixtureTearDown()
         {
-            if (File.Exists(CSV_EXIST)) File.Delete(CSV_EXIST);
-            if (File.Exists(CSV_EMPTY)) File.Delete(CSV_EMPTY);
-            if (File.Exists(CSV_ENTRY)) File.Delete(CSV_ENTRY);
-            if (File.Exists(CSV_TAX_TEST)) File.Delete(CSV_TAX_TEST);
+            if (File.Exists(DB_FILE_EXIST)) File.Delete(DB_FILE_EXIST);
+            if (File.Exists(DB_FILE_EMPTY)) File.Delete(DB_FILE_EMPTY);
+            if (File.Exists(DB_FILE_ENTRY)) File.Delete(DB_FILE_ENTRY);
+            if (File.Exists(DB_FILE_TAX_TEST)) File.Delete(DB_FILE_TAX_TEST);
         }
     }
 
@@ -110,7 +110,7 @@ namespace AbookTest
             [Test]
             public void CountWithEmptyData()
             {
-                ShowFormMain(CSV_EMPTY, TAB_IDX);
+                ShowFormMain(DB_FILE_EMPTY, TAB_IDX);
                 Assert.AreEqual(0, CtDgvExpense().Rows.Count);
             }
 
@@ -121,7 +121,7 @@ namespace AbookTest
             [Test]
             public void CountWithExistData()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
                 Assert.AreEqual(17, CtDgvExpense().Rows.Count);
             }
 
@@ -132,7 +132,7 @@ namespace AbookTest
             [Test]
             public void DgvWithExistData()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 for (var i = 1; i <= 15; i++)
@@ -150,10 +150,13 @@ namespace AbookTest
                     Assert.AreEqual(type, row.Cells[COL.TYPE].Value, "TYPE");
                     Assert.AreEqual(cost, row.Cells[COL.COST].Value, "COST");
                     Assert.AreEqual(note, row.Cells[COL.NAME].ToolTipText, "NOTE");
+                    Assert.AreEqual(DGV.NOTE_BG_COLOR, row.DefaultCellStyle.BackColor);
                 }
 
                 Assert.AreEqual("", dgvExpense.Rows[15].Cells[COL.NAME].ToolTipText, "NOTE");
                 Assert.AreEqual("", dgvExpense.Rows[16].Cells[COL.NAME].ToolTipText, "NOTE");
+                Assert.AreEqual(Color.Empty, dgvExpense.Rows[15].DefaultCellStyle.BackColor);
+                Assert.AreEqual(Color.Empty, dgvExpense.Rows[16].DefaultCellStyle.BackColor);
             }
 
             /// <summary>
@@ -163,7 +166,7 @@ namespace AbookTest
             [Test]
             public void DgvWithSelectedCell()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var cell = CtDgvExpense().SelectedCells[0];
                 Assert.True(cell.Selected);
@@ -179,10 +182,11 @@ namespace AbookTest
             [Test]
             public void DgvWithScrollBar()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
+                // 最終行から 9 行上の行がFirstDisplayedCell
                 var cell = CtDgvExpense().SelectedCells[0];
-                Assert.AreEqual(CtDgvExpense().FirstDisplayedCell.RowIndex, cell.RowIndex - 9); //最終行から 9 行上の行がFirstDisplayedCell
+                Assert.AreEqual(CtDgvExpense().FirstDisplayedCell.RowIndex, cell.RowIndex - 9);
                 Assert.AreEqual(CtDgvExpense().FirstDisplayedCell.ColumnIndex, cell.ColumnIndex);
             }
         }
@@ -200,7 +204,7 @@ namespace AbookTest
             [Test]
             public void BtnAddRowClickWithOnce()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var initRowCount = dgvExpense.Rows.Count;
@@ -218,7 +222,7 @@ namespace AbookTest
             [Test]
             public void BtnAddRowClickWithTwice()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var initRowCount = dgvExpense.Rows.Count;
@@ -237,7 +241,7 @@ namespace AbookTest
             [Test]
             public void BtnAddRowClickWithInitialDate()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var initRowCount = dgvExpense.Rows.Count;
@@ -261,7 +265,7 @@ namespace AbookTest
             [Test, RequiresSTA]
             public void KeyDownWithComplemented()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -284,7 +288,7 @@ namespace AbookTest
             [Test, RequiresSTA]
             public void KeyDownWithNotComplemented()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -307,7 +311,7 @@ namespace AbookTest
             [Test, RequiresSTA]
             public void KeyDownWithCommaFormat()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -330,7 +334,7 @@ namespace AbookTest
             [Test, RequiresSTA]
             public void KeyDownWithCostComplementedOfNameCell()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -354,7 +358,7 @@ namespace AbookTest
             [Test, RequiresSTA]
             public void KeyDownWithCostNotComplementedOfNameCell()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -378,7 +382,7 @@ namespace AbookTest
             [Test, RequiresSTA]
             public void KeyDownWithCostComplementedOfTypeCell()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -402,7 +406,7 @@ namespace AbookTest
             [Test, RequiresSTA]
             public void KeyDownWithCostNotComplementedOfTypeCell()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -425,7 +429,7 @@ namespace AbookTest
             [Test, RequiresSTA]
             public void KeyDownWithNotCtrlV()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 TsBtnAddRow().Click();
 
@@ -446,24 +450,24 @@ namespace AbookTest
             [Test]
             public void KeyDownWithTotalCostNoSelection()
             {
-                //ダイアログの表示テスト
+                // ダイアログの表示テスト
                 DialogBoxHandler = (name, hWnd) =>
                 {
                     var tsMessageBox = new MessageBoxTester(hWnd);
 
-                    //タイトル
+                    // タイトル
                     var title = "合計";
                     Assert.AreEqual(title, tsMessageBox.Title);
 
-                    //テキスト
+                    // テキスト
                     var text = @"\0";
                     Assert.AreEqual(text, tsMessageBox.Text);
 
-                    //OKボタンクリック
+                    // OKボタンクリック
                     tsMessageBox.ClickOk();
                 };
 
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 dgvExpense.ClearSelection();
@@ -479,24 +483,24 @@ namespace AbookTest
             [Test]
             public void KeyDownWithTotalCostWithoutCostColumn()
             {
-                //ダイアログの表示テスト
+                // ダイアログの表示テスト
                 DialogBoxHandler = (name, hWnd) =>
                 {
                     var tsMessageBox = new MessageBoxTester(hWnd);
 
-                    //タイトル
+                    // タイトル
                     var title = "合計";
                     Assert.AreEqual(title, tsMessageBox.Title);
 
-                    //テキスト
+                    // テキスト
                     var text = @"\0";
                     Assert.AreEqual(text, tsMessageBox.Text);
 
-                    //OKボタンクリック
+                    // OKボタンクリック
                     tsMessageBox.ClickOk();
                 };
 
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 for (int i = 0; i < 3; i++) {
@@ -517,24 +521,24 @@ namespace AbookTest
             [Test]
             public void KeyDownWithTotalCostSingleCell()
             {
-                //ダイアログの表示テスト
+                // ダイアログの表示テスト
                 DialogBoxHandler = (name, hWnd) =>
                 {
                     var tsMessageBox = new MessageBoxTester(hWnd);
 
-                    //タイトル
+                    // タイトル
                     var title = "合計";
                     Assert.AreEqual(title, tsMessageBox.Title);
 
-                    //テキスト
+                    // テキスト
                     var text = @"\100";
                     Assert.AreEqual(text, tsMessageBox.Text);
 
-                    //OKボタンクリック
+                    // OKボタンクリック
                     tsMessageBox.ClickOk();
                 };
 
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 dgvExpense.Rows[0].Cells[COL.COST].Selected = true;
@@ -550,24 +554,24 @@ namespace AbookTest
             [Test]
             public void KeyDownWithTotalCostMultiCell()
             {
-                //ダイアログの表示テスト
+                // ダイアログの表示テスト
                 DialogBoxHandler = (name, hWnd) =>
                 {
                     var tsMessageBox = new MessageBoxTester(hWnd);
 
-                    //タイトル
+                    // タイトル
                     var title = "合計";
                     Assert.AreEqual(title, tsMessageBox.Title);
 
-                    //テキスト
+                    // テキスト
                     var text = @"\900";
                     Assert.AreEqual(text, tsMessageBox.Text);
 
-                    //OKボタンクリック
+                    // OKボタンクリック
                     tsMessageBox.ClickOk();
                 };
 
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 for (int i = 1; i < 4; i++)
@@ -586,24 +590,24 @@ namespace AbookTest
             [Test]
             public void KeyDownWithTotalCostIncludeOtherCell()
             {
-                //ダイアログの表示テスト
+                // ダイアログの表示テスト
                 DialogBoxHandler = (name, hWnd) =>
                 {
                     var tsMessageBox = new MessageBoxTester(hWnd);
 
-                    //タイトル
+                    // タイトル
                     var title = "合計";
                     Assert.AreEqual(title, tsMessageBox.Title);
 
-                    //テキスト
+                    // テキスト
                     var text = @"\900";
                     Assert.AreEqual(text, tsMessageBox.Text);
 
-                    //OKボタンクリック
+                    // OKボタンクリック
                     tsMessageBox.ClickOk();
                 };
 
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 for (int i = 1; i < 4; i++)
@@ -626,24 +630,24 @@ namespace AbookTest
             [Test]
             public void KeyDownWithTotalCostIncludeEmptyCost()
             {
-                //ダイアログの表示テスト
+                // ダイアログの表示テスト
                 DialogBoxHandler = (name, hWnd) =>
                 {
                     var tsMessageBox = new MessageBoxTester(hWnd);
 
-                    //タイトル
+                    // タイトル
                     var title = "合計";
                     Assert.AreEqual(title, tsMessageBox.Title);
 
-                    //テキスト
+                    // テキスト
                     var text = @"\600";
                     Assert.AreEqual(text, tsMessageBox.Text);
 
-                    //OKボタンクリック
+                    // OKボタンクリック
                     tsMessageBox.ClickOk();
                 };
 
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 for (int i = 1; i < 4; i++)
@@ -671,7 +675,7 @@ namespace AbookTest
             [Test]
             public void KeyDownWithTax8NoSelection()
             {
-                ShowFormMain(CSV_TAX_TEST, TAB_IDX);
+                ShowFormMain(DB_FILE_TAX_TEST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 dgvExpense.ClearSelection();
@@ -693,7 +697,7 @@ namespace AbookTest
             [Test]
             public void KeyDownWithTax8WithoutCostColumn()
             {
-                ShowFormMain(CSV_TAX_TEST, TAB_IDX);
+                ShowFormMain(DB_FILE_TAX_TEST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 for (int i = 0; i < dgvExpense.Rows.Count; i++)
@@ -721,7 +725,7 @@ namespace AbookTest
             [Test]
             public void KeyDownWithTax8SingleCell()
             {
-                ShowFormMain(CSV_TAX_TEST, TAB_IDX);
+                ShowFormMain(DB_FILE_TAX_TEST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 dgvExpense.Rows[0].Cells[COL.COST].Selected = true;
@@ -739,7 +743,7 @@ namespace AbookTest
             [Test]
             public void KeyDownWithTax8MultiCell()
             {
-                ShowFormMain(CSV_TAX_TEST, TAB_IDX);
+                ShowFormMain(DB_FILE_TAX_TEST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 for (int i = 0; i < dgvExpense.Rows.Count; i++)
@@ -765,7 +769,7 @@ namespace AbookTest
             [Test]
             public void KeyDownWithTax8IncludeOtherCell()
             {
-                ShowFormMain(CSV_TAX_TEST, TAB_IDX);
+                ShowFormMain(DB_FILE_TAX_TEST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 for (int i = 0; i < dgvExpense.Rows.Count; i++)
@@ -795,7 +799,7 @@ namespace AbookTest
             [Test]
             public void KeyDownWithTax8IncludeEmptyCost()
             {
-                ShowFormMain(CSV_TAX_TEST, TAB_IDX);
+                ShowFormMain(DB_FILE_TAX_TEST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 for (int i = 0; i < dgvExpense.Rows.Count; i++)
@@ -831,19 +835,19 @@ namespace AbookTest
 
             /// <summary>
             /// KeyDownテスト
-            /// キー: Ctrl + 1
+            /// キー: Ctrl + 0
             /// 消費税(10%):範囲選択なし
             /// </summary>
             [Test]
             public void KeyDownWithTax10NoSelection()
             {
-                ShowFormMain(CSV_TAX_TEST, TAB_IDX);
+                ShowFormMain(DB_FILE_TAX_TEST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 dgvExpense.ClearSelection();
 
                 var expecteds = dgvExpense.Rows.Cast<DataGridViewRow>().Select(r => r.Cells[COL.COST].Value).ToList();
-                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.D1)));
+                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.D0)));
 
                 for (int i = 0; i < dgvExpense.Rows.Count; i++)
                 {
@@ -853,13 +857,13 @@ namespace AbookTest
 
             /// <summary>
             /// KeyDownテスト
-            /// キー: Ctrl + 1
+            /// キー: Ctrl + 0
             /// 消費税(10%):金額列範囲外
             /// </summary>
             [Test]
             public void KeyDownWithTax10WithoutCostColumn()
             {
-                ShowFormMain(CSV_TAX_TEST, TAB_IDX);
+                ShowFormMain(DB_FILE_TAX_TEST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 for (int i = 0; i < dgvExpense.Rows.Count; i++)
@@ -871,7 +875,7 @@ namespace AbookTest
                 }
 
                 var expecteds = dgvExpense.Rows.Cast<DataGridViewRow>().Select(r => r.Cells[COL.COST].Value).ToList();
-                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.D1)));
+                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.D0)));
 
                 for (int i = 0; i < dgvExpense.Rows.Count; i++)
                 {
@@ -881,31 +885,31 @@ namespace AbookTest
 
             /// <summary>
             /// KeyDownテスト
-            /// キー: Ctrl + 1
+            /// キー: Ctrl + 0
             /// 消費税(10%):金額単一セル
             /// </summary>
             [Test]
             public void KeyDownWithTax10SingleCell()
             {
-                ShowFormMain(CSV_TAX_TEST, TAB_IDX);
+                ShowFormMain(DB_FILE_TAX_TEST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 dgvExpense.Rows[0].Cells[COL.COST].Selected = true;
 
-                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.D1)));
+                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.D0)));
 
                 Assert.AreEqual(110, dgvExpense.Rows[0].Cells[COL.COST].Value);
             }
 
             /// <summary>
             /// KeyDownテスト
-            /// キー: Ctrl + 1
+            /// キー: Ctrl + 0
             /// 消費税(10%):金額複数セル
             /// </summary>
             [Test]
             public void KeyDownWithTax10MultiCell()
             {
-                ShowFormMain(CSV_TAX_TEST, TAB_IDX);
+                ShowFormMain(DB_FILE_TAX_TEST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 for (int i = 0; i < dgvExpense.Rows.Count; i++)
@@ -913,7 +917,7 @@ namespace AbookTest
                     dgvExpense.Rows[i].Cells[COL.COST].Selected = true;
                 }
 
-                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.D1)));
+                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.D0)));
 
                 var expecteds = new decimal[] { 110, 220, 330, 440, 550 };
                 for (int i = 0; i < dgvExpense.Rows.Count; i++)
@@ -925,13 +929,13 @@ namespace AbookTest
 
             /// <summary>
             /// KeyDownテスト
-            /// キー: Ctrl + 1
+            /// キー: Ctrl + 0
             /// 消費税(10%):金額列以外のセルも含む
             /// </summary>
             [Test]
             public void KeyDownWithTax10IncludeOtherCell()
             {
-                ShowFormMain(CSV_TAX_TEST, TAB_IDX);
+                ShowFormMain(DB_FILE_TAX_TEST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 for (int i = 0; i < dgvExpense.Rows.Count; i++)
@@ -943,7 +947,7 @@ namespace AbookTest
                     row.Cells[COL.COST].Selected = true;
                 }
 
-                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.D1)));
+                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.D0)));
 
                 var expecteds = new decimal[] { 110, 220, 330, 440, 550 };
                 for (int i = 0; i < dgvExpense.Rows.Count; i++)
@@ -955,13 +959,13 @@ namespace AbookTest
 
             /// <summary>
             /// KeyDownテスト
-            /// キー: Ctrl + 1
+            /// キー: Ctrl + 0
             /// 消費税(10%):金額列に空白を含む
             /// </summary>
             [Test]
             public void KeyDownWithTax10IncludeEmptyCost()
             {
-                ShowFormMain(CSV_TAX_TEST, TAB_IDX);
+                ShowFormMain(DB_FILE_TAX_TEST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 for (int i = 0; i < dgvExpense.Rows.Count; i++)
@@ -978,7 +982,7 @@ namespace AbookTest
                     }
                 }
 
-                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.D1)));
+                TsDgvExpense().FireEvent("KeyDown", (new KeyEventArgs(Keys.Control | Keys.D0)));
 
                 var expecteds = new decimal[] { 110, 220, 330, 440, 550 };
                 for (int i = 0; i < dgvExpense.Rows.Count; i++)
@@ -1003,7 +1007,7 @@ namespace AbookTest
             [Test]
             public void DgvExpenseCellEndEditWithComplemented()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -1023,7 +1027,7 @@ namespace AbookTest
             [Test]
             public void DgvExpenseCellEndEditWithNotComplemented()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -1043,7 +1047,7 @@ namespace AbookTest
             [Test]
             public void DgvExpenseCellEndEditWithCostEmpty()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -1063,7 +1067,7 @@ namespace AbookTest
             [Test]
             public void DgvExpenseCellEndEditWithCostUnder1000()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -1083,7 +1087,7 @@ namespace AbookTest
             [Test]
             public void DgvExpenseCellEndEditWithCostIs1000()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -1103,7 +1107,7 @@ namespace AbookTest
             [Test]
             public void DgvExpenseCellEndEditWithCostIs1000000()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -1123,7 +1127,7 @@ namespace AbookTest
             [Test]
             public void DgvExpenseCellEndEditWithCostIs1000000000()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -1143,7 +1147,7 @@ namespace AbookTest
             [Test]
             public void DgvExpenseCellEndEditWithCostIsOverflow()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -1163,7 +1167,7 @@ namespace AbookTest
             [Test]
             public void DgvExpenseCellEndEditWithCostIsNotNumber()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -1182,7 +1186,7 @@ namespace AbookTest
             [Test]
             public void DgvExpenseCellEndEditWithNotNameCell()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -1202,7 +1206,7 @@ namespace AbookTest
             [Test]
             public void DgvExpenseCellEndEditWithCostComplementedOfNameCell()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -1223,7 +1227,7 @@ namespace AbookTest
             [Test]
             public void DgvExpenseCellEndEditWithCostNotComplementedOfNameCell()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -1244,7 +1248,7 @@ namespace AbookTest
             [Test]
             public void DgvExpenseCellEndEditWithCostComplementedOfTypeCell()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -1265,7 +1269,7 @@ namespace AbookTest
             [Test]
             public void DgvExpenseCellEndEditWithCostNotComplementedOfTypeCell()
             {
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 var dgvExpense = CtDgvExpense();
                 var idxRow = dgvExpense.Rows.Count - 1;
@@ -1292,28 +1296,28 @@ namespace AbookTest
             [Test]
             public void WithSuccess()
             {
-                //ダイアログの表示テスト
+                // ダイアログの表示テスト
                 DialogBoxHandler = (name, hWnd) =>
                 {
                     var tsMessageBox = new MessageBoxTester(hWnd);
 
-                    //タイトル
+                    // タイトル
                     var title = "登録完了";
                     Assert.AreEqual(title, tsMessageBox.Title);
 
-                    //テキスト
+                    // テキスト
                     var text = "正常に登録しました。";
                     Assert.AreEqual(text, tsMessageBox.Text);
 
-                    //OKボタンクリック
+                    // OKボタンクリック
                     tsMessageBox.ClickOk();
                 };
 
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 TsBtnEntry().Click();
 
-                NUnit.Framework.FileAssert.AreEqual(CSV_ENTRY, CSV_EXIST);
+                NUnit.Framework.FileAssert.AreEqual(DB_FILE_ENTRY, DB_FILE_EXIST);
             }
 
             /// <summary>
@@ -1323,24 +1327,24 @@ namespace AbookTest
             [Test]
             public void ErrorWithRowCountZero()
             {
-                //ダイアログの表示テスト
+                // ダイアログの表示テスト
                 DialogBoxHandler = (name, hWnd) =>
                 {
                     var tsMessageBox = new MessageBoxTester(hWnd);
 
-                    //タイトル
+                    // タイトル
                     var title = "警告";
                     Assert.AreEqual(title, tsMessageBox.Title);
 
-                    //テキスト
+                    // テキスト
                     var text = "レコードが1件もありません。";
                     Assert.AreEqual(text, tsMessageBox.Text);
 
-                    //OKボタンクリック
+                    // OKボタンクリック
                     tsMessageBox.ClickOk();
                 };
 
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 CtDgvExpense().Rows.Clear();
 
@@ -1354,24 +1358,24 @@ namespace AbookTest
             [Test]
             public void WithIgnoreEmptyCell()
             {
-                //ダイアログの表示テスト
+                // ダイアログの表示テスト
                 DialogBoxHandler = (name, hWnd) =>
                 {
                     var tsMessageBox = new MessageBoxTester(hWnd);
 
-                    //タイトル
+                    // タイトル
                     var title = "登録完了";
                     Assert.AreEqual(title, tsMessageBox.Title);
 
-                    //テキスト
+                    // テキスト
                     var text = "正常に登録しました。";
                     Assert.AreEqual(text, tsMessageBox.Text);
 
-                    //OKボタンクリック
+                    // OKボタンクリック
                     tsMessageBox.ClickOk();
                 };
 
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 TsBtnAddRow().Click();
 
@@ -1385,7 +1389,7 @@ namespace AbookTest
 
                 TsBtnEntry().Click();
 
-                NUnit.Framework.FileAssert.AreEqual(CSV_ENTRY, CSV_EXIST);
+                NUnit.Framework.FileAssert.AreEqual(DB_FILE_ENTRY, DB_FILE_EXIST);
             }
 
             /// <summary>
@@ -1395,27 +1399,27 @@ namespace AbookTest
             [Test]
             public void WithInvalidDate()
             {
-                //ダイアログの表示テスト
+                // ダイアログの表示テスト
                 DialogBoxHandler = (name, hWnd) =>
                 {
                     var tsMessageBox = new MessageBoxTester(hWnd);
 
-                    //タイトル
+                    // タイトル
                     var title = "エラー";
                     Assert.AreEqual(title, tsMessageBox.Title);
 
-                    //テキスト
-                    var text = string.Format(EX.CSV_STORE, 2, EX.DATE_FORMAT);
+                    // テキスト
+                    var text = string.Format(EX.DB_FILE_LOAD, 2, EX.DATE_FORMAT);
                     Assert.AreEqual(text, tsMessageBox.Text);
 
-                    //OKボタンクリック
+                    // OKボタンクリック
                     tsMessageBox.ClickOk();
 
-                    //エラー行が選択される
+                    // エラー行が選択される
                     Assert.AreEqual(1, CtDgvExpense().SelectedRows[0].Index);
                 };
 
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 CtDgvExpense().Rows[1].Cells[COL.DATE].Value = "2013-02-31";
 
@@ -1429,27 +1433,27 @@ namespace AbookTest
             [Test]
             public void WithInvalidCost()
             {
-                //ダイアログの表示テスト
+                // ダイアログの表示テスト
                 DialogBoxHandler = (name, hWnd) =>
                 {
                     var tsMessageBox = new MessageBoxTester(hWnd);
 
-                    //タイトル
+                    // タイトル
                     var title = "エラー";
                     Assert.AreEqual(title, tsMessageBox.Title);
 
-                    //テキスト
-                    var text = string.Format(EX.CSV_STORE, 5, EX.COST_FORMAT);
+                    // テキスト
+                    var text = string.Format(EX.DB_FILE_LOAD, 5, EX.COST_FORMAT);
                     Assert.AreEqual(text, tsMessageBox.Text);
 
-                    //OKボタンクリック
+                    // OKボタンクリック
                     tsMessageBox.ClickOk();
 
-                    //エラー行が選択される
+                    // エラー行が選択される
                     Assert.AreEqual(4, CtDgvExpense().SelectedRows[0].Index);
                 };
 
-                ShowFormMain(CSV_EXIST, TAB_IDX);
+                ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
                 CtDgvExpense().Rows[4].Cells[COL.COST].Value = "XXXXXXXX";
 

@@ -1,12 +1,12 @@
 ﻿// ------------------------------------------------------------
-// © 2010 Masaaki Kishi
+// © 2010 https://github.com/m-kishi
 // ------------------------------------------------------------
 namespace Abook
 {
     using System.ComponentModel;
 
     /// <summary>
-    /// 種別明細サブフォームデザイナ
+    /// 種別サブフォームデザイナ
     /// </summary>
     partial class AbSubType
     {

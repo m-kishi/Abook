@@ -1,9 +1,8 @@
 ﻿// ------------------------------------------------------------
-// © 2010 Masaaki Kishi
+// © 2010 https://github.com/m-kishi
 // ------------------------------------------------------------
 namespace Abook
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using CHK = Abook.AbUtilities.CHK;
@@ -68,7 +67,7 @@ namespace Abook
         /// <param name="name">名称</param>
         /// <param name="type">種別</param>
         /// <returns>金額</returns>
-        /// <remarks>直近3件の金額を取得する。</remarks>
+        /// <remarks>直近3件の金額を取得する</remarks>
         public string GetCost(string name, string type)
         {
             if (string.IsNullOrEmpty(name)) return string.Empty;
@@ -77,7 +76,7 @@ namespace Abook
             var targets = abExpenses.Where(exp =>
                 exp.Name == name && exp.Type == type
             ).Reverse().Take(CMM.MAX_COST_CANDIDATE).Select(exp => AbUtilities.ToComma(exp.Cost)).Distinct().ToArray();
-            return String.Join("/", targets);
+            return string.Join("/", targets);
         }
     }
 }

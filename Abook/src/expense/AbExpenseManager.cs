@@ -1,5 +1,5 @@
 ﻿// ------------------------------------------------------------
-// © 2010 Masaaki Kishi
+// © 2010 https://github.com/m-kishi
 // ------------------------------------------------------------
 namespace Abook
 {
@@ -14,16 +14,16 @@ namespace Abook
     /// </summary>
     public class AbExpenseManager
     {
-        /// <summary>集計値</summary>
+        /// <summary>月次情報</summary>
         private AbSummary abCurrentSummary;
-        /// <summary>集計値リスト</summary>
+        /// <summary>月次情報リスト</summary>
         private List<AbSummary> abSummaries;
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="date">日付</param>
-        /// <param name="summaries">集計値リスト</param>
+        /// <param name="summaries">月次情報リスト</param>
         public AbExpenseManager(DateTime date, List<AbSummary> summaries)
         {
             CHK.SumNull(summaries);
@@ -33,7 +33,7 @@ namespace Abook
         }
 
         /// <summary>
-        /// 集計値設定
+        /// 月次情報設定
         /// </summary>
         /// <param name="date">対象日付</param>
         private void SetCurrentSummary(DateTime date)
@@ -46,9 +46,9 @@ namespace Abook
         }
 
         /// <summary>
-        /// 現在集計値の日付を取得
+        /// 現在の月次情報の日付を取得
         /// </summary>
-        /// <returns>現在集計値の日付</returns>
+        /// <returns>現在の月次情報の日付</returns>
         public DateTime CurrentDate
         {
             get
@@ -66,17 +66,17 @@ namespace Abook
         }
 
         /// <summary>
-        /// 集計値取得
+        /// 金額取得
         /// </summary>
         /// <param name="type">種別</param>
-        /// <returns>集計値</returns>
+        /// <returns>金額</returns>
         public decimal GetCost(string type)
         {
             return abCurrentSummary.GetCostByType(type);
         }
 
         /// <summary>
-        /// 前年集計
+        /// 前年へ切り替え
         /// </summary>
         public void PrevYear()
         {
@@ -85,7 +85,7 @@ namespace Abook
         }
 
         /// <summary>
-        /// 前月集計
+        /// 前月へ切り替え
         /// </summary>
         public void PrevMonth()
         {
@@ -94,7 +94,7 @@ namespace Abook
         }
 
         /// <summary>
-        /// 翌月集計
+        /// 翌月へ切り替え
         /// </summary>
         public void NextMonth()
         {
@@ -103,7 +103,7 @@ namespace Abook
         }
 
         /// <summary>
-        /// 翌年集計
+        /// 翌年へ切り替え
         /// </summary>
         public void NextYear()
         {

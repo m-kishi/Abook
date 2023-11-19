@@ -1,9 +1,8 @@
 ﻿// ------------------------------------------------------------
-// © 2010 Masaaki Kishi
+// © 2010 https://github.com/m-kishi
 // ------------------------------------------------------------
 namespace Abook
 {
-    using System;
     using EX   = Abook.AbException.EX;
     using CHK  = Abook.AbUtilities.CHK;
     using FMT  = Abook.AbConstants.FMT;

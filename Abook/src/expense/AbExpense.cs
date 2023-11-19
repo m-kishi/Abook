@@ -1,14 +1,12 @@
 ﻿// ------------------------------------------------------------
-// © 2010 Masaaki Kishi
+// © 2010 https://github.com/m-kishi
 // ------------------------------------------------------------
 namespace Abook
 {
     using System;
-    using System.Linq;
     using EX   = Abook.AbException.EX;
     using CHK  = Abook.AbUtilities.CHK;
     using FMT  = Abook.AbConstants.FMT;
-    using UTIL = Abook.AbUtilities;
 
     /// <summary>
     /// 支出情報クラス
@@ -142,12 +140,12 @@ namespace Abook
         }
 
         /// <summary>
-        /// CSV形式
+        /// DBファイル形式
         /// </summary>
-        /// <returns>CSV形式</returns>
-        public string ToCSV()
+        /// <returns>DBファイル形式</returns>
+        public string ToDBFileFormat()
         {
-            return string.Format(FMT.CSV, Date.ToString(FMT.DATE), Name, Type, Cost, Note);
+            return string.Format(FMT.EXPENSE, Date.ToString(FMT.DATE), Name, Type, Cost, Note);
         }
     }
 }

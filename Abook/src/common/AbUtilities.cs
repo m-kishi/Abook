@@ -1,14 +1,14 @@
 ﻿// ------------------------------------------------------------
-// © 2010 Masaaki Kishi
+// © 2010 https://github.com/m-kishi
 // ------------------------------------------------------------
 namespace Abook
 {
     using System;
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
     using System.Windows.Forms;
     using EX   = Abook.AbException.EX;
+    using DGV  = Abook.AbConstants.DGV;
     using FMT  = Abook.AbConstants.FMT;
     using TYPE = Abook.AbConstants.TYPE;
 
@@ -110,6 +110,21 @@ namespace Abook
         }
 
         /// <summary>
+        /// 備考のツールチップと背景色設定
+        /// </summary>
+        /// <param name="row">行</param>
+        /// <param name="col">列</param>
+        /// <param name="note">備考</param>
+        public static void SetToolTipAndColor(DataGridViewRow row, string col, string note)
+        {
+            if (!IsEmpty(note))
+            {
+                row.Cells[col].ToolTipText = note;
+                row.DefaultCellStyle.BackColor = DGV.NOTE_BG_COLOR;
+            }
+        }
+
+        /// <summary>
         /// チェックユーティリティ
         /// </summary>
         public static class CHK
@@ -169,12 +184,12 @@ namespace Abook
             }
 
             /// <summary>
-            /// NULLチェック(CSVファイル名)
+            /// NULLチェック(DBファイル)
             /// </summary>
-            /// <param name="csv">CSVファイル名</param>
-            public static void CsvNull(string csv)
+            /// <param name="dbFile">DBファイル</param>
+            public static void DBFileNull(string dbFile)
             {
-                if (string.IsNullOrEmpty(csv)) AbException.Throw(EX.CSV_NULL);
+                if (string.IsNullOrEmpty(dbFile)) AbException.Throw(EX.DB_FILE_NULL);
             }
 
             /// <summary>
@@ -201,13 +216,13 @@ namespace Abook
             /// <param name="exp">支出情報リスト</param>
             public static void ExpCount(List<AbExpense> exp)
             {
-                if (exp == null || exp.Count <= 0) AbException.Throw(EX.CSV_RECORD_NOTHING);
+                if (exp == null || exp.Count <= 0) AbException.Throw(EX.DB_FILE_RECORD_NOTHING);
             }
 
             /// <summary>
-            /// NULLチェック(集計値リスト)
+            /// NULLチェック(月次情報リスト)
             /// </summary>
-            /// <param name="sum">集計値リスト</param>
+            /// <param name="sum">月次情報リスト</param>
             public static void SumNull(List<AbSummary> sum)
             {
                 if (sum == null) AbException.Throw(EX.SUMMARIES_NULL);

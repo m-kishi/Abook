@@ -1,10 +1,9 @@
 ﻿// ------------------------------------------------------------
-// © 2010 Masaaki Kishi
+// © 2010 https://github.com/m-kishi
 // ------------------------------------------------------------
 namespace AbookTest
 {
     using Abook;
-    using System;
     using System.Collections.Generic;
     using System.IO;
     using NUnit.Framework;
@@ -28,7 +27,7 @@ namespace AbookTest
         [TestCase(-9999999, "-\u00a59,999,999")]
         public void ToYen(decimal cost, string expected)
         {
-            //\u00a5は円の通貨記号
+            // \u00a5は円の通貨記号
             var actual = AbUtilities.ToYen(cost);
             Assert.AreEqual(expected, actual);
         }
@@ -139,7 +138,7 @@ namespace AbookTest
         [TestFixture]
         public class ChkTest
         {
-            /// <summary>DBファイル名</summary>
+            /// <summary>DBファイル</summary>
             private const string DB_FILE = "AbookTest.db";
 
             /// <summary>
@@ -387,41 +386,41 @@ namespace AbookTest
             }
 
             /// <summary>
-            /// NULLチェック(CSVファイル名)
+            /// NULLチェック(DBファイル)
             /// </summary>
             [Test]
-            public void CsvNull()
+            public void DBFileNull()
             {
-                var argCsv = "999999";
-                Assert.DoesNotThrow(() => CHK.CsvNull(argCsv));
+                var argDBFile = "999999";
+                Assert.DoesNotThrow(() => CHK.DBFileNull(argDBFile));
             }
 
             /// <summary>
-            /// NULLチェック(CSVファイル名)
-            /// 引数:CSVファイル名がNULL
+            /// NULLチェック(DBファイル)
+            /// 引数:DBファイルがNULL
             /// </summary>
             [Test]
-            public void CsvNullWithNullCsv()
+            public void DBFileNullWithNullDBFile()
             {
-                string argCsv = null;
+                string argDBFile = null;
                 var ex = Assert.Throws<AbException>(() =>
-                    CHK.CsvNull(argCsv)
+                    CHK.DBFileNull(argDBFile)
                 );
-                Assert.AreEqual(EX.CSV_NULL, ex.Message);
+                Assert.AreEqual(EX.DB_FILE_NULL, ex.Message);
             }
 
             /// <summary>
-            /// NULLチェック(CSVファイル名)
-            /// 引数:CSVファイル名が空文字列
+            /// NULLチェック(DBファイル)
+            /// 引数:DBファイルが空文字列
             /// </summary>
             [Test]
-            public void CsvNullWithEmptyCsv()
+            public void DBFileNullWithEmptyDBFile()
             {
-                var argCsv = string.Empty;
+                var argDBFile = string.Empty;
                 var ex = Assert.Throws<AbException>(() =>
-                    CHK.CsvNull(argCsv)
+                    CHK.DBFileNull(argDBFile)
                 );
-                Assert.AreEqual(EX.CSV_NULL, ex.Message);
+                Assert.AreEqual(EX.DB_FILE_NULL, ex.Message);
             }
 
             /// <summary>
@@ -499,7 +498,7 @@ namespace AbookTest
                 var ex = Assert.Throws<AbException>(() =>
                     CHK.ExpCount(argExpenses)
                 );
-                Assert.AreEqual(EX.CSV_RECORD_NOTHING, ex.Message);
+                Assert.AreEqual(EX.DB_FILE_RECORD_NOTHING, ex.Message);
             }
 
             /// <summary>
@@ -513,11 +512,11 @@ namespace AbookTest
                 var ex = Assert.Throws<AbException>(() =>
                     CHK.ExpCount(argExpenses)
                 );
-                Assert.AreEqual(EX.CSV_RECORD_NOTHING, ex.Message);
+                Assert.AreEqual(EX.DB_FILE_RECORD_NOTHING, ex.Message);
             }
 
             /// <summary>
-            /// NULLチェック(集計値)
+            /// NULLチェック(月次情報)
             /// </summary>
             [Test]
             public void SumNull()
@@ -530,8 +529,8 @@ namespace AbookTest
             }
 
             /// <summary>
-            /// NULLチェック(集計値)
-            /// 引数:集計値リストがNULL
+            /// NULLチェック(月次情報リスト)
+            /// 引数:月次情報リストがNULL
             /// </summary>
             [Test]
             public void SumNullWithNullSum()

@@ -1,5 +1,5 @@
 ﻿// ------------------------------------------------------------
-// © 2010 Masaaki Kishi
+// © 2010 https://github.com/m-kishi
 // ------------------------------------------------------------
 namespace Abook
 {
@@ -9,7 +9,7 @@ namespace Abook
     using System.Windows.Forms;
     using UTL = Abook.AbUtilities;
     using CHK = Abook.AbUtilities.CHK;
-    using COL = Abook.AbConstants.COL;
+    using COL = Abook.AbConstants.COL.EXPENSE;
     using FMT = Abook.AbConstants.FMT;
     using TYPE = Abook.AbConstants.TYPE;
 
@@ -94,7 +94,7 @@ namespace Abook
                     row.Cells[COL.NAME].Value = exp.Name;
                     row.Cells[COL.TYPE].Value = exp.Type;
                     row.Cells[COL.COST].Value = exp.Cost;
-                    row.Cells[COL.NAME].ToolTipText = exp.Note;
+                    UTL.SetToolTipAndColor(row, COL.NAME, exp.Note);
                 }
                 DgvExpense.FirstDisplayedScrollingRowIndex = 0;
             }

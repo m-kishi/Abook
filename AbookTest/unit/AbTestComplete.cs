@@ -1,10 +1,9 @@
 ﻿// ------------------------------------------------------------
-// © 2010 Masaaki Kishi
+// © 2010 https://github.com/m-kishi
 // ------------------------------------------------------------
 namespace AbookTest
 {
     using Abook;
-    using System;
     using System.Collections.Generic;
     using NUnit.Framework;
     using EX   = Abook.AbException.EX;

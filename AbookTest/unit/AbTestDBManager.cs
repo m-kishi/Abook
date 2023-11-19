@@ -1,17 +1,16 @@
 ﻿// ------------------------------------------------------------
-// © 2010 Masaaki Kishi
+// © 2010 https://github.com/m-kishi
 // ------------------------------------------------------------
 namespace AbookTest
 {
     using Abook;
-    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Windows.Forms;
     using NUnit.Framework;
     using EX  = Abook.AbException.EX;
-    using COL = Abook.AbConstants.COL;
-    using CSV = Abook.AbConstants.CSV;
+    using DB  = Abook.AbConstants.DB;
+    using COL = Abook.AbConstants.COL.EXPENSE;
     using FMT = Abook.AbConstants.FMT;
 
     /// <summary>
@@ -28,9 +27,9 @@ namespace AbookTest
         private string argOutFile;
         /// <summary>引数:DataGridView</summary>
         private DataGridView argDgv;
-        /// <summary>引数:支出リスト</summary>
+        /// <summary>引数:支出情報リスト</summary>
         private List<AbExpense> argExpenses;
-        /// <summary>期待値:支出リスト</summary>
+        /// <summary>期待値:支出情報リスト</summary>
         private List<AbExpense> expected;
 
         /// <summary>
@@ -39,37 +38,37 @@ namespace AbookTest
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            //CSVのフィールド数が少ない
-            using (StreamWriter sw = new StreamWriter("LessCSVFields.db", false, CSV.ENCODING))
+            // DBファイルのフィールド数が少ない
+            using (StreamWriter sw = new StreamWriter("LessFields.db", false, DB.ENCODING))
             {
-                sw.NewLine = CSV.LF;
+                sw.NewLine = DB.LF;
                 sw.WriteLine("\"column1\",\"column2\",\"column3\"");
                 sw.Close();
             }
 
-            //CSVのフィールド数が多い
-            using (StreamWriter sw = new StreamWriter("MoreCSVFields.db", false, CSV.ENCODING))
+            // DBファイルのフィールド数が多い
+            using (StreamWriter sw = new StreamWriter("MoreFields.db", false, DB.ENCODING))
             {
-                sw.NewLine = CSV.LF;
+                sw.NewLine = DB.LF;
                 sw.WriteLine("\"column1\",\"column2\",\"column3\",\"column4\",\"column5\",\"column6\"");
                 sw.Close();
             }
 
-            //日付が不正
-            using (StreamWriter sw = new StreamWriter("InvalidDateFormat.db", false, CSV.ENCODING))
+            // 日付が不正
+            using (StreamWriter sw = new StreamWriter("InvalidDateFormat.db", false, DB.ENCODING))
             {
-                sw.NewLine = CSV.LF;
+                sw.NewLine = DB.LF;
                 sw.WriteLine("\"2011-02-31\",\"name\",\"type\",\"1000\"");
                 sw.Close();
             }
 
-            //データなし
+            // データなし
             File.Create("NoData.db").Close();
 
-            //テストデータ
-            using (StreamWriter sw = new StreamWriter("InData.db", false, CSV.ENCODING))
+            // テストデータ
+            using (StreamWriter sw = new StreamWriter("InData.db", false, DB.ENCODING))
             {
-                sw.NewLine = CSV.LF;
+                sw.NewLine = DB.LF;
                 sw.WriteLine("\"2009-04-01\",\"name1\",\"食費\",\"100\",\"\"");
                 sw.WriteLine("\"2009-04-01\",\"name2\",\"食費\",\"200\",\"\"");
                 sw.WriteLine("\"2009-04-02\",\"name3\",\"食費\",\"300\",\"備考\"");
@@ -87,8 +86,8 @@ namespace AbookTest
             File.Delete("InData.db");
             File.Delete("OutData.db");
             File.Delete("NotExist.db");
-            File.Delete("LessCSVFields.db");
-            File.Delete("MoreCSVFields.db");
+            File.Delete("LessFields.db");
+            File.Delete("MoreFields.db");
             File.Delete("InvalidDateFormat.db");
         }
 
@@ -132,39 +131,39 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// CSVファイル読み込み
-        /// 引数:ファイル名がNULL
+        /// DBファイル読み込み
+        /// 引数:DBファイルがNULL
         /// </summary>
         [Test]
-        public void LoadWithNullFile()
+        public void LoadWithNullDBFile()
         {
             argInFile = null;
             var ex = Assert.Throws<AbException>(() =>
                 AbDBManager.Load(argInFile)
             );
-            Assert.AreEqual(EX.CSV_NULL, ex.Message);
+            Assert.AreEqual(EX.DB_FILE_NULL, ex.Message);
         }
 
         /// <summary>
-        /// CSVファイル読み込み
-        /// 引数:ファイル名が空文字列
+        /// DBファイル読み込み
+        /// 引数:DBファイルが空文字列
         /// </summary>
         [Test]
-        public void LoadWithEmptyFile()
+        public void LoadWithEmptyDBFile()
         {
             argInFile = string.Empty;
             var ex = Assert.Throws<AbException>(() =>
                 AbDBManager.Load(argInFile)
             );
-            Assert.AreEqual(EX.CSV_NULL, ex.Message);
+            Assert.AreEqual(EX.DB_FILE_NULL, ex.Message);
         }
 
         /// <summary>
-        /// CSVファイル読み込み
-        /// 引数:ファイル名が存在しない
+        /// DBファイル読み込み
+        /// 引数:DBファイルが存在しない
         /// </summary>
         [Test]
-        public void LoadWithNotExistFile()
+        public void LoadWithNotExistDBFile()
         {
             argInFile = "NotExist.db";
             var expenses = AbDBManager.Load(argInFile);
@@ -174,35 +173,35 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// CSVファイル読み込み
-        /// CSVのフィールド数が少ない
+        /// DBファイル読み込み
+        /// DBファイルのフィールド数が少ない
         /// </summary>
         [Test]
-        public void LoadWithLessCSVFields()
+        public void LoadWithLessFields()
         {
-            argInFile = "LessCSVFields.db";
+            argInFile = "LessFields.db";
             var ex = Assert.Throws<AbException>(() =>
                 AbDBManager.Load(argInFile)
             );
-            Assert.AreEqual(string.Format(EX.CSV_LOAD, 1, EX.CSV_FIELD_LESS), ex.Message);
+            Assert.AreEqual(string.Format(EX.DB_FILE_LOAD, 1, EX.DB_FILE_FIELD_LESS), ex.Message);
         }
 
         /// <summary>
-        /// CSVファイル読み込み
-        /// CSVのフィールド数が多い
+        /// DBファイル読み込み
+        /// DBファイルのフィールド数が多い
         /// </summary>
         [Test]
-        public void LoadWithMoreCSVFields()
+        public void LoadWithMoreFields()
         {
-            argInFile = "MoreCSVFields.db";
+            argInFile = "MoreFields.db";
             var ex = Assert.Throws<AbException>(() =>
                 AbDBManager.Load(argInFile)
             );
-            Assert.AreEqual(string.Format(EX.CSV_LOAD, 1, EX.CSV_FIELD_MORE), ex.Message);
+            Assert.AreEqual(string.Format(EX.DB_FILE_LOAD, 1, EX.DB_FILE_FIELD_MORE), ex.Message);
         }
 
         /// <summary>
-        /// CSVファイル読み込み
+        /// DBファイル読み込み
         /// 読み込むデータが不正
         /// </summary>
         [Test]
@@ -212,15 +211,15 @@ namespace AbookTest
             var ex = Assert.Throws<AbException>(() =>
                 AbDBManager.Load(argInFile)
             );
-            Assert.AreEqual(string.Format(EX.CSV_LOAD, 1, EX.DATE_FORMAT), ex.Message);
+            Assert.AreEqual(string.Format(EX.DB_FILE_LOAD, 1, EX.DATE_FORMAT), ex.Message);
         }
 
         /// <summary>
-        /// CSVファイル読み込み
+        /// DBファイル読み込み
         /// 空ファイルから読み込み
         /// </summary>
         [Test]
-        public void LoadWithNoDataFile()
+        public void LoadWithNoDataDBFile()
         {
             argInFile = "NoData.db";
             var expenses = AbDBManager.Load(argInFile);
@@ -271,22 +270,22 @@ namespace AbookTest
                 AbDBManager.Load(argDgv, out argLine)
             );
             Assert.AreEqual(argDgv.Rows.Count, argLine);
-            Assert.AreEqual(string.Format(EX.CSV_STORE, argLine, EX.DATE_FORMAT), ex.Message);
+            Assert.AreEqual(string.Format(EX.DB_FILE_LOAD, argLine, EX.DATE_FORMAT), ex.Message);
         }
 
         /// <summary>
-        /// CSVファイル読み込み
+        /// DBファイル読み込み
         /// 読み込み件数のチェック
         /// </summary>
         [Test]
-        public void LoadWithCountFromFile()
+        public void LoadWithCountFromDBFile()
         {
             var expenses = AbDBManager.Load(argInFile);
             Assert.AreEqual(3, expenses.Count);
         }
 
         /// <summary>
-        /// CSVファイル読み込み
+        /// DBファイル読み込み
         /// 読み込み件数のチェック
         /// </summary>
         [Test]
@@ -297,10 +296,10 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// CSVファイル読み込み
+        /// DBファイル読み込み
         /// </summary>
         [Test]
-        public void LoadFromFile()
+        public void LoadFromDBFile()
         {
             var expenses = AbDBManager.Load(argInFile);
             Assert.AreEqual(expected.Count, expenses.Count);
@@ -333,35 +332,35 @@ namespace AbookTest
         }
 
         /// <summary>
-        /// CSVファイル書き出し
-        /// 引数:ファイル名がNULL
+        /// DBファイル書き出し
+        /// 引数:DBファイルがNULL
         /// </summary>
         [Test]
-        public void StoreWithNullFile()
+        public void StoreWithNullDBFile()
         {
             argOutFile = null;
             var ex = Assert.Throws<AbException>(() =>
                 AbDBManager.Store(argOutFile, argExpenses)
             );
-            Assert.AreEqual(EX.CSV_NULL, ex.Message);
+            Assert.AreEqual(EX.DB_FILE_NULL, ex.Message);
         }
 
         /// <summary>
-        /// CSVファイル書き出し
-        /// 引数:ファイル名が空文字列
+        /// DBファイル書き出し
+        /// 引数:DBファイルが空文字列
         /// </summary>
         [Test]
-        public void StoreWithEmptyFile()
+        public void StoreWithEmptyDBFile()
         {
             argOutFile = string.Empty;
             var ex = Assert.Throws<AbException>(() =>
                 AbDBManager.Store(argOutFile, argExpenses)
             );
-            Assert.AreEqual(EX.CSV_NULL, ex.Message);
+            Assert.AreEqual(EX.DB_FILE_NULL, ex.Message);
         }
 
         /// <summary>
-        /// CSVファイル書き出し
+        /// DBファイル書き出し
         /// 引数:支出情報リストがNULL
         /// </summary>
         [Test]
@@ -371,11 +370,11 @@ namespace AbookTest
             var ex = Assert.Throws<AbException>(() =>
                 AbDBManager.Store(argOutFile, argExpenses)
             );
-            Assert.AreEqual(EX.CSV_RECORD_NOTHING, ex.Message);
+            Assert.AreEqual(EX.DB_FILE_RECORD_NOTHING, ex.Message);
         }
 
         /// <summary>
-        /// CSVファイル書き出し
+        /// DBファイル書き出し
         /// 引数:支出情報リストが空リスト
         /// </summary>
         [Test]
@@ -385,11 +384,11 @@ namespace AbookTest
             var ex = Assert.Throws<AbException>(() =>
                 AbDBManager.Store(argOutFile, argExpenses)
             );
-            Assert.AreEqual(EX.CSV_RECORD_NOTHING, ex.Message);
+            Assert.AreEqual(EX.DB_FILE_RECORD_NOTHING, ex.Message);
         }
 
         /// <summary>
-        /// CSVファイル書き出し
+        /// DBファイル書き出し
         /// </summary>
         [Test]
         public void Store()

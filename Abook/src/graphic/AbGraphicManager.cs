@@ -1,5 +1,5 @@
 ﻿// ------------------------------------------------------------
-// © 2010 Masaaki Kishi
+// © 2010 https://github.com/m-kishi
 // ------------------------------------------------------------
 namespace Abook
 {
@@ -14,24 +14,24 @@ namespace Abook
     using GRAPH = Abook.AbConstants.GRAPH;
 
     /// <summary>
-    /// グラフデータ管理クラス
+    /// 推移情報管理クラス
     /// </summary>
     public class AbGraphicManager
     {
-        /// <summary>グラフ表示年月</summary>
+        /// <summary>表示年月</summary>
         private DateTime dtNow;
-        /// <summary>グラフデータ</summary>
+        /// <summary>推移情報リスト</summary>
         public List<AbGraphicData> abGraphDatas;
-        /// <summary>基準線データ</summary>
+        /// <summary>基準線データリスト</summary>
         private List<AbGraphicLine> abGraphLines;
-        /// <summary>集計値リスト</summary>
+        /// <summary>月次情報リスト</summary>
         private List<AbSummary> abSummaries;
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="date">日付</param>
-        /// <param name="summaries">集計値リスト</param>
+        /// <param name="summaries">月次情報リスト</param>
         public AbGraphicManager(DateTime date, List<AbSummary> summaries)
         {
             CHK.SumNull(summaries);
@@ -56,7 +56,7 @@ namespace Abook
         }
 
         /// <summary>
-        /// グラフデータ設定
+        /// 推移情報設定
         /// </summary>
         /// <param name="DtChange">日付更新</param>
         private void SetGraphData(Action DtChange)
@@ -64,11 +64,16 @@ namespace Abook
             DtChange();
 
             abGraphDatas = new List<AbGraphicData>();
-            var gdF = new AbGraphicData(Brushes.Red   ); // 食費
-            var gdO = new AbGraphicData(Brushes.Orange); // 外食費
-            var gdE = new AbGraphicData(Brushes.Yellow); // 電気代
-            var gdG = new AbGraphicData(Brushes.Gray  ); // ガス代
-            var gdW = new AbGraphicData(Brushes.Blue  ); // 水道代
+            // 食費
+            var gdF = new AbGraphicData(Brushes.Red   );
+            // 外食費
+            var gdO = new AbGraphicData(Brushes.Orange);
+            // 電気代
+            var gdE = new AbGraphicData(Brushes.Yellow);
+            // ガス代
+            var gdG = new AbGraphicData(Brushes.Gray  );
+            // 水道代
+            var gdW = new AbGraphicData(Brushes.Blue  );
 
             decimal valF, valO, valE, valG, valW;
             for (var dt = dtNow.AddYears(-1); dt <= dtNow; dt = dt.AddMonths(1))
@@ -135,7 +140,7 @@ namespace Abook
         }
 
         /// <summary>
-        /// 前年グラフ
+        /// 前年へ切り替え
         /// </summary>
         public void PrevYear()
         {
@@ -143,7 +148,7 @@ namespace Abook
         }
 
         /// <summary>
-        /// 前月グラフ
+        /// 前月へ切り替え
         /// </summary>
         public void PrevMonth()
         {
@@ -151,7 +156,7 @@ namespace Abook
         }
 
         /// <summary>
-        /// 翌月グラフ
+        /// 翌月へ切り替え
         /// </summary>
         public void NextMonth()
         {
@@ -159,7 +164,7 @@ namespace Abook
         }
 
         /// <summary>
-        /// 翌年グラフ
+        /// 翌年へ切り替え
         /// </summary>
         public void NextYear()
         {

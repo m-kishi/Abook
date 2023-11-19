@@ -1,20 +1,20 @@
 ﻿// ------------------------------------------------------------
-// © 2010 Masaaki Kishi
+// © 2010 https://github.com/m-kishi
 // ------------------------------------------------------------
 namespace Abook
 {
     using System;
     using System.Collections.Generic;
-    using System.Drawing;
     using System.Linq;
     using System.Windows.Forms;
     using CHK = Abook.AbUtilities.CHK;
-    using COL = Abook.AbConstants.COL;
+    using COL = Abook.AbConstants.COL.EXPENSE;
     using FMT = Abook.AbConstants.FMT;
     using MSG = Abook.AbUtilities.MSG;
+    using UTL = Abook.AbUtilities;
 
     /// <summary>
-    /// 種別明細サブフォーム
+    /// 種別サブフォーム
     /// </summary>
     public partial class AbSubType : Form
     {
@@ -22,7 +22,7 @@ namespace Abook
         private string type;
         /// <summary>対象年月</summary>
         private DateTime dtCurrent;
-        /// <summary>フォーム</summary>
+        /// <summary>支出情報リスト</summary>
         private List<AbExpense> abExpenses;
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Abook
         }
 
         /// <summary>
-        /// 種別明細表示
+        /// 支出情報の表示
         /// </summary>
         /// <param name="expenses">支出情報リスト</param>
         private void SetDgvExpense(List<AbExpense> expenses)
@@ -92,7 +92,7 @@ namespace Abook
                     row.Cells[COL.NAME].Value = exp.Name;
                     row.Cells[COL.TYPE].Value = exp.Type;
                     row.Cells[COL.COST].Value = exp.Cost;
-                    row.Cells[COL.NAME].ToolTipText = exp.Note;
+                    UTL.SetToolTipAndColor(row, COL.NAME, exp.Note);
                 }
                 DgvExpense.FirstDisplayedScrollingRowIndex = 0;
             }

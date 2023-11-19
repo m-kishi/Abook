@@ -1,10 +1,9 @@
 ﻿// ------------------------------------------------------------
-// © 2010 Masaaki Kishi
+// © 2010 https://github.com/m-kishi
 // ------------------------------------------------------------
 namespace Abook
 {
     using System;
-    using System.Drawing;
     using System.Linq;
     using System.Reflection;
     using System.Windows.Forms;
@@ -30,16 +29,16 @@ namespace Abook
             Assembly assembly = Assembly.GetEntryAssembly();
             if (assembly == null) return;
 
-            //タイトル
+            // タイトル
             this.Text = Application.ProductName + " のバージョン情報";
 
-            //製品名
+            // 製品名
             LblProduct.Text = Application.ProductName;
 
-            //バージョン
+            // バージョン
             LblVersion.Text = "Version " + Application.ProductVersion;
 
-            //コピーライト
+            // コピーライト
             LblCopyright.Text = "-";
             var cpyArr = assembly.GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
             if (cpyArr != null && cpyArr.Length > 0)
@@ -47,7 +46,7 @@ namespace Abook
                 LblCopyright.Text = ((AssemblyCopyrightAttribute)cpyArr.First()).Copyright;
             }
 
-            //詳細情報
+            // 詳細情報
             LblDescription.Text = "-";
             var desArr = assembly.GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
             if (desArr != null && desArr.Length > 0)

@@ -1,9 +1,8 @@
 ﻿// ------------------------------------------------------------
-// © 2010 Masaaki Kishi
+// © 2010 https://github.com/m-kishi
 // ------------------------------------------------------------
 namespace Abook
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using CHK  = Abook.AbUtilities.CHK;
@@ -42,7 +41,7 @@ namespace Abook
                 )
             ).ToList();
 
-            //合計
+            // 合計
             if (expenses.Count > 0)
             {
                 var total = new AbBalance(

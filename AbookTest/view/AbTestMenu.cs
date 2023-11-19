@@ -1,17 +1,13 @@
 ﻿// ------------------------------------------------------------
-// © 2010 Masaaki Kishi
+// © 2010 https://github.com/m-kishi
 // ------------------------------------------------------------
 namespace AbookTest
 {
-    using Abook;
-    using System;
     using System.IO;
-    using System.Windows.Forms;
     using NUnit.Framework;
     using NUnit.Extensions.Forms;
-    using TT  = AbTestTool;
-    using EX  = Abook.AbException.EX;
-    using CSV = Abook.AbConstants.CSV;
+    using TT = AbTestTool;
+    using DB = Abook.AbConstants.DB;
 
     /// <summary>
     /// メニューテスト
@@ -19,8 +15,8 @@ namespace AbookTest
     [TestFixture]
     public class AbTestMenu : AbTestFormBase
     {
-        /// <summary>CSVファイル</summary>
-        private const string CSV_FILE = "AbTestMenu.db";
+        /// <summary>DBファイル</summary>
+        private const string DB_FILE = "AbTestMenu.db";
 
         /// <summary>
         /// TestFixtureSetUp
@@ -28,10 +24,10 @@ namespace AbookTest
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            using (var sw = new StreamWriter(CSV_FILE, false, CSV.ENCODING))
+            using (var sw = new StreamWriter(DB_FILE, false, DB.ENCODING))
             {
-                sw.NewLine = CSV.LF;
-                sw.WriteLine(TT.ToCSV("2014-11-01", "おにぎり", "食費", "108"));
+                sw.NewLine = DB.LF;
+                sw.WriteLine(TT.ToDBFileFormat("2014-11-01", "おにぎり", "食費", "108"));
                 sw.Close();
             }
         }
@@ -42,7 +38,7 @@ namespace AbookTest
         [TestFixtureTearDown]
         public void TestFixtureTearDown()
         {
-            if (File.Exists(CSV_FILE)) File.Delete(CSV_FILE);
+            if (File.Exists(DB_FILE)) File.Delete(DB_FILE);
         }
 
         /// <summary>
@@ -51,7 +47,7 @@ namespace AbookTest
         [Test]
         public void MenuExitClick()
         {
-            ShowFormMain(CSV_FILE);
+            ShowFormMain(DB_FILE);
 
             TsMenuExit().Click();
 
@@ -64,20 +60,20 @@ namespace AbookTest
         [Test]
         public void MenuVersionClick()
         {
-            //バージョン情報フォームの表示テスト
+            // バージョン情報フォームの表示テスト
             ModalFormHandler = (name, hWnd, form) =>
             {
-                //フォーム名テスト
+                // フォーム名テスト
                 Assert.AreEqual(name, "AbFormVersion");
 
-                //テスト環境でアセンブリ情報の取得は不可
+                // テスト環境でアセンブリ情報の取得は不可
                 Assert.IsNull(System.Reflection.Assembly.GetEntryAssembly());
 
-                //OKボタンクリック
+                // OKボタンクリック
                 (new ButtonTester("BtnOK", form)).Click();
             };
 
-            ShowFormMain(CSV_FILE);
+            ShowFormMain(DB_FILE);
 
             TsMenuVersion().Click();
         }
@@ -88,17 +84,17 @@ namespace AbookTest
         [Test]
         public void MenuEnergyClick()
         {
-            //光熱費サブフォームが表示される
+            // 光熱費サブフォームが表示される
             ModalFormHandler = (name, hWnd, form) =>
             {
-                //フォーム名テスト
+                // フォーム名テスト
                 Assert.AreEqual(name, "AbSubEnergy");
 
                 // 閉じる
                 form.Close();
             };
 
-            ShowFormMain(CSV_FILE);
+            ShowFormMain(DB_FILE);
 
             TsMenuEnergy().Click();
         }

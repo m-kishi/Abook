@@ -1,5 +1,5 @@
 ﻿// ------------------------------------------------------------
-// © 2010 Masaaki Kishi
+// © 2010 https://github.com/m-kishi
 // ------------------------------------------------------------
 namespace Abook
 {
@@ -7,8 +7,8 @@ namespace Abook
     using System.Drawing;
     using System.Linq;
     using System.Windows.Forms;
+    using UTL  = Abook.AbUtilities;
     using TYPE = Abook.AbConstants.TYPE;
-    using UTIL = Abook.AbUtilities;
 
     /// <summary>
     /// ラベルコントロール
@@ -47,7 +47,7 @@ namespace Abook
         public decimal Cost
         {
             get { return _cost; }
-            set { _cost = value; _Value.Text = UTIL.ToYen(value); }
+            set { _cost = value; _Value.Text = UTL.ToYen(value); }
         }
 
         /// <summary>

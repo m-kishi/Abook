@@ -1,16 +1,14 @@
 ﻿// ------------------------------------------------------------
-// © 2010 Masaaki Kishi
+// © 2010 https://github.com/m-kishi
 // ------------------------------------------------------------
 namespace AbookTest
 {
-    using Abook;
-    using System;
     using System.IO;
     using NUnit.Framework;
     using NUnit.Extensions.Forms;
-    using TT  = AbTestTool;
-    using EX  = Abook.AbException.EX;
-    using CSV = Abook.AbConstants.CSV;
+    using TT = AbTestTool;
+    using EX = Abook.AbException.EX;
+    using DB = Abook.AbConstants.DB;
 
     /// <summary>
     /// メイン画面フォームテスト
@@ -18,10 +16,10 @@ namespace AbookTest
     [TestFixture]
     public class AbTestFormMain : AbTestFormBase
     {
-        /// <summary>CSVファイル</summary>
-        private const string CSV_EMPTY = "AbTestFormMainEmpty.db";
-        /// <summary>CSVファイル</summary>
-        private const string CSV_INVALID = "AbTestFormMainInvalid.db";
+        /// <summary>DBファイル</summary>
+        private const string DB_FILE_EMPTY = "AbTestFormMainEmpty.db";
+        /// <summary>DBファイル</summary>
+        private const string DB_FILE_INVALID = "AbTestFormMainInvalid.db";
 
         /// <summary>
         /// TestFixtureSetUp
@@ -29,11 +27,11 @@ namespace AbookTest
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            using (StreamWriter sw = new StreamWriter(CSV_INVALID, false, CSV.ENCODING))
+            using (StreamWriter sw = new StreamWriter(DB_FILE_INVALID, false, DB.ENCODING))
             {
-                sw.WriteLine(TT.ToCSV("2012-01-01", "name1", "食費", "10000"));
-                sw.WriteLine(TT.ToCSV("2012-02-30", "name2", "食費", "20000"));
-                sw.WriteLine(TT.ToCSV("2012-03-05", "name3", "食費", "30000"));
+                sw.WriteLine(TT.ToDBFileFormat("2012-01-01", "name1", "食費", "10000"));
+                sw.WriteLine(TT.ToDBFileFormat("2012-02-30", "name2", "食費", "20000"));
+                sw.WriteLine(TT.ToDBFileFormat("2012-03-05", "name3", "食費", "30000"));
             }
         }
 
@@ -43,8 +41,8 @@ namespace AbookTest
         [TestFixtureTearDown]
         public void TestFixtureTearDown()
         {
-            if (File.Exists(CSV_EMPTY  )) File.Delete(CSV_EMPTY);
-            if (File.Exists(CSV_INVALID)) File.Delete(CSV_INVALID);
+            if (File.Exists(DB_FILE_EMPTY  )) File.Delete(DB_FILE_EMPTY);
+            if (File.Exists(DB_FILE_INVALID)) File.Delete(DB_FILE_INVALID);
         }
 
         /// <summary>
@@ -53,7 +51,7 @@ namespace AbookTest
         [Test]
         public void Load()
         {
-            ShowFormMain(CSV_EMPTY);
+            ShowFormMain(DB_FILE_EMPTY);
             Assert.IsTrue(CtAbFormMain().Visible);
         }
 
@@ -64,25 +62,23 @@ namespace AbookTest
         [Test]
         public void LoadWithInvalidDB()
         {
-            //ダイアログの表示テスト
-            //Loadイベント中でダイアログを表示させている場合、NUnitで検証不可 -> AssertするとNUnitが落ちる？
-            //  => Assert が成功する場合は落ちないのかも...
+            // ダイアログの表示テスト
             DialogBoxHandler = (name, hWnd) =>
             {
                 var tsMessageBox = new MessageBoxTester(hWnd);
 
-                //タイトルテスト
+                // タイトルテスト
                 var title = "エラー";
                 Assert.AreEqual(title, tsMessageBox.Title);
 
-                //テキストテスト
-                var text = string.Format(EX.CSV_LOAD, 2, EX.DATE_FORMAT);
+                // テキストテスト
+                var text = string.Format(EX.DB_FILE_LOAD, 2, EX.DATE_FORMAT);
                 Assert.AreEqual(text, tsMessageBox.Text);
 
-                //OKボタンクリック
+                // OKボタンクリック
                 tsMessageBox.ClickOk();
             };
-            ShowFormMain(CSV_INVALID);
+            ShowFormMain(DB_FILE_INVALID);
         }
     }
 }

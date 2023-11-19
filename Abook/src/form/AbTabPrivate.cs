@@ -1,16 +1,15 @@
 ﻿// ------------------------------------------------------------
-// © 2010 Masaaki Kishi
+// © 2010 https://github.com/m-kishi
 // ------------------------------------------------------------
 namespace Abook
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Windows.Forms;
     using COL = Abook.AbConstants.COL.PRIVATE;
+    using UTL = Abook.AbUtilities;
 
     /// <summary>
-    /// 秘密収支タブ
+    /// 秘密タブ
     /// </summary>
     public partial class AbFormMain
     {
@@ -18,7 +17,7 @@ namespace Abook
         private AbPrivateManager abPrivateManager;
 
         /// <summary>
-        /// 秘密収支タブ初期化
+        /// 秘密タブ初期化
         /// </summary>
         /// <param name="expenses">支出情報リスト</param>
         private void InitTabPrivate(List<AbExpense> expenses)
@@ -28,7 +27,7 @@ namespace Abook
         }
 
         /// <summary>
-        /// 秘密収支タブ表示
+        /// 秘密タブ表示
         /// </summary>
         private void SetTabPrivate()
         {
@@ -45,7 +44,7 @@ namespace Abook
                     row.Cells[COL.NAME].Value = prv.Name;
                     row.Cells[COL.COST].Value = prv.Cost;
                     row.Cells[COL.BLNC].Value = prv.Blnc;
-                    SetToolTipText(row, COL.NAME, prv.Note);
+                    UTL.SetToolTipAndColor(row, COL.NAME, prv.Note);
                 }
             }
 

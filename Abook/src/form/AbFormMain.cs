@@ -1,14 +1,13 @@
 ﻿// ------------------------------------------------------------
-// © 2010 Masaaki Kishi
+// © 2010 https://github.com/m-kishi
 // ------------------------------------------------------------
 namespace Abook
 {
     using System;
     using System.Collections.Generic;
-    using System.Drawing;
     using System.Threading;
     using System.Windows.Forms;
-    using CSV = Abook.AbConstants.CSV;
+    using DB  = Abook.AbConstants.DB;
     using MSG = Abook.AbUtilities.MSG;
 
     /// <summary>
@@ -16,8 +15,8 @@ namespace Abook
     /// </summary>
     public partial class AbFormMain : Form
     {
-        /// <summary>CSVファイル</summary>
-        public string CSV_FILE { get; private set; }
+        /// <summary>DBファイル</summary>
+        public string DB_FILE { get; private set; }
 
         /// <summary>支出情報リスト</summary>
         private List<AbExpense> abExpenses;
@@ -34,17 +33,17 @@ namespace Abook
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            var form = new AbFormMain(CSV.FILE);
+            var form = new AbFormMain(DB.NAME);
             Application.Run(form);
         }
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        /// <param name="CSV">CSVファイル</param>
-        public AbFormMain(string CSV)
+        /// <param name="dbFile">DBファイル</param>
+        public AbFormMain(string dbFile)
         {
-            this.CSV_FILE = CSV;
+            this.DB_FILE = dbFile;
             InitializeComponent();
         }
 
@@ -55,7 +54,7 @@ namespace Abook
         {
             try
             {
-                abExpenses = AbDBManager.Load(CSV_FILE);
+                abExpenses = AbDBManager.Load(DB_FILE);
                 InitFormMain(abExpenses);
             }
             catch (Exception ex)
@@ -79,17 +78,6 @@ namespace Abook
             InitTabPrivate(expenses);
             InitTabSummary(summaries);
             InitTabGraphic(summaries);
-        }
-
-        /// <summary>
-        /// 備考をツールチップに表示
-        /// </summary>
-        /// <param name="row">行</param>
-        /// <param name="col">列</param>
-        /// <param name="note">備考</param>
-        private void SetToolTipText(DataGridViewRow row, string col, string note)
-        {
-            row.Cells[col].ToolTipText = note;
         }
     }
 }

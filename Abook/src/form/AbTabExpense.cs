@@ -1,5 +1,5 @@
 ﻿// ------------------------------------------------------------
-// © 2010 Masaaki Kishi
+// © 2010 https://github.com/m-kishi
 // ------------------------------------------------------------
 namespace Abook
 {
@@ -7,8 +7,7 @@ namespace Abook
     using System.Collections.Generic;
     using System.Linq;
     using System.Windows.Forms;
-    using COL = Abook.AbConstants.COL;
-    using CSV = Abook.AbConstants.CSV;
+    using COL = Abook.AbConstants.COL.EXPENSE;
     using DGV = Abook.AbConstants.DGV;
     using FMT = Abook.AbConstants.FMT;
     using UTL = Abook.AbUtilities;
@@ -52,7 +51,7 @@ namespace Abook
                     row.Cells[COL.TYPE].Value = exp.Type;
                     row.Cells[COL.COST].Value = exp.Cost;
                     row.Cells[COL.NOTE].Value = exp.Note;
-                    SetToolTipText(row, COL.NAME, exp.Note);
+                    UTL.SetToolTipAndColor(row, COL.NAME, exp.Note);
                 }
             }
 
@@ -125,7 +124,7 @@ namespace Abook
         /// </summary>
         private void DgvExpense_KeyDown(object sender, KeyEventArgs e)
         {
-            //ペースト
+            // ペースト
             if (e.Modifiers == Keys.Control && e.KeyCode == Keys.V)
             {
                 var row = DgvExpense.Rows[DgvExpense.CurrentCell.RowIndex];
@@ -159,7 +158,7 @@ namespace Abook
                 }
             }
 
-            //消費税計算(8%)
+            // 消費税計算(8%)
             if (e.Modifiers == Keys.Control && e.KeyCode == Keys.D8)
             {
                 DgvExpense.SelectedCells.Cast<DataGridViewCell>().Where(c =>
@@ -170,8 +169,8 @@ namespace Abook
                 });
             }
 
-            //消費税計算(10%)
-            if (e.Modifiers == Keys.Control && e.KeyCode == Keys.D1)
+            // 消費税計算(10%)
+            if (e.Modifiers == Keys.Control && e.KeyCode == Keys.D0)
             {
                 DgvExpense.SelectedCells.Cast<DataGridViewCell>().Where(c =>
                     c.ColumnIndex == 3 && UTL.IsCost(c.Value)
@@ -181,7 +180,7 @@ namespace Abook
                 });
             }
 
-            //選択範囲の合計表示
+            // 選択範囲の合計表示
             if (e.Modifiers == Keys.Control && e.KeyCode == Keys.T)
             {
                 var total = DgvExpense.SelectedCells.Cast<DataGridViewCell>().Where(c =>
@@ -194,7 +193,7 @@ namespace Abook
         }
 
         /// <summary>
-        /// CSVファイルへ書き出し
+        /// DBファイルへ書き出し
         /// </summary>
         private void BtnEntry_Click(object sender, EventArgs e)
         {
@@ -208,12 +207,6 @@ namespace Abook
             try
             {
                 abExpenses = AbDBManager.Load(DgvExpense, out errLine);
-
-                AbDBManager.Store(CSV_FILE, abExpenses);
-
-                InitFormMain(abExpenses);
-
-                MSG.OK("登録完了", "正常に登録しました。");
             }
             catch (AbException ex)
             {
@@ -222,6 +215,20 @@ namespace Abook
                 DgvExpense.Rows[errIdx].Selected = true;
                 DgvExpense.FirstDisplayedScrollingRowIndex = errIdx;
 
+                MSG.Error(ex.Message);
+                return;
+            }
+
+            try
+            {
+                AbDBManager.Store(DB_FILE, abExpenses);
+
+                InitFormMain(abExpenses);
+
+                MSG.OK("登録完了", "正常に登録しました。");
+            }
+            catch (AbException ex)
+            {
                 MSG.Error(ex.Message);
                 return;
             }

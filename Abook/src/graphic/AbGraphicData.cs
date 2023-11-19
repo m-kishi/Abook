@@ -1,15 +1,14 @@
 ﻿// ------------------------------------------------------------
-// © 2010 Masaaki Kishi
+// © 2010 https://github.com/m-kishi
 // ------------------------------------------------------------
 namespace Abook
 {
-    using System;
     using System.Collections.Generic;
     using System.Drawing;
     using GRAPH = Abook.AbConstants.GRAPH;
 
     /// <summary>
-    /// グラフデータクラス
+    /// 推移情報クラス
     /// </summary>
     public class AbGraphicData
     {

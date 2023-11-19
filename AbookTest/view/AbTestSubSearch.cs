@@ -1,18 +1,19 @@
 ﻿// ------------------------------------------------------------
-// © 2010 Masaaki Kishi
+// © 2010 https://github.com/m-kishi
 // ------------------------------------------------------------
 namespace AbookTest
 {
     using Abook;
-    using System;
+    using System.Drawing;
     using System.IO;
     using System.Windows.Forms;
     using NUnit.Framework;
     using NUnit.Extensions.Forms;
     using TT   = AbTestTool;
     using EX   = Abook.AbException.EX;
-    using COL  = Abook.AbConstants.COL;
-    using CSV  = Abook.AbConstants.CSV;
+    using DB   = Abook.AbConstants.DB;
+    using COL  = Abook.AbConstants.COL.EXPENSE;
+    using DGV  = Abook.AbConstants.DGV;
     using TYPE = Abook.AbConstants.TYPE;
 
     /// <summary>
@@ -21,11 +22,11 @@ namespace AbookTest
     [TestFixture]
     public class AbTestSubSearch : NUnitFormTest
     {
-        /// <summary>CSVファイル</summary>
-        private const string CSV_EMPTY = "AbTestSubSearchEmpty.db";
-        /// <summary>CSVファイル</summary>
-        private const string CSV_EXIST = "AbTestSubSearchExist.db";
-        /// <summary>対象:検索サブ</summary>
+        /// <summary>DBファイル</summary>
+        private const string DB_FILE_EMPTY = "AbTestSubSearchEmpty.db";
+        /// <summary>DBファイル</summary>
+        private const string DB_FILE_EXIST = "AbTestSubSearchExist.db";
+        /// <summary>対象:検索サブフォーム</summary>
         protected AbSubSearch form;
 
         /// <summary>
@@ -47,7 +48,7 @@ namespace AbookTest
             }
             catch (NoSuchControlException)
             {
-                //すでに閉じられている
+                // すでに閉じられている
             }
             base.TearDown();
         }
@@ -58,19 +59,19 @@ namespace AbookTest
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            using (StreamWriter sw = new StreamWriter(CSV_EXIST, false, CSV.ENCODING))
+            using (StreamWriter sw = new StreamWriter(DB_FILE_EXIST, false, DB.ENCODING))
             {
-                sw.NewLine = CSV.LF;
-                sw.WriteLine(TT.ToCSV("2017-12-01", "おにぎり"    , TYPE.FOOD, "100", "note1"));
-                sw.WriteLine(TT.ToCSV("2017-12-02", "おにぎり"    , TYPE.FOOD, "200"));
-                sw.WriteLine(TT.ToCSV("2017-12-03", "おにぎりＡ"  , TYPE.FOOD, "300"));
-                sw.WriteLine(TT.ToCSV("2017-12-04", "Ｂおにぎり"  , TYPE.FOOD, "400"));
-                sw.WriteLine(TT.ToCSV("2017-12-05", "ＣおにぎりＤ", TYPE.FOOD, "500"));
-                sw.WriteLine(TT.ToCSV("2019-12-21", "おにぎり"    , TYPE.OTFD, "101"));
-                sw.WriteLine(TT.ToCSV("2019-12-22", "おにぎり"    , TYPE.OTFD, "202"));
-                sw.WriteLine(TT.ToCSV("2019-12-23", "おにぎりＡ"  , TYPE.TRFC, "303"));
-                sw.WriteLine(TT.ToCSV("2019-12-24", "Ｂおにぎり"  , TYPE.FRND, "404"));
-                sw.WriteLine(TT.ToCSV("2019-12-25", "ＣおにぎりＤ", TYPE.INSU, "505"));
+                sw.NewLine = DB.LF;
+                sw.WriteLine(TT.ToDBFileFormat("2017-12-01", "おにぎり"    , TYPE.FOOD, "100", "note1"));
+                sw.WriteLine(TT.ToDBFileFormat("2017-12-02", "おにぎり"    , TYPE.FOOD, "200"));
+                sw.WriteLine(TT.ToDBFileFormat("2017-12-03", "おにぎりＡ"  , TYPE.FOOD, "300"));
+                sw.WriteLine(TT.ToDBFileFormat("2017-12-04", "Ｂおにぎり"  , TYPE.FOOD, "400"));
+                sw.WriteLine(TT.ToDBFileFormat("2017-12-05", "ＣおにぎりＤ", TYPE.FOOD, "500"));
+                sw.WriteLine(TT.ToDBFileFormat("2019-12-21", "おにぎり"    , TYPE.OTFD, "101"));
+                sw.WriteLine(TT.ToDBFileFormat("2019-12-22", "おにぎり"    , TYPE.OTFD, "202"));
+                sw.WriteLine(TT.ToDBFileFormat("2019-12-23", "おにぎりＡ"  , TYPE.TRFC, "303"));
+                sw.WriteLine(TT.ToDBFileFormat("2019-12-24", "Ｂおにぎり"  , TYPE.FRND, "404"));
+                sw.WriteLine(TT.ToDBFileFormat("2019-12-25", "ＣおにぎりＤ", TYPE.INSU, "505"));
                 sw.Close();
             }
         }
@@ -81,17 +82,17 @@ namespace AbookTest
         [TestFixtureTearDown]
         public void TestFixtureTearDown()
         {
-            if (File.Exists(CSV_EMPTY)) File.Delete(CSV_EMPTY);
-            if (File.Exists(CSV_EXIST)) File.Delete(CSV_EXIST);
+            if (File.Exists(DB_FILE_EMPTY)) File.Delete(DB_FILE_EMPTY);
+            if (File.Exists(DB_FILE_EXIST)) File.Delete(DB_FILE_EXIST);
         }
 
         /// <summary>
         /// フォーム表示
         /// </summary>
-        /// <param name="csv">CSVファイル</param>
-        protected void ShowSubSearch(string csv)
+        /// <param name="dbFile">DBファイル</param>
+        protected void ShowSubSearch(string dbFile)
         {
-            var expenses = AbDBManager.Load(csv);
+            var expenses = AbDBManager.Load(dbFile);
 
             form = new AbSubSearch(expenses);
             form.Show();
@@ -170,7 +171,7 @@ namespace AbookTest
         [Test, RequiresSTA]
         public void Load()
         {
-            ShowSubSearch(CSV_EMPTY);
+            ShowSubSearch(DB_FILE_EMPTY);
             Assert.IsTrue(CtAbSubSearch().Visible);
         }
 
@@ -193,7 +194,7 @@ namespace AbookTest
         [Test, RequiresSTA]
         public void LoadWithTitle()
         {
-            ShowSubSearch(CSV_EMPTY);
+            ShowSubSearch(DB_FILE_EMPTY);
             Assert.AreEqual("支出検索", form.Text);
         }
 
@@ -204,7 +205,7 @@ namespace AbookTest
         [Test, RequiresSTA]
         public void LoadWithCmbNameEmpty()
         {
-            ShowSubSearch(CSV_EMPTY);
+            ShowSubSearch(DB_FILE_EMPTY);
 
             var cmbName = CtCmbName();
             Assert.AreEqual( 0, cmbName.Items.Count);
@@ -219,7 +220,7 @@ namespace AbookTest
         [Test, RequiresSTA]
         public void LoadWithCmbName()
         {
-            ShowSubSearch(CSV_EXIST);
+            ShowSubSearch(DB_FILE_EXIST);
 
             var cmbName = CtCmbName();
             Assert.AreEqual(4, cmbName.Items.Count);
@@ -234,7 +235,7 @@ namespace AbookTest
         [Test, RequiresSTA]
         public void LoadWithCmbNameWithSort()
         {
-            ShowSubSearch(CSV_EXIST);
+            ShowSubSearch(DB_FILE_EXIST);
 
             var cmbName = CtCmbName();
             Assert.AreEqual("Ｂおにぎり"  , cmbName.Items[0]);
@@ -250,7 +251,7 @@ namespace AbookTest
         [Test, RequiresSTA]
         public void LoadWithType()
         {
-            ShowSubSearch(CSV_EMPTY);
+            ShowSubSearch(DB_FILE_EMPTY);
 
             var cmbType = CtCmbType();
 
@@ -271,7 +272,7 @@ namespace AbookTest
         [Test, RequiresSTA]
         public void LoadWithDgvExpense()
         {
-            ShowSubSearch(CSV_EXIST);
+            ShowSubSearch(DB_FILE_EXIST);
             Assert.AreEqual(0, CtDgvExpense().Rows.Count);
         }
 
@@ -282,7 +283,7 @@ namespace AbookTest
         [Test, RequiresSTA]
         public void SearchWithEmptyName()
         {
-            ShowSubSearch(CSV_EXIST);
+            ShowSubSearch(DB_FILE_EXIST);
 
             var cmbName = CtCmbName();
             cmbName.SelectedIndex = -1;
@@ -322,7 +323,7 @@ namespace AbookTest
         [Test, RequiresSTA]
         public void SearchWithNotFound()
         {
-            ShowSubSearch(CSV_EXIST);
+            ShowSubSearch(DB_FILE_EXIST);
 
             var cmbName = CtCmbName();
             cmbName.SelectedIndex = -1;
@@ -341,7 +342,7 @@ namespace AbookTest
         [Test, RequiresSTA]
         public void SearchWithExactMatch()
         {
-            ShowSubSearch(CSV_EXIST);
+            ShowSubSearch(DB_FILE_EXIST);
 
             var cmbName = CtCmbName();
             cmbName.Text = "おにぎり";
@@ -370,7 +371,7 @@ namespace AbookTest
         [Test, RequiresSTA]
         public void SearchWithPartialMatch()
         {
-            ShowSubSearch(CSV_EXIST);
+            ShowSubSearch(DB_FILE_EXIST);
 
             var cmbName = CtCmbName();
             cmbName.Text = "おにぎり";
@@ -410,7 +411,7 @@ namespace AbookTest
         [Test, RequiresSTA]
         public void SearchWithPartialMatchForward()
         {
-            ShowSubSearch(CSV_EXIST);
+            ShowSubSearch(DB_FILE_EXIST);
 
             var cmbName = CtCmbName();
             cmbName.SelectedIndex = -1;
@@ -434,7 +435,7 @@ namespace AbookTest
         [Test, RequiresSTA]
         public void SearchWithPartialMatchBackward()
         {
-            ShowSubSearch(CSV_EXIST);
+            ShowSubSearch(DB_FILE_EXIST);
 
             var cmbName = CtCmbName();
             cmbName.SelectedIndex = -1;
@@ -458,7 +459,7 @@ namespace AbookTest
         [Test, RequiresSTA]
         public void SearchWithType()
         {
-            ShowSubSearch(CSV_EXIST);
+            ShowSubSearch(DB_FILE_EXIST);
 
             var cmbName = CtCmbName();
             cmbName.SelectedIndex = -1;
@@ -484,7 +485,7 @@ namespace AbookTest
         [Test, RequiresSTA]
         public void SearchWithTypeNotFound()
         {
-            ShowSubSearch(CSV_EXIST);
+            ShowSubSearch(DB_FILE_EXIST);
 
             var cmbName = CtCmbName();
             cmbName.SelectedIndex = -1;
@@ -506,7 +507,7 @@ namespace AbookTest
         [Test, RequiresSTA]
         public void SearchWithPartialNameAndType()
         {
-            ShowSubSearch(CSV_EXIST);
+            ShowSubSearch(DB_FILE_EXIST);
 
             var cmbName = CtCmbName();
             cmbName.Text = "おにぎり";
@@ -538,7 +539,7 @@ namespace AbookTest
         [Test, RequiresSTA]
         public void SearchWithMatchNameAndType()
         {
-            ShowSubSearch(CSV_EXIST);
+            ShowSubSearch(DB_FILE_EXIST);
 
             var cmbName = CtCmbName();
             cmbName.SelectedIndex = 3;
@@ -561,7 +562,7 @@ namespace AbookTest
         [Test, RequiresSTA]
         public void SearchWithScrollingRowIndex()
         {
-            ShowSubSearch(CSV_EXIST);
+            ShowSubSearch(DB_FILE_EXIST);
 
             var cmbName = CtCmbName();
             cmbName.Text = "";
@@ -584,7 +585,7 @@ namespace AbookTest
         [Test, RequiresSTA]
         public void SearchWithScrollingRowIndexWithNotFound()
         {
-            ShowSubSearch(CSV_EXIST);
+            ShowSubSearch(DB_FILE_EXIST);
 
             var cmbName = CtCmbName();
             cmbName.Text = "";
@@ -609,7 +610,7 @@ namespace AbookTest
         [Test, RequiresSTA]
         public void Note()
         {
-            ShowSubSearch(CSV_EXIST);
+            ShowSubSearch(DB_FILE_EXIST);
 
             var cmbName = CtCmbName();
             cmbName.SelectedIndex = 2;
@@ -618,6 +619,7 @@ namespace AbookTest
 
             var dgvExpense = CtDgvExpense();
             Assert.AreEqual("note1", dgvExpense.Rows[0].Cells[COL.NAME].ToolTipText);
+            Assert.AreEqual(DGV.NOTE_BG_COLOR, dgvExpense.Rows[0].DefaultCellStyle.BackColor);
         }
 
         /// <summary>
@@ -627,7 +629,7 @@ namespace AbookTest
         [Test, RequiresSTA]
         public void NoteWithEmpty()
         {
-            ShowSubSearch(CSV_EXIST);
+            ShowSubSearch(DB_FILE_EXIST);
 
             var cmbName = CtCmbName();
             cmbName.SelectedIndex = 2;
@@ -636,6 +638,7 @@ namespace AbookTest
 
             var dgvExpense = CtDgvExpense();
             Assert.AreEqual("", dgvExpense.Rows[1].Cells[COL.NAME].ToolTipText);
+            Assert.AreEqual(Color.Empty, dgvExpense.Rows[1].DefaultCellStyle.BackColor);
         }
     }
 }
