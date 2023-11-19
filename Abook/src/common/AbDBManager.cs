@@ -124,24 +124,22 @@ namespace Abook
             CHK.DBFileNull(dbFile);
             CHK.ExpCount(expenses);
 
-            using (var sw = new StreamWriter(dbFile, false, DB.ENCODING))
+            try
             {
-                var line = 0;
-                try
+                using (var sw = new StreamWriter(dbFile, false, DB.ENCODING))
                 {
                     sw.NewLine = DB.LF;
                     foreach (var exp in expenses)
                     {
-                        line++;
                         sw.WriteLine(exp.ToDBFileFormat());
                     }
                     sw.Close();
                 }
-                catch (Exception ex)
-                {
-                    var message = string.Format(EX.DB_FILE_STORE, line, ex.Message);
-                    AbException.Throw(message);
-                }
+            }
+            catch (Exception ex)
+            {
+                var message = string.Format(EX.DB_FILE_STORE, ex.Message);
+                AbException.Throw(message);
             }
         }
     }

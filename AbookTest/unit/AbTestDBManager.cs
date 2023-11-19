@@ -270,7 +270,7 @@ namespace AbookTest
                 AbDBManager.Load(argDgv, out argLine)
             );
             Assert.AreEqual(argDgv.Rows.Count, argLine);
-            Assert.AreEqual(string.Format(EX.DB_FILE_STORE, argLine, EX.DATE_FORMAT), ex.Message);
+            Assert.AreEqual(string.Format(EX.DB_FILE_LOAD, argLine, EX.DATE_FORMAT), ex.Message);
         }
 
         /// <summary>

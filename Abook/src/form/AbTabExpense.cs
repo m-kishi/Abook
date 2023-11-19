@@ -207,12 +207,6 @@ namespace Abook
             try
             {
                 abExpenses = AbDBManager.Load(DgvExpense, out errLine);
-
-                AbDBManager.Store(DB_FILE, abExpenses);
-
-                InitFormMain(abExpenses);
-
-                MSG.OK("登録完了", "正常に登録しました。");
             }
             catch (AbException ex)
             {
@@ -221,6 +215,20 @@ namespace Abook
                 DgvExpense.Rows[errIdx].Selected = true;
                 DgvExpense.FirstDisplayedScrollingRowIndex = errIdx;
 
+                MSG.Error(ex.Message);
+                return;
+            }
+
+            try
+            {
+                AbDBManager.Store(DB_FILE, abExpenses);
+
+                InitFormMain(abExpenses);
+
+                MSG.OK("登録完了", "正常に登録しました。");
+            }
+            catch (AbException ex)
+            {
                 MSG.Error(ex.Message);
                 return;
             }

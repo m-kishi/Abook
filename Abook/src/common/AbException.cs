@@ -73,8 +73,8 @@ namespace Abook
             public const string DB_FILE_NULL = "DBファイルがありません。";
             /// <summary>{0} 行目: {1}</summary>
             public const string DB_FILE_LOAD = "{0} 行目: {1}";
-            /// <summary>{0} 行目: {1}</summary>
-            public const string DB_FILE_STORE = "{0} 行目: {1}";
+            /// <summary>DBファイル登録エラー: {0}</summary>
+            public const string DB_FILE_STORE = "DBファイル登録エラー: {0}";
             /// <summary>DBファイルの作成に失敗しました。</summary>
             public const string DB_FILE_CREATE = "DBファイルの作成に失敗しました。";
             /// <summary>フィールド数が少ないです。</summary>
