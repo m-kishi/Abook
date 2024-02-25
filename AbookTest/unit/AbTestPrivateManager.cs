@@ -37,11 +37,11 @@ namespace AbookTest
         private List<AbExpense> GenerateExpenses()
         {
             var expenses = new List<AbExpense>();
-            expenses.Add(new AbExpense("2011-01-01", "name1", TYPE.PRVI, "10000"));
+            expenses.Add(new AbExpense("2011-01-01", "name1", TYPE.PRVI, "10000", "note1"));
             expenses.Add(new AbExpense("2011-02-28", "name0", TYPE.FOOD, "11000"));
-            expenses.Add(new AbExpense("2011-03-15", "name2", TYPE.PRVO, "10000"));
+            expenses.Add(new AbExpense("2011-03-15", "name2", TYPE.PRVO, "10000", "note2"));
             expenses.Add(new AbExpense("2011-04-20", "name0", TYPE.FOOD, "22000"));
-            expenses.Add(new AbExpense("2011-05-08", "name3", TYPE.PRVI, "15000"));
+            expenses.Add(new AbExpense("2011-05-08", "name3", TYPE.PRVI, "15000", "note3"));
             expenses.Add(new AbExpense("2011-07-31", "name0", TYPE.FOOD, "33000"));
             expenses.Add(new AbExpense("2011-09-28", "name4", TYPE.PRVI, "30000"));
             expenses.Add(new AbExpense("2011-10-11", "name0", TYPE.FOOD, "44000"));
@@ -73,6 +73,7 @@ namespace AbookTest
             Assert.AreEqual("name1"  , prv.Name);
             Assert.AreEqual(    10000, prv.Cost);
             Assert.AreEqual(    10000, prv.Blnc);
+            Assert.AreEqual("note1"  , prv.Note);
         }
 
         /// <summary>
@@ -87,6 +88,7 @@ namespace AbookTest
             Assert.AreEqual("name2"  , prv.Name);
             Assert.AreEqual(   -10000, prv.Cost);
             Assert.AreEqual(        0, prv.Blnc);
+            Assert.AreEqual("note2"  , prv.Note);
         }
 
         /// <summary>
@@ -101,6 +103,7 @@ namespace AbookTest
             Assert.AreEqual("name3"  , prv.Name);
             Assert.AreEqual(    15000, prv.Cost);
             Assert.AreEqual(    15000, prv.Blnc);
+            Assert.AreEqual("note3"  , prv.Note);
         }
 
         /// <summary>
@@ -115,6 +118,7 @@ namespace AbookTest
             Assert.AreEqual("name4"  , prv.Name);
             Assert.AreEqual(    30000, prv.Cost);
             Assert.AreEqual(    45000, prv.Blnc);
+            Assert.AreEqual(""       , prv.Note);
         }
 
         /// <summary>
@@ -129,6 +133,7 @@ namespace AbookTest
             Assert.AreEqual("name5"  , prv.Name);
             Assert.AreEqual(   -25000, prv.Cost);
             Assert.AreEqual(    20000, prv.Blnc);
+            Assert.AreEqual(""       , prv.Note);
         }
 
         /// <summary>
@@ -143,6 +148,7 @@ namespace AbookTest
             Assert.AreEqual("name6"  , prv.Name);
             Assert.AreEqual(    20000, prv.Cost);
             Assert.AreEqual(    40000, prv.Blnc);
+            Assert.AreEqual(""       , prv.Note);
         }
 
         /// <summary>

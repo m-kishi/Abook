@@ -618,6 +618,7 @@ namespace AbookTest
             TsBtnSearch().Click();
 
             var dgvExpense = CtDgvExpense();
+            Assert.AreEqual("note1", dgvExpense.Rows[0].Cells[COL.NOTE].Value);
             Assert.AreEqual("note1", dgvExpense.Rows[0].Cells[COL.NAME].ToolTipText);
             Assert.AreEqual(DGV.NOTE_BG_COLOR, dgvExpense.Rows[0].DefaultCellStyle.BackColor);
         }
@@ -637,6 +638,7 @@ namespace AbookTest
             TsBtnSearch().Click();
 
             var dgvExpense = CtDgvExpense();
+            Assert.AreEqual("", dgvExpense.Rows[1].Cells[COL.NOTE].Value);
             Assert.AreEqual("", dgvExpense.Rows[1].Cells[COL.NAME].ToolTipText);
             Assert.AreEqual(Color.Empty, dgvExpense.Rows[1].DefaultCellStyle.BackColor);
         }

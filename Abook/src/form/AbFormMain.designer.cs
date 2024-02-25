@@ -36,6 +36,7 @@ namespace Abook
             System.Windows.Forms.DataGridViewCellStyle styleName    = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle styleType    = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle styleCost    = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle styleNote    = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle styleYear    = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle styleEarn    = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle styleExpense = new System.Windows.Forms.DataGridViewCellStyle();
@@ -45,6 +46,7 @@ namespace Abook
             System.Windows.Forms.DataGridViewCellStyle stylePrvName = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle stylePrvCost = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle stylePrvBlnc = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle stylePrvNote = new System.Windows.Forms.DataGridViewCellStyle();
             this.MenuStrip     = new System.Windows.Forms.MenuStrip();
             this.MenuFile      = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuExit      = new System.Windows.Forms.ToolStripMenuItem();
@@ -115,6 +117,7 @@ namespace Abook
             this.ColPrvName    = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColPrvCost    = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColPrvBlnc    = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColPrvNote    = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MenuStrip.SuspendLayout();
             this.TabControl.SuspendLayout();
             this.TabExpense.SuspendLayout();
@@ -124,6 +127,8 @@ namespace Abook
             ((System.ComponentModel.ISupportInitialize)(this.PboxGraph)).BeginInit();
             this.TabBalance.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DgvBalance)).BeginInit();
+            this.TabPrivate.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvPrivate)).BeginInit();
             this.SuspendLayout();
             // 
             // MenuStrip
@@ -131,7 +136,7 @@ namespace Abook
             this.MenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { this.MenuFile, this.MenuData, this.MenuHelp });
             this.MenuStrip.Location = new System.Drawing.Point(0, 0);
             this.MenuStrip.Name = "MenuStrip";
-            this.MenuStrip.Size = new System.Drawing.Size(416, 24);
+            this.MenuStrip.Size = new System.Drawing.Size(491, 24);
             this.MenuStrip.TabIndex = 0;
             // 
             // MenuFile
@@ -171,7 +176,8 @@ namespace Abook
             // 
             // MenuHelp
             // 
-            this.MenuHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.MenuVersion });
+            this.MenuHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MenuVersion});
             this.MenuHelp.Name = "MenuHelp";
             this.MenuHelp.Size = new System.Drawing.Size(62, 20);
             this.MenuHelp.Text = "ヘルプ(&H)";
@@ -193,7 +199,7 @@ namespace Abook
             this.TabControl.Location = new System.Drawing.Point(0, 27);
             this.TabControl.Name = "TabControl";
             this.TabControl.SelectedIndex = 0;
-            this.TabControl.Size = new System.Drawing.Size(416, 316);
+            this.TabControl.Size = new System.Drawing.Size(491, 316);
             this.TabControl.TabIndex = 1;
             // 
             // TabExpense
@@ -205,14 +211,14 @@ namespace Abook
             this.TabExpense.Location = new System.Drawing.Point(4, 21);
             this.TabExpense.Name = "TabExpense";
             this.TabExpense.Padding = new System.Windows.Forms.Padding(3);
-            this.TabExpense.Size = new System.Drawing.Size(408, 291);
+            this.TabExpense.Size = new System.Drawing.Size(483, 291);
             this.TabExpense.TabIndex = 2;
             this.TabExpense.Text = "支出";
             this.TabExpense.UseVisualStyleBackColor = true;
             // 
             // BtnEntry
             // 
-            this.BtnEntry.Location = new System.Drawing.Point(301, 6);
+            this.BtnEntry.Location = new System.Drawing.Point(376, 6);
             this.BtnEntry.Name = "BtnEntry";
             this.BtnEntry.Size = new System.Drawing.Size(50, 23);
             this.BtnEntry.TabIndex = 3;
@@ -223,7 +229,7 @@ namespace Abook
             // BtnAddRow
             // 
             this.BtnAddRow.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.BtnAddRow.Location = new System.Drawing.Point(361, 6);
+            this.BtnAddRow.Location = new System.Drawing.Point(436, 6);
             this.BtnAddRow.Name = "BtnAddRow";
             this.BtnAddRow.Size = new System.Drawing.Size(37, 23);
             this.BtnAddRow.TabIndex = 4;
@@ -243,7 +249,7 @@ namespace Abook
             this.DgvExpense.RowHeadersWidth = 24;
             this.DgvExpense.RowTemplate.Height = 21;
             this.DgvExpense.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.DgvExpense.Size = new System.Drawing.Size(392, 246);
+            this.DgvExpense.Size = new System.Drawing.Size(467, 246);
             this.DgvExpense.TabIndex = 5;
             // 
             // ColDate
@@ -289,9 +295,13 @@ namespace Abook
             // 
             // ColNote
             // 
+            styleNote.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            this.ColNote.DefaultCellStyle = styleNote;
             this.ColNote.HeaderText = "備考";
             this.ColNote.Name = "ColNote";
-            this.ColNote.Visible = false;
+            this.ColNote.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ColNote.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ColNote.Width = 75;
             // 
             // TabSummary
             // 
@@ -316,14 +326,14 @@ namespace Abook
             this.TabSummary.Location = new System.Drawing.Point(4, 21);
             this.TabSummary.Name = "TabSummary";
             this.TabSummary.Padding = new System.Windows.Forms.Padding(3);
-            this.TabSummary.Size = new System.Drawing.Size(408, 291);
+            this.TabSummary.Size = new System.Drawing.Size(483, 291);
             this.TabSummary.TabIndex = 6;
             this.TabSummary.Text = "月次";
             this.TabSummary.UseVisualStyleBackColor = true;
             // 
             // HeadSummary
             // 
-            this.HeadSummary.Location = new System.Drawing.Point(84, 6);
+            this.HeadSummary.Location = new System.Drawing.Point(128, 6);
             this.HeadSummary.Name = "HeadSummary";
             this.HeadSummary.Size = new System.Drawing.Size(227, 29);
             this.HeadSummary.TabIndex = 7;
@@ -336,144 +346,146 @@ namespace Abook
             // LblFood
             // 
             this.LblFood.Label = "食費";
-            this.LblFood.Location = new System.Drawing.Point(36, 50);
+            this.LblFood.Location = new System.Drawing.Point(49, 50);
             this.LblFood.Name = "LblFood";
-            this.LblFood.Size = new System.Drawing.Size(120, 12);
+            this.LblFood.Size = new System.Drawing.Size(176, 19);
             this.LblFood.TabIndex = 8;
             this.LblFood.TypeNameClick += new System.EventHandler(this.LabelControl_TypeNameClick);
             // 
             // LblOtfd
             // 
             this.LblOtfd.Label = "外食費";
-            this.LblOtfd.Location = new System.Drawing.Point(36, 73);
+            this.LblOtfd.Location = new System.Drawing.Point(49, 75);
             this.LblOtfd.Name = "LblOtfd";
-            this.LblOtfd.Size = new System.Drawing.Size(120, 12);
+            this.LblOtfd.Size = new System.Drawing.Size(176, 19);
             this.LblOtfd.TabIndex = 9;
             this.LblOtfd.TypeNameClick += new System.EventHandler(this.LabelControl_TypeNameClick);
             // 
             // LblGood
             // 
             this.LblGood.Label = "雑貨";
-            this.LblGood.Location = new System.Drawing.Point(36, 116);
+            this.LblGood.Location = new System.Drawing.Point(49, 112);
             this.LblGood.Name = "LblGood";
-            this.LblGood.Size = new System.Drawing.Size(120, 12);
+            this.LblGood.Size = new System.Drawing.Size(176, 19);
             this.LblGood.TabIndex = 10;
             this.LblGood.TypeNameClick += new System.EventHandler(this.LabelControl_TypeNameClick);
             // 
             // LblFrnd
             // 
             this.LblFrnd.Label = "交際費";
-            this.LblFrnd.Location = new System.Drawing.Point(36, 139);
+            this.LblFrnd.Location = new System.Drawing.Point(49, 137);
             this.LblFrnd.Name = "LblFrnd";
-            this.LblFrnd.Size = new System.Drawing.Size(120, 12);
+            this.LblFrnd.Size = new System.Drawing.Size(176, 19);
             this.LblFrnd.TabIndex = 11;
             this.LblFrnd.TypeNameClick += new System.EventHandler(this.LabelControl_TypeNameClick);
             // 
             // LblTrfc
             // 
             this.LblTrfc.Label = "交通費";
-            this.LblTrfc.Location = new System.Drawing.Point(36, 162);
+            this.LblTrfc.Location = new System.Drawing.Point(49, 162);
             this.LblTrfc.Name = "LblTrfc";
-            this.LblTrfc.Size = new System.Drawing.Size(120, 12);
+            this.LblTrfc.Size = new System.Drawing.Size(176, 19);
             this.LblTrfc.TabIndex = 12;
             this.LblTrfc.TypeNameClick += new System.EventHandler(this.LabelControl_TypeNameClick);
             // 
             // LblPlay
             // 
             this.LblPlay.Label = "遊行費";
-            this.LblPlay.Location = new System.Drawing.Point(36, 185);
+            this.LblPlay.Location = new System.Drawing.Point(49, 187);
             this.LblPlay.Name = "LblPlay";
-            this.LblPlay.Size = new System.Drawing.Size(120, 12);
+            this.LblPlay.Size = new System.Drawing.Size(176, 19);
             this.LblPlay.TabIndex = 13;
             this.LblPlay.TypeNameClick += new System.EventHandler(this.LabelControl_TypeNameClick);
             // 
             // LblHous
             // 
             this.LblHous.Label = "家賃";
-            this.LblHous.Location = new System.Drawing.Point(217, 50);
+            this.LblHous.Location = new System.Drawing.Point(259, 50);
             this.LblHous.Name = "LblHous";
-            this.LblHous.Size = new System.Drawing.Size(120, 12);
+            this.LblHous.Size = new System.Drawing.Size(176, 19);
             this.LblHous.TabIndex = 14;
             this.LblHous.TypeNameClick += new System.EventHandler(this.LabelControl_TypeNameClick);
             // 
             // LblEngy
             // 
             this.LblEngy.Label = "光熱費";
-            this.LblEngy.Location = new System.Drawing.Point(217, 73);
+            this.LblEngy.Location = new System.Drawing.Point(259, 75);
             this.LblEngy.Name = "LblEngy";
-            this.LblEngy.Size = new System.Drawing.Size(120, 12);
+            this.LblEngy.Size = new System.Drawing.Size(176, 19);
             this.LblEngy.TabIndex = 15;
             this.LblEngy.TypeNameClick += new System.EventHandler(this.LabelControl_TypeNameClick);
             // 
             // LblCnct
             // 
             this.LblCnct.Label = "通信費";
-            this.LblCnct.Location = new System.Drawing.Point(217, 116);
+            this.LblCnct.Location = new System.Drawing.Point(259, 112);
             this.LblCnct.Name = "LblCnct";
-            this.LblCnct.Size = new System.Drawing.Size(120, 12);
+            this.LblCnct.Size = new System.Drawing.Size(176, 19);
             this.LblCnct.TabIndex = 16;
             this.LblCnct.TypeNameClick += new System.EventHandler(this.LabelControl_TypeNameClick);
             // 
             // LblMedi
             // 
             this.LblMedi.Label = "医療費";
-            this.LblMedi.Location = new System.Drawing.Point(217, 139);
+            this.LblMedi.Location = new System.Drawing.Point(259, 137);
             this.LblMedi.Name = "LblMedi";
-            this.LblMedi.Size = new System.Drawing.Size(120, 12);
+            this.LblMedi.Size = new System.Drawing.Size(176, 19);
             this.LblMedi.TabIndex = 17;
             this.LblMedi.TypeNameClick += new System.EventHandler(this.LabelControl_TypeNameClick);
             // 
             // LblInsu
             // 
             this.LblInsu.Label = "保険料";
-            this.LblInsu.Location = new System.Drawing.Point(217, 162);
+            this.LblInsu.Location = new System.Drawing.Point(259, 162);
             this.LblInsu.Name = "LblInsu";
-            this.LblInsu.Size = new System.Drawing.Size(120, 12);
+            this.LblInsu.Size = new System.Drawing.Size(176, 19);
             this.LblInsu.TabIndex = 18;
             this.LblInsu.TypeNameClick += new System.EventHandler(this.LabelControl_TypeNameClick);
             // 
             // LblOthr
             // 
             this.LblOthr.Label = "その他";
-            this.LblOthr.Location = new System.Drawing.Point(217, 185);
+            this.LblOthr.Location = new System.Drawing.Point(259, 187);
             this.LblOthr.Name = "LblOthr";
-            this.LblOthr.Size = new System.Drawing.Size(120, 12);
+            this.LblOthr.Size = new System.Drawing.Size(176, 19);
             this.LblOthr.TabIndex = 19;
             this.LblOthr.TypeNameClick += new System.EventHandler(this.LabelControl_TypeNameClick);
             // 
             // LblTtal
             // 
             this.LblTtal.Label = "合計";
-            this.LblTtal.Location = new System.Drawing.Point(217, 228);
+            this.LblTtal.Location = new System.Drawing.Point(259, 224);
             this.LblTtal.Name = "LblTtal";
-            this.LblTtal.Size = new System.Drawing.Size(120, 12);
+            this.LblTtal.Size = new System.Drawing.Size(176, 19);
             this.LblTtal.TabIndex = 20;
             // 
             // LblBlnc
             // 
             this.LblBlnc.Label = "収支";
-            this.LblBlnc.Location = new System.Drawing.Point(217, 251);
+            this.LblBlnc.Location = new System.Drawing.Point(259, 249);
             this.LblBlnc.Name = "LblBlnc";
-            this.LblBlnc.Size = new System.Drawing.Size(120, 12);
+            this.LblBlnc.Size = new System.Drawing.Size(176, 19);
             this.LblBlnc.TabIndex = 21;
             // 
             // LblLine1
             // 
             this.LblLine1.AutoSize = true;
-            this.LblLine1.Location = new System.Drawing.Point(26, 96);
+            this.LblLine1.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.LblLine1.Location = new System.Drawing.Point(47, 97);
             this.LblLine1.Name = "LblLine1";
-            this.LblLine1.Size = new System.Drawing.Size(323, 12);
+            this.LblLine1.Size = new System.Drawing.Size(390, 12);
             this.LblLine1.TabIndex = 22;
-            this.LblLine1.Text = "-----------------------------------------------------";
+            this.LblLine1.Text = "-------------------------------------------------------";
             // 
             // LblLine2
             // 
             this.LblLine2.AutoSize = true;
-            this.LblLine2.Location = new System.Drawing.Point(206, 208);
+            this.LblLine2.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.LblLine2.Location = new System.Drawing.Point(255, 209);
             this.LblLine2.Name = "LblLine2";
-            this.LblLine2.Size = new System.Drawing.Size(143, 12);
+            this.LblLine2.Size = new System.Drawing.Size(180, 12);
             this.LblLine2.TabIndex = 23;
-            this.LblLine2.Text = "-----------------------";
+            this.LblLine2.Text = "-------------------------";
             // 
             // TabGraphic
             // 
@@ -501,14 +513,14 @@ namespace Abook
             this.TabGraphic.Location = new System.Drawing.Point(4, 21);
             this.TabGraphic.Name = "TabGraphic";
             this.TabGraphic.Padding = new System.Windows.Forms.Padding(3);
-            this.TabGraphic.Size = new System.Drawing.Size(408, 291);
+            this.TabGraphic.Size = new System.Drawing.Size(483, 291);
             this.TabGraphic.TabIndex = 24;
             this.TabGraphic.Text = "推移";
             this.TabGraphic.UseVisualStyleBackColor = true;
             // 
             // HeadGraphic
             // 
-            this.HeadGraphic.Location = new System.Drawing.Point(84, 6);
+            this.HeadGraphic.Location = new System.Drawing.Point(128, 6);
             this.HeadGraphic.Name = "HeadGraphic";
             this.HeadGraphic.Size = new System.Drawing.Size(227, 29);
             this.HeadGraphic.TabIndex = 25;
@@ -523,7 +535,7 @@ namespace Abook
             this.PboxGraph.BackColor = System.Drawing.SystemColors.ControlText;
             this.PboxGraph.Location = new System.Drawing.Point(49, 51);
             this.PboxGraph.Name = "PboxGraph";
-            this.PboxGraph.Size = new System.Drawing.Size(349, 218);
+            this.PboxGraph.Size = new System.Drawing.Size(424, 218);
             this.PboxGraph.TabIndex = 38;
             this.PboxGraph.TabStop = false;
             this.PboxGraph.Paint += new System.Windows.Forms.PaintEventHandler(this.PboxGraph_Paint);
@@ -627,7 +639,7 @@ namespace Abook
             // LblX1
             // 
             this.LblX1.AutoSize = true;
-            this.LblX1.Location = new System.Drawing.Point(95, 271);
+            this.LblX1.Location = new System.Drawing.Point(105, 271);
             this.LblX1.Name = "LblX1";
             this.LblX1.Size = new System.Drawing.Size(17, 12);
             this.LblX1.TabIndex = 39;
@@ -636,7 +648,7 @@ namespace Abook
             // LblX2
             // 
             this.LblX2.AutoSize = true;
-            this.LblX2.Location = new System.Drawing.Point(149, 272);
+            this.LblX2.Location = new System.Drawing.Point(171, 272);
             this.LblX2.Name = "LblX2";
             this.LblX2.Size = new System.Drawing.Size(17, 12);
             this.LblX2.TabIndex = 40;
@@ -645,7 +657,7 @@ namespace Abook
             // LblX3
             // 
             this.LblX3.AutoSize = true;
-            this.LblX3.Location = new System.Drawing.Point(203, 272);
+            this.LblX3.Location = new System.Drawing.Point(237, 272);
             this.LblX3.Name = "LblX3";
             this.LblX3.Size = new System.Drawing.Size(17, 12);
             this.LblX3.TabIndex = 41;
@@ -654,7 +666,7 @@ namespace Abook
             // LblX4
             // 
             this.LblX4.AutoSize = true;
-            this.LblX4.Location = new System.Drawing.Point(256, 272);
+            this.LblX4.Location = new System.Drawing.Point(303, 272);
             this.LblX4.Name = "LblX4";
             this.LblX4.Size = new System.Drawing.Size(17, 12);
             this.LblX4.TabIndex = 42;
@@ -663,7 +675,7 @@ namespace Abook
             // LblX5
             // 
             this.LblX5.AutoSize = true;
-            this.LblX5.Location = new System.Drawing.Point(310, 272);
+            this.LblX5.Location = new System.Drawing.Point(369, 272);
             this.LblX5.Name = "LblX5";
             this.LblX5.Size = new System.Drawing.Size(17, 12);
             this.LblX5.TabIndex = 43;
@@ -672,7 +684,7 @@ namespace Abook
             // LblX6
             // 
             this.LblX6.AutoSize = true;
-            this.LblX6.Location = new System.Drawing.Point(364, 272);
+            this.LblX6.Location = new System.Drawing.Point(435, 272);
             this.LblX6.Name = "LblX6";
             this.LblX6.Size = new System.Drawing.Size(17, 12);
             this.LblX6.TabIndex = 44;
@@ -707,7 +719,7 @@ namespace Abook
             this.TabBalance.Location = new System.Drawing.Point(4, 21);
             this.TabBalance.Name = "TabBalance";
             this.TabBalance.Padding = new System.Windows.Forms.Padding(3);
-            this.TabBalance.Size = new System.Drawing.Size(408, 291);
+            this.TabBalance.Size = new System.Drawing.Size(483, 291);
             this.TabBalance.TabIndex = 45;
             this.TabBalance.Text = "収支";
             this.TabBalance.UseVisualStyleBackColor = true;
@@ -728,7 +740,7 @@ namespace Abook
             this.DgvBalance.RowTemplate.Height = 21;
             this.DgvBalance.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.DgvBalance.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DgvBalance.Size = new System.Drawing.Size(392, 275);
+            this.DgvBalance.Size = new System.Drawing.Size(467, 275);
             this.DgvBalance.TabIndex = 46;
             // 
             // ColYear
@@ -797,7 +809,7 @@ namespace Abook
             this.TabPrivate.Location = new System.Drawing.Point(4, 21);
             this.TabPrivate.Name = "TabPrivate";
             this.TabPrivate.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPrivate.Size = new System.Drawing.Size(408, 291);
+            this.TabPrivate.Size = new System.Drawing.Size(483, 291);
             this.TabPrivate.TabIndex = 47;
             this.TabPrivate.Text = "秘密";
             this.TabPrivate.UseVisualStyleBackColor = true;
@@ -808,7 +820,7 @@ namespace Abook
             this.DgvPrivate.AllowUserToDeleteRows = false;
             this.DgvPrivate.AllowUserToResizeColumns = false;
             this.DgvPrivate.AllowUserToResizeRows = false;
-            this.DgvPrivate.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.ColPrvDate, this.ColPrvName, this.ColPrvCost, this.ColPrvBlnc });
+            this.DgvPrivate.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.ColPrvDate, this.ColPrvName, this.ColPrvCost, this.ColPrvBlnc, this.ColPrvNote });
             this.DgvPrivate.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DgvPrivate.Location = new System.Drawing.Point(6, 6);
             this.DgvPrivate.MultiSelect = false;
@@ -818,7 +830,7 @@ namespace Abook
             this.DgvPrivate.RowTemplate.Height = 21;
             this.DgvPrivate.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.DgvPrivate.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DgvPrivate.Size = new System.Drawing.Size(392, 275);
+            this.DgvPrivate.Size = new System.Drawing.Size(467, 275);
             this.DgvPrivate.TabIndex = 48;
             // 
             // ColPrvDate
@@ -838,6 +850,7 @@ namespace Abook
             this.ColPrvName.DefaultCellStyle = stylePrvName;
             this.ColPrvName.HeaderText = "名称";
             this.ColPrvName.Name = "ColPrvName";
+            this.ColPrvName.ReadOnly = true;
             this.ColPrvName.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.ColPrvName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.ColPrvName.Width = 120;
@@ -849,6 +862,7 @@ namespace Abook
             this.ColPrvCost.DefaultCellStyle = stylePrvCost;
             this.ColPrvCost.HeaderText = "金額";
             this.ColPrvCost.Name = "ColPrvCost";
+            this.ColPrvCost.ReadOnly = true;
             this.ColPrvCost.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.ColPrvCost.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.ColPrvCost.Width = 80;
@@ -860,15 +874,27 @@ namespace Abook
             this.ColPrvBlnc.DefaultCellStyle = stylePrvBlnc;
             this.ColPrvBlnc.HeaderText = "収支";
             this.ColPrvBlnc.Name = "ColPrvBlnc";
+            this.ColPrvBlnc.ReadOnly = true;
             this.ColPrvBlnc.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.ColPrvBlnc.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.ColPrvBlnc.Width = 80;
+            // 
+            // ColPrvNote
+            // 
+            stylePrvNote.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            this.ColPrvNote.DefaultCellStyle = stylePrvNote;
+            this.ColPrvNote.HeaderText = "備考";
+            this.ColPrvNote.Name = "ColPrvNote";
+            this.ColPrvNote.ReadOnly = true;
+            this.ColPrvNote.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ColPrvNote.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ColPrvNote.Width = 75;
             // 
             // AbFormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(416, 343);
+            this.ClientSize = new System.Drawing.Size(491, 343);
             this.Controls.Add(this.MenuStrip);
             this.Controls.Add(this.TabControl);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
@@ -967,5 +993,6 @@ namespace Abook
         private System.Windows.Forms.DataGridViewTextBoxColumn ColPrvName;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColPrvCost;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColPrvBlnc;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColPrvNote;
     }
 }

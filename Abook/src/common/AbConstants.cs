@@ -55,6 +55,8 @@ namespace Abook
                 public const string COST = "ColPrvCost";
                 /// <summary>収支</summary>
                 public const string BLNC = "ColPrvBlnc";
+                /// <summary>備考</summary>
+                public const string NOTE = "ColPrvNote";
             }
         }
 
@@ -111,7 +113,7 @@ namespace Abook
         public static class GRAPH
         {
             /// <summary>描画領域横幅</summary>
-            public const decimal WIDTH = 349;
+            public const decimal WIDTH = 424;
             /// <summary>描画領域縦幅</summary>
             public const decimal HEIGHT = 218;
             /// <summary>表示月数</summary>

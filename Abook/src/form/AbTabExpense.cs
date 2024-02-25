@@ -85,6 +85,7 @@ namespace Abook
         /// <remarks>
         /// ・種別と金額の自動補完
         /// ・金額はカンマ編集する
+        /// ・備考はツールチップと背景色の反映
         /// </remarks>
         private void DgvExpense_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
@@ -112,6 +113,12 @@ namespace Abook
                     {
                         var cost = row.Cells[COL.COST].Value;
                         row.Cells[COL.COST].Value = AbUtilities.ToComma(cost);
+                    }
+                    break;
+                case 4:
+                    {
+                        var note = row.Cells[COL.NOTE].Value as string;
+                        UTL.SetToolTipAndColor(row, COL.NAME, note);
                     }
                     break;
                 default:
