@@ -20,6 +20,8 @@ namespace Abook
         public decimal Special { get; private set; }
         /// <summary>収支</summary>
         public decimal Balance { get; private set; }
+        /// <summary>投資</summary>
+        public decimal Finance { get; private set; }
 
         /// <summary>
         /// コンストラクタ
@@ -36,6 +38,18 @@ namespace Abook
             Expense = ParseExpense(expense);
             Special = ParseSpecial(special);
             Balance = ParseBalance(earn, expense, special, balance);
+            Finance = 0;
+        }
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="year"   >年度</param>
+        /// <param name="balance">収支</param>
+        public AbBalance(int year, decimal finance)
+        {
+            Year = ParseYear(year);
+            Finance = ParseFinance(finance);
         }
 
         /// <summary>
@@ -94,6 +108,26 @@ namespace Abook
         {
             CHK.BalanceIncorrect(earn, expense, special, balance);
             return balance;
+        }
+
+        /// <summary>
+        /// 投資設定
+        /// </summary>
+        /// <param name="finance">投資</param>
+        /// <returns>投資</returns>
+        private decimal ParseFinance(decimal finance)
+        {
+            CHK.FinanceMinus(finance);
+            return finance;
+        }
+
+        /// <summary>
+        /// 投資設定
+        /// </summary>
+        /// <param name="finance">投資</param>
+        public void SetFinance(decimal finance)
+        {
+            Finance = ParseFinance(finance);
         }
     }
 }

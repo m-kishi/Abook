@@ -297,6 +297,7 @@ namespace AbookTest
             [TestCase(TYPE.SPCL, false)]
             [TestCase(TYPE.PRVI, false)]
             [TestCase(TYPE.PRVO, false)]
+            [TestCase(TYPE.FNCE, false)]
             public void TypeWrong(string type, bool isError)
             {
                 if (isError)
@@ -666,6 +667,30 @@ namespace AbookTest
                     CHK.BalanceIncorrect(argErn, argExp, argSpc, argBln)
                 );
                 Assert.AreEqual(EX.BALANCE_INCORRECT, ex.Message);
+            }
+
+            /// <summary>
+            /// マイナスチェック(投資)
+            /// </summary>
+            [Test]
+            public void FinanceMinus()
+            {
+                var argFinance = 9999;
+                Assert.DoesNotThrow(() => CHK.FinanceMinus(argFinance));
+            }
+
+            /// <summary>
+            /// マイナスチェック(投資)
+            /// 引数:投資がマイナス
+            /// </summary>
+            [Test]
+            public void FinanceMinusWithMinusFinance()
+            {
+                var argFinance = -1;
+                var ex = Assert.Throws<AbException>(() =>
+                    CHK.FinanceMinus(argFinance)
+                );
+                Assert.AreEqual(EX.FINANCE_MINUS, ex.Message);
             }
         }
     }

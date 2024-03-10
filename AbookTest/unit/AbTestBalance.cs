@@ -23,8 +23,12 @@ namespace AbookTest
         private decimal argSpecial;
         /// <summary>引数:収支</summary>
         private decimal argBalance;
+        /// <summary>引数:投資</summary>
+        private decimal argFinance;
         /// <summary>対象:収支情報</summary>
         private AbBalance abBalance;
+        /// <summary>対象:収支情報</summary>
+        private AbBalance abBalance2;
 
         /// <summary>
         /// SetUp
@@ -37,7 +41,9 @@ namespace AbookTest
             argExpense = 1060641;
             argSpecial =   92490;
             argBalance = 1400504;
+            argFinance = 3600000;
             abBalance = new AbBalance(argYear, argEarn, argExpense, argSpecial, argBalance);
+            abBalance2 = new AbBalance(argYear, argFinance);
         }
 
         /// <summary>
@@ -93,6 +99,16 @@ namespace AbookTest
         {
             var expected = argBalance;
             Assert.AreEqual(expected, abBalance.Balance);
+        }
+
+        /// <summary>
+        /// コンストラクタ
+        /// 引数:投資のテスト
+        /// </summary>
+        [Test]
+        public void AbBalanceWithFinance()
+        {
+            Assert.AreEqual(0, abBalance.Finance);
         }
 
         /// <summary>
@@ -163,6 +179,92 @@ namespace AbookTest
                 new AbBalance(argYear, argEarn, argExpense, argSpecial, argBalance)
             );
             Assert.AreEqual(EX.BALANCE_INCORRECT, ex.Message);
+        }
+
+        /// <summary>
+        /// コンストラクタ2
+        /// 引数:年度のテスト
+        /// </summary>
+        [Test]
+        public void AbBalance2WithYear()
+        {
+            var expected = argYear;
+            Assert.AreEqual(expected, abBalance2.Year);
+        }
+
+        /// <summary>
+        /// コンストラクタ2
+        /// 収入のテスト
+        /// </summary>
+        [Test]
+        public void AbBalance2WithEarn()
+        {
+            Assert.AreEqual(0, abBalance2.Earn);
+        }
+
+        /// <summary>
+        /// コンストラクタ2
+        /// 支出のテスト
+        /// </summary>
+        [Test]
+        public void AbBalance2WithExpense()
+        {
+            Assert.AreEqual(0, abBalance2.Expense);
+        }
+
+        /// <summary>
+        /// コンストラクタ2
+        /// 特出のテスト
+        /// </summary>
+        [Test]
+        public void AbBalance2WithSpecial()
+        {
+            Assert.AreEqual(0, abBalance2.Special);
+        }
+
+        /// <summary>
+        /// コンストラクタ2
+        /// 収支のテスト
+        /// </summary>
+        [Test]
+        public void AbBalance2WithBalance()
+        {
+            Assert.AreEqual(0, abBalance2.Balance);
+        }
+
+        /// <summary>
+        /// コンストラクタ2
+        /// 引数:投資のテスト
+        /// </summary>
+        [Test]
+        public void AbBalance2WithFinance()
+        {
+            var expected = argFinance;
+            Assert.AreEqual(expected, abBalance2.Finance);
+        }
+
+        /// <summary>
+        /// 投資設定のテスト
+        /// </summary>
+        [Test]
+        public void SetFinance()
+        {
+            abBalance.SetFinance(argFinance);
+            Assert.AreEqual(argFinance, abBalance.Finance);
+        }
+
+        /// <summary>
+        /// 投資設定のテスト
+        /// 引数:投資がマイナス
+        /// </summary>
+        [Test]
+        public void SetFinanceWithMinusFinance()
+        {
+            argFinance = -argFinance;
+            var ex = Assert.Throws<AbException>(() =>
+                abBalance.SetFinance(argFinance)
+            );
+            Assert.AreEqual(EX.FINANCE_MINUS, ex.Message);
         }
     }
 }

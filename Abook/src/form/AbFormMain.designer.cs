@@ -42,6 +42,7 @@ namespace Abook
             System.Windows.Forms.DataGridViewCellStyle styleExpense = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle styleSpecial = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle styleBalance = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle styleFinance = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle stylePrvDate = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle stylePrvName = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle stylePrvCost = new System.Windows.Forms.DataGridViewCellStyle();
@@ -111,6 +112,7 @@ namespace Abook
             this.ColExpense    = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColSpecial    = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColBalance    = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColFinance    = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TabPrivate    = new System.Windows.Forms.TabPage();
             this.DgvPrivate    = new System.Windows.Forms.DataGridView();
             this.ColPrvDate    = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -731,7 +733,7 @@ namespace Abook
             this.DgvBalance.AllowUserToResizeColumns = false;
             this.DgvBalance.AllowUserToResizeRows = false;
             this.DgvBalance.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DgvBalance.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.ColYear, this.ColEarn, this.ColExpense, this.ColSpecial, this.ColBalance });
+            this.DgvBalance.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.ColYear, this.ColEarn, this.ColExpense, this.ColSpecial, this.ColBalance, this.ColFinance });
             this.DgvBalance.Location = new System.Drawing.Point(6, 6);
             this.DgvBalance.MultiSelect = false;
             this.DgvBalance.Name = "DgvBalance";
@@ -801,6 +803,18 @@ namespace Abook
             this.ColBalance.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.ColBalance.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.ColBalance.Width = 75;
+            // 
+            // ColFinance
+            // 
+            styleFinance.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            styleFinance.Format = "C0";
+            this.ColFinance.DefaultCellStyle = styleFinance;
+            this.ColFinance.HeaderText = "投資";
+            this.ColFinance.Name = "ColFinance";
+            this.ColFinance.ReadOnly = true;
+            this.ColFinance.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ColFinance.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ColFinance.Width = 75;
             // 
             // TabPrivate
             // 
@@ -987,6 +1001,7 @@ namespace Abook
         private System.Windows.Forms.DataGridViewTextBoxColumn ColExpense;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColSpecial;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColBalance;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColFinance;
         private System.Windows.Forms.TabPage TabPrivate;
         private System.Windows.Forms.DataGridView DgvPrivate;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColPrvDate;

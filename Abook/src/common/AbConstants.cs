@@ -42,6 +42,8 @@ namespace Abook
                 public const string SPCL = "ColSpecial";
                 /// <summary>収支</summary>
                 public const string BLNC = "ColBalance";
+                /// <summary>投資</summary>
+                public const string FNCE = "ColFinance";
             }
 
             /// <summary>秘密収支</summary>
@@ -192,6 +194,8 @@ namespace Abook
             public const string PRVI = "秘密入";
             /// <summary>秘密出</summary>
             public const string PRVO = "秘密出";
+            /// <summary>投資</summary>
+            public const string FNCE = "投資";
 
             /// <summary>
             /// 支出情報として指定可能な種別
@@ -201,6 +205,7 @@ namespace Abook
                 TYPE.FOOD, TYPE.OTFD, TYPE.GOOD, TYPE.FRND, TYPE.TRFC, TYPE.PLAY,
                 TYPE.HOUS, TYPE.ENGY, TYPE.CNCT, TYPE.MEDI, TYPE.INSU, TYPE.OTHR,
                 TYPE.EARN, TYPE.BNUS, TYPE.SPCL, TYPE.PRVI, TYPE.PRVO,
+                TYPE.FNCE,
             };
 
             /// <summary>秘密収支に属する種別</summary>

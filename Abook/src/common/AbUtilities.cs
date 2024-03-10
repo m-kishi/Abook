@@ -282,6 +282,15 @@ namespace Abook
                 var expected = ern - (exp + spc);
                 if (bln != expected) AbException.Throw(EX.BALANCE_INCORRECT);
             }
+
+            /// <summary>
+            /// マイナスチェック(投資)
+            /// </summary>
+            /// <param name="finance">投資</param>
+            public static void FinanceMinus(decimal finance)
+            {
+                if (finance < 0) AbException.Throw(EX.FINANCE_MINUS);
+            }
         }
 
         /// <summary>
