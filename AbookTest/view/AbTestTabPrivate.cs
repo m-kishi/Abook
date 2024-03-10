@@ -181,6 +181,25 @@ namespace AbookTest
             ShowFormMain(DB_FILE_EXIST, TAB_IDX);
 
             var dgvPrivate = CtDgvPrivate();
+            Assert.AreEqual("", dgvPrivate.Rows[0].Cells[COL.NOTE].Value);
+            Assert.AreEqual("", dgvPrivate.Rows[1].Cells[COL.NOTE].Value);
+            Assert.AreEqual("", dgvPrivate.Rows[2].Cells[COL.NOTE].Value);
+            Assert.AreEqual("", dgvPrivate.Rows[3].Cells[COL.NOTE].Value);
+            Assert.AreEqual("", dgvPrivate.Rows[4].Cells[COL.NOTE].Value);
+            Assert.AreEqual("", dgvPrivate.Rows[5].Cells[COL.NOTE].Value);
+            Assert.AreEqual("", dgvPrivate.Rows[6].Cells[COL.NOTE].Value);
+            Assert.AreEqual("note08", dgvPrivate.Rows[7].Cells[COL.NOTE].Value);
+        }
+
+        /// <summary>
+        /// ツールチップのテスト
+        /// </summary>
+        [Test]
+        public void DgvPrivateWithToolTip()
+        {
+            ShowFormMain(DB_FILE_EXIST, TAB_IDX);
+
+            var dgvPrivate = CtDgvPrivate();
             Assert.AreEqual("", dgvPrivate.Rows[0].Cells[COL.NAME].ToolTipText);
             Assert.AreEqual("", dgvPrivate.Rows[1].Cells[COL.NAME].ToolTipText);
             Assert.AreEqual("", dgvPrivate.Rows[2].Cells[COL.NAME].ToolTipText);

@@ -25,7 +25,7 @@ namespace Abook
             CHK.ExpNull(expenses);
 
             abBalances = expenses.Where(exp =>
-                !TYPE.PRIVATE.Contains(exp.Type)
+                !TYPE.PRIVATE.Contains(exp.Type) && exp.Type != TYPE.FNCE
             ).GroupBy(exp =>
                 exp.Date.Month == 3 ? exp.Date.Year - 1 :
                 exp.Date.Month == 2 ? exp.Date.Year - 1 :
@@ -41,8 +41,31 @@ namespace Abook
                 )
             ).ToList();
 
+            var abFinances = expenses.Where(exp =>
+                exp.Type == TYPE.FNCE
+            ).GroupBy(exp =>
+                exp.Date.Year
+            ).Select(gObj =>
+                new { Year = gObj.Key, Finance = gObj.Sum(exp => exp.Cost) }
+            ).OrderBy(fnc =>
+                fnc.Year
+            );
+
+            foreach (var finance in abFinances)
+            {
+                var balance = abBalances.Where(blc => blc.Year == finance.Year).FirstOrDefault();
+                if (balance == null)
+                {
+                    abBalances.Add(new AbBalance(finance.Year, finance.Finance));
+                }
+                else
+                {
+                    balance.SetFinance(finance.Finance);
+                }
+            }
+
             // 合計
-            if (expenses.Count > 0)
+            if (abBalances.Count > 0)
             {
                 var total = new AbBalance(
                     9999,
@@ -51,6 +74,7 @@ namespace Abook
                     abBalances.Sum(bln => bln.Special),
                     abBalances.Sum(bln => bln.Balance)
                 );
+                total.SetFinance(abBalances.Sum(bln => bln.Finance));
                 abBalances.Add(total);
             }
         }

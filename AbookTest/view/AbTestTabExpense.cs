@@ -32,6 +32,10 @@ namespace AbookTest
         protected const string DB_FILE_ENTRY = "AbTestTabExpenseEntry.db";
         /// <summary>DBファイル</summary>
         protected const string DB_FILE_TAX_TEST = "AbTestTabExpenseTaxTest.cb";
+        /// <summary>DBファイル</summary>
+        protected const string DB_FILE_NOTE_TEST = "AbTestTabExpenseNoteTest.db";
+        /// <summary>DBファイル</summary>
+        protected const string DB_FILE_NOTE_ENTRY = "AbTestTabExpenseNoteEntry.db";
         /// <summary>タブインデックス</summary>
         protected const int TAB_IDX = 0;
 
@@ -77,6 +81,33 @@ namespace AbookTest
                 }
                 sw.Close();
             }
+
+            using (StreamWriter sw = new StreamWriter(DB_FILE_NOTE_TEST, false, DB.ENCODING))
+            {
+                sw.NewLine = DB.LF;
+                for (var i = 1; i <= 5; i++)
+                {
+                    var date = (new DateTime(2024, 3, i)).ToString(FMT.DATE);
+                    var name = "name" + i.ToString("D2");
+                    var type = TYPE.FOOD;
+                    var cost = (i * 100M).ToString();
+                    var note = "note" + i.ToString("D2");
+                    if (i % 2 == 0)
+                    {
+                        note = "";
+                    }
+                    sw.WriteLine(TT.ToDBFileFormat(date, name, type, cost, note));
+                }
+                sw.Close();
+            }
+
+            File.Copy(DB_FILE_NOTE_TEST, DB_FILE_NOTE_ENTRY);
+            using (StreamWriter sw = new StreamWriter(DB_FILE_NOTE_ENTRY, true, DB.ENCODING))
+            {
+                sw.NewLine = DB.LF;
+                sw.WriteLine(TT.ToDBFileFormat("2024-03-01", "おにぎり", "食費", "150", "シャケ"));
+                sw.Close();
+            }
         }
 
         /// <summary>
@@ -89,6 +120,8 @@ namespace AbookTest
             if (File.Exists(DB_FILE_EMPTY)) File.Delete(DB_FILE_EMPTY);
             if (File.Exists(DB_FILE_ENTRY)) File.Delete(DB_FILE_ENTRY);
             if (File.Exists(DB_FILE_TAX_TEST)) File.Delete(DB_FILE_TAX_TEST);
+            if (File.Exists(DB_FILE_NOTE_TEST)) File.Delete(DB_FILE_NOTE_TEST);
+            if (File.Exists(DB_FILE_NOTE_ENTRY)) File.Delete(DB_FILE_NOTE_ENTRY);
         }
     }
 
@@ -157,6 +190,33 @@ namespace AbookTest
                 Assert.AreEqual("", dgvExpense.Rows[16].Cells[COL.NAME].ToolTipText, "NOTE");
                 Assert.AreEqual(Color.Empty, dgvExpense.Rows[15].DefaultCellStyle.BackColor);
                 Assert.AreEqual(Color.Empty, dgvExpense.Rows[16].DefaultCellStyle.BackColor);
+            }
+
+            /// <summary>
+            /// DataGridView
+            /// 支出情報(備考)のテスト
+            /// </summary>
+            [Test]
+            public void DgvWithColNote()
+            {
+                ShowFormMain(DB_FILE_NOTE_TEST, TAB_IDX);
+
+                var dgvExpense = CtDgvExpense();
+                for (var i = 1; i <= 5; i++)
+                {
+                    var row = dgvExpense.Rows[i - 1];
+
+                    var note = string.Format("note{0:D2}", i);
+                    var color = DGV.NOTE_BG_COLOR;
+                    if (i % 2 == 0)
+                    {
+                        note = "";
+                        color = Color.Empty;
+                    }
+
+                    Assert.AreEqual(note, row.Cells[COL.NOTE].Value);
+                    Assert.AreEqual(color, row.DefaultCellStyle.BackColor);
+                }
             }
 
             /// <summary>
@@ -1458,6 +1518,47 @@ namespace AbookTest
                 CtDgvExpense().Rows[4].Cells[COL.COST].Value = "XXXXXXXX";
 
                 TsBtnEntry().Click();
+            }
+
+            /// <summary>
+            /// 登録ボタンクリック
+            /// 備考入力のテスト
+            /// </summary>
+            [Test]
+            public void WithNoteInput()
+            {
+                // ダイアログの表示テスト
+                DialogBoxHandler = (name, hWnd) =>
+                {
+                    var tsMessageBox = new MessageBoxTester(hWnd);
+
+                    // タイトル
+                    var title = "登録完了";
+                    Assert.AreEqual(title, tsMessageBox.Title);
+
+                    // テキスト
+                    var text = "正常に登録しました。";
+                    Assert.AreEqual(text, tsMessageBox.Text);
+
+                    // OKボタンクリック
+                    tsMessageBox.ClickOk();
+                };
+
+                ShowFormMain(DB_FILE_NOTE_TEST, TAB_IDX);
+
+                TsBtnAddRow().Click();
+
+                var dgvExpense = CtDgvExpense();
+                var row = dgvExpense.Rows[dgvExpense.Rows.Count - 1];
+                row.Cells[COL.DATE].Value = "2024-03-01";
+                row.Cells[COL.NAME].Value = "おにぎり";
+                row.Cells[COL.TYPE].Value = "食費";
+                row.Cells[COL.COST].Value = "150";
+                row.Cells[COL.NOTE].Value = "シャケ";
+
+                TsBtnEntry().Click();
+
+                NUnit.Framework.FileAssert.AreEqual(DB_FILE_NOTE_ENTRY, DB_FILE_NOTE_TEST);
             }
         }
     }

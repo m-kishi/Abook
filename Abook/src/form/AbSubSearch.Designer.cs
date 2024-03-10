@@ -35,6 +35,7 @@ namespace Abook
             System.Windows.Forms.DataGridViewCellStyle styleName = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle styleType = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle styleCost = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle styleNote = new System.Windows.Forms.DataGridViewCellStyle();
             this.CmbName    = new System.Windows.Forms.ComboBox();
             this.CmbType    = new System.Windows.Forms.ComboBox();
             this.BtnSearch  = new System.Windows.Forms.Button();
@@ -43,6 +44,7 @@ namespace Abook
             this.ColName    = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColType    = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColCost    = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColNote    = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.DgvExpense)).BeginInit();
             this.SuspendLayout();
             // 
@@ -55,7 +57,7 @@ namespace Abook
             this.CmbName.IntegralHeight = false;
             this.CmbName.Location = new System.Drawing.Point(12, 12);
             this.CmbName.Name = "CmbName";
-            this.CmbName.Size = new System.Drawing.Size(265, 20);
+            this.CmbName.Size = new System.Drawing.Size(340, 20);
             this.CmbName.TabIndex = 0;
             // 
             // CmbType
@@ -63,14 +65,14 @@ namespace Abook
             this.CmbType.DropDownHeight = 242;
             this.CmbType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CmbType.IntegralHeight = false;
-            this.CmbType.Location = new System.Drawing.Point(283, 12);
+            this.CmbType.Location = new System.Drawing.Point(358, 12);
             this.CmbType.Name = "CmbType";
             this.CmbType.Size = new System.Drawing.Size(65, 20);
             this.CmbType.TabIndex = 1;
             // 
             // BtnSearch
             // 
-            this.BtnSearch.Location = new System.Drawing.Point(354, 10);
+            this.BtnSearch.Location = new System.Drawing.Point(429, 10);
             this.BtnSearch.Name = "BtnSearch";
             this.BtnSearch.Size = new System.Drawing.Size(50, 23);
             this.BtnSearch.TabIndex = 2;
@@ -86,7 +88,7 @@ namespace Abook
             this.DgvExpense.AllowUserToResizeRows = false;
             this.DgvExpense.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.DgvExpense.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DgvExpense.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.ColDate, this.ColName, this.ColType, this.ColCost });
+            this.DgvExpense.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.ColDate, this.ColName, this.ColType, this.ColCost, this.ColNote });
             this.DgvExpense.Location = new System.Drawing.Point(12, 39);
             this.DgvExpense.Name = "DgvExpense";
             this.DgvExpense.ReadOnly = true;
@@ -94,7 +96,7 @@ namespace Abook
             this.DgvExpense.RowTemplate.Height = 21;
             this.DgvExpense.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.DgvExpense.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DgvExpense.Size = new System.Drawing.Size(392, 234);
+            this.DgvExpense.Size = new System.Drawing.Size(467, 234);
             this.DgvExpense.TabIndex = 3;
             // 
             // ColDate
@@ -142,12 +144,23 @@ namespace Abook
             this.ColCost.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.ColCost.Width = 60;
             // 
+            // ColNote
+            // 
+            styleNote.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            this.ColNote.DefaultCellStyle = styleNote;
+            this.ColNote.HeaderText = "備考";
+            this.ColNote.Name = "ColNote";
+            this.ColNote.ReadOnly = true;
+            this.ColNote.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ColNote.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ColNote.Width = 75;
+            // 
             // AbSubSearch
             // 
             this.AcceptButton = this.BtnSearch;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(416, 284);
+            this.ClientSize = new System.Drawing.Size(491, 284);
             this.Controls.Add(this.CmbName);
             this.Controls.Add(this.CmbType);
             this.Controls.Add(this.BtnSearch);
@@ -174,5 +187,6 @@ namespace Abook
         private System.Windows.Forms.DataGridViewTextBoxColumn ColName;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColType;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColCost;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColNote;
     }
 }

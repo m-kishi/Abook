@@ -38,22 +38,21 @@ namespace Abook
             // _Label
             // 
             this._Label.AutoSize = true;
-            this._Label.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this._Label.Font = new System.Drawing.Font("MS UI Gothic", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this._Label.Location = new System.Drawing.Point(3, 0);
             this._Label.Name = "_Label";
-            this._Label.Size = new System.Drawing.Size(32, 12);
+            this._Label.Size = new System.Drawing.Size(45, 15);
             this._Label.TabIndex = 0;
             this._Label.Text = "Label";
             this._Label.TextChanged += new System.EventHandler(this._Label_TextChanged);
             // 
             // _Value
             // 
-            this._Value.AutoSize = true;
-            this._Value.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this._Value.Location = new System.Drawing.Point(62, 0);
+            this._Value.Font = new System.Drawing.Font("MS UI Gothic", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this._Value.Location = new System.Drawing.Point(83, 0);
             this._Value.MinimumSize = new System.Drawing.Size(55, 12);
             this._Value.Name = "_Value";
-            this._Value.Size = new System.Drawing.Size(55, 12);
+            this._Value.Size = new System.Drawing.Size(94, 15);
             this._Value.TabIndex = 1;
             this._Value.Text = "\\999,999";
             this._Value.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -65,7 +64,7 @@ namespace Abook
             this.Controls.Add(this._Label);
             this.Controls.Add(this._Value);
             this.Name = "AbLabelControl";
-            this.Size = new System.Drawing.Size(120, 12);
+            this.Size = new System.Drawing.Size(177, 19);
             this.ResumeLayout(false);
             this.PerformLayout();
 

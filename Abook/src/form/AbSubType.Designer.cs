@@ -35,11 +35,13 @@ namespace Abook
             System.Windows.Forms.DataGridViewCellStyle styleName = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle styleType = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle styleCost = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle styleNote = new System.Windows.Forms.DataGridViewCellStyle();
             this.DgvExpense = new System.Windows.Forms.DataGridView();
             this.ColDate    = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColName    = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColType    = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColCost    = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColNote    = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.DgvExpense)).BeginInit();
             this.SuspendLayout();
             // 
@@ -51,7 +53,7 @@ namespace Abook
             this.DgvExpense.AllowUserToResizeRows = false;
             this.DgvExpense.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.DgvExpense.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DgvExpense.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.ColDate, this.ColName, this.ColType, this.ColCost });
+            this.DgvExpense.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.ColDate, this.ColName, this.ColType, this.ColCost, this.ColNote });
             this.DgvExpense.Location = new System.Drawing.Point(2, 2);
             this.DgvExpense.Name = "DgvExpense";
             this.DgvExpense.ReadOnly = true;
@@ -59,7 +61,7 @@ namespace Abook
             this.DgvExpense.RowTemplate.Height = 21;
             this.DgvExpense.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.DgvExpense.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DgvExpense.Size = new System.Drawing.Size(392, 130);
+            this.DgvExpense.Size = new System.Drawing.Size(467, 130);
             this.DgvExpense.TabIndex = 0;
             // 
             // ColDate
@@ -107,11 +109,22 @@ namespace Abook
             this.ColCost.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.ColCost.Width = 60;
             // 
+            // ColNote
+            // 
+            styleNote.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            this.ColNote.DefaultCellStyle = styleNote;
+            this.ColNote.HeaderText = "備考";
+            this.ColNote.Name = "ColNote";
+            this.ColNote.ReadOnly = true;
+            this.ColNote.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ColNote.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ColNote.Width = 75;
+            // 
             // AbSubType
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(395, 132);
+            this.ClientSize = new System.Drawing.Size(470, 132);
             this.Controls.Add(this.DgvExpense);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.MaximizeBox = false;
@@ -132,5 +145,6 @@ namespace Abook
         private System.Windows.Forms.DataGridViewTextBoxColumn ColName;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColType;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColCost;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColNote;
     }
 }

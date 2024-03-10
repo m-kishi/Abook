@@ -5,6 +5,7 @@ namespace Abook
 {
     using System;
     using System.Collections.Generic;
+    using System.Drawing;
     using System.Linq;
     using System.Windows.Forms;
     using EX   = Abook.AbException.EX;
@@ -117,7 +118,12 @@ namespace Abook
         /// <param name="note">備考</param>
         public static void SetToolTipAndColor(DataGridViewRow row, string col, string note)
         {
-            if (!IsEmpty(note))
+            if (IsEmpty(note))
+            {
+                row.Cells[col].ToolTipText = null;
+                row.DefaultCellStyle.BackColor = Color.Empty;
+            }
+            else
             {
                 row.Cells[col].ToolTipText = note;
                 row.DefaultCellStyle.BackColor = DGV.NOTE_BG_COLOR;
@@ -275,6 +281,15 @@ namespace Abook
             {
                 var expected = ern - (exp + spc);
                 if (bln != expected) AbException.Throw(EX.BALANCE_INCORRECT);
+            }
+
+            /// <summary>
+            /// マイナスチェック(投資)
+            /// </summary>
+            /// <param name="finance">投資</param>
+            public static void FinanceMinus(decimal finance)
+            {
+                if (finance < 0) AbException.Throw(EX.FINANCE_MINUS);
             }
         }
 

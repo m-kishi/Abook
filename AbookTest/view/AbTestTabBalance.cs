@@ -77,7 +77,9 @@ namespace AbookTest
                 sw.WriteLine(TT.ToDBFileFormat("2011-04-01", "name", TYPE.SPCL,  "80000"));
                 sw.WriteLine(TT.ToDBFileFormat("2011-04-01", "name", TYPE.SPCL,  "20000"));
                 sw.WriteLine(TT.ToDBFileFormat("2011-04-01", "name", TYPE.PRVI,  "30000"));
+                sw.WriteLine(TT.ToDBFileFormat("2011-04-01", "name", TYPE.FNCE, "123456"));
 
+                sw.WriteLine(TT.ToDBFileFormat("2012-01-01", "name", TYPE.FNCE, "654321"));
                 sw.Close();
             }
         }
@@ -99,7 +101,7 @@ namespace AbookTest
         public void DgvBalanceWithCount()
         {
             ShowFormMain(DB_FILE_EXIST, TAB_IDX);
-            Assert.AreEqual(4, CtDgvBalance().Rows.Count);
+            Assert.AreEqual(5, CtDgvBalance().Rows.Count);
         }
 
         /// <summary>
@@ -128,7 +130,7 @@ namespace AbookTest
 
             Assert.True(row.Selected);
             Assert.True(cell.Selected);
-            Assert.AreEqual(3, row.Index);
+            Assert.AreEqual(4, row.Index);
             Assert.AreEqual(1, dgvBalance.SelectedRows.Count);
         }
 
@@ -160,7 +162,8 @@ namespace AbookTest
             Assert.AreEqual(2009, dgvBalance.Rows[0].Cells[COL.YEAR].Value);
             Assert.AreEqual(2010, dgvBalance.Rows[1].Cells[COL.YEAR].Value);
             Assert.AreEqual(2011, dgvBalance.Rows[2].Cells[COL.YEAR].Value);
-            Assert.AreEqual(9999, dgvBalance.Rows[3].Cells[COL.YEAR].Value);
+            Assert.AreEqual(2012, dgvBalance.Rows[3].Cells[COL.YEAR].Value);
+            Assert.AreEqual(9999, dgvBalance.Rows[4].Cells[COL.YEAR].Value);
         }
 
         /// <summary>
@@ -175,7 +178,8 @@ namespace AbookTest
             Assert.AreEqual(2325000, dgvBalance.Rows[0].Cells[COL.EARN].Value);
             Assert.AreEqual(2403000, dgvBalance.Rows[1].Cells[COL.EARN].Value);
             Assert.AreEqual(      0, dgvBalance.Rows[2].Cells[COL.EARN].Value);
-            Assert.AreEqual(4728000, dgvBalance.Rows[3].Cells[COL.EARN].Value);
+            Assert.AreEqual(      0, dgvBalance.Rows[3].Cells[COL.EARN].Value);
+            Assert.AreEqual(4728000, dgvBalance.Rows[4].Cells[COL.EARN].Value);
         }
 
         /// <summary>
@@ -190,7 +194,8 @@ namespace AbookTest
             Assert.AreEqual(1100000, dgvBalance.Rows[0].Cells[COL.EXPC].Value);
             Assert.AreEqual(1000000, dgvBalance.Rows[1].Cells[COL.EXPC].Value);
             Assert.AreEqual(1200000, dgvBalance.Rows[2].Cells[COL.EXPC].Value);
-            Assert.AreEqual(3300000, dgvBalance.Rows[3].Cells[COL.EXPC].Value);
+            Assert.AreEqual(      0, dgvBalance.Rows[3].Cells[COL.EXPC].Value);
+            Assert.AreEqual(3300000, dgvBalance.Rows[4].Cells[COL.EXPC].Value);
         }
 
         /// <summary>
@@ -205,7 +210,8 @@ namespace AbookTest
             Assert.AreEqual(180000, dgvBalance.Rows[0].Cells[COL.SPCL].Value);
             Assert.AreEqual(138000, dgvBalance.Rows[1].Cells[COL.SPCL].Value);
             Assert.AreEqual(100000, dgvBalance.Rows[2].Cells[COL.SPCL].Value);
-            Assert.AreEqual(418000, dgvBalance.Rows[3].Cells[COL.SPCL].Value);
+            Assert.AreEqual(     0, dgvBalance.Rows[3].Cells[COL.SPCL].Value);
+            Assert.AreEqual(418000, dgvBalance.Rows[4].Cells[COL.SPCL].Value);
         }
 
         /// <summary>
@@ -220,7 +226,24 @@ namespace AbookTest
             Assert.AreEqual( 1045000, dgvBalance.Rows[0].Cells[COL.BLNC].Value);
             Assert.AreEqual( 1265000, dgvBalance.Rows[1].Cells[COL.BLNC].Value);
             Assert.AreEqual(-1300000, dgvBalance.Rows[2].Cells[COL.BLNC].Value);
-            Assert.AreEqual( 1010000, dgvBalance.Rows[3].Cells[COL.BLNC].Value);
+            Assert.AreEqual(       0, dgvBalance.Rows[3].Cells[COL.BLNC].Value);
+            Assert.AreEqual( 1010000, dgvBalance.Rows[4].Cells[COL.BLNC].Value);
+        }
+
+        /// <summary>
+        /// 投資のテスト
+        /// </summary>
+        [Test]
+        public void DgvBalanceWithFinance()
+        {
+            ShowFormMain(DB_FILE_EXIST, TAB_IDX);
+
+            var dgvBalance = CtDgvBalance();
+            Assert.AreEqual(     0, dgvBalance.Rows[0].Cells[COL.FNCE].Value);
+            Assert.AreEqual(     0, dgvBalance.Rows[1].Cells[COL.FNCE].Value);
+            Assert.AreEqual(123456, dgvBalance.Rows[2].Cells[COL.FNCE].Value);
+            Assert.AreEqual(654321, dgvBalance.Rows[3].Cells[COL.FNCE].Value);
+            Assert.AreEqual(777777, dgvBalance.Rows[4].Cells[COL.FNCE].Value);
         }
     }
 }

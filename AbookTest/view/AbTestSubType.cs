@@ -264,6 +264,7 @@ namespace AbookTest
             form = new AbSubType(TYPE.FOOD, current, expenses);
             form.Show();
 
+            Assert.AreEqual("note14", CtDgvExpense().Rows[0].Cells[COL.NOTE].Value);
             Assert.AreEqual("note14", CtDgvExpense().Rows[0].Cells[COL.NAME].ToolTipText);
             Assert.AreEqual(DGV.NOTE_BG_COLOR, CtDgvExpense().Rows[0].DefaultCellStyle.BackColor);
         }
@@ -277,6 +278,7 @@ namespace AbookTest
         {
             ShowSubType(DB_FILE_EXIST);
 
+            Assert.AreEqual("", CtDgvExpense().Rows[0].Cells[COL.NOTE].Value);
             Assert.AreEqual("", CtDgvExpense().Rows[0].Cells[COL.NAME].ToolTipText);
             Assert.AreEqual(Color.Empty, CtDgvExpense().Rows[0].DefaultCellStyle.BackColor);
         }
