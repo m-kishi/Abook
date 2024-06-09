@@ -60,6 +60,21 @@ namespace Abook
                 /// <summary>備考</summary>
                 public const string NOTE = "ColPrvNote";
             }
+
+            /// <summary>投資</summary>
+            public static class FINANCE
+            {
+                /// <summary>日付</summary>
+                public const string DATE = "ColFncDate";
+                /// <summary>名称</summary>
+                public const string NAME = "ColFncName";
+                /// <summary>金額</summary>
+                public const string COST = "ColFncCost";
+                /// <summary>累計</summary>
+                public const string TTAL = "ColFncTtal";
+                /// <summary>備考</summary>
+                public const string NOTE = "ColFncNote";
+            }
         }
 
         /// <summary>DBファイル</summary>

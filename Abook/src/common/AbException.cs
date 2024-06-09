@@ -106,6 +106,8 @@ namespace Abook
 
             /// <summary>種別が正しくありません。</summary>
             public const string TYPE_PRIVATE_ERR = "種別が正しくありません。";
+            /// <summary>種別が正しくありません。</summary>
+            public const string TYPE_FINANCE_ERR = "種別が正しくありません。";
         }
     }
 }
