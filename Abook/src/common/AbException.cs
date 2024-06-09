@@ -101,9 +101,13 @@ namespace Abook
             public const string SPECIAL_MINUS = "特出がマイナスです。";
             /// <summary>収支が合いません。</summary>
             public const string BALANCE_INCORRECT = "収支が合いません。";
+            /// <summary>投資がマイナスです。</summary>
+            public const string FINANCE_MINUS = "投資がマイナスです。";
 
             /// <summary>種別が正しくありません。</summary>
             public const string TYPE_PRIVATE_ERR = "種別が正しくありません。";
+            /// <summary>種別が正しくありません。</summary>
+            public const string TYPE_FINANCE_ERR = "種別が正しくありません。";
         }
     }
 }

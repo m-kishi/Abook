@@ -76,6 +76,8 @@
     <Compile Include="src\expense\AbExpense.cs" />
     <Compile Include="src\expense\AbExpenseManager.cs" />
     <Compile Include="src\expense\AbSummary.cs" />
+    <Compile Include="src\finance\AbFinance.cs" />
+    <Compile Include="src\finance\AbFinanceManager.cs" />
     <Compile Include="src\form\AbFormMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -122,6 +124,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="src\form\AbTabSummary.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\form\AbTabFinance.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="src\graphic\AbGraphicData.cs" />

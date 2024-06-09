@@ -70,6 +70,8 @@ namespace AbookTest
             expenses.Add(new AbExpense("2013-03-31", "name8", TYPE.EARN, "400000"));
             expenses.Add(new AbExpense("2013-03-31", "nameX", TYPE.BNUS, "250000"));
             expenses.Add(new AbExpense("2013-03-31", "nameY", TYPE.PRVO,   "5000"));
+            expenses.Add(new AbExpense("2012-12-31", "nameZ", TYPE.FNCE, "1000000"));
+            expenses.Add(new AbExpense("2013-03-31", "nameZ", TYPE.FNCE, "2000000"));
             return expenses;
         }
 
@@ -80,7 +82,7 @@ namespace AbookTest
         [Test]
         public void AbBalanceManagerWithBalancesCount()
         {
-            Assert.AreEqual(3, abBalanceManager.Balances().Count());
+            Assert.AreEqual(4, abBalanceManager.Balances().Count());
         }
 
         /// <summary>
@@ -96,6 +98,7 @@ namespace AbookTest
             Assert.AreEqual( 420000, balance.Expense);
             Assert.AreEqual( 130000, balance.Special);
             Assert.AreEqual(1170000, balance.Balance);
+            Assert.AreEqual(      0, balance.Finance);
         }
 
         /// <summary>
@@ -111,6 +114,23 @@ namespace AbookTest
             Assert.AreEqual( 270000, balance.Expense);
             Assert.AreEqual( 110000, balance.Special);
             Assert.AreEqual( 870000, balance.Balance);
+            Assert.AreEqual(1000000, balance.Finance);
+        }
+
+        /// <summary>
+        /// コンストラクタ
+        /// 2013年度のテスト
+        /// </summary>
+        [Test]
+        public void AbBalanceManagerWith_2013_Year()
+        {
+            var balance = abBalanceManager.Balances().ElementAt(2);
+            Assert.AreEqual(2013, balance.Year);
+            Assert.AreEqual(      0, balance.Earn);
+            Assert.AreEqual(      0, balance.Expense);
+            Assert.AreEqual(      0, balance.Special);
+            Assert.AreEqual(      0, balance.Balance);
+            Assert.AreEqual(2000000, balance.Finance);
         }
 
         /// <summary>
@@ -120,12 +140,13 @@ namespace AbookTest
         [Test]
         public void AbBalanceManagerWithTotalYear()
         {
-            var balance = abBalanceManager.Balances().ElementAt(2);
+            var balance = abBalanceManager.Balances().ElementAt(3);
             Assert.AreEqual(9999, balance.Year);
             Assert.AreEqual(2970000, balance.Earn);
             Assert.AreEqual( 690000, balance.Expense);
             Assert.AreEqual( 240000, balance.Special);
             Assert.AreEqual(2040000, balance.Balance);
+            Assert.AreEqual(3000000, balance.Finance);
         }
 
         /// <summary>

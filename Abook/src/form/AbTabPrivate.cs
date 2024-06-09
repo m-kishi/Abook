@@ -44,6 +44,7 @@ namespace Abook
                     row.Cells[COL.NAME].Value = prv.Name;
                     row.Cells[COL.COST].Value = prv.Cost;
                     row.Cells[COL.BLNC].Value = prv.Blnc;
+                    row.Cells[COL.NOTE].Value = prv.Note;
                     UTL.SetToolTipAndColor(row, COL.NAME, prv.Note);
                 }
             }

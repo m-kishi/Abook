@@ -72,6 +72,8 @@
     <Compile Include="unit\AbTestPrivateManager.cs" />
     <Compile Include="unit\AbTestSummary.cs" />
     <Compile Include="unit\AbTestUtilities.cs" />
+    <Compile Include="unit\AbTestFinance.cs" />
+    <Compile Include="unit\AbTestFinanceManager.cs" />
     <Compile Include="view\AbTestFormBase.cs" />
     <Compile Include="view\AbTestFormMain.cs" />
     <Compile Include="view\AbTestMenu.cs" />
@@ -83,6 +85,7 @@
     <Compile Include="view\AbTestTabPrivate.cs" />
     <Compile Include="view\AbTestTabSummary.cs" />
     <Compile Include="view\AbTestSubSearch.cs" />
+    <Compile Include="view\AbTestTabFinance.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Abook\Abook.csproj">

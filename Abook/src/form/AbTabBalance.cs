@@ -44,6 +44,7 @@ namespace Abook
                     row.Cells[COL.EXPC].Value = bln.Expense;
                     row.Cells[COL.SPCL].Value = bln.Special;
                     row.Cells[COL.BLNC].Value = bln.Balance;
+                    row.Cells[COL.FNCE].Value = bln.Finance;
                 }
             }
 

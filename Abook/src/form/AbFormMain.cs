@@ -76,6 +76,7 @@ namespace Abook
             InitTabExpense(expenses);
             InitTabBalance(expenses);
             InitTabPrivate(expenses);
+            InitTabFinance(expenses);
             InitTabSummary(summaries);
             InitTabGraphic(summaries);
         }

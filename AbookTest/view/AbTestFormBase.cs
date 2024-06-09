@@ -352,6 +352,14 @@ namespace AbookTest
             return CtControl<DataGridView>("DgvPrivate");
         }
 
+        /// <summary>
+        /// 投資ビュー取得
+        /// </summary>
+        /// <returns>投資ビュー</returns>
+        protected DataGridView CtDgvFinance()
+        {
+            return CtControl<DataGridView>("DgvFinance");
+        }
         #endregion
     }
 }

@@ -42,6 +42,8 @@ namespace Abook
                 public const string SPCL = "ColSpecial";
                 /// <summary>収支</summary>
                 public const string BLNC = "ColBalance";
+                /// <summary>投資</summary>
+                public const string FNCE = "ColFinance";
             }
 
             /// <summary>秘密収支</summary>
@@ -55,6 +57,23 @@ namespace Abook
                 public const string COST = "ColPrvCost";
                 /// <summary>収支</summary>
                 public const string BLNC = "ColPrvBlnc";
+                /// <summary>備考</summary>
+                public const string NOTE = "ColPrvNote";
+            }
+
+            /// <summary>投資</summary>
+            public static class FINANCE
+            {
+                /// <summary>日付</summary>
+                public const string DATE = "ColFncDate";
+                /// <summary>名称</summary>
+                public const string NAME = "ColFncName";
+                /// <summary>金額</summary>
+                public const string COST = "ColFncCost";
+                /// <summary>累計</summary>
+                public const string TTAL = "ColFncTtal";
+                /// <summary>備考</summary>
+                public const string NOTE = "ColFncNote";
             }
         }
 
@@ -111,7 +130,7 @@ namespace Abook
         public static class GRAPH
         {
             /// <summary>描画領域横幅</summary>
-            public const decimal WIDTH = 349;
+            public const decimal WIDTH = 424;
             /// <summary>描画領域縦幅</summary>
             public const decimal HEIGHT = 218;
             /// <summary>表示月数</summary>
@@ -190,6 +209,8 @@ namespace Abook
             public const string PRVI = "秘密入";
             /// <summary>秘密出</summary>
             public const string PRVO = "秘密出";
+            /// <summary>投資</summary>
+            public const string FNCE = "投資";
 
             /// <summary>
             /// 支出情報として指定可能な種別
@@ -199,6 +220,7 @@ namespace Abook
                 TYPE.FOOD, TYPE.OTFD, TYPE.GOOD, TYPE.FRND, TYPE.TRFC, TYPE.PLAY,
                 TYPE.HOUS, TYPE.ENGY, TYPE.CNCT, TYPE.MEDI, TYPE.INSU, TYPE.OTHR,
                 TYPE.EARN, TYPE.BNUS, TYPE.SPCL, TYPE.PRVI, TYPE.PRVO,
+                TYPE.FNCE,
             };
 
             /// <summary>秘密収支に属する種別</summary>
